@@ -1,0 +1,52 @@
+version: 2.1
+
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:14.17.6-browsers
+
+references:
+  workspace_root: &workspace_root '~'
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+jobs:
+  install-dependencies:
+    executor: node-executor
+    steps:
+      - *attach_workspace
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+            - ./.next/cache
+      - persist_to_workspace:
+          root: *workspace_root
+          paths: .
+
+  tests:
+    executor: node-executor
+    steps:
+      - *attach_workspace
+      - run:
+          name: Run Linter
+          command: yarn lint
+      - run:
+          name: Run Tests
+          command: yarn test:unit
+
+workflows:
+  version: 2
+  continuous-delivery:
+    jobs:
+      - install-dependencies
+      - tests:
+          requires:
+            - install-dependencies
