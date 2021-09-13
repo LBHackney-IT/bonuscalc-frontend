@@ -10,7 +10,9 @@ class BonusCalcDocument extends Document {
     return (
       <Html lang="en" className="govuk-template lbh-template">
         <Head />
-        <body className="govuk-template__body">
+        <body
+          className={`govuk-template__body env-${process.env.NEXT_PUBLIC_ENV_NAME}`}
+        >
           <Main />
           <NextScript />
         </body>

@@ -6,13 +6,32 @@ import UserContext from '../UserContext'
 const Header = ({ serviceName }) => {
   const { user } = useContext(UserContext)
 
+  const showDevelopmentNote = () => {
+    if (
+      !['production', 'test'].includes(
+        process.env.NEXT_PUBLIC_ENV_NAME?.toLowerCase()
+      )
+    ) {
+      return (
+        <section className="lbh-announcement lbh-announcement--warning">
+          <div className="lbh-container">
+            <div className="lbh-announcement__content">
+              <p>{`This is not live, this is ${process.env.NEXT_PUBLIC_ENV_NAME}`}</p>
+            </div>
+          </div>
+        </section>
+      )
+    }
+  }
+
   return (
     <>
+      {showDevelopmentNote()}
       <Link href="#main-content">
         <a className="govuk-skip-link lbh-skip-link">Skip to main content</a>
       </Link>
 
-      <header className="lbh-header ">
+      <header className="lbh-header govuk-!-display-none-print">
         <div className="lbh-header__main">
           <div className="lbh-container lbh-header__wrapper lbh-header__wrapper--stacked">
             <div className="lbh-header__title">
