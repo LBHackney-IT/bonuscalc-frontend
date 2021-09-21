@@ -52,3 +52,13 @@ yarn dev
 ```
 
 Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
+
+## Continuous Delivery
+
+Our serverless deployment service is configured in [serverless.yml](serverless.yml).
+
+The serverless service includes the following:
+
+- a single serverless function: bonuscalc-frontend
+- Description of the Cloudfront CDN in CloudFormation
+- Custom subdomain under hackney.gov.uk

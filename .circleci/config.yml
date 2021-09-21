@@ -1,9 +1,16 @@
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@1.0.0
+  aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
+
 executors:
   node-executor:
     docker:
       - image: circleci/node:14.17.6-browsers
+  docker-python:
+    docker:
+      - image: circleci/python:3.7
 
 references:
   workspace_root: &workspace_root '~'
@@ -42,6 +49,52 @@ jobs:
           name: Run Tests
           command: yarn test:unit
 
+  build-deploy-development:
+    executor: aws-cli/default
+    steps:
+      - *attach_workspace
+      - run:
+          name: deploy
+          command: |
+            export NEXT_PUBLIC_ENV_NAME=development
+            yarn build && yarn --production=true && sudo npm i -g serverless && sls deploy --stage development
+
+  build-deploy-staging:
+    executor: aws-cli/default
+    steps:
+      - *attach_workspace
+      - run:
+          name: deploy
+          command: |
+            export NEXT_PUBLIC_ENV_NAME=staging
+            yarn build && yarn --production=true && sudo npm i -g serverless && sls deploy --stage staging
+
+  assume-role-development:
+    executor: docker-python
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: $AWS_ACCOUNT_DEVELOPMENT
+          profile_name: default
+          role: 'LBH_Circle_CI_Deployment_Role'
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .aws
+
+  assume-role-staging:
+    executor: docker-python
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: $AWS_ACCOUNT_STAGING
+          profile_name: default
+          role: 'LBH_Circle_CI_Deployment_Role'
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .aws
+
 workflows:
   version: 2
   continuous-delivery:
@@ -50,3 +103,29 @@ workflows:
       - tests:
           requires:
             - install-dependencies
+      - assume-role-development:
+          context: api-assume-role-housing-development-context
+          requires:
+            - tests
+          filters:
+            branches:
+              only: develop
+      - build-deploy-development:
+          requires:
+            - assume-role-development
+          filters:
+            branches:
+              only: develop
+      - assume-role-staging:
+          context: api-assume-role-housing-staging-context
+          requires:
+            - tests
+          filters:
+            branches:
+              only: main
+      - build-deploy-staging:
+          requires:
+            - assume-role-staging
+          filters:
+            branches:
+              only: main
