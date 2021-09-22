@@ -1,0 +1,114 @@
+service: bonuscalc-frontend
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  timeout: 10
+  region: eu-west-2
+  stage: ${opt:stage}
+  apiGateway:
+    shouldStartNameWithService: true
+
+package:
+  individually: true
+  patterns:
+    - '!./**'
+
+functions:
+  bonuscalc-frontend:
+    name: ${self:service}-${self:provider.stage}
+    handler: src/lambda.handler
+    package:
+      patterns:
+        - 'src/lambda.js'
+        - 'next.config.js'
+        - 'public/**'
+        - 'build/_next/**'
+        - 'node_modules/**'
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+    vpc:
+      securityGroupIds: ${self:custom.securityGroups.${self:provider.stage}}
+      subnetIds: ${self:custom.subnets.${self:provider.stage}}
+    environment:
+      GSSO_URL: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/gsso-url}
+      GSSO_TOKEN_NAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/gsso-token-name}
+      HACKNEY_JWT_SECRET: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/hackney-jwt-secret}
+      OPERATIVE_MANAGERS_GOOGLE_GROUPNAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/operative-managers-group}
+      REDIRECT_URL: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/redirect-url}
+      NEXT_PUBLIC_ENV_NAME: ${self:provider.stage}
+
+resources:
+  Resources:
+    CloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Aliases:
+            - ${self:custom.aliases.${self:provider.stage}}
+          PriceClass: PriceClass_100
+          ViewerCertificate:
+            AcmCertificateArn: ${self:custom.certificate-arn.${self:provider.stage}}
+            MinimumProtocolVersion: TLSv1.2_2018
+            SslSupportMethod: sni-only
+          DefaultCacheBehavior:
+            TargetOriginId: ${self:service}-${self:provider.stage}-custom-origin
+            ViewerProtocolPolicy: 'redirect-to-https'
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - PATCH
+              - POST
+              - DELETE
+            DefaultTTL: 0
+            MaxTTL: 0
+            MinTTL: 0
+            ForwardedValues:
+              QueryString: true
+              Cookies:
+                Forward: all
+          Enabled: true
+          Origins:
+            - Id: ${self:service}-${self:provider.stage}-custom-origin
+              DomainName: ${self:custom.domain-name}
+              OriginPath: /${self:provider.stage}
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+    staticImagesBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: dlo-bonus-scheme-${opt:stage}-static-images
+
+custom:
+  domain-name:
+    Fn::Join:
+      - '.'
+      - - Ref: ApiGatewayRestApi
+        - execute-api
+        - eu-west-2
+        - amazonaws.com
+  aliases:
+    development: dlo-bonus-scheme-development.hackney.gov.uk
+    staging: dlo-bonus-scheme-staging.hackney.gov.uk
+  certificate-arn:
+    development: arn:aws:acm:us-east-1:364864573329:certificate/d903d9e2-c3da-482b-8768-916ec09e461f
+    staging: arn:aws:acm:us-east-1:715003523189:certificate/8f7fa30c-a4e5-4775-b827-ade824a33c9a
+  securityGroups:
+    development:
+      - sg-0a8a71b913edbb0ed
+    staging:
+      - sg-0166cbf56b7e77af0
+  subnets:
+    development:
+      - subnet-0140d06fb84fdb547
+      - subnet-05ce390ba88c42bfd
+    staging:
+      - subnet-06d3de1bd9181b0d7
+      - subnet-0ed7d7713d1127656

@@ -1,0 +1,21 @@
+.env {
+  &-development {
+    .lbh-header__main {
+      background-color: lbh-colour('lbh-a01');
+    }
+  }
+
+  &-staging {
+    .lbh-header__main {
+      background-color: lbh-colour('lbh-e01');
+    }
+  }
+}
+
+.lbh-announcement {
+  &--warning {
+    @include lbh-rem(padding, 12, 0);
+    border-color: lbh-colour('lbh-f03');
+    background: rgba(lbh-colour('lbh-f03'), 0.2);
+  }
+}
