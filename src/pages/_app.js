@@ -1,5 +1,6 @@
 import '../styles/all.scss'
 import App from 'next/app'
+import Script from 'next/script'
 import Layout from '../components/Layout'
 import AccessDenied from '../components/AccessDenied'
 
@@ -35,7 +36,7 @@ class BonusCalcApp extends App {
             />
           </Layout>
         </UserContext.Provider>
-        <script src="/js/govuk.js"></script>
+        <Script src="/js/govuk.js"></Script>
       </>
     )
   }

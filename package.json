@@ -11,7 +11,7 @@
     "prestart": "next build",
     "start": "next start -p $PORT",
     "test:unit": "node --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage",
-    "lint": "eslint . --max-warnings 0 --ext .js,.jsx && echo 'Lint complete.'"
+    "lint": "next lint"
   },
   "dependencies": {
     "cookie": "^0.4.1",
