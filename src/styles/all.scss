@@ -1,2 +1,22 @@
 @import 'lbh-frontend/lbh/all';
 @import 'environments';
+
+/* Bug fixes - remove when fixed in lbh-frontend */
+
+.lbh-tabs {
+  .govuk-tabs__list-item--selected {
+    margin-top: -5px;
+  }
+
+  .govuk-tabs__tab {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.lbh-back-link {
+  border-bottom: 1px solid transparent;
+}
