@@ -28,7 +28,7 @@ const OperativePage = ({ query }) => {
   useEffect(() => {
     setLoading(true)
     getOperative(query.id)
-  }, [])
+  }, [query.id])
 
   return (
     <>
@@ -40,7 +40,7 @@ const OperativePage = ({ query }) => {
           {operative && <OperativeView operative={operative} />}
           {error && (
             <NotFound
-              message={`Couldn't find an operative with the payroll number ${query.id}.`}
+              message={`Couldn&apos;t find an operative with the payroll number ${query.id}.`}
             />
           )}
         </>

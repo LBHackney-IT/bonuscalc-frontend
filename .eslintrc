@@ -11,8 +11,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:prettier/recommended",
-    "plugin:@next/next/recommended",
-    "plugin:cypress/recommended"
+    "plugin:cypress/recommended",
+    "next/core-web-vitals"
   ],
   "parserOptions": {
     "sourceType": "module",
