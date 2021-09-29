@@ -1,0 +1,15 @@
+{
+  "data": {
+    "id": "123456",
+    "type": "operatives",
+    "attributes": {
+      "id": "123456",
+      "name": "Alex Cable",
+      "trade": "Electrician (EL)",
+      "section": "R3007",
+      "scheme": "SMV",
+      "salaryBand": 5,
+      "fixedBand": false
+    }
+  }
+}
