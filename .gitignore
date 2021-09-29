@@ -37,5 +37,10 @@ db.json
 # vercel
 .vercel
 
+# cypress
+cypress/screenshots
+cypress/videos
+cypress/reports
+
 # serverless
 .serverless

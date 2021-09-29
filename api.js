@@ -39,6 +39,6 @@ router.render = (req, res) => {
 
 server.use('/api/v1', router)
 
-server.listen(5001, () => {
+server.listen(6000, () => {
   console.log('JSON Server is running')
 })

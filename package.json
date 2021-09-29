@@ -11,8 +11,16 @@
     "prettier:test": "npx prettier -c .",
     "prestart": "next build",
     "start": "next start -p $PORT",
+    "tests": "yarn test:unit && yarn test:e2e",
+    "test:e2e": "PORT=5001 NEXT_PUBLIC_ENV_NAME=test start-test 5001 cy:run",
     "test:unit": "node --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage",
-    "lint": "eslint . --max-warnings 0 --ext .js,.jsx && echo 'Lint complete.'"
+    "lint": "eslint . --max-warnings 0 --ext .js,.jsx && echo 'Lint complete.'",
+    "e2e:audit": "PORT=5001 NEXT_PUBLIC_ENV_NAME=test start-test 5001 cy:run:audit",
+    "e2e:interactive": "PORT=5001 NEXT_PUBLIC_ENV_NAME=test start-test 5001 cy:open",
+    "e2e:server": "PORT=5001 NEXT_PUBLIC_ENV_NAME=test start-test 5001",
+    "cy:run": "cypress run --browser chrome --headless",
+    "cy:run:audit": "cypress run --browser chrome --headless --env runAudit=true",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
@@ -38,13 +46,18 @@
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.4",
+    "@next/eslint-plugin-next": "^11.1.2",
     "@testing-library/dom": "^8.5.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
     "babel-jest": "^27.2.0",
+    "cypress": "^8.5.0",
+    "cypress-audit": "^1.0.0",
+    "cypress-dotenv": "^2.0.0",
     "eslint": "^7.32.0",
     "eslint-config-next": "11.1.2",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.25.1",
@@ -55,7 +68,8 @@
     "json-server": "^0.16.3",
     "lint-staged": "^11.1.2",
     "node-mocks-http": "^1.10.1",
-    "prettier": "^2.4.0"
+    "prettier": "^2.4.0",
+    "start-server-and-test": "^1.14.0"
   },
   "lint-staged": {
     "**/*.{js,jsx}": "eslint --fix",
