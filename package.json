@@ -15,6 +15,7 @@
     "lint": "eslint . --max-warnings 0 --ext .js,.jsx && echo 'Lint complete.'"
   },
   "dependencies": {
+    "axios": "^0.21.4",
     "cookie": "^0.4.1",
     "dotenv": "^10.0.0",
     "jsonwebtoken": "^8.5.1",
