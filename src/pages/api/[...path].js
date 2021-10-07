@@ -12,6 +12,11 @@ const {
 
 const { OK, UNAUTHORIZED, INTERNAL_SERVER_ERROR } = StatusCodes
 
+const toJSONAPI = (type, attributes) => {
+  const id = attributes['id']
+  return { type, id, attributes }
+}
+
 const jsonError = (res, code, detail) => {
   const title = getReasonPhrase(code)
   const status = code.toString()
@@ -53,7 +58,7 @@ const authoriseAPIRequest = (callback) => {
   }
 }
 
-const forwardAPIRequest = async (req) => {
+const forwardAPIRequest = async (req, type) => {
   const cookies = cookie.parse(req.headers.cookie ?? '')
   const token = cookies[GSSO_TOKEN_NAME]
 
@@ -104,11 +109,15 @@ const forwardAPIRequest = async (req) => {
     data: req.body || '{}',
   })
 
-  return data
+  if (Array.isArray(data)) {
+    return { data: data.map((item) => toJSONAPI(type, item)) }
+  } else {
+    return { data: toJSONAPI(type, data) }
+  }
 }
 
 export default authoriseAPIRequest(async (req, res) => {
-  const data = await forwardAPIRequest(req)
+  const data = await forwardAPIRequest(req, 'operatives')
 
   res.status(OK).json(data)
 })
