@@ -38,7 +38,7 @@ describe('Operative page', () => {
       it('Shows the not found message', () => {
         cy.get('.lbh-heading-h1').contains('Not Found')
         cy.get('.lbh-body').contains(
-          'Couldn&apos;t find an operative with the payroll number 123456.'
+          'Couldn’t find an operative with the payroll number 123456.'
         )
 
         cy.audit()

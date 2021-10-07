@@ -40,7 +40,7 @@ const OperativePage = ({ query }) => {
           {operative && <OperativeView operative={operative} />}
           {error && (
             <NotFound
-              message={`Couldn&apos;t find an operative with the payroll number ${query.id}.`}
+              message={`Couldn\u2019t find an operative with the payroll number ${query.id}.`}
             />
           )}
         </>
