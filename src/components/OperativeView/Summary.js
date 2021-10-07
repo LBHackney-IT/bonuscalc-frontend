@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { TradeDescriptions } from '../../utils/trades'
 
 const Summary = ({ operative }) => {
   return (
@@ -11,7 +12,9 @@ const Summary = ({ operative }) => {
       </div>
       <div className="govuk-summary-list__row">
         <dt className="govuk-summary-list__key">Trade</dt>
-        <dd className="govuk-summary-list__value">{operative.trade}</dd>
+        <dd className="govuk-summary-list__value">
+          {TradeDescriptions[operative.trade]} ({operative.trade})
+        </dd>
         <dt className="govuk-summary-list__key">Scheme</dt>
         <dd className="govuk-summary-list__value">{operative.scheme}</dd>
       </div>
