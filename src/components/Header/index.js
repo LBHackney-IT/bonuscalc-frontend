@@ -7,11 +7,7 @@ const Header = ({ serviceName }) => {
   const { user } = useContext(UserContext)
 
   const showDevelopmentNote = () => {
-    if (
-      !['production', 'test'].includes(
-        process.env.NEXT_PUBLIC_ENV_NAME?.toLowerCase()
-      )
-    ) {
+    if (!['production', 'test'].includes(process.env.NEXT_PUBLIC_ENV_NAME)) {
       return (
         <section className="lbh-announcement lbh-announcement--warning">
           <div className="lbh-container">
