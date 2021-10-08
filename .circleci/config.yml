@@ -25,15 +25,16 @@ jobs:
       - *attach_workspace
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: dependency-cache-v1-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: dependency-cache-v1-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
             - ./.next/cache
+            - /home/circleci/.cache/Cypress
       - persist_to_workspace:
           root: *workspace_root
           paths: .
@@ -48,6 +49,20 @@ jobs:
       - run:
           name: Run Tests
           command: yarn test:unit
+
+  e2e:
+    executor: node-executor
+    steps:
+      - *attach_workspace
+      - run:
+          name: Run E2E With Lighthouse Audit
+          command: yarn e2e:audit
+      - store_artifacts:
+          path: cypress/screenshots
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/reports
 
   build-deploy-development:
     executor: aws-cli/default
@@ -103,10 +118,14 @@ workflows:
       - tests:
           requires:
             - install-dependencies
+      - e2e:
+          requires:
+            - install-dependencies
       - assume-role-development:
           context: api-assume-role-housing-development-context
           requires:
             - tests
+            - e2e
           filters:
             branches:
               only: develop
@@ -120,6 +139,7 @@ workflows:
           context: api-assume-role-housing-staging-context
           requires:
             - tests
+            - e2e
           filters:
             branches:
               only: main

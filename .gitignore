@@ -31,8 +31,16 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# local database files
+db.json
+
 # vercel
 .vercel
+
+# cypress
+cypress/screenshots
+cypress/videos
+cypress/reports
 
 # serverless
 .serverless
