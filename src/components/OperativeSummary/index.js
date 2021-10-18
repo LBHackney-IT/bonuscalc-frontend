@@ -28,7 +28,7 @@ const OperativeSummary = ({ payrollNumber }) => {
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Trade</dt>
           <dd className="govuk-summary-list__value">
-            {operative.trade.description} ({operative.trade.id})
+            {operative.tradeDescription}
           </dd>
           <dt className="govuk-summary-list__key">Scheme</dt>
           <dd className="govuk-summary-list__value">{operative.scheme}</dd>

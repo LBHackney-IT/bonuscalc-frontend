@@ -1,6 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { StatusCodes } from 'http-status-codes'
+import Operative from '../models/Operative'
 
 const client = axios.create({ baseURL: '/api/v1' })
 
@@ -36,7 +37,7 @@ export const useOperative = (payrollNumber) => {
   const { data, error } = useSWR(operativeUrl(payrollNumber), fetcher)
 
   return {
-    operative: data,
+    operative: data ? new Operative(data) : null,
     isLoading: !error && !data,
     isError: error,
   }
