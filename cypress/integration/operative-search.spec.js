@@ -66,6 +66,8 @@ describe('Operative search', () => {
 
         cy.url().should('contains', '/operatives/123456')
 
+        cy.wait('@get_operative')
+
         cy.get('.lbh-heading-h2').within(() => {
           cy.contains('Alex Cable')
         })
