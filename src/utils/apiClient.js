@@ -1,7 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { StatusCodes } from 'http-status-codes'
-import Operative from '../models/Operative'
+import { Operative, Timesheet } from '../models'
 
 const client = axios.create({ baseURL: '/api/v1' })
 
@@ -38,6 +38,22 @@ export const useOperative = (payrollNumber) => {
 
   return {
     operative: data ? new Operative(data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const timesheetUrl = (payrollNumber, week) => {
+  return `/operatives/${encodeURIComponent(
+    payrollNumber
+  )}/timesheet?week=${encodeURIComponent(week)}`
+}
+
+export const useTimesheet = (payrollNumber, week) => {
+  const { data, error } = useSWR(timesheetUrl(payrollNumber, week), fetcher)
+
+  return {
+    timesheet: data ? new Timesheet(data) : null,
     isLoading: !error && !data,
     isError: error,
   }

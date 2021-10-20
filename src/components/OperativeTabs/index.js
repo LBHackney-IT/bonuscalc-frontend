@@ -3,28 +3,28 @@ import Link from 'next/link'
 import { useOperative } from '../../utils/apiClient'
 
 const OperativeTabs = ({ payrollNumber, tabIndex, children }) => {
+  const { operative, isLoading, isError } = useOperative(payrollNumber)
+
+  if (isLoading || isError) return <></>
+
   const tabs = [
     {
       content: 'Summary',
-      href: `/operatives/${encodeURIComponent(payrollNumber)}`,
+      href: `/operatives/${operative.id}`,
     },
     {
       content: 'Productive (P)',
-      href: `/operatives/${encodeURIComponent(payrollNumber)}/productive`,
+      href: `/operatives/${operative.id}/productive`,
     },
     {
       content: 'Non-productive (NP)',
-      href: `/operatives/${encodeURIComponent(payrollNumber)}/non-productive`,
+      href: `/operatives/${operative.id}/non-productive`,
     },
     {
       content: 'Out of hours',
-      href: `/operatives/${encodeURIComponent(payrollNumber)}/out-of-hours`,
+      href: `/operatives/${operative.id}/out-of-hours`,
     },
   ]
-
-  const { isLoading, isError } = useOperative(payrollNumber)
-
-  if (isLoading || isError) return <></>
 
   return (
     <div

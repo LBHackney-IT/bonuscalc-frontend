@@ -1,0 +1,17 @@
+{
+  "id": 3,
+  "week": {
+    "id": "2021-10-25",
+    "bonusPeriod": {
+      "id": "2021-08-02",
+      "startAt": "2021-08-01T23:00:00Z",
+      "year": 2021,
+      "number": 3,
+      "closedAt": null
+    },
+    "startAt": "2021-10-24T23:00:00Z",
+    "number": 13,
+    "closedAt": null
+  },
+  "payElements": []
+}

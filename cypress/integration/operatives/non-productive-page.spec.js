@@ -52,8 +52,16 @@ describe('Non-productive page', () => {
           { statusCode: 200, fixture: 'operatives/electrician.json' }
         ).as('get_operative')
 
-        cy.visit('/operatives/123456/non-productive')
-        cy.wait('@get_operative')
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
+        ).as('get_timesheet')
+
+        cy.visit('/operatives/123456/non-productive?week=2021-10-18')
+        cy.wait(['@get_operative', '@get_timesheet'])
       })
 
       it('Shows the operative summary', () => {
@@ -91,6 +99,58 @@ describe('Non-productive page', () => {
         cy.get('.govuk-tabs__list-item--selected').contains(
           'Non-productive (NP)'
         )
+      })
+
+      it('Shows the week heading', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 12')
+        })
+      })
+
+      it('Allows navigating to the previous week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-11',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-11.json' }
+        ).as('get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 - 2021 / week 11')
+            .click()
+          cy.wait('@get_timesheet')
+
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
+          cy.url().should(
+            'include',
+            '/operatives/123456/non-productive?week=2021-10-11'
+          )
+        })
+      })
+
+      it('Allows navigating to the next week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-25',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-25.json' }
+        ).as('get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 - 2021 / week 13')
+            .click()
+          cy.wait('@get_timesheet')
+
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
+          cy.url().should(
+            'include',
+            '/operatives/123456/non-productive?week=2021-10-25'
+          )
+        })
       })
     })
   })
