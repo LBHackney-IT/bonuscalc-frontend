@@ -152,6 +152,25 @@ describe('Non-productive page', () => {
           )
         })
       })
+
+      it('Disables the edit non-productive time button if the week is closed', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-11',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-11.json' }
+        ).as('get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 - 2021 / week 11')
+            .click()
+          cy.wait('@get_timesheet')
+
+          cy.contains('button', 'Edit non-productive').should('be.disabled')
+        })
+      })
     })
   })
 })

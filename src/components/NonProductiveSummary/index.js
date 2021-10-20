@@ -26,6 +26,20 @@ const NonProductiveSummary = ({ payrollNumber, weekBeginning }) => {
         </PreviousLink>
         <NextLink href={week.nextUrl(baseUrl)}>{week.nextDescription}</NextLink>
       </nav>
+
+      <div className="govuk-button-group">
+        <button className="govuk-button lbh-button" data-module="govuk-button">
+          Download report
+        </button>
+
+        <button
+          className="govuk-button govuk-secondary lbh-button lbh-button--secondary"
+          data-module="govuk-button"
+          disabled={week.isClosed}
+        >
+          Edit non-productive
+        </button>
+      </div>
     </>
   )
 }

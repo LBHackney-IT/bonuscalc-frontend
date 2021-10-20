@@ -12,7 +12,7 @@ export default class Week {
     this.number = attrs.number
     this.bonusPeriod = new BonusPeriod(attrs.bonusPeriod)
     this.startAt = dayjs(attrs.startAt)
-    this.closeAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
+    this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
   }
 
   previousUrl(baseUrl) {
@@ -57,5 +57,9 @@ export default class Week {
 
   get next() {
     return this.startAt.add(1, 'week')
+  }
+
+  get isClosed() {
+    return this.closedAt ? true : false
   }
 }

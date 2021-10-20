@@ -6,6 +6,6 @@ export default class BonusPeriod {
     this.year = attrs.year
     this.number = attrs.number
     this.startAt = dayjs(attrs.startAt)
-    this.closeAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
+    this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
   }
 }
