@@ -11,4 +11,20 @@ export default class PayElement {
     this.duration = attrs.duration
     this.value = attrs.value
   }
+
+  get isAdjustment() {
+    return this.payElementType.adjustment
+  }
+
+  get isProductive() {
+    return this.payElementType.productive
+  }
+
+  get isNonProductive() {
+    return !(this.isAdjustment || this.isProductive)
+  }
+
+  get description() {
+    return this.payElementType.description
+  }
 }

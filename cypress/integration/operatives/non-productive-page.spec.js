@@ -153,6 +153,45 @@ describe('Non-productive page', () => {
         })
       })
 
+      it('Shows the summary of the pay elements for that week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
+        ).as('get_timesheet')
+
+        cy.get('#non-productive-summary tbody').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Dayworks')
+            cy.get(':nth-child(2)').contains('7.50')
+            cy.get(':nth-child(3)').contains('11.63')
+          })
+
+          cy.get('.govuk-table__row:nth-child(2)').within(() => {
+            cy.get(':nth-child(1)').contains('Annual Leave')
+            cy.get(':nth-child(2)').contains('7.50')
+            cy.get(':nth-child(3)').contains('11.63')
+          })
+        })
+
+        cy.get('#adjustment-summary tbody').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('10000001')
+            cy.get(':nth-child(2)').contains('Note about adjustment')
+            cy.get(':nth-child(4)').contains('24.00')
+          })
+        })
+
+        cy.get('#adjustment-summary tfoot').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(2)').contains('Total')
+            cy.get(':nth-child(3)').contains('47.25')
+          })
+        })
+      })
+
       it('Disables the edit non-productive time button if the week is closed', () => {
         cy.intercept(
           {
