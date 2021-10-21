@@ -2,10 +2,10 @@
 
 import 'cypress-audit/commands'
 
-describe('Operative page', () => {
+describe('Productive page', () => {
   context('When not logged in', () => {
     it('Redirects to the sign in page', () => {
-      cy.visit('/operatives/123456')
+      cy.visit('/operatives/123456/productive')
 
       cy.get('.lbh-header__service-name').contains('DLO Bonus Scheme')
       cy.get('.lbh-header__title-link').should('have.attr', 'href', '/')
@@ -31,7 +31,7 @@ describe('Operative page', () => {
           { statusCode: 404, fixture: 'operatives/not_found.json' }
         ).as('get_operative')
 
-        cy.visit('/operatives/123456')
+        cy.visit('/operatives/123456/productive')
         cy.wait('@get_operative')
       })
 
@@ -52,7 +52,7 @@ describe('Operative page', () => {
           { statusCode: 200, fixture: 'operatives/electrician.json' }
         ).as('get_operative')
 
-        cy.visit('/operatives/123456')
+        cy.visit('/operatives/123456/productive')
         cy.wait('@get_operative')
       })
 
@@ -85,6 +85,10 @@ describe('Operative page', () => {
         })
 
         cy.audit()
+      })
+
+      it('Shows the productive tab', () => {
+        cy.get('.govuk-tabs__list-item--selected').contains('Productive (P)')
       })
     })
   })

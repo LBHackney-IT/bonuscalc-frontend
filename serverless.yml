@@ -42,6 +42,7 @@ functions:
       OPERATIVE_MANAGERS_GOOGLE_GROUPNAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/operative-managers-group}
       REDIRECT_URL: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/redirect-url}
       NEXT_PUBLIC_ENV_NAME: ${self:provider.stage}
+      TZ: Europe/London
 
 resources:
   Resources:
