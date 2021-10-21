@@ -1,0 +1,90 @@
+{
+  "id": 2,
+  "week": {
+    "id": "2021-10-18",
+    "bonusPeriod": {
+      "id": "2021-08-02",
+      "startAt": "2021-08-01T23:00:00Z",
+      "year": 2021,
+      "number": 3,
+      "closedAt": null
+    },
+    "startAt": "2021-10-17T23:00:00Z",
+    "number": 12,
+    "closedAt": null
+  },
+  "payElements": [
+    {
+      "id": 1,
+      "payElementType": {
+        "id": 2,
+        "description": "Dayworks",
+        "payAtBand": true,
+        "paid": true,
+        "productive": false,
+        "adjustment": false
+      },
+      "weekDay": 1,
+      "workOrder": null,
+      "address": null,
+      "comment": null,
+      "productive": false,
+      "duration": 7.5,
+      "value": 11.625
+    },
+    {
+      "id": 2,
+      "payElementType": {
+        "id": 1,
+        "description": "Reactive Repairs",
+        "payAtBand": true,
+        "paid": true,
+        "productive": true,
+        "adjustment": false
+      },
+      "weekDay": 1,
+      "workOrder": "10000000",
+      "address": "1 Knowhere Road",
+      "comment": null,
+      "productive": false,
+      "duration": 2,
+      "value": 25
+    },
+    {
+      "id": 3,
+      "payElementType": {
+        "id": 4,
+        "description": "Adjustment",
+        "payAtBand": false,
+        "paid": false,
+        "productive": false,
+        "adjustment": true
+      },
+      "weekDay": 1,
+      "workOrder": "10000001",
+      "address": null,
+      "comment": "Note about adjustment",
+      "productive": false,
+      "duration": 0,
+      "value": 24
+    },
+    {
+      "id": 4,
+      "payElementType": {
+        "id": 3,
+        "description": "Annual Leave",
+        "payAtBand": true,
+        "paid": true,
+        "productive": false,
+        "adjustment": false
+      },
+      "weekDay": 2,
+      "workOrder": null,
+      "address": null,
+      "comment": null,
+      "productive": false,
+      "duration": 7.5,
+      "value": 11.625
+    }
+  ]
+}

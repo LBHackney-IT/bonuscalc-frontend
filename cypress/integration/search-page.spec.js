@@ -2,7 +2,7 @@
 
 import 'cypress-audit/commands'
 
-describe('Operative search', () => {
+describe('Search page', () => {
   beforeEach(() => {
     cy.login()
   })
@@ -65,8 +65,6 @@ describe('Operative search', () => {
         cy.wait('@get_operative')
 
         cy.url().should('contains', '/operatives/123456')
-
-        cy.wait('@get_operative')
 
         cy.get('.lbh-heading-h2').within(() => {
           cy.contains('Alex Cable')
