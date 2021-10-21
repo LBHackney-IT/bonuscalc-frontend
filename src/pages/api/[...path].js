@@ -94,7 +94,7 @@ const forwardAPIRequest = async (req) => {
     url: `${BONUSCALC_SERVICE_API_URL}/${path?.join('/')}`,
     params: queryParams,
     paramsSerializer: paramsSerializer,
-    data: req.body || '{}',
+    data: req.body ? req.body : undefined,
   })
 
   return data
