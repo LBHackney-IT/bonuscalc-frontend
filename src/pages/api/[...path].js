@@ -1,6 +1,6 @@
 import cookie from 'cookie'
 import axios from 'axios'
-import { StatusCodes, getReasonPhrase } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { isAuthorised } from '../../utils/googleAuth'
 import { paramsSerializer } from '../../utils/urls'
 
@@ -10,19 +10,18 @@ const {
   GSSO_TOKEN_NAME,
 } = process.env
 
-const { OK, UNAUTHORIZED, INTERNAL_SERVER_ERROR } = StatusCodes
+const { OK, FORBIDDEN, BAD_GATEWAY } = StatusCodes
 
-const toJSONAPI = (type, attributes) => {
-  const id = attributes['id']
-  return { type, id, attributes }
+const FORBIDDEN_ERROR = {
+  type: 'https://tools.ietf.org/html/rfc7231#section-6.5.3',
+  title: 'Forbidden',
+  status: FORBIDDEN,
 }
 
-const jsonError = (res, code, detail) => {
-  const title = getReasonPhrase(code)
-  const status = code.toString()
-  const json = { errors: [{ status, title, detail }] }
-
-  return res.status(code).json(json)
+const BAD_GATEWAY_ERROR = {
+  type: 'https://tools.ietf.org/html/rfc7231#section-6.6.4',
+  title: 'Bad Gateway',
+  status: BAD_GATEWAY,
 }
 
 const authoriseAPIRequest = (callback) => {
@@ -30,7 +29,7 @@ const authoriseAPIRequest = (callback) => {
     const user = isAuthorised({ req }, false)
 
     if (!user) {
-      return jsonError(res, UNAUTHORIZED, 'Authentication cookie missing')
+      return res.status(FORBIDDEN).json(FORBIDDEN_ERROR)
     }
 
     try {
@@ -38,27 +37,16 @@ const authoriseAPIRequest = (callback) => {
     } catch (error) {
       if (error.response) {
         console.error('Service API response error:', error.response.statusText)
-        return jsonError(res, error.response.status)
-      } else if (error.request) {
-        console.error('Service API connection error:', error.message)
-        return jsonError(
-          res,
-          INTERNAL_SERVER_ERROR,
-          'Service API connection error'
-        )
+        return res.status(error.response.status).json(error.response.data)
       } else {
-        console.error('Service API request setup error:', error.message)
-        return jsonError(
-          res,
-          INTERNAL_SERVER_ERROR,
-          'Service API request setup error'
-        )
+        console.error('Service API request error:', error.message)
+        return res.status(BAD_GATEWAY).json(BAD_GATEWAY_ERROR)
       }
     }
   }
 }
 
-const forwardAPIRequest = async (req, type) => {
+const forwardAPIRequest = async (req) => {
   const cookies = cookie.parse(req.headers.cookie ?? '')
   const token = cookies[GSSO_TOKEN_NAME]
 
@@ -109,15 +97,11 @@ const forwardAPIRequest = async (req, type) => {
     data: req.body || '{}',
   })
 
-  if (Array.isArray(data)) {
-    return { data: data.map((item) => toJSONAPI(type, item)) }
-  } else {
-    return { data: toJSONAPI(type, data) }
-  }
+  return data
 }
 
 export default authoriseAPIRequest(async (req, res) => {
-  const data = await forwardAPIRequest(req, 'operatives')
+  const data = await forwardAPIRequest(req)
 
   res.status(OK).json(data)
 })

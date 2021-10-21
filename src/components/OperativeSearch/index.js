@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import { Operative } from '../../models'
+import { operativeExists } from '../../utils/apiClient'
 import cx from 'classnames'
 
 const OperativeSearch = () => {
@@ -10,14 +10,6 @@ const OperativeSearch = () => {
     formState: { errors },
   } = useForm({ reValidateMode: 'onSubmit' })
   const router = useRouter()
-
-  const operativeExists = async (value) => {
-    try {
-      return (await Operative.find(value)) && true
-    } catch {
-      return false
-    }
-  }
 
   const onSubmit = (data) => {
     router.push(`/operatives/${data.payrollNumber}`)
