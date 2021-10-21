@@ -145,13 +145,14 @@ const NonProductiveSummary = ({ payrollNumber, weekBeginning }) => {
           Download report
         </button>
 
-        <button
-          className="govuk-button govuk-secondary lbh-button lbh-button--secondary"
-          data-module="govuk-button"
-          disabled={week.isClosed}
-        >
-          Edit non-productive
-        </button>
+        {week.isEditable && (
+          <button
+            className="govuk-button govuk-secondary lbh-button lbh-button--secondary"
+            data-module="govuk-button"
+          >
+            Edit non-productive
+          </button>
+        )}
       </div>
     </>
   )

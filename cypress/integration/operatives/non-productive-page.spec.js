@@ -192,7 +192,7 @@ describe('Non-productive page', () => {
         })
       })
 
-      it('Disables the edit non-productive time button if the week is closed', () => {
+      it('Hides the edit non-productive time button if the week is closed', () => {
         cy.intercept(
           {
             method: 'GET',
@@ -202,12 +202,14 @@ describe('Non-productive page', () => {
         ).as('get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
+          cy.contains('button', 'Edit non-productive').should('exist')
+
           cy.get('.lbh-simple-pagination')
             .contains('a', 'Period 3 - 2021 / week 11')
             .click()
           cy.wait('@get_timesheet')
 
-          cy.contains('button', 'Edit non-productive').should('be.disabled')
+          cy.contains('button', 'Edit non-productive').should('not.exist')
         })
       })
     })
