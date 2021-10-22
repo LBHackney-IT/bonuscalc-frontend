@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import NextLink from '../NextLink'
 import PreviousLink from '../PreviousLink'
+import Spinner from '../Spinner'
 import { useOperative, useTimesheet } from '../../utils/apiClient'
 import { numberWithPrecision } from '../../utils/number'
 
@@ -12,7 +13,8 @@ const NonProductiveSummary = ({ payrollNumber, weekBeginning }) => {
   )
 
   if (!operative) return <></>
-  if (isLoading || isError) return <></>
+  if (isError) return <></>
+  if (isLoading) return <Spinner />
 
   const week = timesheet.week
   const baseUrl = `/operatives/${operative.id}/non-productive`
