@@ -1,6 +1,6 @@
 import BonusPeriod from './BonusPeriod'
-import dayjs from '../utils/date'
-import { wrap } from '../utils/number'
+import dayjs from '@/utils/date'
+import { wrap } from '@/utils/number'
 
 export default class Week {
   static current() {

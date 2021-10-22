@@ -1,15 +1,15 @@
-import '../styles/all.scss'
+import '@/styles/all.scss'
 import App from 'next/app'
-import Layout from '../components/Layout'
-import AccessDenied from '../components/AccessDenied'
+import Layout from '@/components/Layout'
+import AccessDenied from '@/components/AccessDenied'
 
 import {
   isAuthorised,
   redirectToAcessDenied,
   AUTH_WHITELIST,
-} from '../utils/googleAuth'
+} from '@/utils/googleAuth'
 
-import UserContext from '../components/UserContext'
+import UserContext from '@/components/UserContext'
 
 if (typeof window !== 'undefined') {
   document.body.className = document.body.className

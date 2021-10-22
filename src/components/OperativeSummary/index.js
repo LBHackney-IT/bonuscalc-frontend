@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useOperative } from '../../utils/apiClient'
+import { useOperative } from '@/utils/apiClient'
 import NotFound from '../NotFound'
 import Spinner from '../Spinner'
 

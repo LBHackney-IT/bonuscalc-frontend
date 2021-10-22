@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import NextLink from '../NextLink'
 import PreviousLink from '../PreviousLink'
 import Spinner from '../Spinner'
-import { useOperative, useTimesheet } from '../../utils/apiClient'
-import { numberWithPrecision } from '../../utils/number'
+import { useOperative, useTimesheet } from '@/utils/apiClient'
+import { numberWithPrecision } from '@/utils/number'
 
 const NonProductiveSummary = ({ payrollNumber, weekBeginning }) => {
   const { operative } = useOperative(payrollNumber)

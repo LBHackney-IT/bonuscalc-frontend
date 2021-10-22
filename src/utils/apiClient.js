@@ -1,7 +1,7 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import { StatusCodes } from 'http-status-codes'
-import { Operative, Timesheet } from '../models'
+import { Operative, Timesheet } from '@/models'
 
 const client = axios.create({ baseURL: '/api/v1' })
 

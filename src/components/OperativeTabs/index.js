@@ -1,6 +1,6 @@
 import cx from 'classnames'
 import Link from 'next/link'
-import { useOperative } from '../../utils/apiClient'
+import { useOperative } from '@/utils/apiClient'
 
 const OperativeTabs = ({ payrollNumber, tabIndex, children }) => {
   const { operative, isLoading, isError } = useOperative(payrollNumber)

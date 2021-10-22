@@ -1,5 +1,5 @@
-import OperativeSearch from '../components/OperativeSearch'
-import { OPERATIVE_MANAGER_ROLE } from '../utils/user'
+import OperativeSearch from '@/components/OperativeSearch'
+import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 
 const HomePage = ({ query }) => {
   return (

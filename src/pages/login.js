@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
-import { redirectToHome, isAuthorised } from '../utils/googleAuth'
-import { getProtocol } from '../utils/urls'
-import UserLogin from '../components/UserLogin'
+import { redirectToHome, isAuthorised } from '@/utils/googleAuth'
+import { getProtocol } from '@/utils/urls'
+import UserLogin from '@/components/UserLogin'
 
 const LoginPage = ({ gssoUrl, returnUrl }) => {
   return (

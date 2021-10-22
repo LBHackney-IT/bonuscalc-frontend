@@ -1,5 +1,5 @@
-import { deleteSessions } from '../utils/googleAuth'
-import { OPERATIVE_MANAGER_ROLE } from '../utils/user'
+import { deleteSessions } from '@/utils/googleAuth'
+import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 
 const LogoutPage = () => null
 

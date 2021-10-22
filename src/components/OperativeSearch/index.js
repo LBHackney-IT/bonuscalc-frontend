@@ -1,6 +1,6 @@
 import { useForm, useFormState } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import { operativeExists } from '../../utils/apiClient'
+import { operativeExists } from '@/utils/apiClient'
 import cx from 'classnames'
 
 const OperativeSearch = () => {
