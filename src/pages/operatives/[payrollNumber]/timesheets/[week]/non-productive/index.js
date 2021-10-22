@@ -1,14 +1,24 @@
 import BackButton from '@/components/BackButton'
 import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
+import NonProductiveSummary from '@/components/NonProductiveSummary'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 
 const OperativePage = ({ query }) => {
   return (
     <>
       <BackButton href="/" />
-      <OperativeSummary payrollNumber={query.id} />
-      <OperativeTabs payrollNumber={query.id} tabIndex={0} />
+      <OperativeSummary payrollNumber={query.payrollNumber} />
+      <OperativeTabs
+        payrollNumber={query.payrollNumber}
+        week={query.week}
+        tabIndex={2}
+      >
+        <NonProductiveSummary
+          payrollNumber={query.payrollNumber}
+          weekBeginning={query.week}
+        />
+      </OperativeTabs>
     </>
   )
 }

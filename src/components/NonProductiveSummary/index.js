@@ -17,17 +17,19 @@ const NonProductiveSummary = ({ payrollNumber, weekBeginning }) => {
   if (isLoading) return <Spinner />
 
   const week = timesheet.week
-  const baseUrl = `/operatives/${operative.id}/non-productive`
+  const baseUrl = `/operatives/${operative.id}/timesheets`
 
   return (
     <>
       <h3 className="lbh-heading-h3">{week.description}</h3>
 
       <nav className="lbh-simple-pagination govuk-!-margin-top-3">
-        <PreviousLink href={week.previousUrl(baseUrl)}>
+        <PreviousLink href={`${baseUrl}/${week.previousDate}/non-productive`}>
           {week.previousDescription}
         </PreviousLink>
-        <NextLink href={week.nextUrl(baseUrl)}>{week.nextDescription}</NextLink>
+        <NextLink href={`${baseUrl}/${week.nextDate}/non-productive`}>
+          {week.nextDescription}
+        </NextLink>
       </nav>
 
       <table className="govuk-table lbh-table" id="non-productive-summary">

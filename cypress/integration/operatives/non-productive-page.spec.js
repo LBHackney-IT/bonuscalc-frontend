@@ -5,7 +5,7 @@ import 'cypress-audit/commands'
 describe('Non-productive page', () => {
   context('When not logged in', () => {
     it('Redirects to the sign in page', () => {
-      cy.visit('/operatives/123456/non-productive')
+      cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive')
 
       cy.get('.lbh-header__service-name').contains('DLO Bonus Scheme')
       cy.get('.lbh-header__title-link').should('have.attr', 'href', '/')
@@ -31,7 +31,7 @@ describe('Non-productive page', () => {
           { statusCode: 404, fixture: 'operatives/not_found.json' }
         ).as('get_operative')
 
-        cy.visit('/operatives/123456/non-productive')
+        cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive')
         cy.wait('@get_operative')
       })
 
@@ -60,7 +60,7 @@ describe('Non-productive page', () => {
           { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
         ).as('get_timesheet')
 
-        cy.visit('/operatives/123456/non-productive?week=2021-10-18')
+        cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive')
         cy.wait(['@get_operative', '@get_timesheet'])
       })
 
@@ -125,7 +125,7 @@ describe('Non-productive page', () => {
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
           cy.url().should(
             'include',
-            '/operatives/123456/non-productive?week=2021-10-11'
+            '/operatives/123456/timesheets/2021-10-11/non-productive'
           )
         })
       })
@@ -148,7 +148,7 @@ describe('Non-productive page', () => {
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
           cy.url().should(
             'include',
-            '/operatives/123456/non-productive?week=2021-10-25'
+            '/operatives/123456/timesheets/2021-10-25/non-productive'
           )
         })
       })

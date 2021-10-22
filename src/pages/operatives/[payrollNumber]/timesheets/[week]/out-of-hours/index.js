@@ -7,8 +7,12 @@ const OperativePage = ({ query }) => {
   return (
     <>
       <BackButton href="/" />
-      <OperativeSummary payrollNumber={query.id} />
-      <OperativeTabs payrollNumber={query.id} tabIndex={3} />
+      <OperativeSummary payrollNumber={query.payrollNumber} />
+      <OperativeTabs
+        payrollNumber={query.payrollNumber}
+        week={query.week}
+        tabIndex={3}
+      />
     </>
   )
 }

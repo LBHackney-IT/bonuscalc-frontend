@@ -5,7 +5,7 @@ import 'cypress-audit/commands'
 describe('Out of hours page', () => {
   context('When not logged in', () => {
     it('Redirects to the sign in page', () => {
-      cy.visit('/operatives/123456/out-of-hours')
+      cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours')
 
       cy.get('.lbh-header__service-name').contains('DLO Bonus Scheme')
       cy.get('.lbh-header__title-link').should('have.attr', 'href', '/')
@@ -31,7 +31,7 @@ describe('Out of hours page', () => {
           { statusCode: 404, fixture: 'operatives/not_found.json' }
         ).as('get_operative')
 
-        cy.visit('/operatives/123456/out-of-hours')
+        cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours')
         cy.wait('@get_operative')
       })
 
@@ -52,7 +52,7 @@ describe('Out of hours page', () => {
           { statusCode: 200, fixture: 'operatives/electrician.json' }
         ).as('get_operative')
 
-        cy.visit('/operatives/123456/out-of-hours')
+        cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours')
         cy.wait('@get_operative')
       })
 

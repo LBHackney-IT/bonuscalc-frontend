@@ -3,7 +3,7 @@ import dayjs from '@/utils/date'
 import { wrap } from '@/utils/number'
 
 export default class Week {
-  static current() {
+  static get current() {
     return dayjs().startOf('week').format('YYYY-MM-DD')
   }
 
@@ -13,14 +13,6 @@ export default class Week {
     this.bonusPeriod = new BonusPeriod(attrs.bonusPeriod)
     this.startAt = dayjs(attrs.startAt)
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
-  }
-
-  previousUrl(baseUrl) {
-    return `${baseUrl}?week=${this.previous.toISODate()}`
-  }
-
-  nextUrl(baseUrl) {
-    return `${baseUrl}?week=${this.next.toISODate()}`
   }
 
   get description() {
@@ -55,8 +47,16 @@ export default class Week {
     return this.startAt.subtract(1, 'week')
   }
 
+  get previousDate() {
+    return this.previous.toISODate()
+  }
+
   get next() {
     return this.startAt.add(1, 'week')
+  }
+
+  get nextDate() {
+    return this.next.toISODate()
   }
 
   get isClosed() {
