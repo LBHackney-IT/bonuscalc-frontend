@@ -1,14 +1,9 @@
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Link from 'next/link'
-import { useOperative } from '@/utils/apiClient'
+import { Operative } from '@/models'
 
-const OperativeTabs = ({ payrollNumber, week, tabIndex, children }) => {
-  const { operative, isLoading, isError } = useOperative(payrollNumber)
-
-  if (isLoading || isError) return <></>
-  if (!operative) return <></>
-
+const OperativeTabs = ({ operative, week, tabIndex, children }) => {
   const tabs = [
     {
       content: 'Summary',
@@ -56,7 +51,7 @@ const OperativeTabs = ({ payrollNumber, week, tabIndex, children }) => {
 }
 
 OperativeTabs.propTypes = {
-  payrollNumber: PropTypes.string.isRequired,
+  operative: PropTypes.instanceOf(Operative).isRequired,
   week: PropTypes.string.isRequired,
   tabIndex: PropTypes.number.isRequired,
 }
