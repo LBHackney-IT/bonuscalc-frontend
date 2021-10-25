@@ -4,7 +4,7 @@ import { Operative } from '@/models'
 const OperativeSummary = ({ operative }) => {
   return (
     <section className="section">
-      <h2 className="lbh-heading-h2">{operative.name}</h2>
+      <h1 className="lbh-heading-h2">{operative.name}</h1>
 
       <dl className="govuk-summary-list lbh-summary-list govuk-!-margin-top-5">
         <div className="govuk-summary-list__row">
