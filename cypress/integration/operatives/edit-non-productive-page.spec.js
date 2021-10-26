@@ -77,6 +77,44 @@ describe('Non-productive page', () => {
 
         cy.audit()
       })
+
+      it('Can update the non-productive time', () => {
+        cy.get('#confirm-button').click()
+
+        cy.location().should((loc) => {
+          expect(loc.pathname).to.eq(
+            '/operatives/123456/timesheets/2021-10-18/non-productive'
+          )
+        })
+
+        cy.get('.lbh-page-announcement').within(() => {
+          cy.contains('Updated non-productive time successfully')
+        })
+
+        // Navigate to another page to check announcement is removed
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-25',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-25.json' }
+        ).as('get_next_week')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 - 2021 / week 13')
+            .click()
+          cy.wait('@get_next_week')
+
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
+          cy.url().should(
+            'include',
+            '/operatives/123456/timesheets/2021-10-25/non-productive'
+          )
+        })
+
+        cy.get('.lbh-page-announcement').should('not.exist')
+      })
     })
   })
 })
