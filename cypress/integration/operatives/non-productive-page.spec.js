@@ -202,14 +202,14 @@ describe('Non-productive page', () => {
         ).as('get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.contains('button', 'Edit non-productive').should('exist')
+          cy.contains('a', 'Edit non-productive').should('exist')
 
           cy.get('.lbh-simple-pagination')
             .contains('a', 'Period 3 - 2021 / week 11')
             .click()
           cy.wait('@get_timesheet')
 
-          cy.contains('button', 'Edit non-productive').should('not.exist')
+          cy.contains('a', 'Edit non-productive').should('not.exist')
         })
       })
     })

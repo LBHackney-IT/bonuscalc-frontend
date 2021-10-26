@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
+import Link from 'next/link'
 import { Week } from '@/models'
 
-const Buttons = ({ week }) => {
+const Buttons = ({ week, baseUrl }) => {
   return (
     <div className="govuk-button-group">
       <button className="govuk-button lbh-button" data-module="govuk-button">
@@ -9,12 +10,16 @@ const Buttons = ({ week }) => {
       </button>
 
       {week.isEditable && (
-        <button
-          className="govuk-button govuk-secondary lbh-button lbh-button--secondary"
-          data-module="govuk-button"
-        >
-          Edit non-productive
-        </button>
+        <Link href={`${baseUrl}/${week.id}/non-productive/edit`}>
+          <a
+            role="button"
+            draggable="false"
+            className="govuk-button govuk-secondary lbh-button lbh-button--secondary"
+            data-module="govuk-button"
+          >
+            Edit non-productive
+          </a>
+        </Link>
       )}
     </div>
   )
@@ -22,6 +27,7 @@ const Buttons = ({ week }) => {
 
 Buttons.propTypes = {
   week: PropTypes.instanceOf(Week).isRequired,
+  baseUrl: PropTypes.string.isRequired,
 }
 
 export default Buttons

@@ -43,6 +43,18 @@ export default class Week {
     return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
   }
 
+  get dateRange() {
+    if (this.next.month() > this.month) {
+      return `${this.startAt.format('D MMMM')} - ${this.endAt.format('D MMMM')}`
+    } else {
+      return `${this.startAt.format('D')} - ${this.endAt.format('D MMMM')}`
+    }
+  }
+
+  get endAt() {
+    return this.next.subtract(1, 'millisecond')
+  }
+
   get previous() {
     return this.startAt.subtract(1, 'week')
   }
