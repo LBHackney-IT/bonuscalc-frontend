@@ -13,23 +13,21 @@ const NonProductiveSummary = ({ operative, week }) => {
   const { timesheet, isLoading, isError } = useTimesheet(operative.id, week)
   const baseUrl = `/operatives/${operative.id}/timesheets`
 
+  if (isLoading) return <Spinner />
+  if (isError || !timesheet)
+    return (
+      <ErrorMessage
+        description={`Couldn\u2019t find a timesheet for the week beginning ${week}.`}
+      />
+    )
+
   return (
     <>
-      {isLoading && <Spinner />}
-      {isError && (
-        <ErrorMessage
-          description={`Couldn\u2019t find a timesheet for the week beginning ${week}.`}
-        />
-      )}
-      {timesheet && (
-        <>
-          <Header week={timesheet.week} />
-          <Pagination week={timesheet.week} baseUrl={baseUrl} />
-          <PayElements timesheet={timesheet} />
-          <Adjustments timesheet={timesheet} />
-          <Buttons week={timesheet.week} />
-        </>
-      )}
+      <Header week={timesheet.week} />
+      <Pagination week={timesheet.week} baseUrl={baseUrl} />
+      <PayElements timesheet={timesheet} />
+      <Adjustments timesheet={timesheet} />
+      <Buttons week={timesheet.week} baseUrl={baseUrl} />
     </>
   )
 }
