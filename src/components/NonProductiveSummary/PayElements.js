@@ -28,7 +28,14 @@ const PayElements = ({ timesheet }) => {
         {timesheet.hasNonProductivePayElements ? (
           timesheet.nonProductivePayElements.map((payElement, index) => (
             <tr className="govuk-table__row" key={index}>
-              <td className="govuk-table__cell">{payElement.description}</td>
+              <td className="govuk-table__cell">
+                <p className="lbh-body-m">{payElement.description}</p>
+                {payElement.comment && (
+                  <p className="lbh-body-s govuk-!-margin-top-0">
+                    {payElement.comment}
+                  </p>
+                )}
+              </td>
               <td className="govuk-table__cell govuk-table__cell--numeric govuk-!-width-two-tenths">
                 {numberWithPrecision(payElement.duration, 2)}
               </td>

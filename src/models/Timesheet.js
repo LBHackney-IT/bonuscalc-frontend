@@ -8,6 +8,19 @@ export default class Timesheet {
     this.payElements = attrs.payElements.map((pe) => new PayElement(pe))
   }
 
+  addPayElement() {
+    this.payElements.push(new PayElement())
+  }
+
+  removePayElement(payElement) {
+    const index = this.payElements.findIndex((pe) => pe.id == payElement.id)
+    if (index >= 0) this.payElements.splice(index, 1)
+  }
+
+  get weekId() {
+    return this.week.id
+  }
+
   get productivePayElements() {
     return this.payElements.filter((pe) => pe.isProductive)
   }

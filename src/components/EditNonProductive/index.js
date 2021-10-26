@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import ErrorMessage from '../ErrorMessage'
 import Spinner from '../Spinner'
 import Header from './Header'
-import Form from './Form'
+import Body from './Body'
 import { Operative } from '@/models'
 import { useTimesheet } from '@/utils/apiClient'
 
@@ -20,7 +20,7 @@ const EditNonProductive = ({ operative, week }) => {
   return (
     <>
       <Header operative={operative} week={timesheet.week} />
-      <Form operative={operative} week={timesheet.week} />
+      <Body operative={operative} timesheet={timesheet} />
     </>
   )
 }

@@ -60,8 +60,16 @@ describe('Non-productive page', () => {
           { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
         ).as('get_timesheet')
 
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/pay/types',
+          },
+          { statusCode: 200, fixture: 'pay/types.json' }
+        ).as('get_pay_types')
+
         cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive/edit')
-        cy.wait(['@get_operative', '@get_timesheet'])
+        cy.wait(['@get_operative', '@get_timesheet', '@get_pay_types'])
       })
 
       it('Shows the header', () => {
@@ -79,7 +87,17 @@ describe('Non-productive page', () => {
       })
 
       it('Can update the non-productive time', () => {
+        cy.intercept(
+          {
+            method: 'POST',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 200, body: {} }
+        ).as('update_timesheet')
+
         cy.get('#confirm-button').click()
+
+        cy.wait('@update_timesheet')
 
         cy.location().should((loc) => {
           expect(loc.pathname).to.eq(

@@ -1,27 +1,76 @@
 import PropTypes from 'prop-types'
-import { useContext, useEffect, useState } from 'react'
+import ConfirmButton from './ConfirmButton'
+import AddPayElementButton from './AddPayElementButton'
+import PayElements from './PayElements'
+import AnnouncementContext from '@/components/AnnouncementContext'
+import { Operative, PayElementType, Timesheet } from '@/models'
+import { useEffect, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useForm, useFormState } from 'react-hook-form'
-import AnnouncementContext from '../AnnouncementContext'
-import { Operative, Week } from '@/models'
+import { useFormContext, useFieldArray } from 'react-hook-form'
+import { numberWithPrecision } from '@/utils/number'
+import { saveTimesheet } from '@/utils/apiClient'
 
-const Form = ({ operative, week }) => {
-  const { handleSubmit, control } = useForm({
-    reValidateMode: 'onSubmit',
-  })
-
-  const { isSubmitting } = useFormState({ control })
+const Form = ({ operative, payElementTypes, timesheet }) => {
   const router = useRouter()
 
   const { setAnnouncement } = useContext(AnnouncementContext)
   const [confirmed, setConfirmed] = useState(false)
 
-  const onSubmit = () => {
-    setConfirmed(true)
-    router.push(
-      `/operatives/${operative.id}/timesheets/${week.id}/non-productive`
-    )
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext()
+  register('id', { value: timesheet.id })
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'payElements',
+  })
+
+  const onSubmit = async (data) => {
+    console.log(data)
+
+    if (await saveTimesheet(operative.id, timesheet.weekId, data)) {
+      setConfirmed(true)
+
+      router.push(
+        `/operatives/${operative.id}/timesheets/${timesheet.weekId}/non-productive`
+      )
+    } else {
+      setAnnouncement({
+        title: 'Unable to save timesheet - please try again in a moment',
+        isWarning: true,
+      })
+    }
   }
+
+  const convertPayElement = (pe) => {
+    return {
+      payElementTypeId: pe.payElementTypeId,
+      workOrder: pe.workOrder,
+      address: pe.address,
+      comment: pe.comment,
+      monday: numberWithPrecision(pe.monday, 2),
+      tuesday: numberWithPrecision(pe.tuesday, 2),
+      wednesday: numberWithPrecision(pe.wednesday, 2),
+      thursday: numberWithPrecision(pe.thursday, 2),
+      friday: numberWithPrecision(pe.friday, 2),
+      saturday: numberWithPrecision(pe.saturday, 2),
+      sunday: numberWithPrecision(pe.sunday, 2),
+      duration: numberWithPrecision(pe.duration, 2),
+      value: numberWithPrecision(pe.value, 2),
+    }
+  }
+
+  const payElements = timesheet.payElements
+
+  useEffect(() => {
+    append(
+      payElements.filter((pe) => pe.isNonProductive).map(convertPayElement)
+    )
+  }, [append, payElements])
 
   useEffect(() => {
     const pushAnnouncement = () => {
@@ -39,40 +88,25 @@ const Form = ({ operative, week }) => {
 
   return (
     <form id="update-timesheet" onSubmit={handleSubmit(onSubmit)}>
+      {errors.payElements && (
+        <p className="lbh-body-m">
+          <span className="govuk-error-message lbh-error-message">
+            <span className="govuk-visually-hidden">Error:</span> There are
+            errors in the form - please ensure you have entered the details
+            correctly.
+          </span>
+        </p>
+      )}
+
+      <PayElements
+        fields={fields}
+        remove={remove}
+        payElementTypes={payElementTypes}
+      />
+
       <div className="govuk-button-group govuk-!-margin-top-9">
-        <button
-          id="confirm-button"
-          type="submit"
-          disabled={isSubmitting}
-          className="govuk-button lbh-button"
-          data-module="govuk-button"
-        >
-          {isSubmitting ? <>Confirming ...</> : <>Confirm</>}
-        </button>
-
-        <button
-          id="add-element-button"
-          type="button"
-          className="govuk-button lbh-button lbh-button--add"
-        >
-          <svg width="12" height="12" viewBox="0 0 12 12">
-            <path d="M6.94 0L5 0V12H6.94V0Z" />
-            <path d="M12 5H0V7H12V5Z" />
-          </svg>
-          Add pay element
-        </button>
-
-        <button
-          id="add-adjustment-button"
-          type="button"
-          className="govuk-button lbh-button lbh-button--add"
-        >
-          <svg width="12" height="12" viewBox="0 0 12 12">
-            <path d="M6.94 0L5 0V12H6.94V0Z" />
-            <path d="M12 5H0V7H12V5Z" />
-          </svg>
-          Add adjustment
-        </button>
+        <ConfirmButton />
+        <AddPayElementButton append={append} />
       </div>
     </form>
   )
@@ -80,7 +114,10 @@ const Form = ({ operative, week }) => {
 
 Form.propTypes = {
   operative: PropTypes.instanceOf(Operative).isRequired,
-  week: PropTypes.instanceOf(Week).isRequired,
+  payElementTypes: PropTypes.arrayOf(
+    PropTypes.instanceOf(PayElementType).isRequired
+  ).isRequired,
+  timesheet: PropTypes.instanceOf(Timesheet).isRequired,
 }
 
 export default Form
