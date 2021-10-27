@@ -1,8 +1,8 @@
 import cookie from 'cookie'
 import axios from 'axios'
 import { StatusCodes } from 'http-status-codes'
-import { isAuthorised } from '../../utils/googleAuth'
-import { paramsSerializer } from '../../utils/urls'
+import { isAuthorised } from '@/utils/googleAuth'
+import { paramsSerializer } from '@/utils/urls'
 
 const {
   BONUSCALC_SERVICE_API_URL,

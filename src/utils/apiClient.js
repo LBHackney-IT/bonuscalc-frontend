@@ -1,7 +1,7 @@
 import axios from 'axios'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { StatusCodes } from 'http-status-codes'
-import { Operative, Timesheet } from '../models'
+import { Operative, Timesheet, PayElementType } from '@/models'
 
 const client = axios.create({ baseURL: '/api/v1' })
 
@@ -43,6 +43,22 @@ export const useOperative = (payrollNumber) => {
   }
 }
 
+export const payElementTypesUrl = () => {
+  return '/pay/types'
+}
+
+export const usePayElementTypes = () => {
+  const { data, error } = useSWR(payElementTypesUrl(), fetcher)
+
+  return {
+    payElementTypes: data
+      ? data.map((payElementType) => new PayElementType(payElementType))
+      : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const timesheetUrl = (payrollNumber, week) => {
   return `/operatives/${encodeURIComponent(
     payrollNumber
@@ -56,5 +72,20 @@ export const useTimesheet = (payrollNumber, week) => {
     timesheet: data ? new Timesheet(data) : null,
     isLoading: !error && !data,
     isError: error,
+  }
+}
+
+export const saveTimesheet = async (payrollNumber, week, data) => {
+  const url = timesheetUrl(payrollNumber, week)
+
+  try {
+    const res = await client.post(url, data)
+
+    // Invalidate the cached timesheet
+    mutate(url)
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
   }
 }

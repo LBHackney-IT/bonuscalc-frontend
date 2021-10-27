@@ -3474,6 +3474,11 @@ govuk-frontend@^3.11.0:
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-3.13.1.tgz#81a68ca940cf6348911294bb5ec28e7ecdb47cdc"
   integrity sha512-OlbAVVpJfZ8tEhkScVoNFA+27RUfMDslN4uxtJyASfXwg4QZYHTX8RqmKBbgVJWaybpa5RsYDuRKQNJe3qN8gw==
 
+govuk-frontend@^3.14.0:
+  version "3.14.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-3.14.0.tgz#d3a9c54437c08f5188f87b1f4480ba60e95c8eb6"
+  integrity sha512-y7FTuihCSA8Hty+e9h0uPhCoNanCAN+CLioNFlPmlbeHXpbi09VMyxTcH+XfnMPY4Cp++7096v0rLwwdapTXnA==
+
 graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   version "4.2.8"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.8.tgz#e412b8d33f5e006593cbd3cee6df9f2cebbe802a"

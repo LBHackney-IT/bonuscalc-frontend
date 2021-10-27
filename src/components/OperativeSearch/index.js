@@ -1,14 +1,13 @@
-import { useForm } from 'react-hook-form'
+import { useForm, useFormState } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import { operativeExists } from '../../utils/apiClient'
+import { operativeExists } from '@/utils/apiClient'
 import cx from 'classnames'
 
 const OperativeSearch = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ reValidateMode: 'onSubmit' })
+  const { register, handleSubmit, control } = useForm({
+    reValidateMode: 'onSubmit',
+  })
+  const { errors, isSubmitting } = useFormState({ control })
   const router = useRouter()
 
   const onSubmit = (data) => {
@@ -63,10 +62,11 @@ const OperativeSearch = () => {
         <button
           id="search-button"
           type="submit"
+          disabled={isSubmitting}
           className="govuk-button lbh-button"
           data-module="govuk-button"
         >
-          Search
+          {isSubmitting ? <>Searching ...</> : <>Search</>}
         </button>
       </form>
     </>

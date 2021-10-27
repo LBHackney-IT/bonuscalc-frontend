@@ -8,3 +8,8 @@ export const numberWithPrecision = (number, precision) => {
     maximumFractionDigits: precision,
   })
 }
+
+export const sum = (total, value) => {
+  const number = parseFloat(value)
+  return isNaN(number) ? total : total + number
+}

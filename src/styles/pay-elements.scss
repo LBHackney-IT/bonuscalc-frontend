@@ -1,0 +1,30 @@
+.bc-pay-element-head {
+  tr:nth-child(1) {
+    .govuk-table__header:nth-child(n + 2):nth-child(-n + 8) {
+      width: 9%;
+    }
+  }
+}
+
+.bc-pay-element-row {
+  tr:nth-child(1) {
+    .govuk-table__cell {
+      border-bottom: 0;
+      padding-bottom: 0;
+      padding-top: 15px;
+    }
+
+    .lbh-input,
+    .lbh-select {
+      margin-top: -10px;
+    }
+  }
+}
+
+.bc-pay-element-totals {
+  tr {
+    .govuk-table__cell:nth-child(n + 3):nth-child(-n + 9) {
+      padding-right: 27px;
+    }
+  }
+}

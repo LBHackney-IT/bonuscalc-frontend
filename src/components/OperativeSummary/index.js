@@ -1,22 +1,10 @@
 import PropTypes from 'prop-types'
-import { useOperative } from '../../utils/apiClient'
-import NotFound from '../NotFound'
-import Spinner from '../Spinner'
+import { Operative } from '@/models'
 
-const OperativeSummary = ({ payrollNumber }) => {
-  const { operative, isLoading, isError } = useOperative(payrollNumber)
-
-  if (isLoading) return <Spinner />
-  if (isError)
-    return (
-      <NotFound
-        message={`Couldn\u2019t find an operative with the payroll number ${payrollNumber}.`}
-      />
-    )
-
+const OperativeSummary = ({ operative }) => {
   return (
     <section className="section">
-      <h2 className="lbh-heading-h2">{operative.name}</h2>
+      <h1 className="lbh-heading-h2">{operative.name}</h1>
 
       <dl className="govuk-summary-list lbh-summary-list govuk-!-margin-top-5">
         <div className="govuk-summary-list__row">
@@ -47,7 +35,7 @@ const OperativeSummary = ({ payrollNumber }) => {
 }
 
 OperativeSummary.propTypes = {
-  payrollNumber: PropTypes.string.isRequired,
+  operative: PropTypes.instanceOf(Operative).isRequired,
 }
 
 export default OperativeSummary
