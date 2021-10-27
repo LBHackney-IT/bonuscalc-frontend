@@ -1,5 +1,5 @@
-import { redirectToHome, isAuthorised } from '../utils/googleAuth'
-import AccessDenied from '../components/AccessDenied'
+import { redirectToHome, isAuthorised } from '@/utils/googleAuth'
+import AccessDenied from '@/components/AccessDenied'
 
 const AccessDeniedPage = () => {
   return (

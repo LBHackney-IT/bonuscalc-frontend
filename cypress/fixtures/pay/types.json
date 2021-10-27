@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "description": "Dayworks",
+    "payAtBand": true,
+    "paid": true,
+    "productive": false,
+    "adjustment": false
+  },
+  {
+    "id": 2,
+    "description": "Annual Leave",
+    "payAtBand": true,
+    "paid": true,
+    "productive": false,
+    "adjustment": false
+  },
+  {
+    "id": 3,
+    "description": "Public Holiday",
+    "payAtBand": true,
+    "paid": true,
+    "productive": false,
+    "adjustment": false
+  },
+  {
+    "id": 4,
+    "description": "Sick",
+    "payAtBand": true,
+    "paid": true,
+    "productive": false,
+    "adjustment": false
+  }
+]

@@ -1,9 +1,9 @@
 import BonusPeriod from './BonusPeriod'
-import dayjs from '../utils/date'
-import { wrap } from '../utils/number'
+import dayjs from '@/utils/date'
+import { wrap } from '@/utils/number'
 
 export default class Week {
-  static current() {
+  static get current() {
     return dayjs().startOf('week').format('YYYY-MM-DD')
   }
 
@@ -13,14 +13,6 @@ export default class Week {
     this.bonusPeriod = new BonusPeriod(attrs.bonusPeriod)
     this.startAt = dayjs(attrs.startAt)
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
-  }
-
-  previousUrl(baseUrl) {
-    return `${baseUrl}?week=${this.previous.toISODate()}`
-  }
-
-  nextUrl(baseUrl) {
-    return `${baseUrl}?week=${this.next.toISODate()}`
   }
 
   get description() {
@@ -51,12 +43,32 @@ export default class Week {
     return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
   }
 
+  get dateRange() {
+    if (this.next.month() > this.month) {
+      return `${this.startAt.format('D MMMM')} - ${this.endAt.format('D MMMM')}`
+    } else {
+      return `${this.startAt.format('D')} - ${this.endAt.format('D MMMM')}`
+    }
+  }
+
+  get endAt() {
+    return this.next.subtract(1, 'millisecond')
+  }
+
   get previous() {
     return this.startAt.subtract(1, 'week')
   }
 
+  get previousDate() {
+    return this.previous.toISODate()
+  }
+
   get next() {
     return this.startAt.add(1, 'week')
+  }
+
+  get nextDate() {
+    return this.next.toISODate()
   }
 
   get isClosed() {

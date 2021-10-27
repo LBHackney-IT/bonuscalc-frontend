@@ -1,12 +1,9 @@
+import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Link from 'next/link'
-import { useOperative } from '../../utils/apiClient'
+import { Operative } from '@/models'
 
-const OperativeTabs = ({ payrollNumber, tabIndex, children }) => {
-  const { operative, isLoading, isError } = useOperative(payrollNumber)
-
-  if (isLoading || isError) return <></>
-
+const OperativeTabs = ({ operative, week, tabIndex, children }) => {
   const tabs = [
     {
       content: 'Summary',
@@ -14,15 +11,15 @@ const OperativeTabs = ({ payrollNumber, tabIndex, children }) => {
     },
     {
       content: 'Productive (P)',
-      href: `/operatives/${operative.id}/productive`,
+      href: `/operatives/${operative.id}/timesheets/${week}/productive`,
     },
     {
       content: 'Non-productive (NP)',
-      href: `/operatives/${operative.id}/non-productive`,
+      href: `/operatives/${operative.id}/timesheets/${week}/non-productive`,
     },
     {
       content: 'Out of hours',
-      href: `/operatives/${operative.id}/out-of-hours`,
+      href: `/operatives/${operative.id}/timesheets/${week}/out-of-hours`,
     },
   ]
 
@@ -51,6 +48,12 @@ const OperativeTabs = ({ payrollNumber, tabIndex, children }) => {
       <section className="govuk-tabs__panel">{children}</section>
     </div>
   )
+}
+
+OperativeTabs.propTypes = {
+  operative: PropTypes.instanceOf(Operative).isRequired,
+  week: PropTypes.string.isRequired,
+  tabIndex: PropTypes.number.isRequired,
 }
 
 export default OperativeTabs

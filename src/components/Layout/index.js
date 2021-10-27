@@ -2,8 +2,13 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import Header from '../Header'
 import PhaseBanner from '../PhaseBanner'
+import Announcement from '../Announcement'
+import AnnouncementContext from '../AnnouncementContext'
+import { useState } from 'react'
 
 const Layout = ({ serviceName, feedbackLink, children }) => {
+  const [announcement, setAnnouncement] = useState({})
+
   return (
     <>
       <Head>
@@ -20,9 +25,14 @@ const Layout = ({ serviceName, feedbackLink, children }) => {
 
       <Header serviceName={serviceName} />
       <PhaseBanner feedbackLink={feedbackLink} />
-      <main className="lbh-main-wrapper" id="main-content" role="main">
-        <div className="lbh-container">{children}</div>
-      </main>
+
+      <AnnouncementContext.Provider value={{ setAnnouncement }}>
+        <Announcement announcement={announcement} />
+
+        <main className="lbh-main-wrapper" id="main-content" role="main">
+          <div className="lbh-container">{children}</div>
+        </main>
+      </AnnouncementContext.Provider>
     </>
   )
 }
