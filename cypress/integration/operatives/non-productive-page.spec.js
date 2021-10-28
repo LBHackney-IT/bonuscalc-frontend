@@ -172,7 +172,7 @@ describe('Non-productive page', () => {
 
         cy.get('#adjustment-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(1)').contains('10000001')
+            cy.get(':nth-child(1)').contains('1000000')
             cy.get(':nth-child(2)').contains('Note about adjustment')
             cy.get(':nth-child(4)').contains('24.00')
           })
