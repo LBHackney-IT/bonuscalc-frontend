@@ -186,8 +186,8 @@ describe('Non-productive page', () => {
 
         cy.get('#adjustment-summary tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(2)').contains('Total')
-            cy.get(':nth-child(3)').contains('47.25')
+            cy.get(':nth-child(1)').contains('Total')
+            cy.get(':nth-child(2)').contains('47.25')
           })
         })
       })
