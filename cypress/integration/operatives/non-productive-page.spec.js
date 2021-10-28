@@ -123,10 +123,11 @@ describe('Non-productive page', () => {
           cy.wait('@get_timesheet')
 
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
-          cy.url().should(
-            'include',
-            '/operatives/123456/timesheets/2021-10-11/non-productive'
-          )
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq(
+              '/operatives/123456/timesheets/2021-10-11/non-productive'
+            )
+          })
         })
       })
 
@@ -146,10 +147,11 @@ describe('Non-productive page', () => {
           cy.wait('@get_timesheet')
 
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
-          cy.url().should(
-            'include',
-            '/operatives/123456/timesheets/2021-10-25/non-productive'
-          )
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq(
+              '/operatives/123456/timesheets/2021-10-25/non-productive'
+            )
+          })
         })
       })
 
