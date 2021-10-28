@@ -156,14 +156,6 @@ describe('Non-productive page', () => {
       })
 
       it('Shows the summary of the pay elements for that week', () => {
-        cy.intercept(
-          {
-            method: 'GET',
-            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
-          },
-          { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
-        ).as('get_timesheet')
-
         cy.get('#non-productive-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Dayworks')
