@@ -18,13 +18,13 @@ export const TBody = ({ className, children, ...props }) => (
   </tbody>
 )
 
-export const TRow = ({ className, children, ...props }) => (
+export const TR = ({ className, children, ...props }) => (
   <tr className={cx('govuk-table__row', className)} {...props}>
     {children}
   </tr>
 )
 
-export const THeader = ({
+export const TH = ({
   className,
   children,
   numeric,
@@ -44,7 +44,7 @@ export const THeader = ({
   </th>
 )
 
-export const TCell = ({
+export const TD = ({
   className,
   children,
   numeric,
