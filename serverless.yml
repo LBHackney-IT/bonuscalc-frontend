@@ -100,14 +100,18 @@ custom:
   aliases:
     development: dlo-bonus-scheme-development.hackney.gov.uk
     staging: dlo-bonus-scheme-staging.hackney.gov.uk
+    production: dlo-bonus-scheme.hackney.gov.uk
   certificate-arn:
     development: arn:aws:acm:us-east-1:364864573329:certificate/d903d9e2-c3da-482b-8768-916ec09e461f
     staging: arn:aws:acm:us-east-1:087586271961:certificate/baffa134-abb5-4b71-b84f-013e9dd2d044
+    production: arn:aws:acm:us-east-1:282997303675:certificate/a43b1303-83ff-496e-b7a2-a75fa3ebfe87
   securityGroups:
     development:
       - sg-0a8a71b913edbb0ed
     staging:
       - sg-0292b24504fdce1eb
+    production:
+      - sg-064b1c3ec1577380b
   subnets:
     development:
       - subnet-0140d06fb84fdb547
@@ -115,3 +119,6 @@ custom:
     staging:
       - subnet-0ea0020a44b98a2ca
       - subnet-0743d86e9b362fa38
+    production:
+      - subnet-0beb266003a56ca82
+      - subnet-06a697d86a9b6ed01

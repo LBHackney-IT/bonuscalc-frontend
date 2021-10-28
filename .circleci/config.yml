@@ -84,6 +84,16 @@ jobs:
             export NEXT_PUBLIC_ENV_NAME=staging
             yarn build && yarn --production=true && npm i --prefix=$HOME/.local -g serverless && sls deploy -s staging
 
+  build-deploy-production:
+    executor: aws-cli/default
+    steps:
+      - *attach_workspace
+      - run:
+          name: deploy
+          command: |
+            export NEXT_PUBLIC_ENV_NAME=production
+            yarn build && yarn --production=true && npm i --prefix=$HOME/.local -g serverless && sls deploy -s production
+
   assume-role-development:
     executor: docker-python
     steps:
@@ -103,6 +113,19 @@ jobs:
       - checkout
       - aws_assume_role/assume_role:
           account: $AWS_ACCOUNT_STAGING
+          profile_name: default
+          role: 'LBH_Circle_CI_Deployment_Role'
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .aws
+
+  assume-role-production:
+    executor: docker-python
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: $AWS_ACCOUNT_PRODUCTION
           profile_name: default
           role: 'LBH_Circle_CI_Deployment_Role'
       - persist_to_workspace:
@@ -146,6 +169,26 @@ workflows:
       - build-deploy-staging:
           requires:
             - assume-role-staging
+          filters:
+            branches:
+              only: main
+      - permit-deploy-production:
+          type: approval
+          requires:
+            - build-deploy-staging
+          filters:
+            branches:
+              only: main
+      - assume-role-production:
+          context: api-assume-role-housing-production-context
+          requires:
+            - permit-deploy-production
+          filters:
+            branches:
+              only: main
+      - build-deploy-production:
+          requires:
+            - assume-role-production
           filters:
             branches:
               only: main
