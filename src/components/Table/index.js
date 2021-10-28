@@ -18,6 +18,12 @@ export const TBody = ({ className, children, ...props }) => (
   </tbody>
 )
 
+export const TFoot = ({ className, children, ...props }) => (
+  <tfoot className={cx('govuk-table__foot', className)} {...props}>
+    {children}
+  </tfoot>
+)
+
 export const TR = ({ className, children, ...props }) => (
   <tr className={cx('govuk-table__row', className)} {...props}>
     {children}

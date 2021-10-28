@@ -47,3 +47,10 @@
 .govuk-\!-width-one-tenth {
   width: 10% !important;
 }
+
+.govuk-table__foot {
+  .govuk-table__cell:not(.govuk-table__cell--numeric),
+  .govuk-table__header {
+    border-bottom: 0;
+  }
+}
