@@ -1,74 +1,49 @@
 import PropTypes from 'prop-types'
+import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
 import { Timesheet } from '@/models'
 import { numberWithPrecision } from '@/utils/number'
 
 const Adjustments = ({ timesheet }) => {
   return (
-    <table className="govuk-table lbh-table" id="adjustment-summary">
-      <thead className="govuk-table__head">
-        <tr className="govuk-table__row">
-          <th
-            scope="col"
-            className="govuk-table__header govuk-!-width-two-tenths"
-          >
+    <Table id="adjustment-summary">
+      <THead>
+        <TR>
+          <TH scope="col" colSpan="4">
             Adjustments
-          </th>
-          <th
-            scope="col"
-            className="govuk-table__header govuk-table__header--numeric"
-          >
-            &nbsp;
-          </th>
-          <th
-            scope="col"
-            className="govuk-table__header govuk-table__header--numeric govuk-!-width-two-tenths"
-          >
-            &nbsp;
-          </th>
-          <th
-            scope="col"
-            className="govuk-table__header govuk-table__header--numeric govuk-!-width-two-tenths"
-          >
-            &nbsp;
-          </th>
-        </tr>
-      </thead>
-      <tbody className="govuk-table__body">
+          </TH>
+        </TR>
+      </THead>
+      <TBody>
         {timesheet.hasAdjustmentPayElements ? (
           timesheet.adjustmentPayElements.map((payElement, index) => (
-            <tr className="govuk-table__row" key={index}>
-              <td className="govuk-table__cell govuk-!-width-two-tenths">
-                {payElement.workOrder}
-              </td>
-              <td className="govuk-table__cell">{payElement.comment}</td>
-              <td className="govuk-table__cell govuk-table__cell--numeric govuk-!-width-two-tenths">
+            <TR key={index}>
+              <TD width="two-tenths">{payElement.workOrder}</TD>
+              <TD>{payElement.comment}</TD>
+              <TD width="two-tenths" numeric={true}>
                 &nbsp;
-              </td>
-              <td className="govuk-table__cell govuk-table__cell--numeric govuk-!-width-two-tenths">
+              </TD>
+              <TD width="two-tenths" numeric={true}>
                 {numberWithPrecision(payElement.value, 2)}
-              </td>
-            </tr>
+              </TD>
+            </TR>
           ))
         ) : (
-          <tr className="govuk-table__row">
-            <td className="govuk-table__cell" colSpan="4">
-              There are no adjustments for this week.
-            </td>
-          </tr>
+          <TR>
+            <TD colSpan="4">There are no adjustments for this week.</TD>
+          </TR>
         )}
-      </tbody>
-      <tfoot className="govuk-table__foot">
-        <tr className="govuk-table__row">
-          <td colSpan="2">&nbsp;</td>
-          <td className="govuk-table__header govuk-table__header--numeric govuk-!-width-two-tenths">
+      </TBody>
+      <TFoot>
+        <TR>
+          <TH scope="row" align="right" colSpan="3">
             Total
-          </td>
-          <td className="govuk-table__cell govuk-table__cell--numeric govuk-!-width-two-tenths">
+          </TH>
+          <TD width="two-tenths" numeric={true}>
             {numberWithPrecision(timesheet.nonProductiveAndAdjustmentTotal, 2)}
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+          </TD>
+        </TR>
+      </TFoot>
+    </Table>
   )
 }
 

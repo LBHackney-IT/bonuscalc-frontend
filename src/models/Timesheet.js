@@ -56,4 +56,8 @@ export default class Timesheet {
   get nonProductiveAndAdjustmentTotal() {
     return this.adjustmentTotal + this.nonProductiveTotal
   }
+
+  get productiveTotal() {
+    return this.productivePayElements.reduce((sum, pe) => sum + pe.value, 0)
+  }
 }
