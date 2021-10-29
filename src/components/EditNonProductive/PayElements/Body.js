@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import PayElementsRow from './Row'
 import PayElementsTotals from './Totals'
-import { TBody, TRow, TCell } from '@/components/Table'
+import { TBody, TR, TD } from '@/components/Table'
 import { PayElementType } from '@/models'
 
 const PayElementsBody = ({ fields, remove, payElementTypes }) => {
@@ -22,11 +22,11 @@ const PayElementsBody = ({ fields, remove, payElementTypes }) => {
         </>
       ) : (
         <TBody>
-          <TRow>
-            <TCell colSpan="11">
+          <TR>
+            <TD colSpan="11">
               There are no non-productive items for this week.
-            </TCell>
-          </TRow>
+            </TD>
+          </TR>
         </TBody>
       )}
     </>

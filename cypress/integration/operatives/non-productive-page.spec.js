@@ -123,10 +123,11 @@ describe('Non-productive page', () => {
           cy.wait('@get_timesheet')
 
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
-          cy.url().should(
-            'include',
-            '/operatives/123456/timesheets/2021-10-11/non-productive'
-          )
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq(
+              '/operatives/123456/timesheets/2021-10-11/non-productive'
+            )
+          })
         })
       })
 
@@ -146,22 +147,15 @@ describe('Non-productive page', () => {
           cy.wait('@get_timesheet')
 
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
-          cy.url().should(
-            'include',
-            '/operatives/123456/timesheets/2021-10-25/non-productive'
-          )
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq(
+              '/operatives/123456/timesheets/2021-10-25/non-productive'
+            )
+          })
         })
       })
 
       it('Shows the summary of the pay elements for that week', () => {
-        cy.intercept(
-          {
-            method: 'GET',
-            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
-          },
-          { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
-        ).as('get_timesheet')
-
         cy.get('#non-productive-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Dayworks')
@@ -178,7 +172,7 @@ describe('Non-productive page', () => {
 
         cy.get('#adjustment-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(1)').contains('10000001')
+            cy.get(':nth-child(1)').contains('1000000')
             cy.get(':nth-child(2)').contains('Note about adjustment')
             cy.get(':nth-child(4)').contains('24.00')
           })
@@ -186,8 +180,8 @@ describe('Non-productive page', () => {
 
         cy.get('#adjustment-summary tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(2)').contains('Total')
-            cy.get(':nth-child(3)').contains('47.25')
+            cy.get(':nth-child(1)').contains('Total')
+            cy.get(':nth-child(2)').contains('47.25')
           })
         })
       })

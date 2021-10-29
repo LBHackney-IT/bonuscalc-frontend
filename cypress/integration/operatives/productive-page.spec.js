@@ -52,8 +52,16 @@ describe('Productive page', () => {
           { statusCode: 200, fixture: 'operatives/electrician.json' }
         ).as('get_operative')
 
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
+        ).as('get_timesheet')
+
         cy.visit('/operatives/123456/timesheets/2021-10-18/productive')
-        cy.wait('@get_operative')
+        cy.wait(['@get_operative', '@get_timesheet'])
       })
 
       it('Shows the operative summary', () => {
@@ -89,6 +97,101 @@ describe('Productive page', () => {
 
       it('Shows the productive tab', () => {
         cy.get('.govuk-tabs__list-item--selected').contains('Productive (P)')
+      })
+
+      it('Shows the week heading', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 12')
+        })
+      })
+
+      it('Allows navigating to the previous week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-11',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-11.json' }
+        ).as('get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 - 2021 / week 11')
+            .click()
+          cy.wait('@get_timesheet')
+
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq(
+              '/operatives/123456/timesheets/2021-10-11/productive'
+            )
+          })
+        })
+      })
+
+      it('Allows navigating to the next week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-25',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-25.json' }
+        ).as('get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 - 2021 / week 13')
+            .click()
+          cy.wait('@get_timesheet')
+
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq(
+              '/operatives/123456/timesheets/2021-10-25/productive'
+            )
+          })
+        })
+      })
+
+      it('Shows the summary of the work orders for that week', () => {
+        cy.get('#productive-summary tbody').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)')
+              .contains('a', '1000000')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  'https://repairs-hub.hackney.gov.uk/work-orders/1000000'
+                )
+                expect(link).to.have.attr('target', '_blank')
+              })
+            cy.get(':nth-child(2)').contains('1 Knowhere Road')
+            cy.get(':nth-child(3)').contains('Replace fuse in plug')
+            cy.get(':nth-child(4)').contains('30.00')
+          })
+
+          cy.get('.govuk-table__row:nth-child(2)').within(() => {
+            cy.get(':nth-child(1)')
+              .contains('a', '1000001')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  'https://repairs-hub.hackney.gov.uk/work-orders/1000001'
+                )
+                expect(link).to.have.attr('target', '_blank')
+              })
+            cy.get(':nth-child(2)').contains('2 Somewhere Street')
+            cy.get(':nth-child(3)').contains('Replace broken light switch')
+            cy.get(':nth-child(4)').contains('60.00')
+          })
+        })
+
+        cy.get('#productive-summary tfoot').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Total')
+            cy.get(':nth-child(2)').contains('90.00')
+          })
+        })
       })
     })
   })

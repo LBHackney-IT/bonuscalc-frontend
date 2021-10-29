@@ -3,7 +3,7 @@ import TypeField from './TypeField'
 import DayField from './DayField'
 import NoteField from './NoteField'
 import TotalField from './TotalField'
-import { TBody, TRow, TCell } from '@/components/Table'
+import { TBody, TR, TD } from '@/components/Table'
 import { PayElementType } from '@/models'
 
 const PayElementsRow = ({ item, index, remove, payElementTypes }) => {
@@ -13,35 +13,35 @@ const PayElementsRow = ({ item, index, remove, payElementTypes }) => {
 
   return (
     <TBody className="bc-pay-element-row">
-      <TRow>
-        <TCell colSpan="2">
+      <TR>
+        <TD colSpan="2">
           <TypeField index={index} payElementTypes={payElementTypes} />
-        </TCell>
-        <TCell numeric={true}>
+        </TD>
+        <TD numeric={true}>
           <DayField index={index} weekday="monday" />
-        </TCell>
-        <TCell numeric={true}>
+        </TD>
+        <TD numeric={true}>
           <DayField index={index} weekday="tuesday" />
-        </TCell>
-        <TCell numeric={true}>
+        </TD>
+        <TD numeric={true}>
           <DayField index={index} weekday="wednesday" />
-        </TCell>
-        <TCell numeric={true}>
+        </TD>
+        <TD numeric={true}>
           <DayField index={index} weekday="thursday" />
-        </TCell>
-        <TCell numeric={true}>
+        </TD>
+        <TD numeric={true}>
           <DayField index={index} weekday="friday" />
-        </TCell>
-        <TCell numeric={true}>
+        </TD>
+        <TD numeric={true}>
           <DayField index={index} weekday="saturday" />
-        </TCell>
-        <TCell numeric={true}>
+        </TD>
+        <TD numeric={true}>
           <DayField index={index} weekday="sunday" />
-        </TCell>
-        <TCell numeric={true}>
+        </TD>
+        <TD numeric={true}>
           <TotalField index={index} />
-        </TCell>
-        <TCell>
+        </TD>
+        <TD>
           <button
             type="button"
             className="lbh-link govuk-!-font-size-16"
@@ -49,15 +49,15 @@ const PayElementsRow = ({ item, index, remove, payElementTypes }) => {
           >
             Remove
           </button>
-        </TCell>
-      </TRow>
-      <TRow>
-        <TCell colSpan="9">
+        </TD>
+      </TR>
+      <TR>
+        <TD colSpan="9">
           <NoteField item={item} index={index} />
-        </TCell>
-        <TCell>&nbsp;</TCell>
-        <TCell>&nbsp;</TCell>
-      </TRow>
+        </TD>
+        <TD>&nbsp;</TD>
+        <TD>&nbsp;</TD>
+      </TR>
     </TBody>
   )
 }

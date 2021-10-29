@@ -34,7 +34,6 @@
       "workOrder": null,
       "address": null,
       "comment": null,
-      "productive": false,
       "duration": 7.5,
       "value": 11.625
     },
@@ -55,12 +54,11 @@
       "friday": 0,
       "saturday": 0,
       "sunday": 0,
-      "workOrder": "10000000",
+      "workOrder": "1000000",
       "address": "1 Knowhere Road",
-      "comment": null,
-      "productive": false,
-      "duration": 2,
-      "value": 25
+      "comment": "Replace fuse in plug",
+      "duration": 0.5,
+      "value": 30
     },
     {
       "id": 3,
@@ -79,10 +77,9 @@
       "friday": 0,
       "saturday": 0,
       "sunday": 0,
-      "workOrder": "10000001",
+      "workOrder": "1000000",
       "address": null,
       "comment": "Note about adjustment",
-      "productive": false,
       "duration": 0,
       "value": 24
     },
@@ -106,9 +103,31 @@
       "workOrder": null,
       "address": null,
       "comment": null,
-      "productive": false,
       "duration": 7.5,
       "value": 11.625
+    },
+    {
+      "id": 5,
+      "payElementType": {
+        "id": 31,
+        "description": "Reactive Repairs",
+        "payAtBand": true,
+        "paid": true,
+        "productive": true,
+        "adjustment": false
+      },
+      "monday": 2,
+      "tuesday": 0,
+      "wednesday": 0,
+      "thursday": 0,
+      "friday": 0,
+      "saturday": 0,
+      "sunday": 0,
+      "workOrder": "1000001",
+      "address": "2 Somewhere Street",
+      "comment": "Replace broken light switch",
+      "duration": 1,
+      "value": 60
     }
   ]
 }

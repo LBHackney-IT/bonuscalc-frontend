@@ -40,10 +40,25 @@
   }
 }
 
+.govuk-\!-width-four-tenths {
+  width: 40% !important;
+}
+
+.govuk-\!-width-three-tenths {
+  width: 30% !important;
+}
+
 .govuk-\!-width-two-tenths {
   width: 20% !important;
 }
 
 .govuk-\!-width-one-tenth {
   width: 10% !important;
+}
+
+.govuk-table__foot {
+  .govuk-table__cell:not(.govuk-table__cell--numeric),
+  .govuk-table__header {
+    border-bottom: 0;
+  }
 }

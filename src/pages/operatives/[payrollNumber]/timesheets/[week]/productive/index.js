@@ -1,6 +1,7 @@
 import BackButton from '@/components/BackButton'
 import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
+import ProductiveSummary from '@/components/ProductiveSummary'
 import NotFound from '@/components/NotFound'
 import Spinner from '@/components/Spinner'
 import { useOperative } from '@/utils/apiClient'
@@ -22,11 +23,9 @@ const OperativePage = ({ query }) => {
     <>
       <BackButton href="/" />
       <OperativeSummary operative={operative} />
-      <OperativeTabs
-        operative={operative}
-        week={week}
-        tabIndex={1}
-      ></OperativeTabs>
+      <OperativeTabs operative={operative} week={week} tabIndex={1}>
+        <ProductiveSummary operative={operative} week={week} />
+      </OperativeTabs>
     </>
   )
 }
