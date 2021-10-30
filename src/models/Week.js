@@ -4,7 +4,7 @@ import { wrap } from '@/utils/number'
 
 export default class Week {
   static get current() {
-    return dayjs().startOf('week').format('YYYY-MM-DD')
+    return dayjs().startOf('week')
   }
 
   constructor(attrs) {

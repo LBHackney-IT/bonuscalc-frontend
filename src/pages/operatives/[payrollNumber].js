@@ -3,6 +3,7 @@ import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
 import NotFound from '@/components/NotFound'
 import Spinner from '@/components/Spinner'
+import dayjs from '@/utils/date'
 import { Week } from '@/models'
 import { useOperative } from '@/utils/apiClient'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
@@ -19,13 +20,17 @@ const OperativePage = ({ query }) => {
       />
     )
 
+  const firstWeek = dayjs(process.env.NEXT_PUBLIC_FIRST_WEEK)
+  const currentWeek = Week.current
+  const week = firstWeek.isBefore(currentWeek) ? currentWeek : firstWeek
+
   return (
     <>
       <BackButton href="/" />
       <OperativeSummary operative={operative} />
       <OperativeTabs
         operative={operative}
-        week={Week.current}
+        week={week.toISODate()}
         tabIndex={0}
       ></OperativeTabs>
     </>
