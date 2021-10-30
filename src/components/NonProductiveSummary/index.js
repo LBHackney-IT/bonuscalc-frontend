@@ -2,10 +2,10 @@ import PropTypes from 'prop-types'
 import ErrorMessage from '../ErrorMessage'
 import Spinner from '../Spinner'
 import Header from './Header'
-import Pagination from './Pagination'
 import PayElements from './PayElements'
 import Adjustments from './Adjustments'
 import Buttons from './Buttons'
+import Pagination from '@/components/Pagination'
 import { Operative } from '@/models'
 import { useTimesheet } from '@/utils/apiClient'
 
@@ -24,7 +24,11 @@ const NonProductiveSummary = ({ operative, week }) => {
   return (
     <>
       <Header week={timesheet.week} />
-      <Pagination week={timesheet.week} baseUrl={baseUrl} />
+      <Pagination
+        week={timesheet.week}
+        baseUrl={baseUrl}
+        tab="non-productive"
+      />
       <PayElements timesheet={timesheet} />
       <Adjustments timesheet={timesheet} />
       <Buttons week={timesheet.week} baseUrl={baseUrl} />

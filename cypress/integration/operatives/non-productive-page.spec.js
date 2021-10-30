@@ -131,6 +131,29 @@ describe('Non-productive page', () => {
         })
       })
 
+      it('Hides the previous link when on the first week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-08-02',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-08-02.json' }
+        ).as('get_timesheet')
+
+        cy.visit('/operatives/123456/timesheets/2021-08-02/non-productive')
+
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 1')
+
+          cy.get('.lbh-simple-pagination').within(() => {
+            cy.contains('a', 'Period 2 - 2021 / week 13').should('not.exist')
+            cy.contains('a', 'Period 3 - 2021 / week 2').should('exist')
+          })
+        })
+      })
+
       it('Allows navigating to the next week', () => {
         cy.intercept(
           {
@@ -151,6 +174,29 @@ describe('Non-productive page', () => {
             expect(loc.pathname).to.eq(
               '/operatives/123456/timesheets/2021-10-25/non-productive'
             )
+          })
+        })
+      })
+
+      it('Hides the next link when on the last week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2022-01-24',
+          },
+          { statusCode: 200, fixture: 'timesheets/2022-01-24.json' }
+        ).as('get_timesheet')
+
+        cy.visit('/operatives/123456/timesheets/2022-01-24/non-productive')
+
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 4 - 2021 / week 13')
+
+          cy.get('.lbh-simple-pagination').within(() => {
+            cy.contains('a', 'Period 4 - 2021 / week 12').should('exist')
+            cy.contains('a', 'Period 1 - 2022 / week 1').should('not.exist')
           })
         })
       })

@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import ErrorMessage from '../ErrorMessage'
 import Spinner from '../Spinner'
 import Header from './Header'
-import Pagination from './Pagination'
 import WorkOrders from './WorkOrders'
 import Buttons from './Buttons'
+import Pagination from '@/components/Pagination'
 import { Operative } from '@/models'
 import { useTimesheet } from '@/utils/apiClient'
 
@@ -23,7 +23,7 @@ const ProductiveSummary = ({ operative, week }) => {
   return (
     <>
       <Header week={timesheet.week} />
-      <Pagination week={timesheet.week} baseUrl={baseUrl} />
+      <Pagination week={timesheet.week} baseUrl={baseUrl} tab="productive" />
       <WorkOrders timesheet={timesheet} />
       <Buttons />
     </>

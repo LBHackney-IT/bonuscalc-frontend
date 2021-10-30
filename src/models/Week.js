@@ -26,7 +26,9 @@ export default class Week {
         ? wrap(this.bonusPeriod.number - 1, 4)
         : this.bonusPeriod.number
     const periodYear =
-      periodNumber == 4 ? this.bonusPeriod.year - 1 : this.bonusPeriod.year
+      periodNumber == 4 && this.bonusPeriod.number == 1
+        ? this.bonusPeriod.year - 1
+        : this.bonusPeriod.year
 
     return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
   }
@@ -38,7 +40,9 @@ export default class Week {
         ? wrap(this.bonusPeriod.number + 1, 4)
         : this.bonusPeriod.number
     const periodYear =
-      periodNumber == 1 ? this.bonusPeriod.year + 1 : this.bonusPeriod.year
+      periodNumber == 1 && this.bonusPeriod.number == 4
+        ? this.bonusPeriod.year + 1
+        : this.bonusPeriod.year
 
     return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
   }

@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs from '@/utils/date'
 
 export default class BonusPeriod {
   constructor(attrs) {
