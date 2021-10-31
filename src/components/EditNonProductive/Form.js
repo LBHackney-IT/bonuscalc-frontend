@@ -59,7 +59,7 @@ const Form = () => {
       saturday: numberWithPrecision(pe.saturday, 2),
       sunday: numberWithPrecision(pe.sunday, 2),
       duration: numberWithPrecision(pe.duration, 2),
-      value: numberWithPrecision(pe.value, 2),
+      value: numberWithPrecision(pe.value, 4),
     }
   }
 

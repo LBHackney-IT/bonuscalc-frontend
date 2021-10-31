@@ -219,14 +219,14 @@ describe('Non-productive page', () => {
         cy.get('#non-productive-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Dayworks')
-            cy.get(':nth-child(2)').contains('7.50')
-            cy.get(':nth-child(3)').contains('11.63')
+            cy.get(':nth-child(2)').contains('7.25')
+            cy.get(':nth-child(3)').contains('6.31')
           })
 
           cy.get('.govuk-table__row:nth-child(2)').within(() => {
             cy.get(':nth-child(1)').contains('Annual Leave')
-            cy.get(':nth-child(2)').contains('7.50')
-            cy.get(':nth-child(3)').contains('11.63')
+            cy.get(':nth-child(2)').contains('7.25')
+            cy.get(':nth-child(3)').contains('7.18')
           })
         })
 
@@ -234,14 +234,14 @@ describe('Non-productive page', () => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('1000000')
             cy.get(':nth-child(2)').contains('Note about adjustment')
-            cy.get(':nth-child(4)').contains('24.00')
+            cy.get(':nth-child(4)').contains('0.40')
           })
         })
 
         cy.get('#adjustment-summary tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('47.25')
+            cy.get(':nth-child(2)').contains('13.89')
           })
         })
       })

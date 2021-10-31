@@ -2,12 +2,14 @@ import Link from 'next/link'
 import PageContext from '@/components/PageContext'
 import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
 import { numberWithPrecision } from '@/utils/number'
+import { smvOrUnits } from '@/utils/scheme'
 import { useContext } from 'react'
 
 const WorkOrders = () => {
   const repairsHubUrl = process.env.NEXT_PUBLIC_REPAIRS_HUB_URL
 
   const {
+    operative: { scheme, isUnitScheme },
     timesheet: {
       hasProductivePayElements,
       productivePayElements,
@@ -29,7 +31,7 @@ const WorkOrders = () => {
             Description
           </TH>
           <TH scope="col" width="one-tenth" numeric={true}>
-            SMV
+            {isUnitScheme ? 'Units' : 'SMVs'}
           </TH>
         </TR>
       </THead>
@@ -52,7 +54,10 @@ const WorkOrders = () => {
                 <TD>{payElement.address}</TD>
                 <TD>{payElement.comment}</TD>
                 <TD numeric={true}>
-                  {numberWithPrecision(payElement.value, 2)}
+                  {numberWithPrecision(
+                    smvOrUnits(scheme, payElement.value),
+                    scheme.precision
+                  )}
                 </TD>
               </TR>
             ))}
@@ -62,7 +67,12 @@ const WorkOrders = () => {
               <TH scope="row" colSpan="3" align="right">
                 Total
               </TH>
-              <TD numeric={true}>{numberWithPrecision(productiveTotal, 2)}</TD>
+              <TD numeric={true}>
+                {numberWithPrecision(
+                  smvOrUnits(scheme, productiveTotal),
+                  scheme.precision
+                )}
+              </TD>
             </TR>
           </TFoot>
         </>

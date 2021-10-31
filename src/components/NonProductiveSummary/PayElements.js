@@ -2,9 +2,11 @@ import PageContext from '@/components/PageContext'
 import { useContext } from 'react'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
 import { numberWithPrecision } from '@/utils/number'
+import { smvhOrUnits } from '@/utils/scheme'
 
 const PayElements = () => {
   const {
+    operative: { scheme, isUnitScheme },
     timesheet: { hasNonProductivePayElements, nonProductivePayElements },
   } = useContext(PageContext)
 
@@ -17,7 +19,7 @@ const PayElements = () => {
             Hours (AT)
           </TH>
           <TH scope="col" numeric={true}>
-            SMV
+            {isUnitScheme ? 'Units' : 'SMVh'}
           </TH>
         </TR>
       </THead>
@@ -37,7 +39,7 @@ const PayElements = () => {
                 {numberWithPrecision(payElement.duration, 2)}
               </TD>
               <TD numeric={true} width="two-tenths">
-                {numberWithPrecision(payElement.value, 2)}
+                {numberWithPrecision(smvhOrUnits(scheme, payElement.value), 2)}
               </TD>
             </TR>
           ))
