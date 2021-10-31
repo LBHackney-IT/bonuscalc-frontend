@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types'
-import { Operative } from '@/models'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 
-const OperativeSummary = ({ operative }) => {
+const OperativeSummary = () => {
+  const { operative } = useContext(PageContext)
+
   return (
     <section className="section">
       <h1 className="lbh-heading-h2">{operative.name}</h1>
@@ -32,10 +34,6 @@ const OperativeSummary = ({ operative }) => {
       </dl>
     </section>
   )
-}
-
-OperativeSummary.propTypes = {
-  operative: PropTypes.instanceOf(Operative).isRequired,
 }
 
 export default OperativeSummary

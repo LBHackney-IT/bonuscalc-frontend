@@ -4,7 +4,7 @@ import { wrap } from '@/utils/number'
 
 export default class Week {
   static get current() {
-    return dayjs().startOf('week').format('YYYY-MM-DD')
+    return dayjs().startOf('week')
   }
 
   constructor(attrs) {
@@ -26,7 +26,9 @@ export default class Week {
         ? wrap(this.bonusPeriod.number - 1, 4)
         : this.bonusPeriod.number
     const periodYear =
-      periodNumber == 4 ? this.bonusPeriod.year - 1 : this.bonusPeriod.year
+      periodNumber == 4 && this.bonusPeriod.number == 1
+        ? this.bonusPeriod.year - 1
+        : this.bonusPeriod.year
 
     return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
   }
@@ -38,7 +40,9 @@ export default class Week {
         ? wrap(this.bonusPeriod.number + 1, 4)
         : this.bonusPeriod.number
     const periodYear =
-      periodNumber == 1 ? this.bonusPeriod.year + 1 : this.bonusPeriod.year
+      periodNumber == 1 && this.bonusPeriod.number == 4
+        ? this.bonusPeriod.year + 1
+        : this.bonusPeriod.year
 
     return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
   }

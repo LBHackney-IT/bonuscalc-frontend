@@ -1,11 +1,21 @@
-import PropTypes from 'prop-types'
 import Link from 'next/link'
+import PageContext from '@/components/PageContext'
 import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
-import { Timesheet } from '@/models'
 import { numberWithPrecision } from '@/utils/number'
+import { smvOrUnits } from '@/utils/scheme'
+import { useContext } from 'react'
 
-const WorkOrders = ({ timesheet }) => {
+const WorkOrders = () => {
   const repairsHubUrl = process.env.NEXT_PUBLIC_REPAIRS_HUB_URL
+
+  const {
+    operative: { scheme, isUnitScheme },
+    timesheet: {
+      hasProductivePayElements,
+      productivePayElements,
+      productiveTotal,
+    },
+  } = useContext(PageContext)
 
   return (
     <Table id="productive-summary">
@@ -21,14 +31,14 @@ const WorkOrders = ({ timesheet }) => {
             Description
           </TH>
           <TH scope="col" width="one-tenth" numeric={true}>
-            SMV
+            {isUnitScheme ? 'Units' : 'SMVs'}
           </TH>
         </TR>
       </THead>
-      {timesheet.hasProductivePayElements ? (
+      {hasProductivePayElements ? (
         <>
           <TBody>
-            {timesheet.productivePayElements.map((payElement, index) => (
+            {productivePayElements.map((payElement, index) => (
               <TR key={index}>
                 <TD>
                   {payElement.workOrder ? (
@@ -44,7 +54,10 @@ const WorkOrders = ({ timesheet }) => {
                 <TD>{payElement.address}</TD>
                 <TD>{payElement.comment}</TD>
                 <TD numeric={true}>
-                  {numberWithPrecision(payElement.value, 2)}
+                  {numberWithPrecision(
+                    smvOrUnits(scheme, payElement.value),
+                    scheme.precision
+                  )}
                 </TD>
               </TR>
             ))}
@@ -55,7 +68,10 @@ const WorkOrders = ({ timesheet }) => {
                 Total
               </TH>
               <TD numeric={true}>
-                {numberWithPrecision(timesheet.productiveTotal, 2)}
+                {numberWithPrecision(
+                  smvOrUnits(scheme, productiveTotal),
+                  scheme.precision
+                )}
               </TD>
             </TR>
           </TFoot>
@@ -69,10 +85,6 @@ const WorkOrders = ({ timesheet }) => {
       )}
     </Table>
   )
-}
-
-WorkOrders.propTypes = {
-  timesheet: PropTypes.instanceOf(Timesheet).isRequired,
 }
 
 export default WorkOrders

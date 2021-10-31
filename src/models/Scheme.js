@@ -7,4 +7,12 @@ export default class Scheme {
     this.conversionFactor = attrs.conversionFactor
     this.payBands = attrs.payBands.map((pb) => new PayBand(pb))
   }
+
+  get isUnitScheme() {
+    return this.type == 'Unit'
+  }
+
+  get precision() {
+    return this.isUnitScheme ? 4 : 2
+  }
 }

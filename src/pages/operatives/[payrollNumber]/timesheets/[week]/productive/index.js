@@ -1,32 +1,51 @@
+import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
 import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
 import ProductiveSummary from '@/components/ProductiveSummary'
-import NotFound from '@/components/NotFound'
 import Spinner from '@/components/Spinner'
-import { useOperative } from '@/utils/apiClient'
+import NotFound from '@/components/NotFound'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { useOperative, useTimesheet } from '@/utils/apiClient'
 
 const OperativePage = ({ query }) => {
   const { payrollNumber, week } = query
-  const { operative, isLoading, isError } = useOperative(payrollNumber)
+  const {
+    operative,
+    isLoading: isOperativeLoading,
+    isError: isOperativeError,
+  } = useOperative(payrollNumber)
 
-  if (isLoading) return <Spinner />
-  if (isError || !operative)
+  const {
+    timesheet,
+    isLoading: isTimesheetLoading,
+    isError: isTimesheetError,
+  } = useTimesheet(payrollNumber, week)
+
+  if (isOperativeLoading) return <Spinner />
+  if (isOperativeError || !operative)
     return (
       <NotFound
         message={`Couldn\u2019t find an operative with the payroll number ${payrollNumber}.`}
       />
     )
 
+  if (isTimesheetLoading) return <Spinner />
+  if (isTimesheetError || !timesheet)
+    return (
+      <NotFound
+        message={`Couldn\u2019t find a timesheet for the week beginning ${week}.`}
+      />
+    )
+
   return (
-    <>
+    <PageContext.Provider value={{ operative, timesheet, week }}>
       <BackButton href="/" />
-      <OperativeSummary operative={operative} />
-      <OperativeTabs operative={operative} week={week} tabIndex={1}>
-        <ProductiveSummary operative={operative} week={week} />
+      <OperativeSummary />
+      <OperativeTabs current={1}>
+        <ProductiveSummary />
       </OperativeTabs>
-    </>
+    </PageContext.Provider>
   )
 }
 

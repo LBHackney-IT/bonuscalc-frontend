@@ -1,8 +1,15 @@
-import PropTypes from 'prop-types'
 import Link from 'next/link'
-import { Week } from '@/models'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 
-const Buttons = ({ week, baseUrl }) => {
+const Buttons = () => {
+  const {
+    operative,
+    timesheet: { week },
+  } = useContext(PageContext)
+
+  const baseUrl = `/operatives/${operative.id}/timesheets`
+
   return (
     <div className="govuk-button-group">
       <button className="govuk-button lbh-button" data-module="govuk-button">
@@ -23,11 +30,6 @@ const Buttons = ({ week, baseUrl }) => {
       )}
     </div>
   )
-}
-
-Buttons.propTypes = {
-  week: PropTypes.instanceOf(Week).isRequired,
-  baseUrl: PropTypes.string.isRequired,
 }
 
 export default Buttons
