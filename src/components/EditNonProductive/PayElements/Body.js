@@ -2,9 +2,8 @@ import PropTypes from 'prop-types'
 import PayElementsRow from './Row'
 import PayElementsTotals from './Totals'
 import { TBody, TR, TD } from '@/components/Table'
-import { PayElementType } from '@/models'
 
-const PayElementsBody = ({ fields, remove, payElementTypes }) => {
+const PayElementsBody = ({ fields, remove }) => {
   return (
     <>
       {fields.length > 0 ? (
@@ -15,7 +14,6 @@ const PayElementsBody = ({ fields, remove, payElementTypes }) => {
               item={item}
               index={index}
               remove={remove}
-              payElementTypes={payElementTypes}
             />
           ))}
           <PayElementsTotals fields={fields} />
@@ -36,9 +34,6 @@ const PayElementsBody = ({ fields, remove, payElementTypes }) => {
 PayElementsBody.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.instanceOf(Object).isRequired).isRequired,
   remove: PropTypes.func.isRequired,
-  payElementTypes: PropTypes.arrayOf(
-    PropTypes.instanceOf(PayElementType).isRequired
-  ).isRequired,
 }
 
 export default PayElementsBody

@@ -12,11 +12,33 @@ export default class Operative {
     this.trade = new Trade(attrs.trade)
   }
 
+  payBand(payAtBand) {
+    return payAtBand ? this.currentPayBand : this.cappedPayBand
+  }
+
   get tradeDescription() {
     return `${this.trade.description} (${this.trade.id})`
   }
 
   get schemeType() {
     return this.scheme?.type
+  }
+
+  get isUnitScheme() {
+    return this.scheme?.isUnitScheme
+  }
+
+  get payBands() {
+    return this.scheme?.payBands
+  }
+
+  get currentPayBand() {
+    return this.payBands.find((pb) => pb.band == this.salaryBand)
+  }
+
+  get cappedPayBand() {
+    return this.payBands.find(
+      (pb) => pb.band == this.salaryBand || pb.band == 3
+    )
   }
 }

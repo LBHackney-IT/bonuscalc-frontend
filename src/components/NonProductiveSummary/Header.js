@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types'
-import { Week } from '@/models'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 
-const Header = ({ week }) => {
+const Header = () => {
+  const {
+    timesheet: { week },
+  } = useContext(PageContext)
+
   return <h3 className="lbh-heading-h3">{week.description}</h3>
-}
-
-Header.propTypes = {
-  week: PropTypes.instanceOf(Week).isRequired,
 }
 
 export default Header

@@ -1,5 +1,5 @@
 {
-  "id": 2,
+  "id": 1,
   "week": {
     "id": "2021-10-18",
     "bonusPeriod": {
@@ -19,12 +19,12 @@
       "payElementType": {
         "id": 1,
         "description": "Dayworks",
-        "payAtBand": true,
+        "payAtBand": false,
         "paid": true,
         "productive": false,
         "adjustment": false
       },
-      "monday": 7.5,
+      "monday": 7.25,
       "tuesday": 0,
       "wednesday": 0,
       "thursday": 0,
@@ -34,8 +34,8 @@
       "workOrder": null,
       "address": null,
       "comment": null,
-      "duration": 7.5,
-      "value": 11.625
+      "duration": 7.25,
+      "value": 378.45
     },
     {
       "id": 2,
@@ -94,7 +94,7 @@
         "adjustment": false
       },
       "monday": 0,
-      "tuesday": 7.5,
+      "tuesday": 7.25,
       "wednesday": 0,
       "thursday": 0,
       "friday": 0,
@@ -103,8 +103,8 @@
       "workOrder": null,
       "address": null,
       "comment": null,
-      "duration": 7.5,
-      "value": 11.625
+      "duration": 7.25,
+      "value": 430.65
     },
     {
       "id": 5,

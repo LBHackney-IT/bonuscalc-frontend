@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { PayElementType } from '@/models'
+import { compareStrings } from '@/utils/string'
 
-const TypeField = ({ index, payElementTypes }) => {
+const TypeField = ({ index }) => {
+  const { payElementTypes } = useContext(PageContext)
   const { register } = useFormContext()
+
+  const nonProductiveTypes = payElementTypes
+    .filter((pet) => pet.nonProductive)
+    .sort((a, b) => compareStrings(a.description, b.description))
 
   return (
     <select
@@ -14,7 +21,7 @@ const TypeField = ({ index, payElementTypes }) => {
       })}
     >
       <option value="">-- Select Type --</option>
-      {payElementTypes.map((payElementType, index) => (
+      {nonProductiveTypes.map((payElementType, index) => (
         <option value={payElementType.id} key={index}>
           {payElementType.description}
         </option>
@@ -25,9 +32,6 @@ const TypeField = ({ index, payElementTypes }) => {
 
 TypeField.propTypes = {
   index: PropTypes.number.isRequired,
-  payElementTypes: PropTypes.arrayOf(
-    PropTypes.instanceOf(PayElementType).isRequired
-  ).isRequired,
 }
 
 export default TypeField

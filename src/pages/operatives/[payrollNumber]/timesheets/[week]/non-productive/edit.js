@@ -1,29 +1,66 @@
+import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
-import NotFound from '@/components/NotFound'
-import Spinner from '@/components/Spinner'
 import EditNonProductive from '@/components/EditNonProductive'
-import { useOperative } from '@/utils/apiClient'
+import Spinner from '@/components/Spinner'
+import NotFound from '@/components/NotFound'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import {
+  useOperative,
+  usePayElementTypes,
+  useTimesheet,
+} from '@/utils/apiClient'
 
 const OperativePage = ({ query }) => {
   const { payrollNumber, week } = query
-  const { operative, isLoading, isError } = useOperative(payrollNumber)
+  const {
+    operative,
+    isLoading: isOperativeLoading,
+    isError: isOperativeError,
+  } = useOperative(payrollNumber)
 
-  if (isLoading) return <Spinner />
-  if (isError || !operative)
+  const {
+    timesheet,
+    isLoading: isTimesheetLoading,
+    isError: isTimesheetError,
+  } = useTimesheet(payrollNumber, week)
+
+  const {
+    payElementTypes,
+    isLoading: isPayElementTypesLoading,
+    isError: isPayElementTypesError,
+  } = usePayElementTypes()
+
+  if (isOperativeLoading) return <Spinner />
+  if (isOperativeError || !operative)
     return (
       <NotFound
         message={`Couldn\u2019t find an operative with the payroll number ${payrollNumber}.`}
       />
     )
 
+  if (isTimesheetLoading) return <Spinner />
+  if (isTimesheetError || !timesheet)
+    return (
+      <NotFound
+        message={`Couldn\u2019t find a timesheet for the week beginning ${week}.`}
+      />
+    )
+
+  if (isPayElementTypesLoading) return <Spinner />
+  if (isPayElementTypesError || !payElementTypes)
+    return (
+      <NotFound message={`Couldn\u2019t fetch the list of pay element types`} />
+    )
+
   return (
-    <>
+    <PageContext.Provider
+      value={{ operative, timesheet, payElementTypes, week }}
+    >
       <BackButton
         href={`/operatives/${payrollNumber}/timesheets/${week}/non-productive`}
       />
-      <EditNonProductive operative={operative} week={week} />
-    </>
+      <EditNonProductive />
+    </PageContext.Provider>
   )
 }
 

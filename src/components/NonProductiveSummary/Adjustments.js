@@ -1,9 +1,36 @@
-import PropTypes from 'prop-types'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
-import { Timesheet } from '@/models'
-import { numberWithPrecision } from '@/utils/number'
+import { numberWithPrecision, round } from '@/utils/number'
+import { smvhOrUnits } from '@/utils/scheme'
 
-const Adjustments = ({ timesheet }) => {
+const Adjustments = () => {
+  const {
+    operative: { scheme },
+    timesheet: {
+      hasNonProductivePayElements,
+      nonProductivePayElements,
+      hasAdjustmentPayElements,
+      adjustmentPayElements,
+    },
+  } = useContext(PageContext)
+
+  const sumPayElements = (payElements) => {
+    return payElements.reduce((sum, pe) => {
+      return sum + round(smvhOrUnits(scheme, pe.value), 2)
+    }, 0)
+  }
+
+  const nonProductiveTotal = hasNonProductivePayElements
+    ? sumPayElements(nonProductivePayElements)
+    : 0
+
+  const adjustmentTotal = hasAdjustmentPayElements
+    ? sumPayElements(adjustmentPayElements)
+    : 0
+
+  const total = round(nonProductiveTotal + adjustmentTotal, 2)
+
   return (
     <Table id="adjustment-summary">
       <THead>
@@ -14,8 +41,8 @@ const Adjustments = ({ timesheet }) => {
         </TR>
       </THead>
       <TBody>
-        {timesheet.hasAdjustmentPayElements ? (
-          timesheet.adjustmentPayElements.map((payElement, index) => (
+        {hasAdjustmentPayElements ? (
+          adjustmentPayElements.map((payElement, index) => (
             <TR key={index}>
               <TD width="two-tenths">{payElement.workOrder}</TD>
               <TD>{payElement.comment}</TD>
@@ -23,7 +50,7 @@ const Adjustments = ({ timesheet }) => {
                 &nbsp;
               </TD>
               <TD width="two-tenths" numeric={true}>
-                {numberWithPrecision(payElement.value, 2)}
+                {numberWithPrecision(smvhOrUnits(scheme, payElement.value), 2)}
               </TD>
             </TR>
           ))
@@ -39,16 +66,12 @@ const Adjustments = ({ timesheet }) => {
             Total
           </TH>
           <TD width="two-tenths" numeric={true}>
-            {numberWithPrecision(timesheet.nonProductiveAndAdjustmentTotal, 2)}
+            {numberWithPrecision(total, 2)}
           </TD>
         </TR>
       </TFoot>
     </Table>
   )
-}
-
-Adjustments.propTypes = {
-  timesheet: PropTypes.instanceOf(Timesheet).isRequired,
 }
 
 export default Adjustments

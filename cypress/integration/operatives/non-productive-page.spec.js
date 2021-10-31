@@ -31,8 +31,16 @@ describe('Non-productive page', () => {
           { statusCode: 404, fixture: 'operatives/not_found.json' }
         ).as('get_operative')
 
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 404, fixture: 'timesheets/not_found.json' }
+        ).as('get_timesheet')
+
         cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive')
-        cy.wait('@get_operative')
+        cy.wait(['@get_operative', '@get_timesheet'])
       })
 
       it('Shows the not found message', () => {
@@ -120,13 +128,39 @@ describe('Non-productive page', () => {
           cy.get('.lbh-simple-pagination')
             .contains('a', 'Period 3 - 2021 / week 11')
             .click()
-          cy.wait('@get_timesheet')
+        })
 
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
               '/operatives/123456/timesheets/2021-10-11/non-productive'
             )
+          })
+        })
+      })
+
+      it('Hides the previous link when on the first week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-08-02',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-08-02.json' }
+        ).as('get_timesheet')
+
+        cy.visit('/operatives/123456/timesheets/2021-08-02/non-productive')
+
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 1')
+
+          cy.get('.lbh-simple-pagination').within(() => {
+            cy.contains('a', 'Period 2 - 2021 / week 13').should('not.exist')
+            cy.contains('a', 'Period 3 - 2021 / week 2').should('exist')
           })
         })
       })
@@ -144,8 +178,11 @@ describe('Non-productive page', () => {
           cy.get('.lbh-simple-pagination')
             .contains('a', 'Period 3 - 2021 / week 13')
             .click()
-          cy.wait('@get_timesheet')
+        })
 
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
@@ -155,18 +192,41 @@ describe('Non-productive page', () => {
         })
       })
 
+      it('Hides the next link when on the last week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2022-01-24',
+          },
+          { statusCode: 200, fixture: 'timesheets/2022-01-24.json' }
+        ).as('get_timesheet')
+
+        cy.visit('/operatives/123456/timesheets/2022-01-24/non-productive')
+
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 4 - 2021 / week 13')
+
+          cy.get('.lbh-simple-pagination').within(() => {
+            cy.contains('a', 'Period 4 - 2021 / week 12').should('exist')
+            cy.contains('a', 'Period 1 - 2022 / week 1').should('not.exist')
+          })
+        })
+      })
+
       it('Shows the summary of the pay elements for that week', () => {
         cy.get('#non-productive-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Dayworks')
-            cy.get(':nth-child(2)').contains('7.50')
-            cy.get(':nth-child(3)').contains('11.63')
+            cy.get(':nth-child(2)').contains('7.25')
+            cy.get(':nth-child(3)').contains('6.31')
           })
 
           cy.get('.govuk-table__row:nth-child(2)').within(() => {
             cy.get(':nth-child(1)').contains('Annual Leave')
-            cy.get(':nth-child(2)').contains('7.50')
-            cy.get(':nth-child(3)').contains('11.63')
+            cy.get(':nth-child(2)').contains('7.25')
+            cy.get(':nth-child(3)').contains('7.18')
           })
         })
 
@@ -174,14 +234,14 @@ describe('Non-productive page', () => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('1000000')
             cy.get(':nth-child(2)').contains('Note about adjustment')
-            cy.get(':nth-child(4)').contains('24.00')
+            cy.get(':nth-child(4)').contains('0.40')
           })
         })
 
         cy.get('#adjustment-summary tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('47.25')
+            cy.get(':nth-child(2)').contains('13.89')
           })
         })
       })

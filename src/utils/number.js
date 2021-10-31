@@ -13,3 +13,8 @@ export const sum = (total, value) => {
   const number = parseFloat(value)
   return isNaN(number) ? total : total + number
 }
+
+export const round = (number, precision) => {
+  const exponent = Math.pow(10, precision)
+  return Math.round((number + Number.EPSILON) * exponent) / exponent
+}
