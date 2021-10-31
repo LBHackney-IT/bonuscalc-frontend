@@ -2,11 +2,16 @@ import PropTypes from 'prop-types'
 import PreviousLink from '../PreviousLink'
 import NextLink from '../NextLink'
 import dayjs from '@/utils/date'
-import { Week } from '@/models'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 
-const Pagination = ({ week, baseUrl, tab }) => {
+const Pagination = ({ tab }) => {
+  const { operative, timesheet } = useContext(PageContext)
+
+  const baseUrl = `/operatives/${operative.id}/timesheets`
   const firstWeek = dayjs(process.env.NEXT_PUBLIC_FIRST_WEEK)
   const lastWeek = dayjs(process.env.NEXT_PUBLIC_LAST_WEEK)
+  const week = timesheet.week
 
   return (
     <nav className="lbh-simple-pagination govuk-!-margin-top-3">
@@ -29,8 +34,6 @@ const Pagination = ({ week, baseUrl, tab }) => {
 }
 
 Pagination.propTypes = {
-  week: PropTypes.instanceOf(Week).isRequired,
-  baseUrl: PropTypes.string.isRequired,
   tab: PropTypes.string.isRequired,
 }
 

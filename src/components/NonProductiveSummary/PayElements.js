@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
-import { Timesheet } from '@/models'
 import { numberWithPrecision } from '@/utils/number'
 
-const PayElements = ({ timesheet }) => {
+const PayElements = () => {
+  const {
+    timesheet: { hasNonProductivePayElements, nonProductivePayElements },
+  } = useContext(PageContext)
+
   return (
     <Table id="non-productive-summary">
       <THead>
@@ -18,8 +22,8 @@ const PayElements = ({ timesheet }) => {
         </TR>
       </THead>
       <TBody>
-        {timesheet.hasNonProductivePayElements ? (
-          timesheet.nonProductivePayElements.map((payElement, index) => (
+        {hasNonProductivePayElements ? (
+          nonProductivePayElements.map((payElement, index) => (
             <TR key={index}>
               <TD>
                 <p className="lbh-body-m">{payElement.description}</p>
@@ -47,10 +51,6 @@ const PayElements = ({ timesheet }) => {
       </TBody>
     </Table>
   )
-}
-
-PayElements.propTypes = {
-  timesheet: PropTypes.instanceOf(Timesheet).isRequired,
 }
 
 export default PayElements

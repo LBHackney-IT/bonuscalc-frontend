@@ -1,3 +1,4 @@
+import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
 import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
@@ -10,6 +11,13 @@ import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 
 const OperativePage = ({ query }) => {
   const { payrollNumber } = query
+
+  const firstWeek = dayjs(process.env.NEXT_PUBLIC_FIRST_WEEK)
+  const currentWeek = Week.current
+  const week = firstWeek.isBefore(currentWeek)
+    ? currentWeek.toISODate()
+    : firstWeek.toISODate()
+
   const { operative, isLoading, isError } = useOperative(payrollNumber)
 
   if (isLoading) return <Spinner />
@@ -20,20 +28,12 @@ const OperativePage = ({ query }) => {
       />
     )
 
-  const firstWeek = dayjs(process.env.NEXT_PUBLIC_FIRST_WEEK)
-  const currentWeek = Week.current
-  const week = firstWeek.isBefore(currentWeek) ? currentWeek : firstWeek
-
   return (
-    <>
+    <PageContext.Provider value={{ operative, week }}>
       <BackButton href="/" />
-      <OperativeSummary operative={operative} />
-      <OperativeTabs
-        operative={operative}
-        week={week.toISODate()}
-        tabIndex={0}
-      ></OperativeTabs>
-    </>
+      <OperativeSummary />
+      <OperativeTabs current={0} />
+    </PageContext.Provider>
   )
 }
 

@@ -1,10 +1,11 @@
+import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
 import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
 import NotFound from '@/components/NotFound'
 import Spinner from '@/components/Spinner'
-import { useOperative } from '@/utils/apiClient'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { useOperative } from '@/utils/apiClient'
 
 const OperativePage = ({ query }) => {
   const { payrollNumber, week } = query
@@ -19,15 +20,11 @@ const OperativePage = ({ query }) => {
     )
 
   return (
-    <>
+    <PageContext.Provider value={{ operative, week }}>
       <BackButton href="/" />
-      <OperativeSummary operative={operative} />
-      <OperativeTabs
-        operative={operative}
-        week={week}
-        tabIndex={3}
-      ></OperativeTabs>
-    </>
+      <OperativeSummary />
+      <OperativeTabs current={3} />
+    </PageContext.Provider>
   )
 }
 

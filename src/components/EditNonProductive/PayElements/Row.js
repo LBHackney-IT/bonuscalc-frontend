@@ -4,9 +4,8 @@ import DayField from './DayField'
 import NoteField from './NoteField'
 import TotalField from './TotalField'
 import { TBody, TR, TD } from '@/components/Table'
-import { PayElementType } from '@/models'
 
-const PayElementsRow = ({ item, index, remove, payElementTypes }) => {
+const PayElementsRow = ({ item, index, remove }) => {
   const removePayElement = () => {
     remove(index)
   }
@@ -15,7 +14,7 @@ const PayElementsRow = ({ item, index, remove, payElementTypes }) => {
     <TBody className="bc-pay-element-row">
       <TR>
         <TD colSpan="2">
-          <TypeField index={index} payElementTypes={payElementTypes} />
+          <TypeField index={index} />
         </TD>
         <TD numeric={true}>
           <DayField index={index} weekday="monday" />
@@ -66,9 +65,6 @@ PayElementsRow.propTypes = {
   item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
   remove: PropTypes.func.isRequired,
-  payElementTypes: PropTypes.arrayOf(
-    PropTypes.instanceOf(PayElementType).isRequired
-  ).isRequired,
 }
 
 export default PayElementsRow

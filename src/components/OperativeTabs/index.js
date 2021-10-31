@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import Link from 'next/link'
-import { Operative } from '@/models'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 
-const OperativeTabs = ({ operative, week, tabIndex, children }) => {
+const OperativeTabs = ({ current, children }) => {
+  const { operative, week } = useContext(PageContext)
+
   const tabs = [
     {
       content: 'Summary',
@@ -35,7 +38,7 @@ const OperativeTabs = ({ operative, week, tabIndex, children }) => {
             key={href}
             className={cx(
               'govuk-tabs__list-item',
-              tabIndex === index ? 'govuk-tabs__list-item--selected' : null
+              current === index ? 'govuk-tabs__list-item--selected' : null
             )}
           >
             <Link href={href}>
@@ -51,9 +54,7 @@ const OperativeTabs = ({ operative, week, tabIndex, children }) => {
 }
 
 OperativeTabs.propTypes = {
-  operative: PropTypes.instanceOf(Operative).isRequired,
-  week: PropTypes.string.isRequired,
-  tabIndex: PropTypes.number.isRequired,
+  current: PropTypes.number.isRequired,
 }
 
 export default OperativeTabs

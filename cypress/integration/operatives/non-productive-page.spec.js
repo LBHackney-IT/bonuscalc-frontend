@@ -31,8 +31,16 @@ describe('Non-productive page', () => {
           { statusCode: 404, fixture: 'operatives/not_found.json' }
         ).as('get_operative')
 
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 404, fixture: 'timesheets/not_found.json' }
+        ).as('get_timesheet')
+
         cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive')
-        cy.wait('@get_operative')
+        cy.wait(['@get_operative', '@get_timesheet'])
       })
 
       it('Shows the not found message', () => {
@@ -120,8 +128,11 @@ describe('Non-productive page', () => {
           cy.get('.lbh-simple-pagination')
             .contains('a', 'Period 3 - 2021 / week 11')
             .click()
-          cy.wait('@get_timesheet')
+        })
 
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
@@ -167,8 +178,11 @@ describe('Non-productive page', () => {
           cy.get('.lbh-simple-pagination')
             .contains('a', 'Period 3 - 2021 / week 13')
             .click()
-          cy.wait('@get_timesheet')
+        })
 
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(

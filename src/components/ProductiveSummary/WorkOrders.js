@@ -1,11 +1,19 @@
-import PropTypes from 'prop-types'
 import Link from 'next/link'
+import PageContext from '@/components/PageContext'
 import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
-import { Timesheet } from '@/models'
 import { numberWithPrecision } from '@/utils/number'
+import { useContext } from 'react'
 
-const WorkOrders = ({ timesheet }) => {
+const WorkOrders = () => {
   const repairsHubUrl = process.env.NEXT_PUBLIC_REPAIRS_HUB_URL
+
+  const {
+    timesheet: {
+      hasProductivePayElements,
+      productivePayElements,
+      productiveTotal,
+    },
+  } = useContext(PageContext)
 
   return (
     <Table id="productive-summary">
@@ -25,10 +33,10 @@ const WorkOrders = ({ timesheet }) => {
           </TH>
         </TR>
       </THead>
-      {timesheet.hasProductivePayElements ? (
+      {hasProductivePayElements ? (
         <>
           <TBody>
-            {timesheet.productivePayElements.map((payElement, index) => (
+            {productivePayElements.map((payElement, index) => (
               <TR key={index}>
                 <TD>
                   {payElement.workOrder ? (
@@ -54,9 +62,7 @@ const WorkOrders = ({ timesheet }) => {
               <TH scope="row" colSpan="3" align="right">
                 Total
               </TH>
-              <TD numeric={true}>
-                {numberWithPrecision(timesheet.productiveTotal, 2)}
-              </TD>
+              <TD numeric={true}>{numberWithPrecision(productiveTotal, 2)}</TD>
             </TR>
           </TFoot>
         </>
@@ -69,10 +75,6 @@ const WorkOrders = ({ timesheet }) => {
       )}
     </Table>
   )
-}
-
-WorkOrders.propTypes = {
-  timesheet: PropTypes.instanceOf(Timesheet).isRequired,
 }
 
 export default WorkOrders

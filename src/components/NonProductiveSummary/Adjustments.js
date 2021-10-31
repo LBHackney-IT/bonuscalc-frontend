@@ -1,9 +1,17 @@
-import PropTypes from 'prop-types'
+import PageContext from '@/components/PageContext'
+import { useContext } from 'react'
 import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
-import { Timesheet } from '@/models'
 import { numberWithPrecision } from '@/utils/number'
 
-const Adjustments = ({ timesheet }) => {
+const Adjustments = () => {
+  const {
+    timesheet: {
+      hasAdjustmentPayElements,
+      adjustmentPayElements,
+      nonProductiveAndAdjustmentTotal,
+    },
+  } = useContext(PageContext)
+
   return (
     <Table id="adjustment-summary">
       <THead>
@@ -14,8 +22,8 @@ const Adjustments = ({ timesheet }) => {
         </TR>
       </THead>
       <TBody>
-        {timesheet.hasAdjustmentPayElements ? (
-          timesheet.adjustmentPayElements.map((payElement, index) => (
+        {hasAdjustmentPayElements ? (
+          adjustmentPayElements.map((payElement, index) => (
             <TR key={index}>
               <TD width="two-tenths">{payElement.workOrder}</TD>
               <TD>{payElement.comment}</TD>
@@ -39,16 +47,12 @@ const Adjustments = ({ timesheet }) => {
             Total
           </TH>
           <TD width="two-tenths" numeric={true}>
-            {numberWithPrecision(timesheet.nonProductiveAndAdjustmentTotal, 2)}
+            {numberWithPrecision(nonProductiveAndAdjustmentTotal, 2)}
           </TD>
         </TR>
       </TFoot>
     </Table>
   )
-}
-
-Adjustments.propTypes = {
-  timesheet: PropTypes.instanceOf(Timesheet).isRequired,
 }
 
 export default Adjustments

@@ -1,17 +1,18 @@
-import PropTypes from 'prop-types'
 import ConfirmButton from './ConfirmButton'
 import AddPayElementButton from './AddPayElementButton'
 import PayElements from './PayElements'
 import AnnouncementContext from '@/components/AnnouncementContext'
-import { Operative, PayElementType, Timesheet } from '@/models'
+import PageContext from '@/components/PageContext'
 import { useEffect, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useFormContext, useFieldArray } from 'react-hook-form'
 import { numberWithPrecision } from '@/utils/number'
 import { saveTimesheet } from '@/utils/apiClient'
 
-const Form = ({ operative, payElementTypes, timesheet }) => {
+const Form = () => {
   const router = useRouter()
+
+  const { operative, timesheet } = useContext(PageContext)
 
   const { setAnnouncement } = useContext(AnnouncementContext)
   const [confirmed, setConfirmed] = useState(false)
@@ -30,8 +31,6 @@ const Form = ({ operative, payElementTypes, timesheet }) => {
   })
 
   const onSubmit = async (data) => {
-    console.log(data)
-
     if (await saveTimesheet(operative.id, timesheet.weekId, data)) {
       setConfirmed(true)
 
@@ -98,11 +97,7 @@ const Form = ({ operative, payElementTypes, timesheet }) => {
         </p>
       )}
 
-      <PayElements
-        fields={fields}
-        remove={remove}
-        payElementTypes={payElementTypes}
-      />
+      <PayElements fields={fields} remove={remove} />
 
       <div className="govuk-button-group govuk-!-margin-top-9">
         <ConfirmButton />
@@ -110,14 +105,6 @@ const Form = ({ operative, payElementTypes, timesheet }) => {
       </div>
     </form>
   )
-}
-
-Form.propTypes = {
-  operative: PropTypes.instanceOf(Operative).isRequired,
-  payElementTypes: PropTypes.arrayOf(
-    PropTypes.instanceOf(PayElementType).isRequired
-  ).isRequired,
-  timesheet: PropTypes.instanceOf(Timesheet).isRequired,
 }
 
 export default Form
