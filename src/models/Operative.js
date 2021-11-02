@@ -24,6 +24,10 @@ export default class Operative {
     return this.scheme?.type
   }
 
+  get schemeDescription() {
+    return this.scheme?.description
+  }
+
   get isUnitScheme() {
     return this.scheme?.isUnitScheme
   }
