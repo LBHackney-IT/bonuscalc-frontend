@@ -21,7 +21,9 @@ const OperativeSummary = () => {
             {operative.tradeDescription}
           </dd>
           <dt className="govuk-summary-list__key">Scheme</dt>
-          <dd className="govuk-summary-list__value">{operative.schemeType}</dd>
+          <dd className="govuk-summary-list__value">
+            {operative.schemeDescription}
+          </dd>
         </div>
         <div className="govuk-summary-list__row">
           <dt className="govuk-summary-list__key">Salary Band</dt>
