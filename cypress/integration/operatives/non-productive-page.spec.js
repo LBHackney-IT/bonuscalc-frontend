@@ -89,7 +89,7 @@ describe('Non-productive page', () => {
             cy.get(':nth-child(1)').contains('Trade')
             cy.get(':nth-child(2)').contains('Electrician (EL)')
             cy.get(':nth-child(3)').contains('Scheme')
-            cy.get(':nth-child(4)').contains('SMV')
+            cy.get(':nth-child(4)').contains('Reactive')
           })
 
           cy.get('.govuk-summary-list__row:nth-child(3)').within(() => {

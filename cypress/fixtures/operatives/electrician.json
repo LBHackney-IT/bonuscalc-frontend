@@ -8,7 +8,7 @@
   "section": "R3007",
   "scheme": {
     "type": "SMV",
-    "description": "SMV",
+    "description": "Reactive",
     "conversionFactor": 1.0,
     "payBands": [
       { "band": 1, "value": 2160 },
