@@ -216,6 +216,14 @@ describe('Non-productive page', () => {
       })
 
       it('Shows the summary of the pay elements for that week', () => {
+        cy.get('#non-productive-summary thead').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Pay element')
+            cy.get(':nth-child(2)').contains('Hours (AT)')
+            cy.get(':nth-child(3)').contains('SMVh')
+          })
+        })
+
         cy.get('#non-productive-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Dayworks')
@@ -264,6 +272,15 @@ describe('Non-productive page', () => {
           cy.wait('@get_timesheet')
 
           cy.contains('a', 'Edit non-productive').should('not.exist')
+        })
+      })
+
+      it('Allows the weekly report to be downloaded', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          const filename = '123456-0093-2021-3-12.pdf'
+
+          cy.contains('button', 'Download report').click()
+          cy.task('downloadExists', filename).should('equal', true)
         })
       })
     })

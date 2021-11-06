@@ -15,6 +15,10 @@ export default class Week {
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
   }
 
+  get startDate() {
+    return this.startAt.format('DD/MM/YYYY')
+  }
+
   get description() {
     return `Period ${this.bonusPeriod.number} - ${this.bonusPeriod.year} / week ${this.number}`
   }

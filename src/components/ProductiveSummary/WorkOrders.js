@@ -2,7 +2,7 @@ import Link from 'next/link'
 import PageContext from '@/components/PageContext'
 import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
 import { numberWithPrecision } from '@/utils/number'
-import { smvOrUnits } from '@/utils/scheme'
+import { smvhOrUnits } from '@/utils/scheme'
 import { useContext } from 'react'
 
 const WorkOrders = () => {
@@ -31,7 +31,7 @@ const WorkOrders = () => {
             Description
           </TH>
           <TH scope="col" width="one-tenth" numeric={true}>
-            {isUnitScheme ? 'Units' : 'SMVs'}
+            {isUnitScheme ? 'Units' : 'SMVh'}
           </TH>
         </TR>
       </THead>
@@ -55,7 +55,7 @@ const WorkOrders = () => {
                 <TD>{payElement.comment}</TD>
                 <TD numeric={true}>
                   {numberWithPrecision(
-                    smvOrUnits(scheme, payElement.value),
+                    smvhOrUnits(scheme, payElement.value),
                     scheme.precision
                   )}
                 </TD>
@@ -69,7 +69,7 @@ const WorkOrders = () => {
               </TH>
               <TD numeric={true}>
                 {numberWithPrecision(
-                  smvOrUnits(scheme, productiveTotal),
+                  smvhOrUnits(scheme, productiveTotal),
                   scheme.precision
                 )}
               </TD>

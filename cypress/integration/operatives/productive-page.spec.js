@@ -214,6 +214,15 @@ describe('Productive page', () => {
       })
 
       it('Shows the summary of the work orders for that week', () => {
+        cy.get('#productive-summary thead').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Reference')
+            cy.get(':nth-child(2)').contains('Address')
+            cy.get(':nth-child(3)').contains('Description')
+            cy.get(':nth-child(4)').contains('SMVh')
+          })
+        })
+
         cy.get('#productive-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)')
@@ -227,7 +236,7 @@ describe('Productive page', () => {
               })
             cy.get(':nth-child(2)').contains('1 Knowhere Road')
             cy.get(':nth-child(3)').contains('Replace fuse in plug')
-            cy.get(':nth-child(4)').contains('30.00')
+            cy.get(':nth-child(4)').contains('0.50')
           })
 
           cy.get('.govuk-table__row:nth-child(2)').within(() => {
@@ -242,15 +251,24 @@ describe('Productive page', () => {
               })
             cy.get(':nth-child(2)').contains('2 Somewhere Street')
             cy.get(':nth-child(3)').contains('Replace broken light switch')
-            cy.get(':nth-child(4)').contains('60.00')
+            cy.get(':nth-child(4)').contains('1.00')
           })
         })
 
         cy.get('#productive-summary tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('90.00')
+            cy.get(':nth-child(2)').contains('1.50')
           })
+        })
+      })
+
+      it('Allows the weekly report to be downloaded', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          const filename = '123456-0093-2021-3-12.pdf'
+
+          cy.contains('button', 'Download report').click()
+          cy.task('downloadExists', filename).should('equal', true)
         })
       })
     })
