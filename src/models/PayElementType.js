@@ -6,11 +6,8 @@ export default class PayElementType {
     this.description = attrs.description
     this.paid = attrs.paid
     this.payAtBand = attrs.payAtBand
+    this.nonProductive = attrs.nonProductive
     this.adjustment = attrs.adjustment
     this.productive = attrs.productive
-  }
-
-  get nonProductive() {
-    return !this.adjustment && !this.productive
   }
 }
