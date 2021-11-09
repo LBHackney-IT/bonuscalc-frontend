@@ -21,6 +21,7 @@
         "description": "Dayworks",
         "payAtBand": false,
         "paid": true,
+        "nonProductive": true,
         "productive": false,
         "adjustment": false
       },
@@ -44,6 +45,7 @@
         "description": "Reactive Repairs",
         "payAtBand": true,
         "paid": true,
+        "nonProductive": false,
         "productive": true,
         "adjustment": false
       },
@@ -67,6 +69,7 @@
         "description": "Adjustment",
         "payAtBand": false,
         "paid": false,
+        "nonProductive": false,
         "productive": false,
         "adjustment": true
       },
@@ -90,6 +93,7 @@
         "description": "Annual Leave",
         "payAtBand": true,
         "paid": true,
+        "nonProductive": true,
         "productive": false,
         "adjustment": false
       },
@@ -113,6 +117,7 @@
         "description": "Reactive Repairs",
         "payAtBand": true,
         "paid": true,
+        "nonProductive": false,
         "productive": true,
         "adjustment": false
       },

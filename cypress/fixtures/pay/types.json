@@ -4,6 +4,7 @@
     "description": "Dayworks",
     "payAtBand": true,
     "paid": true,
+    "nonProductive": true,
     "productive": false,
     "adjustment": false
   },
@@ -12,6 +13,7 @@
     "description": "Annual Leave",
     "payAtBand": true,
     "paid": true,
+    "nonProductive": true,
     "productive": false,
     "adjustment": false
   },
@@ -20,6 +22,7 @@
     "description": "Public Holiday",
     "payAtBand": true,
     "paid": true,
+    "nonProductive": true,
     "productive": false,
     "adjustment": false
   },
@@ -28,6 +31,7 @@
     "description": "Sick",
     "payAtBand": true,
     "paid": true,
+    "nonProductive": true,
     "productive": false,
     "adjustment": false
   }
