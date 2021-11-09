@@ -230,18 +230,11 @@ describe('Non-productive page', () => {
           })
         })
 
-        cy.get('#adjustment-summary tbody').within(() => {
-          cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(1)').contains('1000000')
-            cy.get(':nth-child(2)').contains('Note about adjustment')
-            cy.get(':nth-child(4)').contains('0.40')
-          })
-        })
-
-        cy.get('#adjustment-summary tfoot').within(() => {
+        cy.get('#non-productive-summary tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('13.89')
+            cy.get(':nth-child(2)').contains('14.50')
+            cy.get(':nth-child(3)').contains('13.49')
           })
         })
       })

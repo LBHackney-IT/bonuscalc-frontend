@@ -1,7 +1,7 @@
 import PageContext from '@/components/PageContext'
 import { useContext } from 'react'
-import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
-import { numberWithPrecision } from '@/utils/number'
+import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
+import { numberWithPrecision, round } from '@/utils/number'
 import { smvhOrUnits } from '@/utils/scheme'
 
 const PayElements = () => {
@@ -9,6 +9,18 @@ const PayElements = () => {
     operative: { scheme, isUnitScheme },
     timesheet: { hasNonProductivePayElements, nonProductivePayElements },
   } = useContext(PageContext)
+
+  const totalDuration = hasNonProductivePayElements
+    ? nonProductivePayElements.reduce((sum, pe) => {
+        return sum + round(pe.duration, 2)
+      }, 0)
+    : 0
+
+  const totalValue = hasNonProductivePayElements
+    ? nonProductivePayElements.reduce((sum, pe) => {
+        return sum + round(smvhOrUnits(scheme, pe.value), 2)
+      }, 0)
+    : 0
 
   return (
     <Table id="non-productive-summary">
@@ -51,6 +63,19 @@ const PayElements = () => {
           </TR>
         )}
       </TBody>
+      <TFoot>
+        <TR>
+          <TH scope="row" align="right">
+            Total
+          </TH>
+          <TD width="two-tenths" numeric={true}>
+            {numberWithPrecision(totalDuration, 2)}
+          </TD>
+          <TD width="two-tenths" numeric={true}>
+            {numberWithPrecision(totalValue, 2)}
+          </TD>
+        </TR>
+      </TFoot>
     </Table>
   )
 }
