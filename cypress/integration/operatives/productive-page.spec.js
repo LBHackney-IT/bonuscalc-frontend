@@ -109,7 +109,10 @@ describe('Productive page', () => {
 
       it('Shows the week heading', () => {
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 12')
+          cy.get('.lbh-heading-h3').within(() => {
+            cy.contains('Period 3 – 2021 / week 12')
+            cy.get('.lbh-caption').contains('(18 – 24 Oct)')
+          })
         })
       })
 
@@ -124,14 +127,14 @@ describe('Productive page', () => {
 
         cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-simple-pagination')
-            .contains('a', 'Period 3 - 2021 / week 11')
+            .contains('a', 'Period 3 – 2021 / week 11')
             .click()
         })
 
         cy.wait('@get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 11')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
               '/operatives/123456/timesheets/2021-10-11/productive'
@@ -154,11 +157,11 @@ describe('Productive page', () => {
         cy.wait('@get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 1')
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 1')
 
           cy.get('.lbh-simple-pagination').within(() => {
-            cy.contains('a', 'Period 2 - 2021 / week 13').should('not.exist')
-            cy.contains('a', 'Period 3 - 2021 / week 2').should('exist')
+            cy.contains('a', 'Period 2 – 2021 / week 13').should('not.exist')
+            cy.contains('a', 'Period 3 – 2021 / week 2').should('exist')
           })
         })
       })
@@ -174,14 +177,14 @@ describe('Productive page', () => {
 
         cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-simple-pagination')
-            .contains('a', 'Period 3 - 2021 / week 13')
+            .contains('a', 'Period 3 – 2021 / week 13')
             .click()
         })
 
         cy.wait('@get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 13')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
               '/operatives/123456/timesheets/2021-10-25/productive'
@@ -204,11 +207,11 @@ describe('Productive page', () => {
         cy.wait('@get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 4 - 2021 / week 13')
+          cy.get('.lbh-heading-h3').contains('Period 4 – 2021 / week 13')
 
           cy.get('.lbh-simple-pagination').within(() => {
-            cy.contains('a', 'Period 4 - 2021 / week 12').should('exist')
-            cy.contains('a', 'Period 1 - 2022 / week 1').should('not.exist')
+            cy.contains('a', 'Period 4 – 2021 / week 12').should('exist')
+            cy.contains('a', 'Period 1 – 2022 / week 1').should('not.exist')
           })
         })
       })

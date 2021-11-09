@@ -3,8 +3,37 @@ import dayjs from '@/utils/date'
 import { wrap } from '@/utils/number'
 
 export default class Week {
+  static get first() {
+    return dayjs(process.env.NEXT_PUBLIC_FIRST_WEEK)
+  }
+
+  static get last() {
+    return dayjs(process.env.NEXT_PUBLIC_LAST_WEEK)
+  }
+
   static get current() {
-    return dayjs().startOf('week')
+    const current = dayjs().startOf('week')
+    return this.max(this.first, current).toISODate()
+  }
+
+  static default(bonusPeriod) {
+    const startAt = dayjs(bonusPeriod)
+    const endAt = startAt.add(BonusPeriod.DURATION, 'weeks')
+    const current = dayjs(this.current)
+
+    if (current.isAfter(startAt)) {
+      if (current.isBefore(endAt)) {
+        return this.current
+      } else {
+        return bonusPeriod
+      }
+    } else {
+      return bonusPeriod
+    }
+  }
+
+  static max(a, b) {
+    return a.isBefore(b) ? b : a
   }
 
   constructor(attrs) {
@@ -20,7 +49,7 @@ export default class Week {
   }
 
   get description() {
-    return `Period ${this.bonusPeriod.number} - ${this.bonusPeriod.year} / week ${this.number}`
+    return `${this.bonusPeriod.description} / week ${this.number}`
   }
 
   get previousDescription() {
@@ -34,7 +63,7 @@ export default class Week {
         ? this.bonusPeriod.year - 1
         : this.bonusPeriod.year
 
-    return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
+    return `Period ${periodNumber} – ${periodYear} / week ${weekNumber}`
   }
 
   get nextDescription() {
@@ -48,19 +77,27 @@ export default class Week {
         ? this.bonusPeriod.year + 1
         : this.bonusPeriod.year
 
-    return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
+    return `Period ${periodNumber} – ${periodYear} / week ${weekNumber}`
   }
 
   get dateRange() {
-    if (this.next.month() > this.month) {
-      return `${this.startAt.format('D MMMM')} - ${this.endAt.format('D MMMM')}`
+    if (this.endAt.month() === this.startAt.month()) {
+      return `${this.startAt.format('D')} – ${this.endAt.format('D MMM')}`
     } else {
-      return `${this.startAt.format('D')} - ${this.endAt.format('D MMMM')}`
+      return `${this.startAt.format('D MMM')} – ${this.endAt.format('D MMM')}`
     }
   }
 
   get endAt() {
     return this.next.subtract(1, 'millisecond')
+  }
+
+  get first() {
+    return Week.first
+  }
+
+  get last() {
+    return Week.last
   }
 
   get previous() {
@@ -77,6 +114,14 @@ export default class Week {
 
   get nextDate() {
     return this.next.toISODate()
+  }
+
+  get isFirst() {
+    return this.first.isSameOrAfter(this.startAt)
+  }
+
+  get isLast() {
+    return this.last.isSameOrBefore(this.startAt)
   }
 
   get isClosed() {

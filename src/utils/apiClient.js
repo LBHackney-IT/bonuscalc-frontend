@@ -1,7 +1,7 @@
 import axios from 'axios'
 import useSWR, { mutate } from 'swr'
 import { StatusCodes } from 'http-status-codes'
-import { Operative, Timesheet, PayElementType } from '@/models'
+import { Operative, Timesheet, PayElementType, Summary } from '@/models'
 
 const client = axios.create({ baseURL: '/api/v1' })
 
@@ -54,6 +54,25 @@ export const usePayElementTypes = () => {
     payElementTypes: data
       ? data.map((payElementType) => new PayElementType(payElementType))
       : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const summaryUrl = (payrollNumber, bonusPeriod) => {
+  return `/operatives/${encodeURIComponent(
+    payrollNumber
+  )}/summary?bonusPeriod=${encodeURIComponent(bonusPeriod)}`
+}
+
+export const useSummary = (payrollNumber, bonusPeriod) => {
+  const { data, error } = useSWR(
+    summaryUrl(payrollNumber, bonusPeriod),
+    fetcher
+  )
+
+  return {
+    summary: data ? new Summary(data) : null,
     isLoading: !error && !data,
     isError: error,
   }

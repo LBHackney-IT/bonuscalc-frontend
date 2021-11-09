@@ -3,6 +3,7 @@ import BackButton from '@/components/BackButton'
 import EditNonProductive from '@/components/EditNonProductive'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
+import { BonusPeriod } from '@/models'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 import {
   useOperative,
@@ -52,13 +53,15 @@ const OperativePage = ({ query }) => {
       <NotFound message={`Couldn\u2019t fetch the list of pay element types`} />
     )
 
+  const bonusPeriod = BonusPeriod.forWeek(week)
+  const baseUrl = `/operatives/${operative.id}`
+  const backUrl = `${baseUrl}/timesheets/${week}/non-productive`
+
+  const context = { operative, timesheet, payElementTypes, week, bonusPeriod }
+
   return (
-    <PageContext.Provider
-      value={{ operative, timesheet, payElementTypes, week }}
-    >
-      <BackButton
-        href={`/operatives/${payrollNumber}/timesheets/${week}/non-productive`}
-      />
+    <PageContext.Provider value={context}>
+      <BackButton href={backUrl} />
       <EditNonProductive />
     </PageContext.Provider>
   )

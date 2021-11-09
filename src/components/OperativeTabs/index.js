@@ -5,12 +5,12 @@ import PageContext from '@/components/PageContext'
 import { useContext } from 'react'
 
 const OperativeTabs = ({ current, children }) => {
-  const { operative, week } = useContext(PageContext)
+  const { operative, week, bonusPeriod } = useContext(PageContext)
 
   const tabs = [
     {
       content: 'Summary',
-      href: `/operatives/${operative.id}`,
+      href: `/operatives/${operative.id}/summaries/${bonusPeriod}`,
     },
     {
       content: 'Productive (P)',

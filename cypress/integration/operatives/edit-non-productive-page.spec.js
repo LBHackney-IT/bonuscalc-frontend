@@ -87,8 +87,8 @@ describe('Non-productive page', () => {
         })
 
         cy.get('.lbh-heading-h3').within(() => {
-          cy.contains('Period 3 - 2021 / week 12')
-          cy.contains('(18 - 24 October)')
+          cy.contains('Period 3 – 2021 / week 12')
+          cy.contains('(18 – 24 Oct)')
         })
 
         cy.audit()
@@ -128,14 +128,14 @@ describe('Non-productive page', () => {
 
         cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-simple-pagination')
-            .contains('a', 'Period 3 - 2021 / week 13')
+            .contains('a', 'Period 3 – 2021 / week 13')
             .click()
         })
 
         cy.wait('@get_next_week')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 13')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
               '/operatives/123456/timesheets/2021-10-25/non-productive'

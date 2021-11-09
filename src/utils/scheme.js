@@ -33,3 +33,9 @@ export const smvPerHour = (operative, payElementType) => {
     return 0
   }
 }
+
+export const bandForValue = (payBands, value) => {
+  return payBands.reduce((band, payBand) => {
+    return payBand.value > value ? band : payBand.band
+  }, 1)
+}
