@@ -1,0 +1,143 @@
+{
+  "id": "123456/2021-08-02",
+  "bonusPeriod": {
+    "id": "2021-08-02",
+    "startAt": "2021-08-01T23:00:00Z",
+    "year": 2021,
+    "number": 3,
+    "closedAt": null
+  },
+  "weeklySummaries": [
+    {
+      "number": 1,
+      "startAt": "2021-08-01T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 2620.20,
+      "nonProductiveDuration": 14.25,
+      "nonProductiveValue": 1453.80,
+      "totalValue": 4074.00,
+      "projectedValue": 4074.00
+    },
+    {
+      "number": 2,
+      "startAt": "2021-08-08T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.00,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 739.80,
+      "projectedValue": 2406.90
+    },
+    {
+      "number": 3,
+      "startAt": "2021-08-15T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 1960.20,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 2700.00,
+      "projectedValue": 2504.60
+    },
+    {
+      "number": 4,
+      "startAt": "2021-08-22T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.00,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 739.80,
+      "projectedValue": 2063.40
+    },
+    {
+      "number": 5,
+      "startAt": "2021-08-29T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 3289.80,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 4029.60,
+      "projectedValue": 2456.64
+    },
+    {
+      "number": 6,
+      "startAt": "2021-09-05T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 6840.00,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 7579.80,
+      "projectedValue": 3310.50
+    },
+    {
+      "number": 7,
+      "startAt": "2021-09-12T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 397.20,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 1137.00,
+      "projectedValue": 3000.00
+
+    },
+    {
+      "number": 8,
+      "startAt": "2021-09-19T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 3265.80,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 4005.60,
+      "projectedValue": 3125.70
+    },
+    {
+      "number": 9,
+      "startAt": "2021-09-26T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.00,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 739.80,
+      "projectedValue": 2860.60
+    },
+    {
+      "number": 10,
+      "startAt": "2021-10-03T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.00,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.80,
+      "totalValue": 739.80,
+      "projectedValue": 2648.52
+    },
+    {
+      "number": 11,
+      "startAt": "2021-10-10T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.00,
+      "nonProductiveDuration": 14.50,
+      "nonProductiveValue": 1479.00,
+      "totalValue": 1479.00,
+      "projectedValue": 2542.20
+    },
+    {
+      "number": 12,
+      "startAt": "2021-10-17T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.00,
+      "nonProductiveDuration": 36.00,
+      "nonProductiveValue": 3672.00,
+      "totalValue": 3672.00,
+      "projectedValue": 2636.35
+    },
+    {
+      "number": 13,
+      "startAt": "2021-10-24T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 5626.20,
+      "nonProductiveDuration": 28.75,
+      "nonProductiveValue": 2832.60,
+      "totalValue": 8458.80,
+      "projectedValue": 3084.23
+    }
+  ]
+}

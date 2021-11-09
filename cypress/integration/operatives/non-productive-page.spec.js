@@ -111,7 +111,10 @@ describe('Non-productive page', () => {
 
       it('Shows the week heading', () => {
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 12')
+          cy.get('.lbh-heading-h3').within(() => {
+            cy.contains('Period 3 – 2021 / week 12')
+            cy.get('.lbh-caption').contains('(18 – 24 Oct)')
+          })
         })
       })
 
@@ -126,14 +129,14 @@ describe('Non-productive page', () => {
 
         cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-simple-pagination')
-            .contains('a', 'Period 3 - 2021 / week 11')
+            .contains('a', 'Period 3 – 2021 / week 11')
             .click()
         })
 
         cy.wait('@get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 11')
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 11')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
               '/operatives/123456/timesheets/2021-10-11/non-productive'
@@ -156,11 +159,11 @@ describe('Non-productive page', () => {
         cy.wait('@get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 1')
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 1')
 
           cy.get('.lbh-simple-pagination').within(() => {
-            cy.contains('a', 'Period 2 - 2021 / week 13').should('not.exist')
-            cy.contains('a', 'Period 3 - 2021 / week 2').should('exist')
+            cy.contains('a', 'Period 2 – 2021 / week 13').should('not.exist')
+            cy.contains('a', 'Period 3 – 2021 / week 2').should('exist')
           })
         })
       })
@@ -176,14 +179,14 @@ describe('Non-productive page', () => {
 
         cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-simple-pagination')
-            .contains('a', 'Period 3 - 2021 / week 13')
+            .contains('a', 'Period 3 – 2021 / week 13')
             .click()
         })
 
         cy.wait('@get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 3 - 2021 / week 13')
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 13')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
               '/operatives/123456/timesheets/2021-10-25/non-productive'
@@ -206,16 +209,24 @@ describe('Non-productive page', () => {
         cy.wait('@get_timesheet')
 
         cy.get('.govuk-tabs__panel').within(() => {
-          cy.get('.lbh-heading-h3').contains('Period 4 - 2021 / week 13')
+          cy.get('.lbh-heading-h3').contains('Period 4 – 2021 / week 13')
 
           cy.get('.lbh-simple-pagination').within(() => {
-            cy.contains('a', 'Period 4 - 2021 / week 12').should('exist')
-            cy.contains('a', 'Period 1 - 2022 / week 1').should('not.exist')
+            cy.contains('a', 'Period 4 – 2021 / week 12').should('exist')
+            cy.contains('a', 'Period 1 – 2022 / week 1').should('not.exist')
           })
         })
       })
 
       it('Shows the summary of the pay elements for that week', () => {
+        cy.get('#non-productive-summary thead').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Pay element')
+            cy.get(':nth-child(2)').contains('Hours (AT)')
+            cy.get(':nth-child(3)').contains('SMVh')
+          })
+        })
+
         cy.get('#non-productive-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Dayworks')
@@ -230,18 +241,11 @@ describe('Non-productive page', () => {
           })
         })
 
-        cy.get('#adjustment-summary tbody').within(() => {
-          cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(1)').contains('1000000')
-            cy.get(':nth-child(2)').contains('Note about adjustment')
-            cy.get(':nth-child(4)').contains('0.40')
-          })
-        })
-
-        cy.get('#adjustment-summary tfoot').within(() => {
+        cy.get('#non-productive-summary tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('13.89')
+            cy.get(':nth-child(2)').contains('14.50')
+            cy.get(':nth-child(3)').contains('13.49')
           })
         })
       })
@@ -259,11 +263,20 @@ describe('Non-productive page', () => {
           cy.contains('a', 'Edit non-productive').should('exist')
 
           cy.get('.lbh-simple-pagination')
-            .contains('a', 'Period 3 - 2021 / week 11')
+            .contains('a', 'Period 3 – 2021 / week 11')
             .click()
           cy.wait('@get_timesheet')
 
           cy.contains('a', 'Edit non-productive').should('not.exist')
+        })
+      })
+
+      it('Allows the weekly report to be downloaded', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          const filename = '123456-0093-2021-3-12.pdf'
+
+          cy.contains('button', 'Download report').click()
+          cy.task('downloadExists', filename).should('equal', true)
         })
       })
     })

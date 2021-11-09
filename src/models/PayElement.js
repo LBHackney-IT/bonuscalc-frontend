@@ -33,7 +33,7 @@ export default class PayElement {
   }
 
   get isNonProductive() {
-    return !(this.isAdjustment || this.isProductive)
+    return this.payElementType.nonProductive
   }
 
   get description() {

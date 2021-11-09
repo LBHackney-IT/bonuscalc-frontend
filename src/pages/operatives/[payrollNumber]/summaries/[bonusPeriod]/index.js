@@ -2,15 +2,17 @@ import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
 import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
-import ProductiveSummary from '@/components/ProductiveSummary'
-import Spinner from '@/components/Spinner'
+import BonusPeriodSummary from '@/components/BonusPeriodSummary'
 import NotFound from '@/components/NotFound'
-import { BonusPeriod } from '@/models'
+import Spinner from '@/components/Spinner'
+import { Week } from '@/models'
+import { useOperative, useSummary } from '@/utils/apiClient'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
-import { useOperative, useTimesheet } from '@/utils/apiClient'
 
 const OperativePage = ({ query }) => {
-  const { payrollNumber, week } = query
+  const { payrollNumber, bonusPeriod } = query
+  const week = Week.default(bonusPeriod)
+
   const {
     operative,
     isLoading: isOperativeLoading,
@@ -18,10 +20,10 @@ const OperativePage = ({ query }) => {
   } = useOperative(payrollNumber)
 
   const {
-    timesheet,
-    isLoading: isTimesheetLoading,
-    isError: isTimesheetError,
-  } = useTimesheet(payrollNumber, week)
+    summary,
+    isLoading: isSummaryLoading,
+    isError: isSummaryError,
+  } = useSummary(payrollNumber, bonusPeriod)
 
   if (isOperativeLoading) return <Spinner />
   if (isOperativeError || !operative)
@@ -31,23 +33,22 @@ const OperativePage = ({ query }) => {
       />
     )
 
-  if (isTimesheetLoading) return <Spinner />
-  if (isTimesheetError || !timesheet)
+  if (isSummaryLoading) return <Spinner />
+  if (isSummaryError || !summary)
     return (
       <NotFound
-        message={`Couldn\u2019t find a timesheet for the week beginning ${week}.`}
+        message={`Couldn\u2019t find a summary for the bonus period beginning ${bonusPeriod}.`}
       />
     )
 
-  const bonusPeriod = BonusPeriod.forWeek(week)
-  const context = { operative, timesheet, week, bonusPeriod }
+  const context = { operative, summary, week, bonusPeriod }
 
   return (
     <PageContext.Provider value={context}>
       <BackButton href="/" />
       <OperativeSummary />
-      <OperativeTabs current={1}>
-        <ProductiveSummary />
+      <OperativeTabs current={0}>
+        <BonusPeriodSummary />
       </OperativeTabs>
     </PageContext.Provider>
   )

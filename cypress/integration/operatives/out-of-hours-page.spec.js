@@ -31,8 +31,16 @@ describe('Out of hours page', () => {
           { statusCode: 404, fixture: 'operatives/not_found.json' }
         ).as('get_operative')
 
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 404, fixture: 'timesheets/not_found.json' }
+        ).as('get_timesheet')
+
         cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours')
-        cy.wait('@get_operative')
+        cy.wait(['@get_operative', '@get_timesheet'])
       })
 
       it('Shows the not found message', () => {
@@ -52,8 +60,16 @@ describe('Out of hours page', () => {
           { statusCode: 200, fixture: 'operatives/electrician.json' }
         ).as('get_operative')
 
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
+        ).as('get_timesheet')
+
         cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours')
-        cy.wait('@get_operative')
+        cy.wait(['@get_operative', '@get_timesheet'])
       })
 
       it('Shows the operative summary', () => {
@@ -89,6 +105,115 @@ describe('Out of hours page', () => {
 
       it('Shows the out of hours tab', () => {
         cy.get('.govuk-tabs__list-item--selected').contains('Out of hours')
+      })
+
+      it('Shows the week heading', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').within(() => {
+            cy.contains('Period 3 – 2021 / week 12')
+            cy.get('.lbh-caption').contains('(18 – 24 Oct)')
+          })
+        })
+      })
+
+      it('Allows navigating to the previous week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-11',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-11.json' }
+        ).as('get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 – 2021 / week 11')
+            .click()
+        })
+
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 11')
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq(
+              '/operatives/123456/timesheets/2021-10-11/out-of-hours'
+            )
+          })
+        })
+      })
+
+      it('Hides the previous link when on the first week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-08-02',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-08-02.json' }
+        ).as('get_timesheet')
+
+        cy.visit('/operatives/123456/timesheets/2021-08-02/out-of-hours')
+
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 1')
+
+          cy.get('.lbh-simple-pagination').within(() => {
+            cy.contains('a', 'Period 2 – 2021 / week 13').should('not.exist')
+            cy.contains('a', 'Period 3 – 2021 / week 2').should('exist')
+          })
+        })
+      })
+
+      it('Allows navigating to the next week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-25',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-25.json' }
+        ).as('get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 – 2021 / week 13')
+            .click()
+        })
+
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 13')
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq(
+              '/operatives/123456/timesheets/2021-10-25/out-of-hours'
+            )
+          })
+        })
+      })
+
+      it('Hides the next link when on the last week', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2022-01-24',
+          },
+          { statusCode: 200, fixture: 'timesheets/2022-01-24.json' }
+        ).as('get_timesheet')
+
+        cy.visit('/operatives/123456/timesheets/2022-01-24/out-of-hours')
+
+        cy.wait('@get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.get('.lbh-heading-h3').contains('Period 4 – 2021 / week 13')
+
+          cy.get('.lbh-simple-pagination').within(() => {
+            cy.contains('a', 'Period 4 – 2021 / week 12').should('exist')
+            cy.contains('a', 'Period 1 – 2022 / week 1').should('not.exist')
+          })
+        })
       })
     })
   })

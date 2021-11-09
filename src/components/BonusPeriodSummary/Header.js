@@ -3,14 +3,14 @@ import { useContext } from 'react'
 
 const Header = () => {
   const {
-    timesheet: { week },
+    summary: { bonusPeriod },
   } = useContext(PageContext)
 
   return (
     <h3 className="lbh-heading-h3">
-      {week.description}
+      {bonusPeriod.description}
       <span className="govuk-caption-m lbh-caption govuk-!-display-inline-block govuk-!-margin-left-3">
-        ({week.dateRange})
+        ({bonusPeriod.dateRange})
       </span>
     </h3>
   )
