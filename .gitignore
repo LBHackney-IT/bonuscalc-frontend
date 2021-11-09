@@ -38,6 +38,7 @@ db.json
 .vercel
 
 # cypress
+cypress/downloads
 cypress/screenshots
 cypress/videos
 cypress/reports

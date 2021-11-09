@@ -1,6 +1,14 @@
 import PayElement from './PayElement'
 import Week from './Week'
 
+const totalDuration = (total, pe) => {
+  return total + pe.duration
+}
+
+const totalValue = (total, pe) => {
+  return total + pe.value
+}
+
 export default class Timesheet {
   constructor(attrs) {
     this.id = attrs.id
@@ -46,11 +54,15 @@ export default class Timesheet {
   }
 
   get adjustmentTotal() {
-    return this.adjustmentPayElements.reduce((sum, pe) => sum + pe.value, 0)
+    return this.adjustmentPayElements.reduce(totalValue, 0)
+  }
+
+  get nonProductiveDuration() {
+    return this.nonProductivePayElements.reduce(totalDuration, 0)
   }
 
   get nonProductiveTotal() {
-    return this.nonProductivePayElements.reduce((sum, pe) => sum + pe.value, 0)
+    return this.nonProductivePayElements.reduce(totalValue, 0)
   }
 
   get nonProductiveAndAdjustmentTotal() {
@@ -58,6 +70,6 @@ export default class Timesheet {
   }
 
   get productiveTotal() {
-    return this.productivePayElements.reduce((sum, pe) => sum + pe.value, 0)
+    return this.productivePayElements.reduce(totalValue, 0)
   }
 }
