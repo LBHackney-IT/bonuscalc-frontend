@@ -1,0 +1,11 @@
+{
+  "id": "123456/2021-08-02",
+  "bonusPeriod": {
+    "id": "2021-08-02",
+    "startAt": "2021-08-01T23:00:00Z",
+    "year": 2021,
+    "number": 3,
+    "closedAt": null
+  },
+  "weeklySummaries": []
+}

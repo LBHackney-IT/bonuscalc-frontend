@@ -54,18 +54,28 @@ describe('Search page', () => {
 
     context('When an operative exists', () => {
       it('Redirects to the operative page', () => {
+        cy.clock(new Date('2021-10-27T09:00:00Z'))
+
         cy.intercept(
           { method: 'GET', path: '/api/v1/operatives/123456' },
           { statusCode: 200, fixture: 'operatives/electrician.json' }
         ).as('get_operative')
 
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/summary?bonusPeriod=2021-08-02',
+          },
+          { statusCode: 200, fixture: 'summaries/2021-08-02.json' }
+        ).as('get_summary')
+
         cy.get('#payroll-number').clear().type('123456')
         cy.get('#search-button').click()
 
-        cy.wait('@get_operative')
+        cy.wait(['@get_operative', '@get_summary'])
 
         cy.location().should((loc) => {
-          expect(loc.pathname).to.eq('/operatives/123456')
+          expect(loc.pathname).to.eq('/operatives/123456/summaries/2021-08-02')
         })
 
         cy.get('.lbh-heading-h2').within(() => {

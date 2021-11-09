@@ -1,0 +1,7 @@
+{
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+  "title": "Not Found",
+  "status": 404,
+  "detail": "The requested summary was not found",
+  "instance": "/api/v2/operatives/123456/summary"
+}

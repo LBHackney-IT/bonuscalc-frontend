@@ -5,7 +5,7 @@ import 'cypress-audit/commands'
 describe('Summary page', () => {
   context('When not logged in', () => {
     it('Redirects to the sign in page', () => {
-      cy.visit('/operatives/123456')
+      cy.visit('/operatives/123456/summaries/2021-08-02')
 
       cy.get('.lbh-header__service-name').contains('DLO Bonus Scheme')
       cy.get('.lbh-header__title-link').should('have.attr', 'href', '/')
@@ -31,8 +31,16 @@ describe('Summary page', () => {
           { statusCode: 404, fixture: 'operatives/not_found.json' }
         ).as('get_operative')
 
-        cy.visit('/operatives/123456')
-        cy.wait('@get_operative')
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/summary?bonusPeriod=2021-08-02',
+          },
+          { statusCode: 404, fixture: 'summaries/not_found.json' }
+        ).as('get_summary')
+
+        cy.visit('/operatives/123456/summaries/2021-08-02')
+        cy.wait(['@get_operative', '@get_summary'])
       })
 
       it('Shows the not found message', () => {
@@ -52,8 +60,16 @@ describe('Summary page', () => {
           { statusCode: 200, fixture: 'operatives/electrician.json' }
         ).as('get_operative')
 
-        cy.visit('/operatives/123456')
-        cy.wait('@get_operative')
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/summary?bonusPeriod=2021-08-02',
+          },
+          { statusCode: 200, fixture: 'summaries/2021-08-02.json' }
+        ).as('get_summary')
+
+        cy.visit('/operatives/123456/summaries/2021-08-02')
+        cy.wait(['@get_operative', '@get_summary'])
       })
 
       it('Shows the operative summary', () => {

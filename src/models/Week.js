@@ -16,6 +16,22 @@ export default class Week {
     return this.max(this.first, current).toISODate()
   }
 
+  static default(bonusPeriod) {
+    const startAt = dayjs(bonusPeriod)
+    const endAt = startAt.add(BonusPeriod.DURATION, 'weeks')
+    const current = dayjs(this.current)
+
+    if (current.isAfter(startAt)) {
+      if (current.isBefore(endAt)) {
+        return this.current
+      } else {
+        return bonusPeriod
+      }
+    } else {
+      return bonusPeriod
+    }
+  }
+
   static max(a, b) {
     return a.isBefore(b) ? b : a
   }
