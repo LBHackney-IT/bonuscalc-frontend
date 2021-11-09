@@ -3,5 +3,5 @@
   "title": "Not Found",
   "status": 404,
   "detail": "The requested timesheet was not found",
-  "instance": "/api/v2/operatives/123456/timesheets"
+  "instance": "/api/v2/operatives/123456/timesheet"
 }
