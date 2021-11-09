@@ -3,8 +3,21 @@ import dayjs from '@/utils/date'
 import { wrap } from '@/utils/number'
 
 export default class Week {
+  static get first() {
+    return dayjs(process.env.NEXT_PUBLIC_FIRST_WEEK)
+  }
+
+  static get last() {
+    return dayjs(process.env.NEXT_PUBLIC_LAST_WEEK)
+  }
+
   static get current() {
-    return dayjs().startOf('week')
+    const current = dayjs().startOf('week')
+    return this.max(this.first, current).toISODate()
+  }
+
+  static max(a, b) {
+    return a.isBefore(b) ? b : a
   }
 
   constructor(attrs) {
@@ -63,6 +76,14 @@ export default class Week {
     return this.next.subtract(1, 'millisecond')
   }
 
+  get first() {
+    return Week.first
+  }
+
+  get last() {
+    return Week.last
+  }
+
   get previous() {
     return this.startAt.subtract(1, 'week')
   }
@@ -77,6 +98,14 @@ export default class Week {
 
   get nextDate() {
     return this.next.toISODate()
+  }
+
+  get isFirst() {
+    return this.first.isSameOrAfter(this.startAt)
+  }
+
+  get isLast() {
+    return this.last.isSameOrBefore(this.startAt)
   }
 
   get isClosed() {
