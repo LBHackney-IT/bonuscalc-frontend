@@ -47,7 +47,9 @@ const OperativePage = ({ query }) => {
     <PageContext.Provider value={context}>
       <BackButton href="/" />
       <OperativeSummary />
-      <OperativeTabs current={0} />
+      <OperativeTabs current={0}>
+        <BonusPeriodSummary />
+      </OperativeTabs>
     </PageContext.Provider>
   )
 }
