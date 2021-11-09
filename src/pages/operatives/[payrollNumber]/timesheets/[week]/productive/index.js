@@ -5,6 +5,7 @@ import OperativeTabs from '@/components/OperativeTabs'
 import ProductiveSummary from '@/components/ProductiveSummary'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
+import { BonusPeriod } from '@/models'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 import { useOperative, useTimesheet } from '@/utils/apiClient'
 
@@ -38,8 +39,11 @@ const OperativePage = ({ query }) => {
       />
     )
 
+  const bonusPeriod = BonusPeriod.forWeek(week)
+  const context = { operative, timesheet, week, bonusPeriod }
+
   return (
-    <PageContext.Provider value={{ operative, timesheet, week }}>
+    <PageContext.Provider value={context}>
       <BackButton href="/" />
       <OperativeSummary />
       <OperativeTabs current={1}>

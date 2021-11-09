@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import updateLocale from 'dayjs/plugin/updateLocale'
@@ -12,6 +13,7 @@ dayjs.extend(function (o, c) {
 
 dayjs.locale('en-gb')
 
+dayjs.extend(duration)
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 dayjs.extend(updateLocale)
