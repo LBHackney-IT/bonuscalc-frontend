@@ -20,7 +20,7 @@ export default class Week {
   }
 
   get description() {
-    return `Period ${this.bonusPeriod.number} - ${this.bonusPeriod.year} / week ${this.number}`
+    return `${this.bonusPeriod.description} / week ${this.number}`
   }
 
   get previousDescription() {
@@ -34,7 +34,7 @@ export default class Week {
         ? this.bonusPeriod.year - 1
         : this.bonusPeriod.year
 
-    return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
+    return `Period ${periodNumber} – ${periodYear} / week ${weekNumber}`
   }
 
   get nextDescription() {
@@ -48,14 +48,14 @@ export default class Week {
         ? this.bonusPeriod.year + 1
         : this.bonusPeriod.year
 
-    return `Period ${periodNumber} - ${periodYear} / week ${weekNumber}`
+    return `Period ${periodNumber} – ${periodYear} / week ${weekNumber}`
   }
 
   get dateRange() {
-    if (this.next.month() > this.month) {
-      return `${this.startAt.format('D MMMM')} - ${this.endAt.format('D MMMM')}`
+    if (this.endAt.month() === this.startAt.month()) {
+      return `${this.startAt.format('D')} – ${this.endAt.format('D MMM')}`
     } else {
-      return `${this.startAt.format('D')} - ${this.endAt.format('D MMMM')}`
+      return `${this.startAt.format('D MMM')} – ${this.endAt.format('D MMM')}`
     }
   }
 

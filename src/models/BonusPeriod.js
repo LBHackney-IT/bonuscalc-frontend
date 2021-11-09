@@ -8,4 +8,8 @@ export default class BonusPeriod {
     this.startAt = dayjs(attrs.startAt)
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
   }
+
+  get description() {
+    return `Period ${this.number} – ${this.year}`
+  }
 }
