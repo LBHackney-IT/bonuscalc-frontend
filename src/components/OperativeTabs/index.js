@@ -24,6 +24,10 @@ const OperativeTabs = ({ current, children }) => {
       content: 'Out of hours',
       href: `/operatives/${operative.id}/timesheets/${week}/out-of-hours`,
     },
+    {
+      content: 'Overtime',
+      href: `/operatives/${operative.id}/timesheets/${week}/overtime`,
+    },
   ]
 
   return (
