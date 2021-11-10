@@ -38,4 +38,3 @@ describe('Scheme functions', () => {
     })
   })
 })
-

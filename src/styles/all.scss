@@ -1,5 +1,6 @@
 @import 'lbh-frontend/lbh/all';
 @import 'environments';
+@import 'bonus-summary';
 @import 'pay-elements';
 
 /* Bug fixes - remove when fixed in lbh-frontend */
@@ -40,6 +41,8 @@
   }
 }
 
+/* Custom widths */
+
 .govuk-\!-width-four-tenths {
   width: 40% !important;
 }
@@ -54,6 +57,25 @@
 
 .govuk-\!-width-one-tenth {
   width: 10% !important;
+}
+
+/* Table customisations */
+
+.govuk-table-s {
+  td,
+  th {
+    @include lbh-body-s;
+  }
+}
+
+.govuk-table {
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
 }
 
 .govuk-table__foot {

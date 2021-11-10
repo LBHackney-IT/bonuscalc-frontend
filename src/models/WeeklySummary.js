@@ -12,6 +12,10 @@ export default class WeeklySummary {
     this.projectedValue = attrs.projectedValue
   }
 
+  get weekId() {
+    return this.startAt.toISODate()
+  }
+
   get description() {
     return this.startAt.format('DD/MM/YYYY')
   }

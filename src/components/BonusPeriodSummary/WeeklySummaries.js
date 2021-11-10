@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import PageContext from '@/components/PageContext'
 import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
 import { numberWithPrecision } from '@/utils/number'
@@ -6,7 +7,7 @@ import { useContext } from 'react'
 
 const WeeklySummaries = () => {
   const {
-    operative: { scheme, isUnitScheme, salaryBand },
+    operative: { id, scheme, isUnitScheme, salaryBand },
     summary: {
       hasWeeklySummaries,
       weeklySummaries,
@@ -18,30 +19,33 @@ const WeeklySummaries = () => {
     },
   } = useContext(PageContext)
 
+  const baseUrl = `/operatives/${id}/timesheets`
+
   return (
-    <Table id="weekly-summary">
+    <Table id="weekly-summary" className="govuk-!-margin-top-3">
       <THead>
         <TR>
-          <TH scope="col" colSpan="2" align="centre">
+          <TH scope="col" align="centre">
             Week
           </TH>
-          <TH scope="col" align="centre">
+          <TH scope="col" numeric={true}>
             {isUnitScheme ? 'Units\u00A0(P)' : 'SMVh\u00A0(P)'}
           </TH>
-          <TH scope="col" align="centre">
+          <TH scope="col" numeric={true}>
             {'Hours\u00A0(NP)'}
           </TH>
-          <TH scope="col" align="centre">
+          <TH scope="col" numeric={true}>
             {isUnitScheme ? 'Units\u00A0(NP)' : 'SMVh\u00A0(NP)'}
           </TH>
-          <TH scope="col" align="centre">
+          <TH scope="col" numeric={true}>
             {isUnitScheme ? 'Total\u00A0Units' : 'Total\u00A0SMVh'}
           </TH>
-          <TH scope="col" align="centre" width="one-tenth">
-            Band
-          </TH>
-          <TH scope="col" align="centre">
-            Projected
+          <TH scope="col" align="centre" width="two-tenths">
+            <div className="bc-summary-payband">
+              <span>Band</span>
+              <span> </span>
+              <span>Projected</span>
+            </div>
           </TH>
         </TR>
       </THead>
@@ -50,22 +54,39 @@ const WeeklySummaries = () => {
           <TBody>
             {weeklySummaries.map((ws, index) => (
               <TR key={index}>
-                <TD numeric={true}>{ws.number}</TD>
-                <TD align="right">{ws.description}</TD>
-                <TD numeric={true}>
-                  {numberWithPrecision(
-                    smvhOrUnits(scheme, ws.productiveValue),
-                    scheme.precision
-                  )}
+                <TD align="centre">
+                  <div className="bc-summary-week">
+                    <span>{ws.number}</span>
+                    <span> </span>
+                    <span>{ws.description}</span>
+                  </div>
                 </TD>
                 <TD numeric={true}>
-                  {numberWithPrecision(ws.nonProductiveDuration, 2)}
+                  <Link href={`${baseUrl}/${ws.weekId}/productive`}>
+                    <a className="lbh-link lbh-link--no-visited-state">
+                      {numberWithPrecision(
+                        smvhOrUnits(scheme, ws.productiveValue),
+                        scheme.precision
+                      )}
+                    </a>
+                  </Link>
                 </TD>
                 <TD numeric={true}>
-                  {numberWithPrecision(
-                    smvhOrUnits(scheme, ws.nonProductiveValue),
-                    scheme.precision
-                  )}
+                  <Link href={`${baseUrl}/${ws.weekId}/non-productive`}>
+                    <a className="lbh-link lbh-link--no-visited-state">
+                      {numberWithPrecision(ws.nonProductiveDuration, 2)}
+                    </a>
+                  </Link>
+                </TD>
+                <TD numeric={true}>
+                  <Link href={`${baseUrl}/${ws.weekId}/non-productive`}>
+                    <a className="lbh-link lbh-link--no-visited-state">
+                      {numberWithPrecision(
+                        smvhOrUnits(scheme, ws.nonProductiveValue),
+                        scheme.precision
+                      )}
+                    </a>
+                  </Link>
                 </TD>
                 <TD numeric={true}>
                   {numberWithPrecision(
@@ -74,17 +95,20 @@ const WeeklySummaries = () => {
                   )}
                 </TD>
                 <TD align="centre">
-                  {bandForValue(scheme.payBands, ws.totalValue)}
-                </TD>
-                <TD align="centre">
-                  {bandForValue(scheme.payBands, ws.projectedValue)}
+                  <div className="bc-summary-payband">
+                    <span>{bandForValue(scheme.payBands, ws.totalValue)}</span>
+                    <span> </span>
+                    <span>
+                      {bandForValue(scheme.payBands, ws.projectedValue)}
+                    </span>
+                  </div>
                 </TD>
               </TR>
             ))}
           </TBody>
           <TFoot>
             <TR>
-              <TH scope="row" colSpan="2" align="right">
+              <TH scope="row" align="right">
                 Totals
               </TH>
               <TD numeric={true}>
@@ -108,9 +132,12 @@ const WeeklySummaries = () => {
                   scheme.precision
                 )}
               </TD>
-              <TD align="centre">{salaryBand}</TD>
               <TD align="centre">
-                {bandForValue(scheme.payBands, projectedValue)}
+                <div className="bc-summary-payband">
+                  <span>{salaryBand}</span>
+                  <span>&rarr;</span>
+                  <span>{bandForValue(scheme.payBands, projectedValue)}</span>
+                </div>
               </TD>
             </TR>
           </TFoot>
@@ -118,7 +145,7 @@ const WeeklySummaries = () => {
       ) : (
         <TBody>
           <TR>
-            <TD colSpan="8">There are no weekly summaries for this period.</TD>
+            <TD colSpan="6">There are no weekly summaries for this period.</TD>
           </TR>
         </TBody>
       )}

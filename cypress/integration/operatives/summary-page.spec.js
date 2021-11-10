@@ -143,9 +143,7 @@ describe('Summary page', () => {
         cy.wait('@get_summary')
 
         cy.location().should((loc) => {
-          expect(loc.pathname).to.eq(
-            '/operatives/123456/summaries/2021-11-01'
-          )
+          expect(loc.pathname).to.eq('/operatives/123456/summaries/2021-11-01')
         })
 
         cy.get('.govuk-tabs__panel').within(() => {
@@ -181,43 +179,36 @@ describe('Summary page', () => {
             cy.get(':nth-child(3)').contains('Hours (NP)')
             cy.get(':nth-child(4)').contains('SMVh (NP)')
             cy.get(':nth-child(5)').contains('Total SMVh')
-            cy.get(':nth-child(6)').contains('Band')
-            cy.get(':nth-child(7)').contains('Projected')
+            cy.get(':nth-child(6)').contains('Band Projected')
           })
         })
 
         cy.get('#weekly-summary tbody').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(1)').contains('1')
-            cy.get(':nth-child(2)').contains('02/08/2021')
-            cy.get(':nth-child(3)').contains('43.67')
-            cy.get(':nth-child(4)').contains('14.25')
-            cy.get(':nth-child(5)').contains('24.23')
-            cy.get(':nth-child(6)').contains('67.90')
-            cy.get(':nth-child(7)').contains('7')
-            cy.get(':nth-child(8)').contains('7')
+            cy.get(':nth-child(1)').contains('1 02/08/2021')
+            cy.get(':nth-child(2)').contains('43.67')
+            cy.get(':nth-child(3)').contains('14.25')
+            cy.get(':nth-child(4)').contains('24.23')
+            cy.get(':nth-child(5)').contains('67.90')
+            cy.get(':nth-child(6)').contains('7 7')
           })
 
           cy.get('.govuk-table__row:nth-child(6)').within(() => {
-            cy.get(':nth-child(1)').contains('6')
-            cy.get(':nth-child(2)').contains('06/09/2021')
-            cy.get(':nth-child(3)').contains('114.00')
-            cy.get(':nth-child(4)').contains('7.25')
-            cy.get(':nth-child(5)').contains('12.33')
-            cy.get(':nth-child(6)').contains('126.33')
-            cy.get(':nth-child(7)').contains('9')
-            cy.get(':nth-child(8)').contains('3')
+            cy.get(':nth-child(1)').contains('6 06/09/2021')
+            cy.get(':nth-child(2)').contains('114.00')
+            cy.get(':nth-child(3)').contains('7.25')
+            cy.get(':nth-child(4)').contains('12.33')
+            cy.get(':nth-child(5)').contains('126.33')
+            cy.get(':nth-child(6)').contains('9 3')
           })
 
           cy.get('.govuk-table__row:nth-child(13)').within(() => {
-            cy.get(':nth-child(1)').contains('13')
-            cy.get(':nth-child(2)').contains('25/10/2021')
-            cy.get(':nth-child(3)').contains('93.77')
-            cy.get(':nth-child(4)').contains('28.75')
-            cy.get(':nth-child(5)').contains('47.21')
-            cy.get(':nth-child(6)').contains('140.98')
-            cy.get(':nth-child(7)').contains('9')
-            cy.get(':nth-child(8)').contains('2')
+            cy.get(':nth-child(1)').contains('13 25/10/2021')
+            cy.get(':nth-child(2)').contains('93.77')
+            cy.get(':nth-child(3)').contains('28.75')
+            cy.get(':nth-child(4)').contains('47.21')
+            cy.get(':nth-child(5)').contains('140.98')
+            cy.get(':nth-child(6)').contains('9 2')
           })
         })
 
@@ -228,8 +219,7 @@ describe('Summary page', () => {
             cy.get(':nth-child(3)').contains('158.75')
             cy.get(':nth-child(4)').contains('268.26')
             cy.get(':nth-child(5)').contains('668.25')
-            cy.get(':nth-child(6)').contains('5')
-            cy.get(':nth-child(7)').contains('2')
+            cy.get(':nth-child(6)').contains('5→2')
           })
         })
       })
