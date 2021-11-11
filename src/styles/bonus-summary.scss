@@ -1,0 +1,42 @@
+.bc-summary-week {
+  display: flex;
+  justify-content: center;
+
+  span {
+    margin: 0;
+  }
+
+  span:first-child {
+    text-align: right;
+    width: 25px;
+  }
+
+  span:nth-child(2) {
+    width: 15px;
+  }
+}
+
+.bc-summary-payband {
+  display: flex;
+  justify-content: center;
+
+  span {
+    margin: 0;
+    width: 100px;
+  }
+
+  span:nth-child(2) {
+    width: 30px;
+    margin: 0 -15px;
+  }
+}
+
+.govuk-table {
+  tfoot {
+    .bc-summary-payband {
+      span:nth-child(2) {
+        @include lbh-rem(font-size, 24);
+      }
+    }
+  }
+}
