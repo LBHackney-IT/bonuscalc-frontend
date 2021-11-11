@@ -222,7 +222,7 @@ describe('Non-productive page', () => {
         cy.get('#non-productive-summary thead').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Pay element')
-            cy.get(':nth-child(2)').contains('Hours (AT)')
+            cy.get(':nth-child(2)').contains('Hours')
             cy.get(':nth-child(3)').contains('SMVh')
           })
         })
