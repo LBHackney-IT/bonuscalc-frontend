@@ -223,6 +223,15 @@ describe('Summary page', () => {
           })
         })
       })
+
+      it('Allows the summary report to be downloaded', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          const filename = '123456-0092-2021-3.pdf'
+
+          cy.contains('button', 'Download report').click()
+          cy.task('downloadExists', filename).should('equal', true)
+        })
+      })
     })
   })
 })
