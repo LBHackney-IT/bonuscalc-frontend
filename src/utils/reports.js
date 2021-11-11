@@ -1,5 +1,5 @@
 import { numberWithPrecision } from '@/utils/number'
-import { smvhOrUnits } from '@/utils/scheme'
+import { smvhOrUnits, bandForValue } from '@/utils/scheme'
 import { truncate } from '@/utils/string'
 import { SVGPathData } from 'svg-pathdata'
 import { jsPDF } from 'jspdf'
@@ -88,7 +88,7 @@ const drawLogo = (pdf) => {
   drawSVGPath(pdf, LOGO, [154.3, 16.3], [0.2, 0.2])
 }
 
-const drawSummary = (pdf, operative, timesheet) => {
+const drawWeeklyOperativeSummary = (pdf, operative, timesheet) => {
   const { week } = timesheet
   const { bonusPeriod } = week
 
@@ -133,7 +133,7 @@ const drawSummary = (pdf, operative, timesheet) => {
   pdf.text(`${week.number}`, 136.0, 66.2)
 }
 
-const drawNonProductiveTime = (pdf, operative, timesheet) => {
+const drawWeeklyNonProductiveTime = (pdf, operative, timesheet) => {
   const originX = 17.7
   const originY = 76.6
   const width = 174.6
@@ -279,7 +279,7 @@ const drawNonProductiveTime = (pdf, operative, timesheet) => {
   pdf.text('Total', x, y, { align: 'right' })
 }
 
-const drawProductiveTime = (pdf, operative, timesheet) => {
+const drawWeeklyProductiveTime = (pdf, operative, timesheet) => {
   const {
     hasNonProductivePayElements,
     nonProductivePayElements,
@@ -463,6 +463,278 @@ const drawProductiveTime = (pdf, operative, timesheet) => {
   pdf.text('Total', x, y, { align: 'right' })
 }
 
+const drawOperativeSummary = (pdf, operative) => {
+  pdf.setFont('OpenSans', 'normal', 700)
+  pdf.setFontSize(24)
+  pdf.text('Bonus – Summary Report', 15.7, 22.2)
+
+  pdf.setFontSize(18)
+  pdf.text(operative.name, 17.7, 32.2)
+
+  pdf.setFillColor(223)
+  pdf.setLineWidth(0.3)
+  pdf.rect(14.3, 35.5, 181.4, 23.9, 'FD')
+
+  pdf.setFont('OpenSans', 'normal', 600)
+  pdf.setFontSize(10)
+
+  pdf.text('Employee No:', 17.7, 42.6)
+  pdf.text('Trade:', 17.7, 48.5)
+  pdf.text('Salary Band:', 17.7, 54.4)
+
+  pdf.text('Section / Team:', 107.6, 42.6)
+  pdf.text('Scheme:', 107.6, 48.5)
+  pdf.text('Fixed Band:', 107.6, 54.4)
+
+  pdf.setFont('OpenSans', 'normal', 400)
+
+  pdf.text(`${operative.id}`, 45.0, 42.6)
+  pdf.text(`${operative.tradeDescription}`, 45.0, 48.5)
+  pdf.text(`${operative.salaryBand}`, 45.0, 54.4)
+
+  pdf.text(`${operative.section}`, 136.0, 42.6)
+  pdf.text(`${operative.schemeDescription}`, 136.0, 48.5)
+  pdf.text(`${operative.fixedBand ? 'Yes' : 'No'}`, 136.0, 54.4)
+}
+
+const drawBonusSummary = (pdf, operative, summary) => {
+  const originX = 17.7
+  const originY = 64.4
+  const width = 174.6
+  const lineHeight = 5.8
+
+  const {
+    bonusPeriod,
+    weeklySummaries,
+    totalNonProductiveValue,
+    totalNonProductiveDuration,
+    totalProductiveValue,
+    totalValueForBonusPeriod,
+    projectedValue,
+  } = summary
+
+  const { scheme } = operative
+  const { payBands } = scheme
+
+  let x, y, x1, y1, x2, y2, text, value
+
+  pdf.setFillColor(223)
+  pdf.rect(originX, originY, 36.2, 7.0, 'F')
+
+  pdf.setFont('OpenSans', 'normal', 700)
+  pdf.setFontSize(14)
+
+  text = `Period ${bonusPeriod.number}, ${bonusPeriod.year}`
+  pdf.text(text, 18.8, 69.7)
+
+  pdf.setFont('OpenSans', 'normal', 600)
+  pdf.setFontSize(9)
+
+  x = originX + 7.9
+  y = originY + 14.2
+
+  pdf.text('Week', x, y, { align: 'center' })
+
+  x = originX + 27.5
+  y = originY + 14.2
+
+  pdf.text('Starting on', x, y, { align: 'center' })
+
+  x = originX + 50.8
+  y = originY + 14.2
+
+  pdf.text('SMVh (P)', x, y, { align: 'center' })
+
+  x = originX + 73.6
+  y = originY + 14.2
+
+  pdf.text('Hours (NP)', x, y, { align: 'center' })
+
+  x = originX + 97.9
+  y = originY + 14.2
+
+  pdf.text('SMVh (NP)', x, y, { align: 'center' })
+
+  x = originX + 121.1
+  y = originY + 14.2
+
+  pdf.text('Total SMVh', x, y, { align: 'center' })
+
+  x = originX + 144.1
+  y = originY + 14.2
+
+  pdf.text('Band', x, y, { align: 'center' })
+
+  x = originX + 162.2
+  y = originY + 14.2
+
+  pdf.text('Projected', x, y, { align: 'center' })
+
+  pdf.setLineWidth(0.3)
+
+  x1 = originX
+  y1 = originY + 16.5
+  x2 = originX + width
+  y2 = originY + 16.5
+
+  pdf.line(x1, y1, x2, y2, 'S')
+
+  pdf.setFont('OpenSans', 'normal', 400)
+  pdf.setLineWidth(0.1)
+
+  let row = 0
+
+  weeklySummaries.forEach((weeklySummary) => {
+    row = row + 1
+
+    x = originX + 7.9
+    y = originY + 14.5 + lineHeight * row
+    text = `${weeklySummary.number}`
+
+    pdf.text(text, x, y, { align: 'center' })
+
+    x = originX + 27.5
+    y = originY + 14.5 + lineHeight * row
+
+    pdf.text(weeklySummary.description, x, y, { align: 'center' })
+
+    x = originX + 55.9
+    y = originY + 14.5 + lineHeight * row
+
+    value = smvhOrUnits(scheme, weeklySummary.productiveValue)
+    text = numberWithPrecision(value, 2)
+    pdf.text(text, x, y, { align: 'right' })
+
+    x = originX + 78.8
+    y = originY + 14.5 + lineHeight * row
+
+    text = numberWithPrecision(weeklySummary.nonProductiveDuration, 2)
+    pdf.text(text, x, y, { align: 'right' })
+
+    x = originX + 103.0
+    y = originY + 14.5 + lineHeight * row
+
+    value = smvhOrUnits(scheme, weeklySummary.nonProductiveValue)
+    text = numberWithPrecision(value, 2)
+    pdf.text(text, x, y, { align: 'right' })
+
+    x = originX + 126.2
+    y = originY + 14.5 + lineHeight * row
+
+    value = smvhOrUnits(scheme, weeklySummary.totalValue)
+    text = numberWithPrecision(value, 2)
+    pdf.text(text, x, y, { align: 'right' })
+
+    x = originX + 144.1
+    y = originY + 14.5 + lineHeight * row
+
+    text = `${bandForValue(payBands, weeklySummary.totalValue)}`
+    pdf.text(text, x, y, { align: 'center' })
+
+    x = originX + 162.2
+    y = originY + 14.5 + lineHeight * row
+
+    text = `${bandForValue(payBands, weeklySummary.projectedValue)}`
+    pdf.text(text, x, y, { align: 'center' })
+
+    x1 = originX
+    y1 = originY + 16.5 + lineHeight * row
+    x2 = originX + width
+    y2 = originY + 16.5 + lineHeight * row
+
+    pdf.line(x1, y1, x2, y2, 'S')
+  })
+
+  row = row + 1
+
+  pdf.setFont('OpenSans', 'normal', 600)
+  pdf.setFontSize(9)
+
+  x = originX + 35.9
+  y = originY + 15.5 + lineHeight * row
+
+  pdf.text('Totals', x, y, { align: 'right' })
+
+  x = originX + 55.9
+  y = originY + 15.5 + lineHeight * row
+
+  value = smvhOrUnits(scheme, totalProductiveValue)
+  text = numberWithPrecision(value, 2)
+  pdf.text(text, x, y, { align: 'right' })
+
+  x = originX + 78.8
+  y = originY + 15.5 + lineHeight * row
+
+  text = numberWithPrecision(totalNonProductiveDuration, 2)
+  pdf.text(text, x, y, { align: 'right' })
+
+  x = originX + 103.0
+  y = originY + 15.5 + lineHeight * row
+
+  value = smvhOrUnits(scheme, totalNonProductiveValue)
+  text = numberWithPrecision(value, 2)
+  pdf.text(text, x, y, { align: 'right' })
+
+  x = originX + 126.2
+  y = originY + 15.5 + lineHeight * row
+
+  value = smvhOrUnits(scheme, totalValueForBonusPeriod)
+  text = numberWithPrecision(value, 2)
+  pdf.text(text, x, y, { align: 'right' })
+
+  x = originX + 144.1
+  y = originY + 15.5 + lineHeight * row
+
+  text = `${operative.salaryBand}`
+  pdf.text(text, x, y, { align: 'center' })
+
+  x = originX + 162.2
+  y = originY + 15.5 + lineHeight * row
+
+  text = `${bandForValue(payBands, projectedValue)}`
+  pdf.text(text, x, y, { align: 'center' })
+
+  x = originX + 153.4
+  y = originY + 15.5 + lineHeight * row
+
+  x1 = originX + 19.2
+  y1 = originY + 18.6 + lineHeight * row
+  x2 = originX + 135.2
+  y2 = originY + 18.6 + lineHeight * row
+
+  pdf.line(x1, y1, x2, y2, 'S')
+
+  pdf.setLineWidth(0.3)
+
+  x1 = originX + 150.4
+  y1 = originY + 14.4 + lineHeight * row
+  x2 = originX + 155.6
+  y2 = originY + 14.4 + lineHeight * row
+
+  pdf.line(x1, y1, x2, y2, 'S')
+
+  x = originX + 155.6
+  y = originY + 14.4 + lineHeight * row
+
+  pdf.lines(
+    [
+      [-1, -1],
+      [1, 1],
+      [-1, 1],
+    ],
+    x,
+    y,
+    [1, 1],
+    'S',
+    false
+  )
+
+  pdf.setFont('OpenSans', 'normal', 400)
+
+  pdf.text('P: Productive time', originX, originY + 127.1)
+  pdf.text('NP: Non-Productive time', originX, originY + 131.3)
+}
+
 export const generateWeeklyReport = (operative, timesheet) => {
   const pdf = new jsPDF({ compress: true })
 
@@ -471,15 +743,33 @@ export const generateWeeklyReport = (operative, timesheet) => {
   })
 
   withGraphicsState(pdf, () => {
-    drawSummary(pdf, operative, timesheet)
+    drawWeeklyOperativeSummary(pdf, operative, timesheet)
   })
 
   withGraphicsState(pdf, () => {
-    drawNonProductiveTime(pdf, operative, timesheet)
+    drawWeeklyNonProductiveTime(pdf, operative, timesheet)
   })
 
   withGraphicsState(pdf, () => {
-    drawProductiveTime(pdf, operative, timesheet)
+    drawWeeklyProductiveTime(pdf, operative, timesheet)
+  })
+
+  return pdf
+}
+
+export const generateSummaryReport = (operative, summary) => {
+  const pdf = new jsPDF({ compress: true })
+
+  withGraphicsState(pdf, () => {
+    drawLogo(pdf)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawOperativeSummary(pdf, operative)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawBonusSummary(pdf, operative, summary)
   })
 
   return pdf
