@@ -173,7 +173,7 @@ const drawNonProductiveTime = (pdf, operative, timesheet) => {
   x = originX + width - 24.0
   y = originY + 13.1
 
-  pdf.text('Hours (AT)', x, y, { align: 'right' })
+  pdf.text('Hours', x, y, { align: 'right' })
 
   x = originX + width - 3.6
   y = originY + 13.1
