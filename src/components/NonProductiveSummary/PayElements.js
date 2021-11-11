@@ -28,7 +28,7 @@ const PayElements = () => {
         <TR>
           <TH scope="col">Pay elements</TH>
           <TH scope="col" numeric={true}>
-            Hours (AT)
+            Hours
           </TH>
           <TH scope="col" numeric={true}>
             {isUnitScheme ? 'Units' : 'SMVh'}
