@@ -6,7 +6,6 @@ import PageContext from '@/components/PageContext'
 import { useEffect, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useFormContext, useFieldArray } from 'react-hook-form'
-import { numberWithPrecision } from '@/utils/number'
 import { saveTimesheet } from '@/utils/apiClient'
 
 const Form = () => {
@@ -46,30 +45,11 @@ const Form = () => {
     }
   }
 
-  const convertPayElement = (pe) => {
-    return {
-      id: pe.id,
-      payElementTypeId: pe.payElementTypeId,
-      workOrder: pe.workOrder,
-      address: pe.address,
-      comment: pe.comment,
-      monday: numberWithPrecision(pe.monday, 2),
-      tuesday: numberWithPrecision(pe.tuesday, 2),
-      wednesday: numberWithPrecision(pe.wednesday, 2),
-      thursday: numberWithPrecision(pe.thursday, 2),
-      friday: numberWithPrecision(pe.friday, 2),
-      saturday: numberWithPrecision(pe.saturday, 2),
-      sunday: numberWithPrecision(pe.sunday, 2),
-      duration: numberWithPrecision(pe.duration, 2),
-      value: numberWithPrecision(pe.value, 4),
-    }
-  }
-
   const payElements = timesheet.payElements
 
   useEffect(() => {
     append(
-      payElements.filter((pe) => pe.isNonProductive).map(convertPayElement)
+      payElements.filter((pe) => pe.isNonProductive).map((pe) => pe.toRow())
     )
   }, [append, payElements])
 
