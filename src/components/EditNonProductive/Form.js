@@ -10,11 +10,10 @@ import { saveTimesheet } from '@/utils/apiClient'
 
 const Form = () => {
   const router = useRouter()
-
   const { operative, timesheet } = useContext(PageContext)
-
   const { setAnnouncement } = useContext(AnnouncementContext)
   const [confirmed, setConfirmed] = useState(false)
+  const [initialized, setInitialized] = useState(false)
 
   const {
     register,
@@ -22,6 +21,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors },
   } = useFormContext()
+
   register('id', { value: timesheet.id })
 
   const { fields, append, remove } = useFieldArray({
@@ -48,10 +48,13 @@ const Form = () => {
   const payElements = timesheet.payElements
 
   useEffect(() => {
-    append(
-      payElements.filter((pe) => pe.isNonProductive).map((pe) => pe.toRow())
-    )
-  }, [append, payElements])
+    if (!initialized) {
+      append(
+        payElements.filter((pe) => pe.isNonProductive).map((pe) => pe.toRow())
+      )
+      setInitialized(true)
+    }
+  }, [append, payElements, initialized])
 
   useEffect(() => {
     const pushAnnouncement = () => {
