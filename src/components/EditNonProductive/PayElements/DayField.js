@@ -3,13 +3,21 @@ import { useFormContext } from 'react-hook-form'
 import { numberWithPrecision } from '@/utils/number'
 
 const DayField = ({ index, weekday }) => {
-  const { register } = useFormContext()
+  const { register, setValue } = useFormContext()
+  const fieldName = `payElements.${index}.${weekday}`
 
   const onBlur = (event) => {
-    const number = parseFloat(event.target.value)
+    const value = event.target.value
+    const number = parseFloat(value)
 
     if (!isNaN(number)) {
       event.target.value = numberWithPrecision(number, 2)
+    } else if (!value) {
+      event.target.value = '0.00'
+
+      setTimeout(() => {
+        setValue(fieldName, '0.00', { shouldDirty: true })
+      }, 10)
     }
   }
 
@@ -17,7 +25,7 @@ const DayField = ({ index, weekday }) => {
     <input
       type="text"
       className="govuk-input lbh-input govuk-!-text-align-right"
-      {...register(`payElements.${index}.${weekday}`, {
+      {...register(fieldName, {
         onBlur: onBlur,
         valueAsNumber: true,
         required: true,
