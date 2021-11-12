@@ -4,6 +4,7 @@ import TypeField from './TypeField'
 import DayField from './DayField'
 import NoteField from './NoteField'
 import TotalField from './TotalField'
+import LinkButton from '@/components/LinkButton'
 import { TBody, TR, TD } from '@/components/Table'
 
 const PayElementsRow = ({ item, index, remove }) => {
@@ -43,13 +44,7 @@ const PayElementsRow = ({ item, index, remove }) => {
           <TotalField index={index} />
         </TD>
         <TD>
-          <button
-            type="button"
-            className="lbh-link govuk-!-font-size-16"
-            onClick={removePayElement}
-          >
-            Remove
-          </button>
+          <LinkButton onClick={removePayElement}>Remove</LinkButton>
         </TD>
       </TR>
       <TR>

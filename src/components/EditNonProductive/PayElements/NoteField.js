@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+import LinkButton from '@/components/LinkButton'
 import { useState, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -26,16 +27,12 @@ const NoteField = ({ item, index }) => {
 
   return (
     <>
-      <button
-        type="button"
-        className={cx(
-          'lbh-link govuk-!-font-size-16',
-          showNote ? 'govuk-!-display-none' : null
-        )}
+      <LinkButton
+        className={cx(showNote ? 'govuk-!-display-none' : null)}
         onClick={addNote}
       >
         Add note
-      </button>
+      </LinkButton>
       <input
         type="text"
         className={cx(

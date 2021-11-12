@@ -1,8 +1,10 @@
-import ConfirmButton from './ConfirmButton'
-import AddPayElementButton from './AddPayElementButton'
 import PayElements from './PayElements'
 import AnnouncementContext from '@/components/AnnouncementContext'
+import ButtonGroup from '@/components/ButtonGroup'
+import ConfirmButton from '@/components/ConfirmButton'
+import AddElementButton from '@/components/AddElementButton'
 import PageContext from '@/components/PageContext'
+import { PayElement } from '@/models'
 import { useEffect, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useFormContext, useFieldArray } from 'react-hook-form'
@@ -19,7 +21,7 @@ const Form = () => {
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext()
 
   register('id', { value: timesheet.id })
@@ -66,6 +68,10 @@ const Form = () => {
     }
   }, [confirmed, router.events, setAnnouncement])
 
+  const addPayElement = () => {
+    append(PayElement.defaultRow)
+  }
+
   return (
     <form id="update-timesheet" onSubmit={handleSubmit(onSubmit)}>
       {errors.payElements && (
@@ -80,10 +86,15 @@ const Form = () => {
 
       <PayElements fields={fields} remove={remove} />
 
-      <div className="govuk-button-group govuk-!-margin-top-9">
-        <ConfirmButton />
-        <AddPayElementButton append={append} />
-      </div>
+      <ButtonGroup className="govuk-!-margin-top-9">
+        <ConfirmButton disabled={isSubmitting}>
+          {isSubmitting ? <>Confirming ...</> : <>Confirm</>}
+        </ConfirmButton>
+
+        <AddElementButton onClick={addPayElement}>
+          Add pay element
+        </AddElementButton>
+      </ButtonGroup>
     </form>
   )
 }

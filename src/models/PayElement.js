@@ -2,6 +2,25 @@ import PayElementType from './PayElementType'
 import { numberWithPrecision } from '@/utils/number'
 
 export default class PayElement {
+  static get defaultRow() {
+    return {
+      id: null,
+      payElementTypeId: null,
+      workOrder: null,
+      address: null,
+      comment: null,
+      monday: '0.00',
+      tuesday: '0.00',
+      wednesday: '0.00',
+      thursday: '0.00',
+      friday: '0.00',
+      saturday: '0.00',
+      sunday: '0.00',
+      duration: '0.00',
+      value: '0.00',
+    }
+  }
+
   constructor(attrs) {
     attrs = attrs || {}
 
