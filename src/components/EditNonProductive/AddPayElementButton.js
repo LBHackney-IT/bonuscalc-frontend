@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 
 const AddPayElementButton = ({ append }) => {
   const defaults = {
+    id: null,
     payElementTypeId: null,
     workOrder: null,
     address: null,

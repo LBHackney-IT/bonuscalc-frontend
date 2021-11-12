@@ -28,6 +28,7 @@ const Form = () => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'payElements',
+    keyName: 'key',
   })
 
   const onSubmit = async (data) => {
@@ -47,6 +48,7 @@ const Form = () => {
 
   const convertPayElement = (pe) => {
     return {
+      id: pe.id,
       payElementTypeId: pe.payElementTypeId,
       workOrder: pe.workOrder,
       address: pe.address,

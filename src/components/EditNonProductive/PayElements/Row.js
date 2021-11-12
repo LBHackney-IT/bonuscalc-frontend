@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import IdField from './IdField'
 import TypeField from './TypeField'
 import DayField from './DayField'
 import NoteField from './NoteField'
@@ -14,6 +15,7 @@ const PayElementsRow = ({ item, index, remove }) => {
     <TBody className="bc-pay-element-row">
       <TR>
         <TD colSpan="2">
+          <IdField index={index} />
           <TypeField index={index} />
         </TD>
         <TD numeric={true}>
