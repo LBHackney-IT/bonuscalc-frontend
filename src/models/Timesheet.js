@@ -30,7 +30,7 @@ export default class Timesheet {
   }
 
   get productivePayElements() {
-    return this.payElements.filter((pe) => pe.isProductive)
+    return this.payElements.filter((pe) => pe.isProductive && !pe.isAdjustment)
   }
 
   get hasProductivePayElements() {
