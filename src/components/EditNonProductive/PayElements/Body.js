@@ -10,7 +10,7 @@ const PayElementsBody = ({ fields, remove }) => {
         <>
           {fields.map((item, index) => (
             <PayElementsRow
-              key={item.id}
+              key={item.key}
               item={item}
               index={index}
               remove={remove}
