@@ -10,7 +10,7 @@ import { saveTimesheet } from '@/utils/apiClient'
 
 const Form = () => {
   const router = useRouter()
-  const { operative, timesheet } = useContext(PageContext)
+  const { operative, timesheet, payElements } = useContext(PageContext)
   const { setAnnouncement } = useContext(AnnouncementContext)
   const [confirmed, setConfirmed] = useState(false)
   const [initialized, setInitialized] = useState(false)
@@ -45,13 +45,9 @@ const Form = () => {
     }
   }
 
-  const payElements = timesheet.payElements
-
   useEffect(() => {
     if (!initialized) {
-      append(
-        payElements.filter((pe) => pe.isNonProductive).map((pe) => pe.toRow())
-      )
+      append(payElements.map((pe) => pe.toRow()))
       setInitialized(true)
     }
   }, [append, payElements, initialized])

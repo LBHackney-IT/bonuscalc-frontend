@@ -2,15 +2,10 @@ import PropTypes from 'prop-types'
 import PageContext from '@/components/PageContext'
 import { useContext } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { compareStrings } from '@/utils/string'
 
 const TypeField = ({ index }) => {
   const { payElementTypes } = useContext(PageContext)
   const { register } = useFormContext()
-
-  const nonProductiveTypes = payElementTypes
-    .filter((pet) => pet.nonProductive && pet.selectable)
-    .sort((a, b) => compareStrings(a.description, b.description))
 
   return (
     <select
@@ -21,7 +16,7 @@ const TypeField = ({ index }) => {
       })}
     >
       <option value="">-- Select Type --</option>
-      {nonProductiveTypes.map((payElementType) => (
+      {payElementTypes.map((payElementType) => (
         <option value={payElementType.id} key={payElementType.id}>
           {payElementType.description}
         </option>
