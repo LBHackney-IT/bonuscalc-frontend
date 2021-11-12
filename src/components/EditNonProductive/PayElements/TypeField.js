@@ -21,8 +21,8 @@ const TypeField = ({ index }) => {
       })}
     >
       <option value="">-- Select Type --</option>
-      {nonProductiveTypes.map((payElementType, index) => (
-        <option value={payElementType.id} key={index}>
+      {nonProductiveTypes.map((payElementType) => (
+        <option value={payElementType.id} key={payElementType.id}>
           {payElementType.description}
         </option>
       ))}
