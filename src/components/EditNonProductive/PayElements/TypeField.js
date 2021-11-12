@@ -9,7 +9,7 @@ const TypeField = ({ index }) => {
   const { register } = useFormContext()
 
   const nonProductiveTypes = payElementTypes
-    .filter((pet) => pet.nonProductive)
+    .filter((pet) => pet.nonProductive && pet.selectable)
     .sort((a, b) => compareStrings(a.description, b.description))
 
   return (

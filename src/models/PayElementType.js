@@ -9,5 +9,6 @@ export default class PayElementType {
     this.nonProductive = attrs.nonProductive
     this.adjustment = attrs.adjustment
     this.productive = attrs.productive
+    this.selectable = attrs.selectable
   }
 }

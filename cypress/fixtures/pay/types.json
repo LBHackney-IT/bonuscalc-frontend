@@ -6,7 +6,8 @@
     "paid": true,
     "nonProductive": true,
     "productive": false,
-    "adjustment": false
+    "adjustment": false,
+    "selectable": true
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@
     "paid": true,
     "nonProductive": true,
     "productive": false,
-    "adjustment": false
+    "adjustment": false,
+    "selectable": true
   },
   {
     "id": 3,
@@ -24,7 +26,8 @@
     "paid": true,
     "nonProductive": true,
     "productive": false,
-    "adjustment": false
+    "adjustment": false,
+    "selectable": true
   },
   {
     "id": 4,
@@ -33,6 +36,7 @@
     "paid": true,
     "nonProductive": true,
     "productive": false,
-    "adjustment": false
+    "adjustment": false,
+    "selectable": true
   }
 ]
