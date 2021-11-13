@@ -44,6 +44,7 @@ describe('Non-productive page', () => {
       })
 
       it('Shows the not found message', () => {
+        cy.get('.lbh-main-wrapper').contains('a', 'Back')
         cy.get('.lbh-heading-h1').contains('Not Found')
         cy.get('.lbh-body').contains(
           'Couldn’t find an operative with the payroll number 123456.'
