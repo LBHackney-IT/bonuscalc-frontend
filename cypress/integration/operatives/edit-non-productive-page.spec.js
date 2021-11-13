@@ -84,7 +84,7 @@ describe('Non-productive page', () => {
       it('Shows the header', () => {
         cy.get('.lbh-heading-h2').within(() => {
           cy.contains('Alex Cable')
-          cy.contains('Edit additional time')
+          cy.contains('Edit non-productive time')
         })
 
         cy.get('.lbh-heading-h3').within(() => {
