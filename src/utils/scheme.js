@@ -17,7 +17,11 @@ export const smvOrUnits = (scheme, value) => {
 }
 
 export const calculateSMV = (operative, payElementType, duration) => {
-  return round(duration * smvPerHour(operative, payElementType), 4)
+  if (payElementType.productive) {
+    return round(duration * 60, 4)
+  } else {
+    return round(duration * smvPerHour(operative, payElementType), 4)
+  }
 }
 
 export const smvPerHour = (operative, payElementType) => {

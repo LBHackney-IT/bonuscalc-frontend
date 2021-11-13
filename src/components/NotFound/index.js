@@ -1,14 +1,23 @@
-import PropTypes from 'prop-types'
+import AnnouncementContext from '../AnnouncementContext'
+import BackButton from '../BackButton'
+import { useEffect, useContext } from 'react'
 
-const NotFound = ({ message }) => (
-  <section className="section">
-    <h1 className="lbh-heading-h1">Not Found</h1>
-    <p className="lbh-body">{message}</p>
-  </section>
-)
+const NotFound = ({ children }) => {
+  const { setAnnouncement } = useContext(AnnouncementContext)
 
-NotFound.propTypes = {
-  message: PropTypes.string.isRequired,
+  useEffect(() => {
+    setAnnouncement({})
+  }, [setAnnouncement])
+
+  return (
+    <>
+      <BackButton href="/" />
+      <section className="section">
+        <h1 className="lbh-heading-h1">Not Found</h1>
+        <p className="lbh-body">{children}</p>
+      </section>
+    </>
+  )
 }
 
 export default NotFound

@@ -1,4 +1,3 @@
-import BackButton from '@/components/BackButton'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
 import { useEffect } from 'react'
@@ -25,12 +24,9 @@ const OperativePage = ({ query }) => {
   if (isLoading) return <Spinner />
   if (isError || !operative)
     return (
-      <>
-        <BackButton href="/" />
-        <NotFound
-          message={`Couldn\u2019t find an operative with the payroll number ${payrollNumber}.`}
-        />
-      </>
+      <NotFound>
+        Couldn’t find an operative with the payroll number {payrollNumber}.
+      </NotFound>
     )
 
   return <Spinner />

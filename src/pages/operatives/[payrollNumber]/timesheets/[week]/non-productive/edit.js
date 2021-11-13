@@ -5,6 +5,7 @@ import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
 import { BonusPeriod } from '@/models'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { compareStrings } from '@/utils/string'
 import {
   useOperative,
   usePayElementTypes,
@@ -26,7 +27,7 @@ const OperativePage = ({ query }) => {
   } = useTimesheet(payrollNumber, week)
 
   const {
-    payElementTypes,
+    payElementTypes: allPayElementTypes,
     isLoading: isPayElementTypesLoading,
     isError: isPayElementTypesError,
   } = usePayElementTypes()
@@ -34,30 +35,36 @@ const OperativePage = ({ query }) => {
   if (isOperativeLoading) return <Spinner />
   if (isOperativeError || !operative)
     return (
-      <NotFound
-        message={`Couldn\u2019t find an operative with the payroll number ${payrollNumber}.`}
-      />
+      <NotFound>
+        Couldn’t find an operative with the payroll number {payrollNumber}.
+      </NotFound>
     )
 
   if (isTimesheetLoading) return <Spinner />
   if (isTimesheetError || !timesheet)
-    return (
-      <NotFound
-        message={`Couldn\u2019t find a timesheet for the week beginning ${week}.`}
-      />
-    )
+    return <NotFound>Couldn’t find a timesheet for the date {week}.</NotFound>
 
   if (isPayElementTypesLoading) return <Spinner />
-  if (isPayElementTypesError || !payElementTypes)
-    return (
-      <NotFound message={`Couldn\u2019t fetch the list of pay element types`} />
-    )
+  if (isPayElementTypesError || !allPayElementTypes)
+    return <NotFound>Couldn’t fetch the list of pay element types.</NotFound>
 
   const bonusPeriod = BonusPeriod.forWeek(week)
   const baseUrl = `/operatives/${operative.id}`
   const backUrl = `${baseUrl}/timesheets/${week}/non-productive`
 
-  const context = { operative, timesheet, payElementTypes, week, bonusPeriod }
+  const payElements = timesheet.nonProductivePayElements
+  const payElementTypes = allPayElementTypes
+    .filter((pet) => pet.nonProductive && pet.selectable)
+    .sort((a, b) => compareStrings(a.description, b.description))
+
+  const context = {
+    operative,
+    timesheet,
+    payElements,
+    payElementTypes,
+    bonusPeriod,
+    week,
+  }
 
   return (
     <PageContext.Provider value={context}>

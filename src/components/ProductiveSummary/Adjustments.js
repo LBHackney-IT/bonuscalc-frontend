@@ -1,58 +1,42 @@
-import Link from 'next/link'
 import PageContext from '@/components/PageContext'
 import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
 import { numberWithPrecision } from '@/utils/number'
 import { smvhOrUnits } from '@/utils/scheme'
 import { useContext } from 'react'
 
-const WorkOrders = () => {
-  const repairsHubUrl = process.env.NEXT_PUBLIC_REPAIRS_HUB_URL
-
+const Adjustments = () => {
   const {
     operative: { scheme, isUnitScheme },
     timesheet: {
-      hasProductivePayElements,
-      productivePayElements,
-      productiveTotal,
+      hasAdjustmentPayElements,
+      adjustmentPayElements,
+      adjustmentTotal,
     },
   } = useContext(PageContext)
 
   return (
     <>
-      {hasProductivePayElements && (
-        <Table id="productive-summary">
+      {hasAdjustmentPayElements && (
+        <Table id="adjustment-summary">
           <THead>
             <TR>
-              <TH scope="col" width="two-tenths">
-                Reference
-              </TH>
-              <TH scope="col" width="three-tenths">
-                Address
-              </TH>
-              <TH scope="col" width="four-tenths">
-                Description
-              </TH>
+              <TH scope="col">Productive not on Repairs Hub</TH>
               <TH scope="col" width="one-tenth" numeric={true}>
                 {isUnitScheme ? 'Units' : 'SMVh'}
               </TH>
             </TR>
           </THead>
           <TBody>
-            {productivePayElements.map((payElement, index) => (
+            {adjustmentPayElements.map((payElement, index) => (
               <TR key={index}>
                 <TD>
-                  {payElement.workOrder ? (
-                    <Link href={`${repairsHubUrl}/${payElement.workOrder}`}>
-                      <a target="_blank" className="lbh-link">
-                        {payElement.workOrder}
-                      </a>
-                    </Link>
-                  ) : (
-                    <>&ndash;</>
+                  <p className="lbh-body-m">{payElement.description}</p>
+                  {payElement.comment && (
+                    <p className="lbh-body-s govuk-!-margin-top-0">
+                      {payElement.comment}
+                    </p>
                   )}
                 </TD>
-                <TD>{payElement.address}</TD>
-                <TD>{payElement.comment}</TD>
                 <TD numeric={true}>
                   {numberWithPrecision(
                     smvhOrUnits(scheme, payElement.value),
@@ -64,12 +48,12 @@ const WorkOrders = () => {
           </TBody>
           <TFoot>
             <TR>
-              <TH scope="row" colSpan="3" align="right">
+              <TH scope="row" align="right">
                 Total
               </TH>
               <TD numeric={true}>
                 {numberWithPrecision(
-                  smvhOrUnits(scheme, productiveTotal),
+                  smvhOrUnits(scheme, adjustmentTotal),
                   scheme.precision
                 )}
               </TD>
@@ -81,4 +65,4 @@ const WorkOrders = () => {
   )
 }
 
-export default WorkOrders
+export default Adjustments

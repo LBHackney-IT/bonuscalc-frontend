@@ -2,10 +2,10 @@
 
 import 'cypress-audit/commands'
 
-describe('Non-productive page', () => {
+describe('Productive page', () => {
   context('When not logged in', () => {
     it('Redirects to the sign in page', () => {
-      cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive/edit')
+      cy.visit('/operatives/123456/timesheets/2021-10-18/productive/edit')
 
       cy.get('.lbh-header__service-name').contains('DLO Bonus Scheme')
       cy.get('.lbh-header__title-link').should('have.attr', 'href', '/')
@@ -39,7 +39,7 @@ describe('Non-productive page', () => {
           { statusCode: 404, fixture: 'timesheets/not_found.json' }
         ).as('get_timesheet')
 
-        cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive')
+        cy.visit('/operatives/123456/timesheets/2021-10-18/productive')
         cy.wait(['@get_operative', '@get_timesheet'])
       })
 
@@ -77,14 +77,14 @@ describe('Non-productive page', () => {
           { statusCode: 200, fixture: 'pay/types.json' }
         ).as('get_pay_types')
 
-        cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive/edit')
+        cy.visit('/operatives/123456/timesheets/2021-10-18/productive/edit')
         cy.wait(['@get_operative', '@get_timesheet', '@get_pay_types'])
       })
 
       it('Shows the header', () => {
         cy.get('.lbh-heading-h2').within(() => {
           cy.contains('Alex Cable')
-          cy.contains('Edit non-productive time')
+          cy.contains('Edit productive time')
         })
 
         cy.get('.lbh-heading-h3').within(() => {
@@ -95,7 +95,7 @@ describe('Non-productive page', () => {
         cy.audit()
       })
 
-      it('Can update the non-productive time', () => {
+      it('Can update the productive time', () => {
         cy.intercept(
           {
             method: 'POST',
@@ -110,12 +110,12 @@ describe('Non-productive page', () => {
 
         cy.location().should((loc) => {
           expect(loc.pathname).to.eq(
-            '/operatives/123456/timesheets/2021-10-18/non-productive'
+            '/operatives/123456/timesheets/2021-10-18/productive'
           )
         })
 
         cy.get('.lbh-page-announcement').within(() => {
-          cy.contains('Updated non-productive time successfully')
+          cy.contains('Updated productive time successfully')
         })
 
         // Navigate to another page to check announcement is removed
@@ -139,7 +139,7 @@ describe('Non-productive page', () => {
           cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 13')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
-              '/operatives/123456/timesheets/2021-10-25/non-productive'
+              '/operatives/123456/timesheets/2021-10-25/productive'
             )
           })
         })
