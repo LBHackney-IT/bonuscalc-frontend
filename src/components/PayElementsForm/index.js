@@ -128,7 +128,13 @@ const DayField = ({ index, weekday }) => {
   )
 }
 
-const TotalField = ({ index, minDuration, maxDuration, minValue }) => {
+const TotalField = ({
+  index,
+  minDuration,
+  maxDuration,
+  minValue,
+  maxValue,
+}) => {
   const { operative, payElementTypes } = useContext(PageContext)
   const { register, watch, setValue } = useFormContext()
   const [total, setTotal] = useState(0)
@@ -155,6 +161,7 @@ const TotalField = ({ index, minDuration, maxDuration, minValue }) => {
   register(`payElements.${index}.value`, {
     valueAsNumber: true,
     min: minValue,
+    max: maxValue,
   })
 
   useEffect(() => {
@@ -220,7 +227,16 @@ const GridTotal = ({ fields }) => {
   return <>{numberWithPrecision(total, 2)}</>
 }
 
-const PayElementsForm = ({ onSubmit, appendLabel, typeLabel, children }) => {
+const PayElementsForm = ({
+  onSubmit,
+  appendLabel,
+  typeLabel,
+  children,
+  minDuration,
+  maxDuration,
+  minValue,
+  maxValue,
+}) => {
   const { timesheet, payElements } = useContext(PageContext)
   const [initialized, setInitialized] = useState(false)
 
@@ -316,7 +332,13 @@ const PayElementsForm = ({ onSubmit, appendLabel, typeLabel, children }) => {
                     <DayField index={index} weekday="sunday" />
                   </TD>
                   <TD numeric={true}>
-                    <TotalField index={index} />
+                    <TotalField
+                      index={index}
+                      minDuration={minDuration}
+                      maxDuration={maxDuration}
+                      minValue={minValue}
+                      maxValue={maxValue}
+                    />
                   </TD>
                   <TD>
                     <LinkButton onClick={() => remove(index)}>
@@ -395,6 +417,7 @@ PayElementsForm.propTypes = {
   minDuration: PropTypes.number.isRequired,
   maxDuration: PropTypes.number.isRequired,
   minValue: PropTypes.number.isRequired,
+  maxValue: PropTypes.number.isRequired,
 }
 
 PayElementsForm.defaultProps = {

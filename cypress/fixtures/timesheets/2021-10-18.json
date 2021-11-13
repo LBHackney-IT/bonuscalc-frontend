@@ -17,7 +17,7 @@
     {
       "id": 1,
       "payElementType": {
-        "id": 1,
+        "id": 101,
         "description": "Dayworks",
         "payAtBand": false,
         "paid": true,
@@ -41,7 +41,7 @@
     {
       "id": 2,
       "payElementType": {
-        "id": 31,
+        "id": 301,
         "description": "Reactive Repairs",
         "payAtBand": true,
         "paid": true,
@@ -63,33 +63,33 @@
       "value": 30
     },
     {
-      "id": 3,
+      "id": 4,
       "payElementType": {
-        "id": 34,
-        "description": "Adjustment",
-        "payAtBand": false,
-        "paid": false,
+        "id": 211,
+        "description": "Planned Maintenance",
+        "payAtBand": true,
+        "paid": true,
         "nonProductive": false,
-        "productive": false,
+        "productive": true,
         "adjustment": true
       },
       "monday": 0,
       "tuesday": 0,
       "wednesday": 0,
       "thursday": 0,
-      "friday": 0,
+      "friday": 2,
       "saturday": 0,
       "sunday": 0,
-      "workOrder": "1000000",
+      "workOrder": null,
       "address": null,
-      "comment": "Note about adjustment",
-      "duration": 0,
-      "value": 24
+      "comment": "Check electrical circuits at 1 Knowhere Road",
+      "duration": 2,
+      "value": 120
     },
     {
       "id": 4,
       "payElementType": {
-        "id": 2,
+        "id": 102,
         "description": "Annual Leave",
         "payAtBand": true,
         "paid": true,
@@ -113,7 +113,7 @@
     {
       "id": 5,
       "payElementType": {
-        "id": 31,
+        "id": 301,
         "description": "Reactive Repairs",
         "payAtBand": true,
         "paid": true,

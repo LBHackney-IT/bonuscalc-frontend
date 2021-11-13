@@ -1,11 +1,14 @@
 import Header from './Header'
 import WorkOrders from './WorkOrders'
-import ButtonGroup from '@/components/ButtonGroup'
+import Adjustments from './Adjustments'
+import NoProductiveTime from './NoProductiveTime'
 import Button from '@/components/Button'
-import Pagination from '@/components/Pagination'
+import ButtonGroup from '@/components/ButtonGroup'
+import ButtonLink from '@/components/ButtonLink'
 import PageContext from '@/components/PageContext'
-import { useContext } from 'react'
+import Pagination from '@/components/Pagination'
 import { generateWeeklyReport } from '@/utils/reports'
+import { useContext } from 'react'
 
 const ProductiveSummary = () => {
   const {
@@ -13,9 +16,13 @@ const ProductiveSummary = () => {
     timesheet,
     timesheet: { week },
     timesheet: {
+      hasAdjustmentPayElements,
+      hasProductivePayElements,
       week: { bonusPeriod },
     },
   } = useContext(PageContext)
+
+  const baseUrl = `/operatives/${operative.id}/timesheets/${week.id}`
 
   const downloadReport = () => {
     const pdf = generateWeeklyReport(operative, timesheet)
@@ -29,10 +36,25 @@ const ProductiveSummary = () => {
     <>
       <Header />
       <Pagination tab="productive" />
-      <WorkOrders />
+      <>
+        {hasAdjustmentPayElements || hasProductivePayElements ? (
+          <>
+            <WorkOrders />
+            <Adjustments />
+          </>
+        ) : (
+          <NoProductiveTime />
+        )}
+      </>
 
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>
+
+        {week.isEditable && (
+          <ButtonLink href={`${baseUrl}/productive/edit`} secondary={true}>
+            Edit productive
+          </ButtonLink>
+        )}
       </ButtonGroup>
     </>
   )
