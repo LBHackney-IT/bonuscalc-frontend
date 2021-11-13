@@ -1,13 +1,16 @@
 import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
-import OperativeSummary from '@/components/OperativeSummary'
-import OperativeTabs from '@/components/OperativeTabs'
-import NonProductiveSummary from '@/components/NonProductiveSummary'
+import EditProductive from '@/components/EditProductive'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
 import { BonusPeriod } from '@/models'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
-import { useOperative, useTimesheet } from '@/utils/apiClient'
+import { compareStrings } from '@/utils/string'
+import {
+  useOperative,
+  usePayElementTypes,
+  useTimesheet,
+} from '@/utils/apiClient'
 
 const OperativePage = ({ query }) => {
   const { payrollNumber, week } = query
@@ -23,6 +26,12 @@ const OperativePage = ({ query }) => {
     isError: isTimesheetError,
   } = useTimesheet(payrollNumber, week)
 
+  const {
+    payElementTypes: allPayElementTypes,
+    isLoading: isPayElementTypesLoading,
+    isError: isPayElementTypesError,
+  } = usePayElementTypes()
+
   if (isOperativeLoading) return <Spinner />
   if (isOperativeError || !operative)
     return (
@@ -35,16 +44,32 @@ const OperativePage = ({ query }) => {
   if (isTimesheetError || !timesheet)
     return <NotFound>Couldn’t find a timesheet for the date {week}.</NotFound>
 
+  if (isPayElementTypesLoading) return <Spinner />
+  if (isPayElementTypesError || !allPayElementTypes)
+    return <NotFound>Couldn’t fetch the list of pay element types.</NotFound>
+
   const bonusPeriod = BonusPeriod.forWeek(week)
-  const context = { operative, timesheet, week, bonusPeriod }
+  const baseUrl = `/operatives/${operative.id}`
+  const backUrl = `${baseUrl}/timesheets/${week}/productive`
+
+  const payElements = timesheet.adjustmentPayElements
+  const payElementTypes = allPayElementTypes
+    .filter((pet) => pet.adjustment && pet.selectable)
+    .sort((a, b) => compareStrings(a.description, b.description))
+
+  const context = {
+    operative,
+    timesheet,
+    payElements,
+    payElementTypes,
+    bonusPeriod,
+    week,
+  }
 
   return (
     <PageContext.Provider value={context}>
-      <BackButton href="/" />
-      <OperativeSummary />
-      <OperativeTabs current={2}>
-        <NonProductiveSummary />
-      </OperativeTabs>
+      <BackButton href={backUrl} />
+      <EditProductive />
     </PageContext.Provider>
   )
 }

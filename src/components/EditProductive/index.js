@@ -6,7 +6,7 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { saveTimesheet } from '@/utils/apiClient'
 
-const EditNonProductive = () => {
+const EditProductive = () => {
   const router = useRouter()
   const methods = useForm()
 
@@ -17,9 +17,9 @@ const EditNonProductive = () => {
   const [confirmed, setConfirmed] = useState(false)
 
   const onSubmit = async (data) => {
-    const { adjustmentPayElements } = timesheet
+    const { nonProductivePayElements } = timesheet
 
-    adjustmentPayElements.map((pe) => {
+    nonProductivePayElements.map((pe) => {
       data.payElements.push(pe.toRow())
     })
 
@@ -27,7 +27,7 @@ const EditNonProductive = () => {
       setConfirmed(true)
 
       router.push(
-        `/operatives/${operative.id}/timesheets/${timesheet.weekId}/non-productive`
+        `/operatives/${operative.id}/timesheets/${timesheet.weekId}/productive`
       )
     } else {
       setAnnouncement({
@@ -39,7 +39,7 @@ const EditNonProductive = () => {
 
   useEffect(() => {
     const pushAnnouncement = () => {
-      setAnnouncement({ title: 'Updated non-productive time successfully' })
+      setAnnouncement({ title: 'Updated productive time successfully' })
     }
 
     if (confirmed) {
@@ -56,7 +56,7 @@ const EditNonProductive = () => {
       <section className="section">
         <h1 className="lbh-heading-h2">
           <span className="govuk-caption-l lbh-caption">{operative.name}</span>
-          Edit non-productive time
+          Edit productive time
         </h1>
         <h2 className="lbh-heading-h3 govuk-!-margin-top-2">
           {week.description}
@@ -69,17 +69,17 @@ const EditNonProductive = () => {
       <FormProvider {...methods}>
         <PayElementsForm
           onSubmit={onSubmit}
-          appendLabel="Add non-productive"
-          minDuration={0.01}
-          maxDuration={168.0}
-          minValue={0}
-          maxValue={13540}
+          appendLabel="Add productive"
+          minDuration={-420}
+          maxDuration={420}
+          minValue={-25200}
+          maxValue={25200}
         >
-          There are no non-productive items for this week.
+          There are no editable productive items for this week.
         </PayElementsForm>
       </FormProvider>
     </>
   )
 }
 
-export default EditNonProductive
+export default EditProductive

@@ -1,3 +1,4 @@
+import ConfirmButton from '@/components/ConfirmButton'
 import { useForm, useFormState } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { operativeExists } from '@/utils/apiClient'
@@ -59,15 +60,10 @@ const OperativeSearch = () => {
             className="govuk-input lbh-input govuk-!-width-one-quarter"
           />
         </div>
-        <button
-          id="search-button"
-          type="submit"
-          disabled={isSubmitting}
-          className="govuk-button lbh-button"
-          data-module="govuk-button"
-        >
+
+        <ConfirmButton id="search-button" disabled={isSubmitting}>
           {isSubmitting ? <>Searching ...</> : <>Search</>}
-        </button>
+        </ConfirmButton>
       </form>
     </>
   )

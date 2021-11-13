@@ -26,18 +26,14 @@ const OperativePage = ({ query }) => {
   if (isOperativeLoading) return <Spinner />
   if (isOperativeError || !operative)
     return (
-      <NotFound
-        message={`Couldn\u2019t find an operative with the payroll number ${payrollNumber}.`}
-      />
+      <NotFound>
+        Couldn’t find an operative with the payroll number {payrollNumber}.
+      </NotFound>
     )
 
   if (isTimesheetLoading) return <Spinner />
   if (isTimesheetError || !timesheet)
-    return (
-      <NotFound
-        message={`Couldn\u2019t find a timesheet for the week beginning ${week}.`}
-      />
-    )
+    return <NotFound>Couldn’t find a timesheet for the date {week}.</NotFound>
 
   const bonusPeriod = BonusPeriod.forWeek(week)
   const context = { operative, timesheet, week, bonusPeriod }

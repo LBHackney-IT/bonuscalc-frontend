@@ -28,17 +28,17 @@ const OperativePage = ({ query }) => {
   if (isOperativeLoading) return <Spinner />
   if (isOperativeError || !operative)
     return (
-      <NotFound
-        message={`Couldn\u2019t find an operative with the payroll number ${payrollNumber}.`}
-      />
+      <NotFound>
+        Couldn’t find an operative with the payroll number {payrollNumber}.
+      </NotFound>
     )
 
   if (isSummaryLoading) return <Spinner />
   if (isSummaryError || !summary)
     return (
-      <NotFound
-        message={`Couldn\u2019t find a summary for the bonus period beginning ${bonusPeriod}.`}
-      />
+      <NotFound>
+        Couldn’t find a summary for the bonus period beginning {bonusPeriod}.
+      </NotFound>
     )
 
   const context = { operative, summary, week, bonusPeriod }

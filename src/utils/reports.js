@@ -286,6 +286,9 @@ const drawWeeklyProductiveTime = (pdf, operative, timesheet) => {
     hasProductivePayElements,
     productivePayElements,
     productiveTotal,
+    hasAdjustmentPayElements,
+    adjustmentPayElements,
+    adjustmentTotal,
   } = timesheet
 
   const numberOfNonProductiveLines = hasNonProductivePayElements
@@ -294,6 +297,8 @@ const drawWeeklyProductiveTime = (pdf, operative, timesheet) => {
 
   let originX = 17.7
   let originY = 102.9 + numberOfNonProductiveLines * 5.8
+  let pageBreak = 27
+  let rowOffset = numberOfNonProductiveLines
   const width = 174.6
   const lineHeight = 5.8
 
@@ -349,11 +354,13 @@ const drawWeeklyProductiveTime = (pdf, operative, timesheet) => {
     productivePayElements.forEach((payElement) => {
       row = row + 1
 
-      if (row + numberOfNonProductiveLines > 27) {
+      if (row + rowOffset > pageBreak) {
         pdf.addPage()
 
         originY = 14.0
         row = 1
+        rowOffset = 0
+        pageBreak = 42
 
         pdf.setFont('OpenSans', 'normal', 600)
         pdf.setFontSize(9)
@@ -447,11 +454,126 @@ const drawWeeklyProductiveTime = (pdf, operative, timesheet) => {
     pdf.text('0.00', x, y, { align: 'right' })
   }
 
+  if (hasAdjustmentPayElements) {
+    row = row + 2
+
+    if (row + rowOffset + 2 > pageBreak) {
+      pdf.addPage()
+
+      originY = 14.0
+      row = 1
+      rowOffset = 0
+      pageBreak = 42
+    }
+
+    pdf.setFont('OpenSans', 'normal', 600)
+    pdf.setFontSize(9)
+
+    x = originX + 3.6
+    y = originY + 13.1 + lineHeight * row
+
+    pdf.text('Type', x, y)
+
+    x = originX + 48.1
+    y = originY + 13.1 + lineHeight * row
+
+    pdf.text('Note', x, y)
+
+    x = originX + width - 3.6
+    y = originY + 13.1 + lineHeight * row
+
+    pdf.text('SMVh', x, y, { align: 'right' })
+
+    pdf.setLineWidth(0.3)
+
+    x1 = originX
+    y1 = originY + 14.9 + lineHeight * row
+    x2 = originX + width
+    y2 = originY + 14.9 + lineHeight * row
+
+    pdf.line(x1, y1, x2, y2, 'S')
+
+    pdf.setFont('OpenSans', 'normal', 400)
+    pdf.setLineWidth(0.1)
+
+    adjustmentPayElements.forEach((payElement) => {
+      row = row + 1
+
+      if (row + rowOffset > pageBreak) {
+        pdf.addPage()
+
+        originY = 14.0
+        row = 1
+        rowOffset = 0
+        pageBreak = 42
+
+        pdf.setFont('OpenSans', 'normal', 600)
+        pdf.setFontSize(9)
+
+        x = originX + 3.6
+        y = originY + 13.1 + lineHeight * row
+
+        pdf.text('Type', x, y)
+
+        x = originX + 48.1
+        y = originY + 13.1 + lineHeight * row
+
+        pdf.text('Note', x, y)
+
+        x = originX + width - 3.6
+        y = originY + 13.1 + lineHeight * row
+
+        pdf.text('SMVh', x, y, { align: 'right' })
+
+        pdf.setLineWidth(0.3)
+
+        x1 = originX
+        y1 = originY + 14.9 + lineHeight * row
+        x2 = originX + width
+        y2 = originY + 14.9 + lineHeight * row
+
+        pdf.line(x1, y1, x2, y2, 'S')
+
+        pdf.setFont('OpenSans', 'normal', 400)
+        pdf.setLineWidth(0.1)
+
+        row = row + 1
+      }
+
+      x = originX + 3.6
+      y = originY + 13.1 + lineHeight * row
+
+      pdf.text(payElement.description, x, y)
+
+      if (payElement.comment) {
+        x = originX + 48.1
+        y = originY + 13.1 + lineHeight * row
+        text = truncate(payElement.comment, 75, { omission: ' …' })
+
+        pdf.text(text, x, y)
+      }
+
+      x = originX + width - 3.6
+      y = originY + 13.1 + lineHeight * row
+      value = smvhOrUnits(scheme, payElement.value)
+      text = numberWithPrecision(value, 2)
+
+      pdf.text(text, x, y, { align: 'right' })
+
+      x1 = originX
+      y1 = originY + 14.9 + lineHeight * row
+      x2 = originX + width
+      y2 = originY + 14.9 + lineHeight * row
+
+      pdf.line(x1, y1, x2, y2, 'S')
+    })
+  }
+
   row = row + 1
 
   x = originX + width - 3.6
   y = originY + 13.1 + lineHeight * row
-  value = smvhOrUnits(scheme, productiveTotal)
+  value = smvhOrUnits(scheme, productiveTotal + adjustmentTotal)
   text = numberWithPrecision(value, 2)
 
   pdf.text(text, x, y, { align: 'right' })
