@@ -316,115 +316,131 @@ const drawWeeklyProductiveTime = (pdf, operative, timesheet) => {
   pdf.setFont('OpenSans', 'normal', 600)
   pdf.setFontSize(9)
 
-  x = originX + 3.6
-  y = originY + 13.1
-
-  pdf.text('Reference', x, y)
-
-  x = originX + 24.1
-  y = originY + 13.1
-
-  pdf.text('Address', x, y)
-
-  x = originX + 72.2
-  y = originY + 13.1
-
-  pdf.text('Description', x, y)
-
-  x = originX + width - 3.6
-  y = originY + 13.1
-
-  pdf.text('SMVh', x, y, { align: 'right' })
-
-  pdf.setLineWidth(0.3)
-
-  x1 = originX
-  y1 = originY + 14.9
-  x2 = originX + width
-  y2 = originY + 14.9
-
-  pdf.line(x1, y1, x2, y2, 'S')
-
-  pdf.setFont('OpenSans', 'normal', 400)
-  pdf.setLineWidth(0.1)
-
   let row = 0
 
-  if (hasProductivePayElements) {
-    productivePayElements.forEach((payElement) => {
-      row = row + 1
+  if (hasProductivePayElements || !hasAdjustmentPayElements) {
+    x = originX + 3.6
+    y = originY + 13.1
 
-      if (row + rowOffset > pageBreak) {
-        pdf.addPage()
+    pdf.text('Reference', x, y)
 
-        originY = 14.0
-        row = 1
-        rowOffset = 0
-        pageBreak = 42
+    x = originX + 24.1
+    y = originY + 13.1
 
-        pdf.setFont('OpenSans', 'normal', 600)
-        pdf.setFontSize(9)
+    pdf.text('Address', x, y)
+
+    x = originX + 72.2
+    y = originY + 13.1
+
+    pdf.text('Description', x, y)
+
+    x = originX + width - 3.6
+    y = originY + 13.1
+
+    pdf.text('SMVh', x, y, { align: 'right' })
+
+    pdf.setLineWidth(0.3)
+
+    x1 = originX
+    y1 = originY + 14.9
+    x2 = originX + width
+    y2 = originY + 14.9
+
+    pdf.line(x1, y1, x2, y2, 'S')
+
+    pdf.setFont('OpenSans', 'normal', 400)
+    pdf.setLineWidth(0.1)
+
+    if (hasProductivePayElements) {
+      productivePayElements.forEach((payElement) => {
+        row = row + 1
+
+        if (row + rowOffset > pageBreak) {
+          pdf.addPage()
+
+          originY = 14.0
+          row = 1
+          rowOffset = 0
+          pageBreak = 42
+
+          pdf.setFont('OpenSans', 'normal', 600)
+          pdf.setFontSize(9)
+
+          x = originX + 3.6
+          y = originY + 13.1
+
+          pdf.text('Reference', x, y)
+
+          x = originX + 24.1
+          y = originY + 13.1
+
+          pdf.text('Address', x, y)
+
+          x = originX + 72.2
+          y = originY + 13.1
+
+          pdf.text('Description', x, y)
+
+          x = originX + width - 3.6
+          y = originY + 13.1
+
+          pdf.text('SMVh', x, y, { align: 'right' })
+
+          pdf.setLineWidth(0.3)
+
+          x1 = originX
+          y1 = originY + 14.9
+          x2 = originX + width
+          y2 = originY + 14.9
+
+          pdf.line(x1, y1, x2, y2, 'S')
+
+          pdf.setFont('OpenSans', 'normal', 400)
+          pdf.setLineWidth(0.1)
+        }
 
         x = originX + 3.6
-        y = originY + 13.1
+        y = originY + 13.1 + lineHeight * row
 
-        pdf.text('Reference', x, y)
+        pdf.text(payElement.workOrder, x, y)
 
-        x = originX + 24.1
-        y = originY + 13.1
+        if (payElement.address) {
+          x = originX + 24.1
+          y = originY + 13.1 + lineHeight * row
+          text = truncate(payElement.address, 25, { omission: ' …' })
 
-        pdf.text('Address', x, y)
+          pdf.text(text, x, y)
+        }
 
-        x = originX + 72.2
-        y = originY + 13.1
+        if (payElement.comment) {
+          x = originX + 72.2
+          y = originY + 13.1 + lineHeight * row
+          text = truncate(payElement.comment, 50, { omission: ' …' })
 
-        pdf.text('Description', x, y)
+          pdf.text(text, x, y)
+        }
 
         x = originX + width - 3.6
-        y = originY + 13.1
+        y = originY + 13.1 + lineHeight * row
+        value = smvhOrUnits(scheme, payElement.value)
+        text = numberWithPrecision(value, 2)
 
-        pdf.text('SMVh', x, y, { align: 'right' })
-
-        pdf.setLineWidth(0.3)
+        pdf.text(text, x, y, { align: 'right' })
 
         x1 = originX
-        y1 = originY + 14.9
+        y1 = originY + 14.9 + lineHeight * row
         x2 = originX + width
-        y2 = originY + 14.9
+        y2 = originY + 14.9 + lineHeight * row
 
         pdf.line(x1, y1, x2, y2, 'S')
-
-        pdf.setFont('OpenSans', 'normal', 400)
-        pdf.setLineWidth(0.1)
-      }
+      })
+    } else {
+      row = row + 1
 
       x = originX + 3.6
       y = originY + 13.1 + lineHeight * row
 
-      pdf.text(payElement.workOrder, x, y)
-
-      if (payElement.address) {
-        x = originX + 24.1
-        y = originY + 13.1 + lineHeight * row
-        text = truncate(payElement.address, 25, { omission: ' …' })
-
-        pdf.text(text, x, y)
-      }
-
-      if (payElement.comment) {
-        x = originX + 72.2
-        y = originY + 13.1 + lineHeight * row
-        text = truncate(payElement.comment, 50, { omission: ' …' })
-
-        pdf.text(text, x, y)
-      }
-
-      x = originX + width - 3.6
-      y = originY + 13.1 + lineHeight * row
-      value = smvhOrUnits(scheme, payElement.value)
-      text = numberWithPrecision(value, 2)
-
-      pdf.text(text, x, y, { align: 'right' })
+      pdf.text('There are no productive items for this week.', x, y)
 
       x1 = originX
       y1 = originY + 14.9 + lineHeight * row
@@ -432,30 +448,18 @@ const drawWeeklyProductiveTime = (pdf, operative, timesheet) => {
       y2 = originY + 14.9 + lineHeight * row
 
       pdf.line(x1, y1, x2, y2, 'S')
-    })
-  } else {
-    row = row + 1
 
-    x = originX + 3.6
-    y = originY + 13.1 + lineHeight * row
+      x = originX + width - 3.6
+      y = originY + 13.1 + lineHeight * row
 
-    pdf.text('There are no productive items for this week.', x, y)
-
-    x1 = originX
-    y1 = originY + 14.9 + lineHeight * row
-    x2 = originX + width
-    y2 = originY + 14.9 + lineHeight * row
-
-    pdf.line(x1, y1, x2, y2, 'S')
-
-    x = originX + width - 3.6
-    y = originY + 13.1 + lineHeight * row
-
-    pdf.text('0.00', x, y, { align: 'right' })
+      pdf.text('0.00', x, y, { align: 'right' })
+    }
   }
 
   if (hasAdjustmentPayElements) {
-    row = row + 2
+    if (hasProductivePayElements) {
+      row = row + 2
+    }
 
     if (row + rowOffset + 2 > pageBreak) {
       pdf.addPage()
