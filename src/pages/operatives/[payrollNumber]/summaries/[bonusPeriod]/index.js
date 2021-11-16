@@ -2,14 +2,14 @@ import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
 import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
-import BonusPeriodSummary from '@/components/BonusPeriodSummary'
-import NotFound from '@/components/NotFound'
 import Spinner from '@/components/Spinner'
+import NotFound from '@/components/NotFound'
+import BonusPeriodSummary from '@/components/BonusPeriodSummary'
 import { Week } from '@/models'
 import { useOperative, useSummary } from '@/utils/apiClient'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 
-const OperativePage = ({ query }) => {
+const SummaryPage = ({ query }) => {
   const { payrollNumber, bonusPeriod } = query
   const week = Week.default(bonusPeriod)
 
@@ -64,6 +64,6 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-OperativePage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+SummaryPage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
 
-export default OperativePage
+export default SummaryPage

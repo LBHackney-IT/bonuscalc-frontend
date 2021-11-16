@@ -6,7 +6,7 @@ import { useOperative } from '@/utils/apiClient'
 import { BonusPeriod } from '@/models'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 
-const OperativePage = ({ query }) => {
+const OperativeRedirect = ({ query }) => {
   const { payrollNumber } = query
   const { operative, isLoading, isError } = useOperative(payrollNumber)
   const router = useRouter()
@@ -42,6 +42,6 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-OperativePage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+OperativeRedirect.permittedRoles = [OPERATIVE_MANAGER_ROLE]
 
-export default OperativePage
+export default OperativeRedirect
