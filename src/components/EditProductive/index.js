@@ -74,6 +74,8 @@ const EditProductive = () => {
           maxDuration={420}
           minValue={-25200}
           maxValue={25200}
+          minDay={-60}
+          maxDay={60}
         >
           There are no editable productive items for this week.
         </PayElementsForm>

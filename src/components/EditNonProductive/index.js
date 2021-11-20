@@ -70,10 +70,12 @@ const EditNonProductive = () => {
         <PayElementsForm
           onSubmit={onSubmit}
           appendLabel="Add non-productive"
-          minDuration={0.01}
+          minDuration={0}
           maxDuration={168.0}
           minValue={0}
           maxValue={13540}
+          minDay={0}
+          maxDay={24}
         >
           There are no non-productive items for this week.
         </PayElementsForm>

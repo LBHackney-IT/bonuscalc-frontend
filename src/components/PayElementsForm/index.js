@@ -91,7 +91,7 @@ const NoteField = ({ item, index }) => {
   )
 }
 
-const DayField = ({ index, weekday }) => {
+const DayField = ({ index, weekday, min, max }) => {
   const { register, setValue } = useFormContext()
   const fieldName = `payElements.${index}.${weekday}`
 
@@ -118,8 +118,8 @@ const DayField = ({ index, weekday }) => {
         onBlur: onBlur,
         valueAsNumber: true,
         required: true,
-        min: 0,
-        max: 24,
+        min: min,
+        max: max,
         validate: {
           isNumber: (v) => !isNaN(v),
         },
@@ -153,7 +153,6 @@ const TotalField = ({
 
   register(`payElements.${index}.duration`, {
     valueAsNumber: true,
-    required: true,
     min: minDuration,
     max: maxDuration,
   })
@@ -236,6 +235,8 @@ const PayElementsForm = ({
   maxDuration,
   minValue,
   maxValue,
+  minDay,
+  maxDay,
 }) => {
   const { timesheet, payElements } = useContext(PageContext)
   const [initialized, setInitialized] = useState(false)
@@ -311,25 +312,60 @@ const PayElementsForm = ({
                     <TypeField index={index} />
                   </TD>
                   <TD numeric={true}>
-                    <DayField index={index} weekday="monday" />
+                    <DayField
+                      index={index}
+                      weekday="monday"
+                      min={minDay}
+                      max={maxDay}
+                    />
                   </TD>
                   <TD numeric={true}>
-                    <DayField index={index} weekday="tuesday" />
+                    <DayField
+                      index={index}
+                      weekday="tuesday"
+                      min={minDay}
+                      max={maxDay}
+                    />
                   </TD>
                   <TD numeric={true}>
-                    <DayField index={index} weekday="wednesday" />
+                    <DayField
+                      index={index}
+                      weekday="wednesday"
+                      min={minDay}
+                      max={maxDay}
+                    />
                   </TD>
                   <TD numeric={true}>
-                    <DayField index={index} weekday="thursday" />
+                    <DayField
+                      index={index}
+                      weekday="thursday"
+                      min={minDay}
+                      max={maxDay}
+                    />
                   </TD>
                   <TD numeric={true}>
-                    <DayField index={index} weekday="friday" />
+                    <DayField
+                      index={index}
+                      weekday="friday"
+                      min={minDay}
+                      max={maxDay}
+                    />
                   </TD>
                   <TD numeric={true}>
-                    <DayField index={index} weekday="saturday" />
+                    <DayField
+                      index={index}
+                      weekday="saturday"
+                      min={minDay}
+                      max={maxDay}
+                    />
                   </TD>
                   <TD numeric={true}>
-                    <DayField index={index} weekday="sunday" />
+                    <DayField
+                      index={index}
+                      weekday="sunday"
+                      min={minDay}
+                      max={maxDay}
+                    />
                   </TD>
                   <TD numeric={true}>
                     <TotalField
@@ -418,6 +454,8 @@ PayElementsForm.propTypes = {
   maxDuration: PropTypes.number.isRequired,
   minValue: PropTypes.number.isRequired,
   maxValue: PropTypes.number.isRequired,
+  minDay: PropTypes.number.isRequired,
+  maxDay: PropTypes.number.isRequired,
 }
 
 PayElementsForm.defaultProps = {
