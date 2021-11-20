@@ -216,6 +216,97 @@ describe('Overtime page', () => {
           })
         })
       })
+
+      it('Shows the summary of the overtime for that week', () => {
+        cy.get('#overtime-hours thead').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Overtime')
+            cy.get(':nth-child(2)').contains('Mon')
+            cy.get(':nth-child(3)').contains('Tue')
+            cy.get(':nth-child(4)').contains('Wed')
+            cy.get(':nth-child(5)').contains('Thu')
+            cy.get(':nth-child(6)').contains('Fri')
+            cy.get(':nth-child(7)').contains('Sat')
+            cy.get(':nth-child(8)').contains('Sun')
+            cy.get(':nth-child(9)').contains('Hours')
+            cy.get(':nth-child(10)').contains('Total')
+          })
+        })
+
+        cy.get('#overtime-hours tbody').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('18 – 24 Oct')
+            cy.get(':nth-child(2)').contains('0').should('not.exist')
+            cy.get(':nth-child(3)').contains('0').should('not.exist')
+            cy.get(':nth-child(4)').contains('0').should('not.exist')
+            cy.get(':nth-child(5)').contains('1')
+            cy.get(':nth-child(6)').contains('1')
+            cy.get(':nth-child(7)').contains('0').should('not.exist')
+            cy.get(':nth-child(8)').contains('0').should('not.exist')
+            cy.get(':nth-child(9)').contains('4')
+            cy.get(':nth-child(10)').contains('£43.20')
+          })
+
+          cy.get('.govuk-table__row:nth-child(2)').within(() => {
+            cy.get(':nth-child(1)').contains('Cover for André')
+          })
+        })
+
+        cy.get('#overtime-jobs').within(() => {
+          cy.get('.govuk-table__caption').contains('Overtime – Work orders')
+        })
+
+        cy.get('#overtime-jobs thead').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Reference')
+            cy.get(':nth-child(2)').contains('Address')
+            cy.get(':nth-child(3)').contains('Description')
+            cy.get(':nth-child(4)').contains('Date')
+            cy.get(':nth-child(5)').contains('Value')
+          })
+        })
+
+        cy.get('#overtime-jobs tbody').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)')
+              .contains('a', '1000003')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  'https://repairs-hub.hackney.gov.uk/work-orders/1000003'
+                )
+                expect(link).to.have.attr('target', '_blank')
+              })
+            cy.get(':nth-child(2)').contains('2 Somewhere Street')
+            cy.get(':nth-child(3)').contains('Replace broken light switch')
+            cy.get(':nth-child(4)').contains('20/10/2021')
+            cy.get(':nth-child(5)').contains('£21.60')
+          })
+
+          cy.get('.govuk-table__row:nth-child(2)').within(() => {
+            cy.get(':nth-child(1)')
+              .contains('a', '1000004')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  'https://repairs-hub.hackney.gov.uk/work-orders/1000004'
+                )
+                expect(link).to.have.attr('target', '_blank')
+              })
+            cy.get(':nth-child(2)').contains('1 Knowhere Road')
+            cy.get(':nth-child(3)').contains('Replace fuse in plug')
+            cy.get(':nth-child(4)').contains('19/10/2021')
+            cy.get(':nth-child(5)').contains('£21.60')
+          })
+        })
+
+        cy.get('#overtime-jobs tfoot').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Total')
+            cy.get(':nth-child(2)').contains('£86.40')
+          })
+        })
+      })
     })
   })
 })

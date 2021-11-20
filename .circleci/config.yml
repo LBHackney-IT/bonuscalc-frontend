@@ -75,6 +75,8 @@ jobs:
             export NEXT_PUBLIC_REPAIRS_HUB_URL=https://repairs-hub-development.hackney.gov.uk/work-orders
             export NEXT_PUBLIC_FIRST_WEEK=2021-08-02
             export NEXT_PUBLIC_LAST_WEEK=2022-01-17
+            export NEXT_PUBLIC_OVERTIME_HOURS_TYPE_ID=400
+            export NEXT_PUBLIC_OVERTIME_JOB_TYPE_ID=401
             export NEXT_PUBLIC_OOH_ROTA_TYPE_ID=500
             export NEXT_PUBLIC_OOH_JOB_TYPE_ID=501
             export NEXT_PUBLIC_OOH_RATE=25.00
@@ -91,6 +93,8 @@ jobs:
             export NEXT_PUBLIC_REPAIRS_HUB_URL=https://repairs-hub-staging.hackney.gov.uk/work-orders
             export NEXT_PUBLIC_FIRST_WEEK=2021-08-02
             export NEXT_PUBLIC_LAST_WEEK=2022-01-17
+            export NEXT_PUBLIC_OVERTIME_HOURS_TYPE_ID=400
+            export NEXT_PUBLIC_OVERTIME_JOB_TYPE_ID=401
             export NEXT_PUBLIC_OOH_ROTA_TYPE_ID=500
             export NEXT_PUBLIC_OOH_JOB_TYPE_ID=501
             export NEXT_PUBLIC_OOH_RATE=25.00
@@ -107,6 +111,8 @@ jobs:
             export NEXT_PUBLIC_REPAIRS_HUB_URL=https://repairs-hub.hackney.gov.uk/work-orders
             export NEXT_PUBLIC_FIRST_WEEK=2021-11-01
             export NEXT_PUBLIC_LAST_WEEK=2022-01-17
+            export NEXT_PUBLIC_OVERTIME_HOURS_TYPE_ID=400
+            export NEXT_PUBLIC_OVERTIME_JOB_TYPE_ID=401
             export NEXT_PUBLIC_OOH_ROTA_TYPE_ID=500
             export NEXT_PUBLIC_OOH_JOB_TYPE_ID=501
             export NEXT_PUBLIC_OOH_RATE=25.00

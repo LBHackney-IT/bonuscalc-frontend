@@ -8,6 +8,7 @@ export default class PayElement {
       id: null,
       payElementTypeId: null,
       workOrder: null,
+      closedAt: null,
       address: null,
       comment: null,
       monday: '0.00',
@@ -60,6 +61,7 @@ export default class PayElement {
     this.id = attrs.id
     this.payElementType = new PayElementType(attrs.payElementType)
     this.workOrder = attrs.workOrder
+    this.closedAt = attrs.closedAt
     this.address = attrs.address
     this.comment = attrs.comment
     this.monday = attrs.monday || 0
@@ -94,6 +96,14 @@ export default class PayElement {
     return this.payElementType.outOfHoursJob
   }
 
+  get isOvertimeHours() {
+    return this.payElementType.overtimeHours
+  }
+
+  get isOvertimeJob() {
+    return this.payElementType.overtimeJob
+  }
+
   get isProductive() {
     return this.payElementType.productive
   }
@@ -121,6 +131,7 @@ export default class PayElement {
       id: this.id,
       payElementTypeId: this.payElementTypeId,
       workOrder: this.workOrder,
+      closedAt: this.closedAt,
       address: this.address,
       comment: this.comment,
       monday: numberWithPrecision(this.monday, precision),

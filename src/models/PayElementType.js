@@ -26,6 +26,14 @@ export default class PayElementType {
     return parseFloat(process.env.NEXT_PUBLIC_OOH_RATE)
   }
 
+  static get overtimeHoursTypeId() {
+    return parseInt(process.env.NEXT_PUBLIC_OVERTIME_HOURS_TYPE_ID)
+  }
+
+  static get overtimeJobTypeId() {
+    return parseInt(process.env.NEXT_PUBLIC_OVERTIME_JOB_TYPE_ID)
+  }
+
   constructor(attrs) {
     attrs = attrs || {}
 
@@ -47,5 +55,13 @@ export default class PayElementType {
 
   get outOfHoursJob() {
     return this.outOfHours && this.id == PayElementType.outOfHoursJobTypeId
+  }
+
+  get overtimeHours() {
+    return this.overtime && this.id == PayElementType.overtimeHoursTypeId
+  }
+
+  get overtimeJob() {
+    return this.overtime && this.id == PayElementType.overtimeJobTypeId
   }
 }
