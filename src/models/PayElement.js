@@ -21,6 +21,18 @@ export default class PayElement {
     }
   }
 
+  static get days() {
+    return [
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+      'sunday',
+    ]
+  }
+
   constructor(attrs) {
     attrs = attrs || {}
 
@@ -48,6 +60,14 @@ export default class PayElement {
     return this.payElementType.adjustment
   }
 
+  get isOutOfHoursRota() {
+    return this.payElementType.outOfHoursRota
+  }
+
+  get isOutOfHoursJob() {
+    return this.payElementType.outOfHoursJob
+  }
+
   get isProductive() {
     return this.payElementType.productive
   }
@@ -58,6 +78,12 @@ export default class PayElement {
 
   get description() {
     return this.payElementType.description
+  }
+
+  get days() {
+    return PayElement.days.reduce((sum, day) => {
+      return sum + (this[day] > 0 ? 1 : 0)
+    }, 0)
   }
 
   toRow(precision = 4) {
