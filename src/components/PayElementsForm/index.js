@@ -74,7 +74,10 @@ const NoteField = ({ item, index }) => {
   return (
     <>
       <LinkButton
-        className={cx(showNote ? 'govuk-!-display-none' : null)}
+        className={cx(
+          'govuk-!-font-size-16',
+          showNote ? 'govuk-!-display-none' : null
+        )}
         onClick={addNote}
       >
         Add note
