@@ -7,6 +7,25 @@ export default class PayElementType {
     return parseInt(process.env.NEXT_PUBLIC_OOH_JOB_TYPE_ID)
   }
 
+  static get outOfHoursRota() {
+    return new PayElementType({
+      id: this.outOfHoursRotaTypeId,
+      description: 'OOH Rota',
+      paid: false,
+      payAtBand: false,
+      nonProductive: false,
+      adjustment: false,
+      productive: false,
+      selectable: true,
+      outOfHours: true,
+      overtime: false,
+    })
+  }
+
+  static get outOfHoursRate() {
+    return parseFloat(process.env.NEXT_PUBLIC_OOH_RATE)
+  }
+
   constructor(attrs) {
     attrs = attrs || {}
 

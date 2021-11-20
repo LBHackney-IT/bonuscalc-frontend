@@ -21,6 +21,26 @@ export default class PayElement {
     }
   }
 
+  static get outOfHoursRota() {
+    return new PayElement({
+      id: null,
+      payElementType: PayElementType.outOfHoursRota,
+      workOrder: null,
+      closedAt: null,
+      address: null,
+      comment: null,
+      monday: 0,
+      tuesday: 0,
+      wednesday: 0,
+      thursday: 0,
+      friday: 0,
+      saturday: 0,
+      sunday: 0,
+      duration: 0,
+      value: 0,
+    })
+  }
+
   static get days() {
     return [
       'monday',
@@ -58,6 +78,10 @@ export default class PayElement {
 
   get isAdjustment() {
     return this.payElementType.adjustment
+  }
+
+  get isOutOfHours() {
+    return this.payElementType.outOfHours
   }
 
   get isOutOfHoursRota() {
