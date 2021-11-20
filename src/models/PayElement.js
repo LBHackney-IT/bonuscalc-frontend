@@ -60,21 +60,21 @@ export default class PayElement {
     return this.payElementType.description
   }
 
-  toRow() {
+  toRow(precision = 4) {
     return {
       id: this.id,
       payElementTypeId: this.payElementTypeId,
       workOrder: this.workOrder,
       address: this.address,
       comment: this.comment,
-      monday: numberWithPrecision(this.monday, 2),
-      tuesday: numberWithPrecision(this.tuesday, 2),
-      wednesday: numberWithPrecision(this.wednesday, 2),
-      thursday: numberWithPrecision(this.thursday, 2),
-      friday: numberWithPrecision(this.friday, 2),
-      saturday: numberWithPrecision(this.saturday, 2),
-      sunday: numberWithPrecision(this.sunday, 2),
-      duration: numberWithPrecision(this.duration, 2),
+      monday: numberWithPrecision(this.monday, precision),
+      tuesday: numberWithPrecision(this.tuesday, precision),
+      wednesday: numberWithPrecision(this.wednesday, precision),
+      thursday: numberWithPrecision(this.thursday, precision),
+      friday: numberWithPrecision(this.friday, precision),
+      saturday: numberWithPrecision(this.saturday, precision),
+      sunday: numberWithPrecision(this.sunday, precision),
+      duration: numberWithPrecision(this.duration, precision),
       value: numberWithPrecision(this.value, 4),
     }
   }

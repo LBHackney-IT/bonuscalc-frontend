@@ -261,7 +261,7 @@ const PayElementsForm = ({
 
   useEffect(() => {
     if (!initialized) {
-      append(payElements.map((pe) => pe.toRow()))
+      append(payElements.map((pe) => pe.toRow(2)))
       setInitialized(true)
     }
   }, [append, payElements, initialized])
