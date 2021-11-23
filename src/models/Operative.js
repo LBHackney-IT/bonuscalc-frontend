@@ -8,6 +8,7 @@ export default class Operative {
     this.section = attrs.section
     this.scheme = attrs.scheme ? new Scheme(attrs.scheme) : null
     this.salaryBand = attrs.salaryBand
+    this.utilisation = attrs.utilisation
     this.fixedBand = attrs.fixedBand
     this.trade = new Trade(attrs.trade)
   }

@@ -9,7 +9,9 @@ export default class WeeklySummary {
     this.nonProductiveDuration = attrs.nonProductiveDuration
     this.nonProductiveValue = attrs.nonProductiveValue
     this.totalValue = attrs.totalValue
+    this.utilisation = attrs.utilisation
     this.projectedValue = attrs.projectedValue
+    this.averageUtilisation = attrs.averageUtilisation
   }
 
   get weekId() {

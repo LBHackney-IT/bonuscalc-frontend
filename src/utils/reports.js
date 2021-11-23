@@ -637,6 +637,7 @@ const drawBonusSummary = (pdf, operative, summary) => {
     totalProductiveValue,
     totalValueForBonusPeriod,
     projectedValue,
+    averageUtilisation,
   } = summary
 
   const { scheme } = operative
@@ -754,13 +755,21 @@ const drawBonusSummary = (pdf, operative, summary) => {
     x = originX + 144.1
     y = originY + 14.5 + lineHeight * row
 
-    text = `${bandForValue(payBands, weeklySummary.totalValue)}`
+    text = `${bandForValue(
+      payBands,
+      weeklySummary.totalValue,
+      weeklySummary.utilisation
+    )}`
     pdf.text(text, x, y, { align: 'center' })
 
     x = originX + 162.2
     y = originY + 14.5 + lineHeight * row
 
-    text = `${bandForValue(payBands, weeklySummary.projectedValue)}`
+    text = `${bandForValue(
+      payBands,
+      weeklySummary.projectedValue,
+      weeklySummary.averageUtilisation
+    )}`
     pdf.text(text, x, y, { align: 'center' })
 
     x1 = originX
@@ -817,7 +826,7 @@ const drawBonusSummary = (pdf, operative, summary) => {
   x = originX + 162.2
   y = originY + 15.5 + lineHeight * row
 
-  text = `${bandForValue(payBands, projectedValue)}`
+  text = `${bandForValue(payBands, projectedValue, averageUtilisation)}`
   pdf.text(text, x, y, { align: 'center' })
 
   x = originX + 153.4
