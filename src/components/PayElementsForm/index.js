@@ -74,7 +74,10 @@ const NoteField = ({ item, index }) => {
   return (
     <>
       <LinkButton
-        className={cx(showNote ? 'govuk-!-display-none' : null)}
+        className={cx(
+          'govuk-!-font-size-16',
+          showNote ? 'govuk-!-display-none' : null
+        )}
         onClick={addNote}
       >
         Add note
@@ -258,7 +261,7 @@ const PayElementsForm = ({
 
   useEffect(() => {
     if (!initialized) {
-      append(payElements.map((pe) => pe.toRow()))
+      append(payElements.map((pe) => pe.toRow(2)))
       setInitialized(true)
     }
   }, [append, payElements, initialized])

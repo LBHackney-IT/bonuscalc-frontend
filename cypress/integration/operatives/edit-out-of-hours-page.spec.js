@@ -2,10 +2,10 @@
 
 import 'cypress-audit/commands'
 
-describe('Productive page', () => {
+describe('Out of hours page', () => {
   context('When not logged in', () => {
     it('Redirects to the sign in page', () => {
-      cy.visit('/operatives/123456/timesheets/2021-10-18/productive/edit')
+      cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours/edit')
 
       cy.get('.lbh-header__service-name').contains('DLO Bonus Scheme')
       cy.get('.lbh-header__title-link').should('have.attr', 'href', '/')
@@ -47,7 +47,7 @@ describe('Productive page', () => {
           { statusCode: 200, fixture: 'pay/types.json' }
         ).as('get_pay_types')
 
-        cy.visit('/operatives/123456/timesheets/2021-10-18/productive/edit')
+        cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours/edit')
         cy.wait(['@get_operative', '@get_timesheet', '@get_pay_types'])
       })
 
@@ -85,14 +85,14 @@ describe('Productive page', () => {
           { statusCode: 200, fixture: 'pay/types.json' }
         ).as('get_pay_types')
 
-        cy.visit('/operatives/123456/timesheets/2021-10-18/productive/edit')
+        cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours/edit')
         cy.wait(['@get_operative', '@get_timesheet', '@get_pay_types'])
       })
 
       it('Shows the header', () => {
         cy.get('.lbh-heading-h2').within(() => {
           cy.contains('Alex Cable')
-          cy.contains('Edit productive time')
+          cy.contains('Edit out of hours')
         })
 
         cy.get('.lbh-heading-h3').within(() => {
@@ -103,7 +103,7 @@ describe('Productive page', () => {
         cy.audit()
       })
 
-      it('Can update the productive time', () => {
+      it('Can update the out of hours rota', () => {
         cy.intercept(
           {
             method: 'POST',
@@ -118,12 +118,12 @@ describe('Productive page', () => {
 
         cy.location().should((loc) => {
           expect(loc.pathname).to.eq(
-            '/operatives/123456/timesheets/2021-10-18/productive'
+            '/operatives/123456/timesheets/2021-10-18/out-of-hours'
           )
         })
 
         cy.get('.lbh-page-announcement').within(() => {
-          cy.contains('Updated productive time successfully')
+          cy.contains('Updated out of hours successfully')
         })
 
         // Navigate to another page to check announcement is removed
@@ -147,7 +147,7 @@ describe('Productive page', () => {
           cy.get('.lbh-heading-h3').contains('Period 3 – 2021 / week 13')
           cy.location().should((loc) => {
             expect(loc.pathname).to.eq(
-              '/operatives/123456/timesheets/2021-10-25/productive'
+              '/operatives/123456/timesheets/2021-10-25/out-of-hours'
             )
           })
         })

@@ -1,5 +1,5 @@
 {
-  "id": 1,
+  "id": "123456/2021-10-18",
   "week": {
     "id": "2021-10-18",
     "bonusPeriod": {
@@ -23,7 +23,10 @@
         "paid": true,
         "nonProductive": true,
         "productive": false,
-        "adjustment": false
+        "adjustment": false,
+        "outOfHours": false,
+        "overtime": false,
+        "selectable": true
       },
       "monday": 7.25,
       "tuesday": 0,
@@ -47,7 +50,10 @@
         "paid": true,
         "nonProductive": false,
         "productive": true,
-        "adjustment": false
+        "adjustment": false,
+        "outOfHours": false,
+        "overtime": false,
+        "selectable": false
       },
       "monday": 2,
       "tuesday": 0,
@@ -63,7 +69,7 @@
       "value": 30
     },
     {
-      "id": 4,
+      "id": 3,
       "payElementType": {
         "id": 211,
         "description": "Planned Maintenance",
@@ -71,7 +77,10 @@
         "paid": true,
         "nonProductive": false,
         "productive": true,
-        "adjustment": true
+        "adjustment": true,
+        "outOfHours": false,
+        "overtime": false,
+        "selectable": true
       },
       "monday": 0,
       "tuesday": 0,
@@ -95,7 +104,10 @@
         "paid": true,
         "nonProductive": true,
         "productive": false,
-        "adjustment": false
+        "adjustment": false,
+        "outOfHours": false,
+        "overtime": false,
+        "selectable": true
       },
       "monday": 0,
       "tuesday": 7.25,
@@ -119,7 +131,10 @@
         "paid": true,
         "nonProductive": false,
         "productive": true,
-        "adjustment": false
+        "adjustment": false,
+        "outOfHours": false,
+        "overtime": false,
+        "selectable": false
       },
       "monday": 2,
       "tuesday": 0,
@@ -132,7 +147,95 @@
       "address": "2 Somewhere Street",
       "comment": "Replace broken light switch",
       "duration": 1,
-      "value": 60
+      "value": 60,
+      "readOnly": true
+    },
+    {
+      "id": 6,
+      "payElementType": {
+        "id": 500,
+        "description": "OOH Hours",
+        "payAtBand": false,
+        "paid": false,
+        "nonProductive": false,
+        "productive": false,
+        "adjustment": false,
+        "outOfHours": true,
+        "overtime": false,
+        "selectable": false
+      },
+      "monday": 0,
+      "tuesday": 1,
+      "wednesday": 0,
+      "thursday": 3,
+      "friday": 2,
+      "saturday": 0,
+      "sunday": 0,
+      "workOrder": null,
+      "closedAt": null,
+      "address": null,
+      "comment": "Cover for André",
+      "duration": 6,
+      "value": 150,
+      "readOnly": false
+    },
+    {
+      "id": 7,
+      "payElementType": {
+        "id": 501,
+        "description": "OOH Job",
+        "payAtBand": false,
+        "paid": false,
+        "nonProductive": false,
+        "productive": false,
+        "adjustment": false,
+        "outOfHours": true,
+        "overtime": false,
+        "selectable": false
+      },
+      "monday": 0,
+      "tuesday": 0,
+      "wednesday": 34,
+      "thursday": 0,
+      "friday": 0,
+      "saturday": 0,
+      "sunday": 0,
+      "workOrder": "1000005",
+      "closedAt": "2021-10-20T20:00:00Z",
+      "address": "2 Somewhere Street",
+      "comment": "Replace broken light switch",
+      "duration": 0,
+      "value": 34,
+      "readOnly": true
+    },
+    {
+      "id": 8,
+      "payElementType": {
+        "id": 501,
+        "description": "OOH Job",
+        "payAtBand": false,
+        "paid": false,
+        "nonProductive": false,
+        "productive": false,
+        "adjustment": false,
+        "outOfHours": true,
+        "overtime": false,
+        "selectable": false
+      },
+      "monday": 0,
+      "tuesday": 20,
+      "wednesday": 0,
+      "thursday": 0,
+      "friday": 0,
+      "saturday": 0,
+      "sunday": 0,
+      "workOrder": "1000006",
+      "closedAt": "2021-10-19T21:00:00Z",
+      "address": "1 Knowhere Road",
+      "comment": "Replace fuse in plug",
+      "duration": 0,
+      "value": 20,
+      "readOnly": true
     }
   ]
 }

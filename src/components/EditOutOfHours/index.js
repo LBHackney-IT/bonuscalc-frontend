@@ -1,12 +1,13 @@
 import AnnouncementContext from '@/components/AnnouncementContext'
 import PageContext from '@/components/PageContext'
-import PayElementsForm from '@/components/PayElementsForm'
+import MoneyForm from '@/components/MoneyForm'
 import { useEffect, useContext, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import { PayElementType } from '@/models'
 import { saveTimesheet } from '@/utils/apiClient'
 
-const EditProductive = () => {
+const EditOutOfHours = () => {
   const router = useRouter()
   const methods = useForm()
 
@@ -17,11 +18,17 @@ const EditProductive = () => {
   const [confirmed, setConfirmed] = useState(false)
 
   const baseUrl = `/operatives/${operative.id}/timesheets`
-  const summaryUrl = `${baseUrl}/${timesheet.weekId}/productive`
+  const summaryUrl = `${baseUrl}/${timesheet.weekId}/out-of-hours`
 
   const onSubmit = async (data) => {
-    timesheet.payElements.map((pe) => {
-      if (!pe.isProductive) {
+    const [payElement] = data.payElements
+
+    if (payElement.duration < 1) {
+      data.payElements = []
+    }
+
+    timesheet.payElements.forEach((pe) => {
+      if (!pe.isOutOfHours) {
         data.payElements.push(pe.toRow())
       }
     })
@@ -40,7 +47,7 @@ const EditProductive = () => {
 
   useEffect(() => {
     const pushAnnouncement = () => {
-      setAnnouncement({ title: 'Updated productive time successfully' })
+      setAnnouncement({ title: 'Updated out of hours successfully' })
     }
 
     if (confirmed) {
@@ -57,7 +64,7 @@ const EditProductive = () => {
       <section className="section">
         <h1 className="lbh-heading-h2">
           <span className="govuk-caption-l lbh-caption">{operative.name}</span>
-          Edit productive time
+          Edit out of hours
         </h1>
         <h2 className="lbh-heading-h3 govuk-!-margin-top-2">
           {week.description}
@@ -68,21 +75,21 @@ const EditProductive = () => {
       </section>
 
       <FormProvider {...methods}>
-        <PayElementsForm
+        <MoneyForm
           onSubmit={onSubmit}
-          appendLabel="Add productive"
-          minDuration={-420}
-          maxDuration={420}
-          minValue={-25200}
-          maxValue={25200}
-          minDay={-60}
-          maxDay={60}
-        >
-          There are no editable productive items for this week.
-        </PayElementsForm>
+          cancelUrl={summaryUrl}
+          typeLabel="Out of hours"
+          minDuration={0}
+          maxDuration={21}
+          minValue={0}
+          maxValue={500}
+          minDay={0}
+          maxDay={3}
+          rate={PayElementType.outOfHoursRate}
+        />
       </FormProvider>
     </>
   )
 }
 
-export default EditProductive
+export default EditOutOfHours

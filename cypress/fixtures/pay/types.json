@@ -442,5 +442,29 @@
     "outOfHours": false,
     "overtime": false,
     "selectable": false
+  },
+  {
+    "id": 500,
+    "description": "OOH Hours",
+    "payAtBand": false,
+    "paid": false,
+    "nonProductive": false,
+    "productive": false,
+    "adjustment": false,
+    "outOfHours": true,
+    "overtime": false,
+    "selectable": false
+  },
+  {
+    "id": 501,
+    "description": "OOH Job",
+    "payAtBand": false,
+    "paid": false,
+    "nonProductive": false,
+    "productive": false,
+    "adjustment": false,
+    "outOfHours": true,
+    "overtime": false,
+    "selectable": false
   }
 ]

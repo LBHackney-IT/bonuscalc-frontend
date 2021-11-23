@@ -216,6 +216,87 @@ describe('Out of hours page', () => {
           })
         })
       })
+
+      it('Shows the summary of the out-of-hours for that week', () => {
+        cy.get('#ooh-rota thead').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Out of hours')
+            cy.get(':nth-child(2)').contains('Mon')
+            cy.get(':nth-child(3)').contains('Tue')
+            cy.get(':nth-child(4)').contains('Wed')
+            cy.get(':nth-child(5)').contains('Thu')
+            cy.get(':nth-child(6)').contains('Fri')
+            cy.get(':nth-child(7)').contains('Sat')
+            cy.get(':nth-child(8)').contains('Sun')
+            cy.get(':nth-child(9)').contains('Days')
+            cy.get(':nth-child(10)').contains('Total')
+          })
+        })
+
+        cy.get('#ooh-rota tbody').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('18 – 24 Oct')
+            cy.get(':nth-child(2)').contains('0').should('not.exist')
+            cy.get(':nth-child(3)').contains('1')
+            cy.get(':nth-child(4)').contains('0').should('not.exist')
+            cy.get(':nth-child(5)').contains('3')
+            cy.get(':nth-child(6)').contains('2')
+            cy.get(':nth-child(7)').contains('0').should('not.exist')
+            cy.get(':nth-child(8)').contains('0').should('not.exist')
+            cy.get(':nth-child(9)').contains('3')
+            cy.get(':nth-child(10)').contains('£150.00')
+          })
+
+          cy.get('.govuk-table__row:nth-child(2)').within(() => {
+            cy.get(':nth-child(1)').contains('Cover for André')
+          })
+        })
+
+        cy.get('#ooh-jobs thead').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Out of hours – work orders')
+          })
+        })
+
+        cy.get('#ooh-jobs tbody').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)')
+              .contains('a', '1000005')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  'https://repairs-hub.hackney.gov.uk/work-orders/1000005'
+                )
+                expect(link).to.have.attr('target', '_blank')
+              })
+            cy.get(':nth-child(2)').contains('2 Somewhere Street')
+            cy.get(':nth-child(3)').contains('Replace broken light switch')
+            cy.get(':nth-child(4)').contains('£34.00')
+          })
+
+          cy.get('.govuk-table__row:nth-child(2)').within(() => {
+            cy.get(':nth-child(1)')
+              .contains('a', '1000006')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  'https://repairs-hub.hackney.gov.uk/work-orders/1000006'
+                )
+                expect(link).to.have.attr('target', '_blank')
+              })
+            cy.get(':nth-child(2)').contains('1 Knowhere Road')
+            cy.get(':nth-child(3)').contains('Replace fuse in plug')
+            cy.get(':nth-child(4)').contains('£20.00')
+          })
+        })
+
+        cy.get('#ooh-jobs tfoot').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Total')
+            cy.get(':nth-child(2)').contains('£204.00')
+          })
+        })
+      })
     })
   })
 })
