@@ -16,19 +16,20 @@ const EditNonProductive = () => {
 
   const [confirmed, setConfirmed] = useState(false)
 
-  const onSubmit = async (data) => {
-    const { adjustmentPayElements } = timesheet
+  const baseUrl = `/operatives/${operative.id}/timesheets`
+  const summaryUrl = `${baseUrl}/${timesheet.weekId}/non-productive`
 
-    adjustmentPayElements.map((pe) => {
-      data.payElements.push(pe.toRow())
+  const onSubmit = async (data) => {
+    timesheet.payElements.forEach((pe) => {
+      if (!pe.isNonProductive) {
+        data.payElements.push(pe.toRow())
+      }
     })
 
     if (await saveTimesheet(operative.id, timesheet.weekId, data)) {
       setConfirmed(true)
 
-      router.push(
-        `/operatives/${operative.id}/timesheets/${timesheet.weekId}/non-productive`
-      )
+      router.push(summaryUrl)
     } else {
       setAnnouncement({
         title: 'Unable to save timesheet - please try again in a moment',

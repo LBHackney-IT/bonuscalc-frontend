@@ -21,6 +21,38 @@ export default class PayElement {
     }
   }
 
+  static get outOfHoursRota() {
+    return new PayElement({
+      id: null,
+      payElementType: PayElementType.outOfHoursRota,
+      workOrder: null,
+      closedAt: null,
+      address: null,
+      comment: null,
+      monday: 0,
+      tuesday: 0,
+      wednesday: 0,
+      thursday: 0,
+      friday: 0,
+      saturday: 0,
+      sunday: 0,
+      duration: 0,
+      value: 0,
+    })
+  }
+
+  static get days() {
+    return [
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+      'sunday',
+    ]
+  }
+
   constructor(attrs) {
     attrs = attrs || {}
 
@@ -48,6 +80,18 @@ export default class PayElement {
     return this.payElementType.adjustment
   }
 
+  get isOutOfHours() {
+    return this.payElementType.outOfHours
+  }
+
+  get isOutOfHoursRota() {
+    return this.payElementType.outOfHoursRota
+  }
+
+  get isOutOfHoursJob() {
+    return this.payElementType.outOfHoursJob
+  }
+
   get isProductive() {
     return this.payElementType.productive
   }
@@ -60,21 +104,27 @@ export default class PayElement {
     return this.payElementType.description
   }
 
-  toRow() {
+  get days() {
+    return PayElement.days.reduce((sum, day) => {
+      return sum + (this[day] > 0 ? 1 : 0)
+    }, 0)
+  }
+
+  toRow(precision = 4) {
     return {
       id: this.id,
       payElementTypeId: this.payElementTypeId,
       workOrder: this.workOrder,
       address: this.address,
       comment: this.comment,
-      monday: numberWithPrecision(this.monday, 2),
-      tuesday: numberWithPrecision(this.tuesday, 2),
-      wednesday: numberWithPrecision(this.wednesday, 2),
-      thursday: numberWithPrecision(this.thursday, 2),
-      friday: numberWithPrecision(this.friday, 2),
-      saturday: numberWithPrecision(this.saturday, 2),
-      sunday: numberWithPrecision(this.sunday, 2),
-      duration: numberWithPrecision(this.duration, 2),
+      monday: numberWithPrecision(this.monday, precision),
+      tuesday: numberWithPrecision(this.tuesday, precision),
+      wednesday: numberWithPrecision(this.wednesday, precision),
+      thursday: numberWithPrecision(this.thursday, precision),
+      friday: numberWithPrecision(this.friday, precision),
+      saturday: numberWithPrecision(this.saturday, precision),
+      sunday: numberWithPrecision(this.sunday, precision),
+      duration: numberWithPrecision(this.duration, precision),
       value: numberWithPrecision(this.value, 4),
     }
   }

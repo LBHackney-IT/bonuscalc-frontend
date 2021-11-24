@@ -39,8 +39,16 @@ describe('Non-productive page', () => {
           { statusCode: 404, fixture: 'timesheets/not_found.json' }
         ).as('get_timesheet')
 
-        cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive')
-        cy.wait(['@get_operative', '@get_timesheet'])
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/pay/types',
+          },
+          { statusCode: 200, fixture: 'pay/types.json' }
+        ).as('get_pay_types')
+
+        cy.visit('/operatives/123456/timesheets/2021-10-18/non-productive/edit')
+        cy.wait(['@get_operative', '@get_timesheet', '@get_pay_types'])
       })
 
       it('Shows the not found message', () => {

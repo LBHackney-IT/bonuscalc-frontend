@@ -1,26 +1,31 @@
 import EditOperativePage from '@/components/EditOperativePage'
-import EditProductive from '@/components/EditProductive'
+import EditOutOfHours from '@/components/EditOutOfHours'
+import { PayElement } from '@/models'
 import { compareStrings } from '@/utils/string'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 
-const EditProductivePage = ({ query }) => {
+const EditOutOfHoursPage = ({ query }) => {
   const selectPayElements = (timesheet) => {
-    return timesheet.adjustmentPayElements
+    if (timesheet.hasOutOfHoursRota) {
+      return timesheet.outOfHoursRota
+    } else {
+      return [PayElement.outOfHoursRota]
+    }
   }
 
   const selectPayElementTypes = (payElementTypes) => {
     return payElementTypes
-      .filter((pet) => pet.adjustment && pet.selectable)
+      .filter((pet) => pet.outOfHours && pet.selectable)
       .sort((a, b) => compareStrings(a.description, b.description))
   }
 
   return (
     <EditOperativePage
       query={query}
-      tab="productive"
+      tab="out-of-hours"
       selectPayElements={selectPayElements}
       selectPayElementTypes={selectPayElementTypes}
-      component={EditProductive}
+      component={EditOutOfHours}
     />
   )
 }
@@ -35,6 +40,6 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-EditProductivePage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+EditOutOfHoursPage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
 
-export default EditProductivePage
+export default EditOutOfHoursPage

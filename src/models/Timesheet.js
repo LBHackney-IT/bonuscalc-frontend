@@ -45,6 +45,22 @@ export default class Timesheet {
     return this.adjustmentPayElements.length > 0
   }
 
+  get outOfHoursRota() {
+    return this.payElements.filter((pe) => pe.isOutOfHoursRota)
+  }
+
+  get hasOutOfHoursRota() {
+    return this.outOfHoursRota.length > 0
+  }
+
+  get outOfHoursJobs() {
+    return this.payElements.filter((pe) => pe.isOutOfHoursJob)
+  }
+
+  get hasOutOfHoursJobs() {
+    return this.outOfHoursJobs.length > 0
+  }
+
   get nonProductivePayElements() {
     return this.payElements.filter((pe) => pe.isNonProductive)
   }
@@ -55,6 +71,18 @@ export default class Timesheet {
 
   get adjustmentTotal() {
     return this.adjustmentPayElements.reduce(totalValue, 0)
+  }
+
+  get outOfHoursRotaTotal() {
+    return this.outOfHoursRota.reduce(totalValue, 0)
+  }
+
+  get outOfHoursJobsTotal() {
+    return this.outOfHoursJobs.reduce(totalValue, 0)
+  }
+
+  get outOfHoursTotal() {
+    return this.outOfHoursRotaTotal + this.outOfHoursJobsTotal
   }
 
   get nonProductiveDuration() {
