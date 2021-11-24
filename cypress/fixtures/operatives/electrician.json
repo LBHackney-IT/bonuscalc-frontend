@@ -23,6 +23,7 @@
     ]
   },
   "salaryBand": 5,
+  "utilisation": 1,
   "fixedBand": false,
   "isArchived": false
 }

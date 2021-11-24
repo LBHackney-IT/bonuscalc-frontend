@@ -16,7 +16,9 @@
       "nonProductiveDuration": 14.25,
       "nonProductiveValue": 1453.8,
       "totalValue": 4074.0,
-      "projectedValue": 4074.0
+      "utilisation": 1,
+      "projectedValue": 4074.0,
+      "averageUtilisation": 1
     },
     {
       "number": 2,
@@ -26,7 +28,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 739.8,
-      "projectedValue": 2406.9
+      "utilisation": 1,
+      "projectedValue": 2406.9,
+      "averageUtilisation": 1
     },
     {
       "number": 3,
@@ -36,7 +40,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 2700.0,
-      "projectedValue": 2504.6
+      "utilisation": 1,
+      "projectedValue": 2504.6,
+      "averageUtilisation": 1
     },
     {
       "number": 4,
@@ -46,7 +52,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 739.8,
-      "projectedValue": 2063.4
+      "utilisation": 1,
+      "projectedValue": 2063.4,
+      "averageUtilisation": 1
     },
     {
       "number": 5,
@@ -56,7 +64,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 4029.6,
-      "projectedValue": 2456.64
+      "utilisation": 1,
+      "projectedValue": 2456.64,
+      "averageUtilisation": 1
     },
     {
       "number": 6,
@@ -66,7 +76,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 7579.8,
-      "projectedValue": 3310.5
+      "utilisation": 1,
+      "projectedValue": 3310.5,
+      "averageUtilisation": 1
     },
     {
       "number": 7,
@@ -76,7 +88,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 1137.0,
-      "projectedValue": 3000.0
+      "utilisation": 1,
+      "projectedValue": 3000.0,
+      "averageUtilisation": 1
     },
     {
       "number": 8,
@@ -86,7 +100,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 4005.6,
-      "projectedValue": 3125.7
+      "utilisation": 1,
+      "projectedValue": 3125.7,
+      "averageUtilisation": 1
     },
     {
       "number": 9,
@@ -96,7 +112,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 739.8,
-      "projectedValue": 2860.6
+      "utilisation": 1,
+      "projectedValue": 2860.6,
+      "averageUtilisation": 1
     },
     {
       "number": 10,
@@ -106,7 +124,9 @@
       "nonProductiveDuration": 7.25,
       "nonProductiveValue": 739.8,
       "totalValue": 739.8,
-      "projectedValue": 2648.52
+      "utilisation": 1,
+      "projectedValue": 2648.52,
+      "averageUtilisation": 1
     },
     {
       "number": 11,
@@ -116,7 +136,9 @@
       "nonProductiveDuration": 14.5,
       "nonProductiveValue": 1479.0,
       "totalValue": 1479.0,
-      "projectedValue": 2542.2
+      "utilisation": 1,
+      "projectedValue": 2542.2,
+      "averageUtilisation": 1
     },
     {
       "number": 12,
@@ -126,7 +148,9 @@
       "nonProductiveDuration": 36.0,
       "nonProductiveValue": 3672.0,
       "totalValue": 3672.0,
-      "projectedValue": 2636.35
+      "utilisation": 1,
+      "projectedValue": 2636.35,
+      "averageUtilisation": 1
     },
     {
       "number": 13,
@@ -136,7 +160,9 @@
       "nonProductiveDuration": 28.75,
       "nonProductiveValue": 2832.6,
       "totalValue": 8458.8,
-      "projectedValue": 3084.23
+      "utilisation": 1,
+      "projectedValue": 3084.23,
+      "averageUtilisation": 1
     }
   ]
 }
