@@ -16,6 +16,7 @@ const WeeklySummaries = () => {
       totalProductiveValue,
       totalValueForBonusPeriod,
       projectedValue,
+      averageUtilisation,
     },
   } = useContext(PageContext)
 
@@ -96,10 +97,20 @@ const WeeklySummaries = () => {
                 </TD>
                 <TD align="centre">
                   <div className="bc-summary-payband">
-                    <span>{bandForValue(scheme.payBands, ws.totalValue)}</span>
+                    <span>
+                      {bandForValue(
+                        scheme.payBands,
+                        ws.totalValue,
+                        ws.utilisation
+                      )}
+                    </span>
                     <span> </span>
                     <span>
-                      {bandForValue(scheme.payBands, ws.projectedValue)}
+                      {bandForValue(
+                        scheme.payBands,
+                        ws.projectedValue,
+                        ws.averageUtilisation
+                      )}
                     </span>
                   </div>
                 </TD>
@@ -136,7 +147,13 @@ const WeeklySummaries = () => {
                 <div className="bc-summary-payband">
                   <span>{salaryBand}</span>
                   <span>&rarr;</span>
-                  <span>{bandForValue(scheme.payBands, projectedValue)}</span>
+                  <span>
+                    {bandForValue(
+                      scheme.payBands,
+                      projectedValue,
+                      averageUtilisation
+                    )}
+                  </span>
                 </div>
               </TD>
             </TR>

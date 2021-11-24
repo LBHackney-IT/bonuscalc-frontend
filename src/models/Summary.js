@@ -43,4 +43,10 @@ export default class Summary {
       return ws.projectedValue
     }, 0)
   }
+
+  get averageUtilisation() {
+    return this.weeklySummaries.reduce((average, ws) => {
+      return ws.averageUtilisation
+    }, 1)
+  }
 }
