@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import PageContext from '@/components/PageContext'
-import { Table, THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
+import { Table, Caption } from '@/components/Table'
+import { THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
 import { useContext } from 'react'
 import { numberWithPrecision } from '@/utils/number'
 
@@ -12,11 +13,20 @@ const OutOfHoursJobs = () => {
   } = useContext(PageContext)
 
   return (
-    <Table id="ooh-jobs" className="bc-ooh-jobs">
+    <Table id="ooh-jobs" className="bc-ooh-jobs govuk-!-margin-top-9">
+      <Caption className="govuk-!-margin-bottom-2 lbh-heading-h4">
+        Out of hours – Work orders
+      </Caption>
       <THead>
         <TR>
-          <TH scope="col" colSpan="4">
-            Out of hours – work orders
+          <TH scope="col">Reference</TH>
+          <TH scope="col">Address</TH>
+          <TH scope="col">Description</TH>
+          <TH scope="col" align="centre">
+            Date
+          </TH>
+          <TH scope="col" numeric={true}>
+            Value
           </TH>
         </TR>
       </THead>
@@ -38,6 +48,7 @@ const OutOfHoursJobs = () => {
                 </TD>
                 <TD>{payElement.address}</TD>
                 <TD>{payElement.comment}</TD>
+                <TD align="centre">{payElement.closedDate}</TD>
                 <TD numeric={true}>
                   &pound;{numberWithPrecision(payElement.value, 2)}
                 </TD>
@@ -46,7 +57,7 @@ const OutOfHoursJobs = () => {
           </TBody>
           <TFoot>
             <TR>
-              <TH scope="row" colSpan="3" align="right">
+              <TH scope="row" colSpan="4" align="right">
                 Total
               </TH>
               <TD numeric={true}>
@@ -58,7 +69,7 @@ const OutOfHoursJobs = () => {
       ) : (
         <TBody>
           <TR>
-            <TD colSpan="4">
+            <TD colSpan="5">
               There are no out of hours work orders for this week.
             </TD>
           </TR>

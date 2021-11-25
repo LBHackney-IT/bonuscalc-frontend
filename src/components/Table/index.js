@@ -6,6 +6,15 @@ export const Table = ({ className, children, ...props }) => (
   </table>
 )
 
+export const Caption = ({ className, children, ...props }) => (
+  <caption
+    className={cx('govuk-table__caption lbh-table__caption', className)}
+    {...props}
+  >
+    {children}
+  </caption>
+)
+
 export const THead = ({ className, children, ...props }) => (
   <thead className={cx('govuk-table__head', className)} {...props}>
     {children}

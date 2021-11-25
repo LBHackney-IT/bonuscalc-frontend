@@ -1,4 +1,5 @@
 import PayElementType from './PayElementType'
+import dayjs from '@/utils/date'
 import { numberWithPrecision } from '@/utils/number'
 
 export default class PayElement {
@@ -70,6 +71,7 @@ export default class PayElement {
     this.sunday = attrs.sunday || 0
     this.duration = attrs.duration || 0
     this.value = attrs.value || 0
+    this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
   }
 
   get payElementTypeId() {
@@ -102,6 +104,10 @@ export default class PayElement {
 
   get description() {
     return this.payElementType.description
+  }
+
+  get closedDate() {
+    return this.closedAt?.format('DD/MM/YYYY')
   }
 
   get days() {
