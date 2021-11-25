@@ -61,6 +61,22 @@ export default class Timesheet {
     return this.outOfHoursJobs.length > 0
   }
 
+  get hasOvertimeHours() {
+    return this.overtimeHours.length > 0
+  }
+
+  get overtimeHours() {
+    return this.payElements.filter((pe) => pe.isOvertimeHours)
+  }
+
+  get hasOvertimeJobs() {
+    return this.overtimeJobs.length > 0
+  }
+
+  get overtimeJobs() {
+    return this.payElements.filter((pe) => pe.isOvertimeJob)
+  }
+
   get nonProductivePayElements() {
     return this.payElements.filter((pe) => pe.isNonProductive)
   }
@@ -83,6 +99,18 @@ export default class Timesheet {
 
   get outOfHoursTotal() {
     return this.outOfHoursRotaTotal + this.outOfHoursJobsTotal
+  }
+
+  get overtimeHoursTotal() {
+    return this.overtimeHours.reduce(totalValue, 0)
+  }
+
+  get overtimeJobsTotal() {
+    return this.overtimeJobs.reduce(totalValue, 0)
+  }
+
+  get overtimeTotal() {
+    return this.overtimeHoursTotal + this.overtimeJobsTotal
   }
 
   get nonProductiveDuration() {

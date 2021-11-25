@@ -5,17 +5,17 @@ import { THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
 import { useContext } from 'react'
 import { numberWithPrecision } from '@/utils/number'
 
-const OutOfHoursJobs = () => {
+const OvertimeJobs = () => {
   const repairsHubUrl = process.env.NEXT_PUBLIC_REPAIRS_HUB_URL
 
   const {
-    timesheet: { hasOutOfHoursJobs, outOfHoursJobs, outOfHoursTotal },
+    timesheet: { hasOvertimeJobs, overtimeJobs, overtimeTotal },
   } = useContext(PageContext)
 
   return (
-    <Table id="ooh-jobs" className="bc-ooh-jobs govuk-!-margin-top-9">
+    <Table id="overtime-jobs" className="bc-overtime-jobs govuk-!-margin-top-9">
       <Caption className="govuk-!-margin-bottom-2 lbh-heading-h4">
-        Out of hours – Work orders
+        Overtime – Work orders
       </Caption>
       <THead>
         <TR>
@@ -30,10 +30,10 @@ const OutOfHoursJobs = () => {
           </TH>
         </TR>
       </THead>
-      {hasOutOfHoursJobs ? (
+      {hasOvertimeJobs ? (
         <>
           <TBody>
-            {outOfHoursJobs.map((payElement, index) => (
+            {overtimeJobs.map((payElement, index) => (
               <TR key={index}>
                 <TD>
                   {payElement.workOrder ? (
@@ -61,7 +61,7 @@ const OutOfHoursJobs = () => {
                 Total
               </TH>
               <TD numeric={true}>
-                &pound;{numberWithPrecision(outOfHoursTotal, 2)}
+                &pound;{numberWithPrecision(overtimeTotal, 2)}
               </TD>
             </TR>
           </TFoot>
@@ -70,7 +70,7 @@ const OutOfHoursJobs = () => {
         <TBody>
           <TR>
             <TD colSpan="5">
-              There are no out of hours work orders for this week.
+              There are no overtime work orders for this week.
             </TD>
           </TR>
         </TBody>
@@ -79,4 +79,4 @@ const OutOfHoursJobs = () => {
   )
 }
 
-export default OutOfHoursJobs
+export default OvertimeJobs
