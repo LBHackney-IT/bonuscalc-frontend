@@ -92,10 +92,18 @@ const DayField = ({ index, weekday, min, max }) => {
     }
   }
 
+  const selectAll = (event) => {
+    const input = event.target
+
+    input.selectionStart = 0
+    input.selectionEnd = input.value.length
+  }
+
   return (
     <input
       type="text"
       className="govuk-input lbh-input govuk-!-text-align-right"
+      onClick={selectAll}
       {...register(fieldName, {
         onBlur: onBlur,
         valueAsNumber: true,
