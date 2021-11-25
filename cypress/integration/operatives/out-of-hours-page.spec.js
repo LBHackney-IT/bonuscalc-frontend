@@ -252,9 +252,17 @@ describe('Out of hours page', () => {
           })
         })
 
+        cy.get('#ooh-jobs').within(() => {
+          cy.get('.govuk-table__caption').contains('Out of hours – Work orders')
+        })
+
         cy.get('#ooh-jobs thead').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(1)').contains('Out of hours – work orders')
+            cy.get(':nth-child(1)').contains('Reference')
+            cy.get(':nth-child(2)').contains('Address')
+            cy.get(':nth-child(3)').contains('Description')
+            cy.get(':nth-child(4)').contains('Date')
+            cy.get(':nth-child(5)').contains('Value')
           })
         })
 
@@ -271,7 +279,8 @@ describe('Out of hours page', () => {
               })
             cy.get(':nth-child(2)').contains('2 Somewhere Street')
             cy.get(':nth-child(3)').contains('Replace broken light switch')
-            cy.get(':nth-child(4)').contains('£34.00')
+            cy.get(':nth-child(4)').contains('20/10/2021')
+            cy.get(':nth-child(5)').contains('£34.00')
           })
 
           cy.get('.govuk-table__row:nth-child(2)').within(() => {
@@ -286,7 +295,8 @@ describe('Out of hours page', () => {
               })
             cy.get(':nth-child(2)').contains('1 Knowhere Road')
             cy.get(':nth-child(3)').contains('Replace fuse in plug')
-            cy.get(':nth-child(4)').contains('£20.00')
+            cy.get(':nth-child(4)').contains('19/10/2021')
+            cy.get(':nth-child(5)').contains('£20.00')
           })
         })
 
