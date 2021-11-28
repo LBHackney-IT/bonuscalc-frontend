@@ -7,8 +7,8 @@ describe('Header', () => {
   const serviceName = 'DLO Bonus Scheme'
 
   describe('When user is signed in', () => {
-    it('should render header content for agents', () => {
-      const { getByText } = render(
+    it('should render header content for managers', () => {
+      const { getByText, getByRole } = render(
         <UserContext.Provider
           value={{
             user: operativeManager,
@@ -19,8 +19,23 @@ describe('Header', () => {
       )
 
       expect(getByText(serviceName)).toBeInTheDocument()
-      expect(getByText(operativeManager.name)).toBeInTheDocument()
-      expect(getByText('Sign out')).toBeInTheDocument()
+      expect(getByRole('link', { name: 'Search' })).toBeInTheDocument()
+      expect(getByRole('link', { name: 'Sign out' })).toBeInTheDocument()
+    })
+
+    it('should not link Search when it is the current page', () => {
+      const { getByText, queryByRole } = render(
+        <UserContext.Provider
+          value={{
+            user: operativeManager,
+          }}
+        >
+          <Header serviceName={serviceName} currentPage="search" />
+        </UserContext.Provider>
+      )
+
+      expect(queryByRole('link', { name: 'Search' })).not.toBeInTheDocument()
+      expect(getByText('Search')).toBeInTheDocument()
     })
   })
 
@@ -37,7 +52,7 @@ describe('Header', () => {
       )
 
       expect(getByText(serviceName)).toBeInTheDocument()
-      expect(queryByText(operativeManager.name)).not.toBeInTheDocument()
+      expect(queryByText('Search')).not.toBeInTheDocument()
       expect(queryByText('Sign out')).not.toBeInTheDocument()
     })
   })

@@ -48,7 +48,7 @@ const OperativePage = ({ query, tab, component }) => {
 
   return (
     <PageContext.Provider value={context}>
-      <BackButton href="/" />
+      <BackButton href="/search" />
       <OperativeSummary />
       <OperativeTabs current={tab}>
         <ComponentToRender />

@@ -9,7 +9,7 @@ describe('Search page', () => {
 
   describe('Search for an operative by payroll number', () => {
     beforeEach(() => {
-      cy.visit('/')
+      cy.visit('/search')
     })
 
     it('Checks a payroll number has been entered', () => {

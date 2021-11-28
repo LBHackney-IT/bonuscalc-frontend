@@ -50,7 +50,7 @@ const SummaryPage = ({ query }) => {
 
   return (
     <PageContext.Provider value={context}>
-      <BackButton href="/" />
+      <BackButton href="/search" />
       <OperativeSummary />
       <OperativeTabs current={0}>
         <BonusPeriodSummary />
