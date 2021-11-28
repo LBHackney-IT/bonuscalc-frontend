@@ -49,6 +49,11 @@ const Header = ({ serviceName, currentPage }) => {
             </div>
             {user && (
               <div className="lbh-header__links">
+                {currentPage == 'manage' ? (
+                  <p>Manage Bonus</p>
+                ) : (
+                  <a href="/manage">Manage Bonus</a>
+                )}
                 {currentPage == 'search' ? (
                   <p>Search</p>
                 ) : (

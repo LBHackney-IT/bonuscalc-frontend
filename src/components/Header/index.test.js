@@ -19,12 +19,32 @@ describe('Header', () => {
       )
 
       expect(getByText(serviceName)).toBeInTheDocument()
+      expect(getByRole('link', { name: 'Manage Bonus' })).toBeInTheDocument()
+      expect(getByRole('link', { name: 'Search' })).toBeInTheDocument()
+      expect(getByRole('link', { name: 'Sign out' })).toBeInTheDocument()
+    })
+
+    it('should not link Manage Bonus when it is the current page', () => {
+      const { getByText, getByRole, queryByRole } = render(
+        <UserContext.Provider
+          value={{
+            user: operativeManager,
+          }}
+        >
+          <Header serviceName={serviceName} currentPage="manage" />
+        </UserContext.Provider>
+      )
+
+      expect(
+        queryByRole('link', { name: 'Manage Bonus' })
+      ).not.toBeInTheDocument()
+      expect(getByText('Manage Bonus')).toBeInTheDocument()
       expect(getByRole('link', { name: 'Search' })).toBeInTheDocument()
       expect(getByRole('link', { name: 'Sign out' })).toBeInTheDocument()
     })
 
     it('should not link Search when it is the current page', () => {
-      const { getByText, queryByRole } = render(
+      const { getByText, getByRole, queryByRole } = render(
         <UserContext.Provider
           value={{
             user: operativeManager,
@@ -34,8 +54,10 @@ describe('Header', () => {
         </UserContext.Provider>
       )
 
+      expect(getByRole('link', { name: 'Manage Bonus' })).toBeInTheDocument()
       expect(queryByRole('link', { name: 'Search' })).not.toBeInTheDocument()
       expect(getByText('Search')).toBeInTheDocument()
+      expect(getByRole('link', { name: 'Sign out' })).toBeInTheDocument()
     })
   })
 
@@ -52,6 +74,7 @@ describe('Header', () => {
       )
 
       expect(getByText(serviceName)).toBeInTheDocument()
+      expect(queryByText('Manage Bonus')).not.toBeInTheDocument()
       expect(queryByText('Search')).not.toBeInTheDocument()
       expect(queryByText('Sign out')).not.toBeInTheDocument()
     })
