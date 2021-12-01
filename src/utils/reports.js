@@ -631,13 +631,13 @@ const drawBonusSummary = (pdf, operative, summary) => {
 
   const {
     bonusPeriod,
-    weeklySummaries,
-    totalNonProductiveValue,
-    totalNonProductiveDuration,
-    totalProductiveValue,
-    totalValueForBonusPeriod,
-    projectedValue,
-    averageUtilisation,
+    closedWeeklySummaries,
+    totalClosedNonProductiveValue,
+    totalClosedNonProductiveDuration,
+    totalClosedProductiveValue,
+    totalClosedValueForBonusPeriod,
+    projectedClosedValue,
+    averageClosedUtilisation,
   } = summary
 
   const { scheme } = operative
@@ -711,7 +711,7 @@ const drawBonusSummary = (pdf, operative, summary) => {
 
   let row = 0
 
-  weeklySummaries.forEach((weeklySummary) => {
+  closedWeeklySummaries.forEach((weeklySummary) => {
     row = row + 1
 
     x = originX + 7.9
@@ -793,27 +793,27 @@ const drawBonusSummary = (pdf, operative, summary) => {
   x = originX + 55.9
   y = originY + 15.5 + lineHeight * row
 
-  value = smvhOrUnits(scheme, totalProductiveValue)
+  value = smvhOrUnits(scheme, totalClosedProductiveValue)
   text = numberWithPrecision(value, 2)
   pdf.text(text, x, y, { align: 'right' })
 
   x = originX + 78.8
   y = originY + 15.5 + lineHeight * row
 
-  text = numberWithPrecision(totalNonProductiveDuration, 2)
+  text = numberWithPrecision(totalClosedNonProductiveDuration, 2)
   pdf.text(text, x, y, { align: 'right' })
 
   x = originX + 103.0
   y = originY + 15.5 + lineHeight * row
 
-  value = smvhOrUnits(scheme, totalNonProductiveValue)
+  value = smvhOrUnits(scheme, totalClosedNonProductiveValue)
   text = numberWithPrecision(value, 2)
   pdf.text(text, x, y, { align: 'right' })
 
   x = originX + 126.2
   y = originY + 15.5 + lineHeight * row
 
-  value = smvhOrUnits(scheme, totalValueForBonusPeriod)
+  value = smvhOrUnits(scheme, totalClosedValueForBonusPeriod)
   text = numberWithPrecision(value, 2)
   pdf.text(text, x, y, { align: 'right' })
 
@@ -826,7 +826,11 @@ const drawBonusSummary = (pdf, operative, summary) => {
   x = originX + 162.2
   y = originY + 15.5 + lineHeight * row
 
-  text = `${bandForValue(payBands, projectedValue, averageUtilisation)}`
+  text = `${bandForValue(
+    payBands,
+    projectedClosedValue,
+    averageClosedUtilisation
+  )}`
   pdf.text(text, x, y, { align: 'center' })
 
   x = originX + 153.4
