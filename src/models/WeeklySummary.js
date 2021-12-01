@@ -21,4 +21,8 @@ export default class WeeklySummary {
   get description() {
     return this.startAt.format('DD/MM/YYYY')
   }
+
+  get isClosed() {
+    return this.closedAt ? true : false
+  }
 }

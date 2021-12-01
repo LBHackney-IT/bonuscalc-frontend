@@ -49,4 +49,48 @@ export default class Summary {
       return ws.averageUtilisation
     }, 1)
   }
+
+  get closedWeeklySummaries() {
+    return this.weeklySummaries.filter((ws) => ws.isClosed)
+  }
+
+  get hasClosedWeeklySummaries() {
+    return this.closedWeeklySummaries.length > 0
+  }
+
+  get totalClosedProductiveValue() {
+    return this.closedWeeklySummaries.reduce((sum, ws) => {
+      return sum + ws.productiveValue
+    }, 0)
+  }
+
+  get totalClosedNonProductiveValue() {
+    return this.closedWeeklySummaries.reduce((sum, ws) => {
+      return sum + ws.nonProductiveValue
+    }, 0)
+  }
+
+  get totalClosedNonProductiveDuration() {
+    return this.closedWeeklySummaries.reduce((sum, ws) => {
+      return sum + ws.nonProductiveDuration
+    }, 0)
+  }
+
+  get totalClosedValueForBonusPeriod() {
+    return this.closedWeeklySummaries.reduce((sum, ws) => {
+      return sum + ws.totalValue
+    }, 0)
+  }
+
+  get projectedClosedValue() {
+    return this.closedWeeklySummaries.reduce((projected, ws) => {
+      return ws.projectedValue
+    }, 0)
+  }
+
+  get averageClosedUtilisation() {
+    return this.closedWeeklySummaries.reduce((average, ws) => {
+      return ws.averageUtilisation
+    }, 1)
+  }
 }
