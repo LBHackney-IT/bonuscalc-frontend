@@ -1,4 +1,5 @@
-import { bandForValue } from './scheme'
+import { bandForValue, smvPerHour } from './scheme'
+import { Operative, PayElementType } from '@/models'
 
 describe('Scheme functions', () => {
   describe('bandForValue', () => {
@@ -61,6 +62,95 @@ describe('Scheme functions', () => {
         expect(bandForValue(payBands, 2418, 0.5)).toBe(9)
         expect(bandForValue(payBands, 2500, 0.5)).toBe(9)
         expect(bandForValue(payBands, 5000, 0.5)).toBe(9)
+      })
+    })
+  })
+
+  describe('smvPerHour', () => {
+    const operative = new Operative({
+      id: '123456',
+      name: 'Alex Cable',
+      trade: { id: 'EL', description: 'Electrical' },
+      scheme: {
+        type: 'SMV',
+        description: 'Planned',
+        conversionFactor: 1,
+        payBands: [
+          { band: 1, value: 2160 },
+          { band: 2, value: 2700 },
+          { band: 3, value: 3132 },
+          { band: 4, value: 3348 },
+          { band: 5, value: 3564 },
+          { band: 6, value: 3780 },
+          { band: 7, value: 3996 },
+          { band: 8, value: 4320 },
+          { band: 9, value: 4644 },
+        ],
+      },
+      section: 'R3007',
+      salaryBand: 5,
+      utilisation: 1,
+      fixedBand: false,
+      isArchived: false,
+    })
+
+    const dayworks = new PayElementType({
+      id: 101,
+      description: 'Dayworks',
+      payAtBand: false,
+      paid: true,
+      nonProductive: true,
+      productive: false,
+      adjustment: false,
+      outOfHours: false,
+      overtime: false,
+      selectable: true,
+      smvPerHour: null,
+    })
+
+    const holiday = new PayElementType({
+      id: 102,
+      description: 'Annual Leave',
+      payAtBand: true,
+      paid: true,
+      nonProductive: true,
+      productive: false,
+      adjustment: false,
+      outOfHours: false,
+      overtime: false,
+      selectable: true,
+      smvPerHour: null,
+    })
+
+    const apprentice = new PayElementType({
+      id: 132,
+      description: 'Apprentice',
+      payAtBand: true,
+      paid: true,
+      nonProductive: true,
+      productive: false,
+      adjustment: false,
+      outOfHours: false,
+      overtime: false,
+      selectable: true,
+      smvPerHour: 60,
+    })
+
+    describe('when the pay element type is paid', () => {
+      it('returns the band 3 rate', () => {
+        expect(smvPerHour(operative, dayworks)).toBe(87)
+      })
+    })
+
+    describe('when the pay element type is paid at band', () => {
+      it('returns the salary band rate', () => {
+        expect(smvPerHour(operative, holiday)).toBe(99)
+      })
+    })
+
+    describe('when the pay element type has a custom rate', () => {
+      it('returns the custom rate', () => {
+        expect(smvPerHour(operative, apprentice)).toBe(60)
       })
     })
   })

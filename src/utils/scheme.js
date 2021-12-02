@@ -25,7 +25,9 @@ export const calculateSMV = (operative, payElementType, duration) => {
 }
 
 export const smvPerHour = (operative, payElementType) => {
-  if (payElementType.paid) {
+  if (payElementType.smvPerHour) {
+    return payElementType.smvPerHour
+  } else if (payElementType.paid) {
     const payBand = operative.payBand(payElementType.payAtBand)
 
     if (payBand) {

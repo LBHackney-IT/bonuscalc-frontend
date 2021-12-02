@@ -66,6 +66,7 @@ export default class PayElementType {
     this.selectable = attrs.selectable
     this.outOfHours = attrs.outOfHours
     this.overtime = attrs.overtime
+    this.smvPerHour = attrs.smvPerHour
   }
 
   get outOfHoursRota() {
