@@ -11,6 +11,7 @@ export default class Operative {
     this.utilisation = attrs.utilisation
     this.fixedBand = attrs.fixedBand
     this.trade = new Trade(attrs.trade)
+    this.isArchived = attrs.isArchived
   }
 
   payBand(payAtBand) {
@@ -45,5 +46,9 @@ export default class Operative {
     return this.payBands.find(
       (pb) => pb.band == this.salaryBand || pb.band == 3
     )
+  }
+
+  get isEditable() {
+    return !this.isArchived
   }
 }
