@@ -22,7 +22,23 @@ export default class WeeklySummary {
     return this.startAt.format('DD/MM/YYYY')
   }
 
+  get endAt() {
+    return this.startAt.add(1, 'week').subtract(1, 'millisecond')
+  }
+
   get isClosed() {
     return this.closedAt ? true : false
+  }
+
+  get isPast() {
+    return dayjs().isAfter(this.endAt)
+  }
+
+  get isFuture() {
+    return dayjs().isBefore(this.startAt)
+  }
+
+  get isCurrent() {
+    return !(this.isPast || this.isFuture)
   }
 }

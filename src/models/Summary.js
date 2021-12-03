@@ -50,46 +50,46 @@ export default class Summary {
     }, 1)
   }
 
-  get closedWeeklySummaries() {
-    return this.weeklySummaries.filter((ws) => ws.isClosed)
+  get pastWeeklySummaries() {
+    return this.weeklySummaries.filter((ws) => ws.isPast)
   }
 
-  get hasClosedWeeklySummaries() {
-    return this.closedWeeklySummaries.length > 0
+  get hasPastWeeklySummaries() {
+    return this.pastWeeklySummaries.length > 0
   }
 
-  get totalClosedProductiveValue() {
-    return this.closedWeeklySummaries.reduce((sum, ws) => {
+  get totalPastProductiveValue() {
+    return this.pastWeeklySummaries.reduce((sum, ws) => {
       return sum + ws.productiveValue
     }, 0)
   }
 
-  get totalClosedNonProductiveValue() {
-    return this.closedWeeklySummaries.reduce((sum, ws) => {
+  get totalPastNonProductiveValue() {
+    return this.pastWeeklySummaries.reduce((sum, ws) => {
       return sum + ws.nonProductiveValue
     }, 0)
   }
 
-  get totalClosedNonProductiveDuration() {
-    return this.closedWeeklySummaries.reduce((sum, ws) => {
+  get totalPastNonProductiveDuration() {
+    return this.pastWeeklySummaries.reduce((sum, ws) => {
       return sum + ws.nonProductiveDuration
     }, 0)
   }
 
-  get totalClosedValueForBonusPeriod() {
-    return this.closedWeeklySummaries.reduce((sum, ws) => {
+  get totalPastValueForBonusPeriod() {
+    return this.pastWeeklySummaries.reduce((sum, ws) => {
       return sum + ws.totalValue
     }, 0)
   }
 
-  get projectedClosedValue() {
-    return this.closedWeeklySummaries.reduce((projected, ws) => {
+  get projectedPastValue() {
+    return this.pastWeeklySummaries.reduce((projected, ws) => {
       return ws.projectedValue
     }, 0)
   }
 
-  get averageClosedUtilisation() {
-    return this.closedWeeklySummaries.reduce((average, ws) => {
+  get averagePastUtilisation() {
+    return this.pastWeeklySummaries.reduce((average, ws) => {
       return ws.averageUtilisation
     }, 1)
   }
