@@ -50,7 +50,7 @@ const ProductiveSummary = () => {
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>
 
-        {week.isEditable && (
+        {week.isEditable && operative.isEditable && (
           <ButtonLink href={`${baseUrl}/productive/edit`} secondary={true}>
             Edit productive
           </ButtonLink>

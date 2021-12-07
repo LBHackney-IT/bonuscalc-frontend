@@ -37,7 +37,7 @@ const NonProductiveSummary = () => {
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>
 
-        {week.isEditable && (
+        {week.isEditable && operative.isEditable && (
           <ButtonLink href={`${baseUrl}/non-productive/edit`} secondary={true}>
             Edit non-productive
           </ButtonLink>

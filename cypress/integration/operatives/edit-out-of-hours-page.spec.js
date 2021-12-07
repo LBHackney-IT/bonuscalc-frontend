@@ -62,6 +62,44 @@ describe('Out of hours page', () => {
       })
     })
 
+    context('And the operative is archived', () => {
+      beforeEach(() => {
+        cy.intercept(
+          { method: 'GET', path: '/api/v1/operatives/123456' },
+          { statusCode: 200, fixture: 'operatives/archived.json' }
+        ).as('get_operative')
+
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
+        ).as('get_timesheet')
+
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/pay/types',
+          },
+          { statusCode: 200, fixture: 'pay/types.json' }
+        ).as('get_pay_types')
+
+        cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours/edit')
+        cy.wait(['@get_operative', '@get_timesheet', '@get_pay_types'])
+      })
+
+      it('Shows the access denied message', () => {
+        cy.get('.lbh-main-wrapper').contains('a', 'Back')
+        cy.get('.lbh-heading-h1').contains('Access Denied')
+        cy.get('.lbh-body').contains(
+          'Sorry, Alex Cable has been archived and is no longer editable.'
+        )
+
+        cy.audit()
+      })
+    })
+
     context('And the operative exists', () => {
       beforeEach(() => {
         cy.intercept(

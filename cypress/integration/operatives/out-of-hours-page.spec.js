@@ -54,6 +54,38 @@ describe('Out of hours page', () => {
       })
     })
 
+    context('And the operative is archived', () => {
+      beforeEach(() => {
+        cy.intercept(
+          { method: 'GET', path: '/api/v1/operatives/123456' },
+          { statusCode: 200, fixture: 'operatives/archived.json' }
+        ).as('get_operative')
+
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-18',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-18.json' }
+        ).as('get_timesheet')
+
+        cy.visit('/operatives/123456/timesheets/2021-10-18/out-of-hours')
+        cy.wait(['@get_operative', '@get_timesheet'])
+      })
+
+      it('Shows the operative is archived', () => {
+        cy.get('.lbh-heading-h2').within(() => {
+          cy.contains('(Archived)')
+        })
+      })
+
+      it('Hides the edit out of hours time button', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.contains('a', 'Edit out of hours').should('not.exist')
+        })
+      })
+    })
+
     context('And the operative exists', () => {
       beforeEach(() => {
         cy.intercept(
@@ -305,6 +337,27 @@ describe('Out of hours page', () => {
             cy.get(':nth-child(1)').contains('Total')
             cy.get(':nth-child(2)').contains('£204.00')
           })
+        })
+      })
+
+      it('Hides the edit out of hours time button if the week is closed', () => {
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/timesheet?week=2021-10-11',
+          },
+          { statusCode: 200, fixture: 'timesheets/2021-10-11.json' }
+        ).as('get_timesheet')
+
+        cy.get('.govuk-tabs__panel').within(() => {
+          cy.contains('a', 'Edit out of hours').should('exist')
+
+          cy.get('.lbh-simple-pagination')
+            .contains('a', 'Period 3 – 2021 / week 11')
+            .click()
+          cy.wait('@get_timesheet')
+
+          cy.contains('a', 'Edit out of hours').should('not.exist')
         })
       })
     })
