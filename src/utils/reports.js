@@ -928,3 +928,41 @@ export const generateSummaryReport = (operative, summary) => {
 
   return pdf
 }
+
+export const generateCombinedReport = (operative, summary, timesheets) => {
+  const pdf = createPDF()
+
+  withGraphicsState(pdf, () => {
+    drawLogo(pdf)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawOperativeSummary(pdf, operative)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawBonusSummary(pdf, operative, summary)
+  })
+
+  timesheets.forEach((timesheet) => {
+    pdf.addPage()
+
+    withGraphicsState(pdf, () => {
+      drawLogo(pdf)
+    })
+
+    withGraphicsState(pdf, () => {
+      drawWeeklyOperativeSummary(pdf, operative, timesheet)
+    })
+
+    withGraphicsState(pdf, () => {
+      drawWeeklyNonProductiveTime(pdf, operative, timesheet)
+    })
+
+    withGraphicsState(pdf, () => {
+      drawWeeklyProductiveTime(pdf, operative, timesheet)
+    })
+  })
+
+  return pdf
+}
