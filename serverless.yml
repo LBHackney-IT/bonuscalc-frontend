@@ -10,6 +10,8 @@ provider:
   stage: ${opt:stage}
   apiGateway:
     shouldStartNameWithService: true
+    binaryMediaTypes:
+      - 'application/pdf'
 
 package:
   individually: true
