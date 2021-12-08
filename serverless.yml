@@ -11,7 +11,7 @@ provider:
   apiGateway:
     shouldStartNameWithService: true
     binaryMediaTypes:
-      - 'application/pdf'
+      - '*/*'
 
 package:
   individually: true
