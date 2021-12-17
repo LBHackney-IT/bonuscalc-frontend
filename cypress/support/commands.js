@@ -27,16 +27,19 @@
 import 'cypress-audit/commands'
 
 Cypress.Commands.add('login', () => {
-  const gssoTestKey = Cypress.env('GSSO_TEST_KEY')
+  const GSSO_TEST_KEY = Cypress.env('GSSO_TEST_KEY')
+  const GSSO_TOKEN_NAME = Cypress.env('GSSO_TOKEN_NAME')
 
   cy.getCookies().should('be.empty')
-  cy.setCookie('hackneyToken', gssoTestKey)
-  cy.getCookie('hackneyToken').should('have.property', 'value', gssoTestKey)
+  cy.setCookie(GSSO_TOKEN_NAME, GSSO_TEST_KEY)
+  cy.getCookie(GSSO_TOKEN_NAME).should('have.property', 'value', GSSO_TEST_KEY)
 })
 
 Cypress.Commands.add('logout', () => {
+  const GSSO_TOKEN_NAME = Cypress.env('GSSO_TOKEN_NAME')
+
   cy.get('#signout').contains('Sign out')
-  cy.clearCookie('hackneyToken')
+  cy.clearCookie(GSSO_TOKEN_NAME)
 
   cy.getCookies().should('be.empty')
 })
