@@ -5,6 +5,7 @@ import { Operative, Summary, Timesheet } from '@/models'
 import { generateCombinedReport } from '@/utils/reports'
 import { authoriseAPIRequest } from '@/utils/apiAuth'
 import { operativeUrl, summaryUrl, timesheetUrl } from '@/utils/apiClient'
+import { setTag } from '@sentry/nextjs'
 
 const { BONUSCALC_SERVICE_API_URL, BONUSCALC_SERVICE_API_KEY } = process.env
 
@@ -70,6 +71,10 @@ export default authoriseAPIRequest(async (req, res) => {
         return fetchTimesheet(payrollNumber, ws.weekId)
       })
     )
+
+    // Add Sentry tags
+    setTag('operative', operative.id)
+    setTag('bonus_period', bonusPeriod.id)
 
     const pdf = generateCombinedReport(operative, summary, timesheets)
     const filename = `${operative.id}-${bonusPeriod.year}-${bonusPeriod.number}.pdf`
