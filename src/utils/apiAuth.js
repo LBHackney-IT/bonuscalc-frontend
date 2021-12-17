@@ -5,6 +5,9 @@ import { StatusCodes } from 'http-status-codes'
 import { isAuthorised } from '@/utils/googleAuth'
 import { paramsSerializer } from '@/utils/urls'
 
+// Sentry doesn't load the config for API routes automatically
+import { Sentry } from '@/root/sentry.server.config'
+
 const {
   BONUSCALC_SERVICE_API_URL,
   BONUSCALC_SERVICE_API_KEY,
@@ -39,6 +42,8 @@ export const authoriseAPIRequest = (callback) => {
 
       return await callback(req, res, user)
     } catch (error) {
+      Sentry.captureException(error)
+
       if (error.response) {
         logger.error('Service API response error:', error.response.statusText)
         return res.status(error.response.status).json(error.response.data)
