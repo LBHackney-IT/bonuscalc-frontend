@@ -47,6 +47,9 @@ functions:
       NEXT_PUBLIC_ENV_NAME: ${self:provider.stage}
       NODE_ENV: production
       NEXT_PUBLIC_NODE_ENV: production
+      SENTRY_DSN: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/sentry-dsn}
+      SENTRY_ENVIRONMENT: ${self:provider.stage}
+      SENTRY_RELEASE: ${env:CIRCLE_SHA1}
       TZ: Europe/London
 
 resources:

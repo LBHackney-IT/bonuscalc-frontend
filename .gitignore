@@ -42,3 +42,6 @@ cypress/reports
 
 # serverless
 .serverless
+
+# Sentry
+.sentryclirc
