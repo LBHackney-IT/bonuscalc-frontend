@@ -67,7 +67,7 @@ BonusCalcApp.getInitialProps = async ({ ctx, Component: pageComponent }) => {
 }
 
 const userAuthorisedForPage = (component, user) => {
-  if (component.name === 'Error') {
+  if (component.name === 'BonusCalcError' || component.name === 'ErrorPage') {
     return true
   }
 
