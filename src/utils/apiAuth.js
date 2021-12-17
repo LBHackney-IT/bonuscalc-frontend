@@ -38,6 +38,8 @@ export const authoriseAPIRequest = (callback) => {
 
       if (!user) {
         return res.status(FORBIDDEN).json(FORBIDDEN_ERROR)
+      } else {
+        Sentry.setUser({ name: user.name, email: user.email })
       }
 
       Sentry.configureScope((scope) => {
