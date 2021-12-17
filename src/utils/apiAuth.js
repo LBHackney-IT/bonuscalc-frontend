@@ -30,13 +30,13 @@ logger.setLevel(logger.levels[LOG_LEVEL || 'INFO'])
 
 export const authoriseAPIRequest = (callback) => {
   return async (req, res) => {
-    const user = isAuthorised({ req }, false)
-
-    if (!user) {
-      return res.status(FORBIDDEN).json(FORBIDDEN_ERROR)
-    }
-
     try {
+      const user = isAuthorised({ req, res }, false)
+
+      if (!user) {
+        return res.status(FORBIDDEN).json(FORBIDDEN_ERROR)
+      }
+
       return await callback(req, res, user)
     } catch (error) {
       if (error.response) {
@@ -92,14 +92,18 @@ export const forwardAPIRequest = async (req) => {
     return response
   })
 
-  const { data } = await api({
-    method: req.method,
-    headers,
-    url: `${BONUSCALC_SERVICE_API_URL}/${path?.join('/')}`,
-    params: queryParams,
-    paramsSerializer: paramsSerializer,
-    data: req.body ? req.body : undefined,
-  })
+  try {
+    const { data } = await api({
+      method: req.method,
+      headers,
+      url: `${BONUSCALC_SERVICE_API_URL}/${path?.join('/')}`,
+      params: queryParams,
+      paramsSerializer: paramsSerializer,
+      data: req.body ? req.body : undefined,
+    })
 
-  return data
+    return data
+  } catch (error) {
+    throw Error(error)
+  }
 }
