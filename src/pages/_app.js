@@ -2,6 +2,7 @@ import '@/styles/all.scss'
 import App from 'next/app'
 import Layout from '@/components/Layout'
 import AccessDenied from '@/components/AccessDenied'
+import { configureScope } from '@sentry/nextjs'
 
 import {
   isAuthorised,
@@ -10,6 +11,8 @@ import {
 } from '@/utils/googleAuth'
 
 import UserContext from '@/components/UserContext'
+
+const { GSSO_TOKEN_NAME } = process.env
 
 if (typeof window !== 'undefined') {
   document.body.className = document.body.className
@@ -55,6 +58,16 @@ BonusCalcApp.getInitialProps = async ({ ctx, Component: pageComponent }) => {
   if (!userDetails) {
     return { accessDenied: true }
   }
+
+  configureScope((scope) => {
+    scope.addEventProcessor((event) => {
+      if (event.request.cookies[GSSO_TOKEN_NAME]) {
+        event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
+      }
+
+      return event
+    })
+  })
 
   if (userAuthorisedForPage(pageComponent, userDetails)) {
     return { userDetails, accessDenied: false }
