@@ -35,7 +35,7 @@ class BonusCalcApp extends App {
           <Layout
             serviceName="DLO Bonus Scheme"
             feedbackLink="mailto:repairshub.feedback@hackney.gov.uk"
-            currentPage={pageProps.currentPage}
+            currentPage={pageProps?.currentPage}
           >
             <ComponentToRender
               {...pageProps}

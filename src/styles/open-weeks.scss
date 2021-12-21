@@ -1,0 +1,123 @@
+.bc-open-weeks {
+  & > h1 {
+    @include lbh-heading-h2;
+  }
+
+  &__period {
+    header {
+      h2 {
+        @include lbh-body-l;
+      }
+
+      p {
+        @include lbh-body-m;
+        margin: 0;
+      }
+    }
+  }
+
+  &__week {
+    background-color: lbh-colour('lbh-grey-4');
+    border-radius: 4px;
+    @include lbh-rem(padding, 12);
+
+    & > header {
+      @include lbh-rem(padding-bottom, 6);
+      border-bottom: 1px solid lbh-colour('lbh-grey-3');
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      h3,
+      p {
+        @include lbh-body-s;
+        color: lbh-colour('lbh-secondary-text');
+        margin: 0;
+      }
+    }
+
+    &--current {
+      & > header {
+        h3,
+        p {
+          color: lbh-colour('lbh-text');
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  &__operatives {
+    @include lbh-rem(margin-top, 9);
+
+    & > header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      h4 {
+        @include lbh-body-m;
+        color: lbh-colour('lbh-secondary-text');
+        width: 100%;
+      }
+
+      a {
+        @include lbh-rem(font-size, 14);
+        margin: 0;
+        width: 100%;
+      }
+
+      @include govuk-media-query($from: tablet) {
+        h4 {
+          width: auto;
+        }
+
+        a {
+          @include lbh-rem(font-size, 16);
+          width: auto;
+        }
+      }
+    }
+
+    & > ol {
+      @include lbh-rem(margin-top, 12);
+
+      li {
+        @include lbh-body-s;
+      }
+
+      li + li {
+        @include lbh-rem(margin-top, 6);
+      }
+
+      a {
+        display: flex;
+        flex-wrap: wrap;
+        text-decoration: none;
+
+        span {
+          margin: 0;
+          width: 100%;
+        }
+
+        @include govuk-media-query($from: tablet) {
+          span {
+            width: auto;
+          }
+        }
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+
+    & > footer {
+      @include lbh-rem(margin-top, 12);
+
+      button {
+        font-weight: 600;
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import BonusPeriod from './BonusPeriod'
 import Operative from './Operative'
+import OperativeSummary from './OperativeSummary'
 import PayElement from './PayElement'
 import PayElementType from './PayElementType'
 import Summary from './Summary'
@@ -11,6 +12,7 @@ import WeeklySummary from './WeeklySummary'
 export {
   BonusPeriod,
   Operative,
+  OperativeSummary,
   PayElement,
   PayElementType,
   Summary,

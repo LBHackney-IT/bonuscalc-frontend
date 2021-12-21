@@ -1,7 +1,14 @@
 import axios from 'axios'
 import useSWR, { mutate } from 'swr'
 import { StatusCodes } from 'http-status-codes'
-import { Operative, Timesheet, PayElementType, Summary } from '@/models'
+import {
+  BonusPeriod,
+  Operative,
+  Timesheet,
+  PayElementType,
+  Summary,
+  Week,
+} from '@/models'
 
 const client = axios.create({ baseURL: '/api/v1' })
 
@@ -18,6 +25,22 @@ export const fetcher = async (url) => {
   }
 
   return data
+}
+
+export const bonusPeriodsUrl = () => {
+  return `/periods/current`
+}
+
+export const useBonusPeriods = () => {
+  const { data, error } = useSWR(bonusPeriodsUrl(), fetcher)
+
+  return {
+    bonusPeriods: data
+      ? data.map((bonusPeriod) => new BonusPeriod(bonusPeriod))
+      : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
 }
 
 export const operativeUrl = (payrollNumber) => {
@@ -106,5 +129,19 @@ export const saveTimesheet = async (payrollNumber, week, data) => {
     return res.status == StatusCodes.OK
   } catch (error) {
     return false
+  }
+}
+
+export const weekUrl = (week) => {
+  return `/weeks/${encodeURIComponent(week)}`
+}
+
+export const useWeek = (week) => {
+  const { data, error } = useSWR(weekUrl(week), fetcher)
+
+  return {
+    week: data ? new Week(data) : null,
+    isLoading: !error && !data,
+    isError: error,
   }
 }

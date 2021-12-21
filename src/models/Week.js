@@ -1,4 +1,5 @@
 import BonusPeriod from './BonusPeriod'
+import OperativeSummary from './OperativeSummary'
 import dayjs from '@/utils/date'
 import { wrap } from '@/utils/number'
 
@@ -39,9 +40,14 @@ export default class Week {
   constructor(attrs) {
     this.id = attrs.id
     this.number = attrs.number
-    this.bonusPeriod = new BonusPeriod(attrs.bonusPeriod)
     this.startAt = dayjs(attrs.startAt)
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
+    this.bonusPeriod = attrs.bonusPeriod
+      ? new BonusPeriod(attrs.bonusPeriod)
+      : null
+    this.operativeSummaries = attrs.operativeSummaries
+      ? attrs.operativeSummaries.map((os) => new OperativeSummary(os))
+      : null
   }
 
   get startDate() {
@@ -130,5 +136,21 @@ export default class Week {
 
   get isEditable() {
     return !this.isClosed
+  }
+
+  get isCurrent() {
+    return dayjs().isBetween(this.startAt, this.endAt)
+  }
+
+  get isPast() {
+    return dayjs().isAfter(this.endAt)
+  }
+
+  get isFuture() {
+    return dayjs().isBefore(this.startAt)
+  }
+
+  get isVisible() {
+    return this.isEditable && (this.isCurrent || this.isPast)
   }
 }

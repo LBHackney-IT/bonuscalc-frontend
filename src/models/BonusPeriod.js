@@ -34,6 +34,12 @@ export default class BonusPeriod {
     this.number = attrs.number
     this.startAt = dayjs(attrs.startAt)
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
+
+    if (Array.isArray(attrs.weeks)) {
+      this.weeks = attrs.weeks.map((week) => {
+        return Object.assign(new Week(week), { bonusPeriod: this })
+      })
+    }
   }
 
   get dateRange() {
