@@ -56,7 +56,7 @@ const OperativeList = ({ date }) => {
   if (isLoading) return <Spinner />
   if (isError || !week)
     return (
-      <p>
+      <p className="lbh-body-s govuk-!-margin-top-2">
         <ErrorMessage
           description={`Unable to fetch operative summaries for ${date}`}
         />

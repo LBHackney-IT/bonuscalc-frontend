@@ -7,7 +7,7 @@ const HomeRedirect = () => {
   const router = useRouter()
 
   useEffect(() => {
-    router.push('/search')
+    router.push('/manage/weeks')
   })
 
   return <Spinner />

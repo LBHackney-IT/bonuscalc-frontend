@@ -1,0 +1,180 @@
+[
+  {
+    "id": "2021-08-02",
+    "startAt": "2021-08-01T23:00:00Z",
+    "year": 2021,
+    "number": 3,
+    "closedAt": null,
+    "weeks": [
+      {
+        "id": "2021-08-02",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-08-01T23:00:00Z",
+        "number": 1,
+        "closedAt": "2021-08-13T16:00:00Z"
+      },
+      {
+        "id": "2021-08-09",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-08-08T23:00:00Z",
+        "number": 2,
+        "closedAt": "2021-08-20T16:00:00Z"
+      },
+      {
+        "id": "2021-08-16",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-08-15T23:00:00Z",
+        "number": 3,
+        "closedAt": "2021-08-27T16:00:00Z"
+      },
+      {
+        "id": "2021-08-23",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-08-22T23:00:00Z",
+        "number": 4,
+        "closedAt": "2021-09-03T16:00:00Z"
+      },
+      {
+        "id": "2021-08-30",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-08-29T23:00:00Z",
+        "number": 5,
+        "closedAt": "2021-09-10T16:00:00Z"
+      },
+      {
+        "id": "2021-09-06",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-09-05T23:00:00Z",
+        "number": 6,
+        "closedAt": "2021-09-17T16:00:00Z"
+      },
+      {
+        "id": "2021-09-13",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-09-12T23:00:00Z",
+        "number": 7,
+        "closedAt": "2021-09-24T16:00:00Z"
+      },
+      {
+        "id": "2021-09-20",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-09-19T23:00:00Z",
+        "number": 8,
+        "closedAt": "2021-10-01T16:00:00Z"
+      },
+      {
+        "id": "2021-09-27",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-09-26T23:00:00Z",
+        "number": 9,
+        "closedAt": "2021-10-08T16:00:00Z"
+      },
+      {
+        "id": "2021-10-04",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-10-03T23:00:00Z",
+        "number": 10,
+        "closedAt": "2021-10-15T16:00:00Z"
+      },
+      {
+        "id": "2021-10-11",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-10-10T23:00:00Z",
+        "number": 11,
+        "closedAt": "2021-10-22T16:00:00Z"
+      },
+      {
+        "id": "2021-10-18",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-10-17T23:00:00Z",
+        "number": 12,
+        "closedAt": null
+      },
+      {
+        "id": "2021-10-25",
+        "bonusPeriod": {
+          "id": "2021-11-01",
+          "startAt": "2021-08-01T23:00:00Z",
+          "year": 2021,
+          "number": 3,
+          "closedAt": null
+        },
+        "startAt": "2021-10-24T23:00:00Z",
+        "number": 13,
+        "closedAt": null
+      }
+    ]
+  }
+]
