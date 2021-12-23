@@ -10,6 +10,46 @@ import { useState, useEffect } from 'react'
 import { BonusPeriod } from '@/models'
 import { useWeek } from '@/utils/apiClient'
 
+const WeekNotStarted = () => {
+  return (
+    <section className="bc-open-weeks__operatives">
+      <header>
+        <h4>Week not started</h4>
+      </header>
+    </section>
+  )
+}
+
+const CurrentWeek = () => {
+  return <p>Current week</p>
+}
+
+const ClosedTime = ({ week }) => {
+  const { closedDate, closedAt } = week
+  const dateTime = closedAt.toISOString()
+  const title = closedAt.toLocaleString()
+
+  return (
+    <time dateTime={dateTime} title={title}>
+      {closedDate}
+    </time>
+  )
+}
+
+const ClosedWeek = ({ week }) => {
+  return (
+    <p>
+      <strong>Week closed&nbsp;</strong>
+      <span>
+        on&nbsp;
+        <ClosedTime week={week} />
+        &nbsp;
+      </span>
+      <span>by {week.closedBy}</span>
+    </p>
+  )
+}
+
 const OperativeListItem = ({ operative, week }) => {
   const baseUrl = `/operatives/${operative.id}/timesheets`
 
@@ -110,23 +150,17 @@ const ManageWeek = ({ week, showAll }) => {
       <section
         className={cx('bc-open-weeks__week', {
           'bc-open-weeks__week--current': week.isCurrent,
+          'bc-open-weeks__week--closed': week.isClosed,
         })}
       >
         <header>
           <h3>
             {week.description} <span>({week.dateRange})</span>
           </h3>
-          {week.isCurrent && <p>Current week</p>}
+          {week.isCurrent && <CurrentWeek />}
+          {week.isClosed && <ClosedWeek week={week} />}
         </header>
-        {week.isFuture ? (
-          <section className="bc-open-weeks__operatives">
-            <header>
-              <h4>Week not started</h4>
-            </header>
-          </section>
-        ) : (
-          <OperativeList date={week.id} />
-        )}
+        {week.isFuture ? <WeekNotStarted /> : <OperativeList date={week.id} />}
       </section>
     )
   )

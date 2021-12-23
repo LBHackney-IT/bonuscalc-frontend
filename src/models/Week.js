@@ -42,6 +42,7 @@ export default class Week {
     this.number = attrs.number
     this.startAt = dayjs(attrs.startAt)
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
+    this.closedBy = attrs.closedBy
     this.bonusPeriod = attrs.bonusPeriod
       ? new BonusPeriod(attrs.bonusPeriod)
       : null
@@ -52,6 +53,10 @@ export default class Week {
 
   get startDate() {
     return this.startAt.format('DD/MM/YYYY')
+  }
+
+  get closedDate() {
+    return this.closedAt?.format('DD/MM/YYYY')
   }
 
   get description() {

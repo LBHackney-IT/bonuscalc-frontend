@@ -22,7 +22,6 @@
     @include lbh-rem(padding, 12);
 
     & > header {
-      @include lbh-rem(padding-bottom, 6);
       border-bottom: 1px solid lbh-colour('lbh-grey-3');
       display: flex;
       flex-wrap: wrap;
@@ -30,9 +29,11 @@
 
       h3,
       p {
-        @include lbh-body-s;
+        @include lbh-body-xs;
+        line-height: 1;
         color: lbh-colour('lbh-secondary-text');
         margin: 0;
+        @include lbh-rem(margin-bottom, 9);
       }
     }
 
@@ -42,6 +43,21 @@
         p {
           color: lbh-colour('lbh-text');
           font-weight: 600;
+        }
+      }
+    }
+
+    &--closed {
+      & > header {
+        p {
+          color: lbh-colour('lbh-text');
+          line-height: inherit;
+        }
+
+        @include govuk-media-query($from: tablet) {
+          p {
+            line-height: 1;
+          }
         }
       }
     }
