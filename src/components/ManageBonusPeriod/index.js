@@ -75,7 +75,7 @@ const OperativeList = ({ date }) => {
             </a>
           </Link>
         </header>
-        {operatives.length > 0 && (
+        {week.isEditable && operatives.length > 0 && (
           <>
             <ol className="lbh-list">
               {operatives.map((operative, index) => (
