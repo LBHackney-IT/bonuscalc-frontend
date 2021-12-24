@@ -27,7 +27,7 @@ const Header = ({ serviceName, currentPage }) => {
         <a className="govuk-skip-link lbh-skip-link">Skip to main content</a>
       </Link>
 
-      <header className="lbh-header govuk-!-display-none-print">
+      <header className="lbh-header">
         <div className="lbh-header__main">
           <div className="lbh-container lbh-header__wrapper lbh-header__wrapper--stacked">
             <div className="lbh-header__title">

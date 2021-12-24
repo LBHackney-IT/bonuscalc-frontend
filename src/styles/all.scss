@@ -32,6 +32,10 @@
   &:hover {
     color: lbh-colour('lbh-link-hover');
   }
+
+  @include govuk-media-query($media-type: print) {
+    display: none !important;
+  }
 }
 
 .lbh-simple-pagination__link {
@@ -49,6 +53,18 @@
   svg {
     left: inherit;
     right: 0px;
+  }
+}
+
+.lbh-header, .lbh-phase-banner, .lbh-announcement {
+  @include govuk-media-query($media-type: print) {
+    display: none !important;
+  }
+}
+
+.lbh-main-wrapper {
+  @include govuk-media-query($media-type: print) {
+    padding-top: 0 !important;
   }
 }
 
