@@ -12,7 +12,7 @@ const ServerError = ({ children }) => {
   return (
     <>
       <BackButton href="/" />
-      <section className="section">
+      <section>
         <h1 className="lbh-heading-h1">Server Error</h1>
         <p className="lbh-body">{children}</p>
       </section>

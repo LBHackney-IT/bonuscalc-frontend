@@ -54,7 +54,7 @@ const EditNonProductive = () => {
 
   return (
     <>
-      <section className="section">
+      <section>
         <h1 className="lbh-heading-h2">
           <span className="govuk-caption-l lbh-caption">{operative.name}</span>
           Edit non-productive time

@@ -1,5 +1,5 @@
 const Spinner = () => (
-  <section className="section">
+  <section>
     <svg
       width="50"
       height="50"

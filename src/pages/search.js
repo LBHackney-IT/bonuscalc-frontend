@@ -4,7 +4,7 @@ import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 const SearchPage = ({ query }) => {
   return (
     <>
-      <section className="section">
+      <section>
         <OperativeSearch query={query} />
       </section>
     </>
