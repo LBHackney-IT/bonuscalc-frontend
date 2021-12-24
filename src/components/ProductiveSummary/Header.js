@@ -8,8 +8,10 @@ const Header = () => {
 
   return (
     <h3 className="lbh-heading-h3">
-      {week.description}
-      <span className="govuk-caption-m lbh-caption govuk-!-display-inline-block govuk-!-margin-left-3">
+      <span className="govuk-!-display-inline-block govuk-!-margin-right-3">
+        {week.description}
+      </span>
+      <span className="govuk-caption-m lbh-caption govuk-!-margin-top-0 govuk-!-display-inline-block">
         ({week.dateRange})
       </span>
     </h3>
