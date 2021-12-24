@@ -24,6 +24,14 @@
 
 .lbh-back-link {
   border-bottom: 1px solid transparent;
+
+  &:visited {
+    color: lbh-colour('lbh-link');
+  }
+
+  &:hover {
+    color: lbh-colour('lbh-link-hover');
+  }
 }
 
 .lbh-simple-pagination__link {
