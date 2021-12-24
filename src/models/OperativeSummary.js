@@ -22,4 +22,12 @@ export default class OperativeSummary {
   get tradeDescription() {
     return `${this.trade.description} (${this.trade.id})`
   }
+
+  matches(pattern) {
+    return (
+      pattern.test(this.id) ||
+      pattern.test(this.name) ||
+      pattern.test(this.tradeDescription)
+    )
+  }
 }

@@ -3,6 +3,7 @@ import Operative from './Operative'
 import OperativeSummary from './OperativeSummary'
 import PayElement from './PayElement'
 import PayElementType from './PayElementType'
+import Scheme from './Scheme'
 import Summary from './Summary'
 import Timesheet from './Timesheet'
 import Trade from './Trade'
@@ -15,6 +16,7 @@ export {
   OperativeSummary,
   PayElement,
   PayElementType,
+  Scheme,
   Summary,
   Timesheet,
   Trade,

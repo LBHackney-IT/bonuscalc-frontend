@@ -1,5 +1,9 @@
 import { round } from './number'
 
+export const smvh = (value) => {
+  return round(value / 60, 10)
+}
+
 export const smvhOrUnits = (scheme, value) => {
   if (scheme?.isUnitScheme) {
     return round(value * scheme.conversionFactor, scheme.precision)

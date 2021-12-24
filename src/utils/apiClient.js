@@ -6,11 +6,17 @@ import {
   Operative,
   Timesheet,
   PayElementType,
+  Scheme,
   Summary,
   Week,
 } from '@/models'
 
 const client = axios.create({ baseURL: '/api/v1' })
+
+const arrayMap = (klass, items) => items.map((item) => new klass(item))
+
+const objectMap = (key, klass, items) =>
+  Object.fromEntries(items.map((item) => [item[key], new klass(item)]))
 
 export const fetcher = async (url) => {
   const { status, data } = await client.get(url)
@@ -35,9 +41,7 @@ export const useBonusPeriods = () => {
   const { data, error } = useSWR(bonusPeriodsUrl(), fetcher)
 
   return {
-    bonusPeriods: data
-      ? data.map((bonusPeriod) => new BonusPeriod(bonusPeriod))
-      : null,
+    bonusPeriods: data ? arrayMap(BonusPeriod, data) : null,
     isLoading: !error && !data,
     isError: error,
   }
@@ -66,6 +70,20 @@ export const useOperative = (payrollNumber) => {
   }
 }
 
+export const payBandsUrl = () => {
+  return '/pay/bands'
+}
+
+export const useSchemes = () => {
+  const { data, error } = useSWR(payBandsUrl(), fetcher)
+
+  return {
+    schemes: data ? objectMap('id', Scheme, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const payElementTypesUrl = () => {
   return '/pay/types'
 }
@@ -74,9 +92,7 @@ export const usePayElementTypes = () => {
   const { data, error } = useSWR(payElementTypesUrl(), fetcher)
 
   return {
-    payElementTypes: data
-      ? data.map((payElementType) => new PayElementType(payElementType))
-      : null,
+    payElementTypes: data ? arrayMap(PayElementType, data) : null,
     isLoading: !error && !data,
     isError: error,
   }
