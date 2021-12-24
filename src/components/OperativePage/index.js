@@ -12,7 +12,7 @@ import { useOperative, useTimesheet } from '@/utils/apiClient'
 const OperativePage = ({ query, tab, component }) => {
   const ComponentToRender = component
 
-  const { payrollNumber, week } = query
+  const { payrollNumber, week, backUrl } = query
   const {
     operative,
     isLoading: isOperativeLoading,
@@ -48,9 +48,9 @@ const OperativePage = ({ query, tab, component }) => {
 
   return (
     <PageContext.Provider value={context}>
-      <BackButton href="/search" />
+      <BackButton href={backUrl || '/search'} />
       <OperativeSummary />
-      <OperativeTabs current={tab}>
+      <OperativeTabs current={tab} backUrl={backUrl}>
         <ComponentToRender />
       </OperativeTabs>
     </PageContext.Provider>

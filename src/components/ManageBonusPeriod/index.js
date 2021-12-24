@@ -51,11 +51,12 @@ const ClosedWeek = ({ week }) => {
 }
 
 const OperativeListItem = ({ operative, week }) => {
-  const baseUrl = `/operatives/${operative.id}/timesheets`
+  const baseUrl = `/operatives/${operative.id}/timesheets/${week.id}`
+  const backUrl = '/manage/weeks'
 
   return (
     <li>
-      <Link href={`${baseUrl}/${week.id}/productive`}>
+      <Link href={`${baseUrl}/productive?backUrl=${backUrl}`}>
         <a className="lbh-link lbh-link--no-visited-state">
           <span>{operative.description}&nbsp;–&nbsp;</span>
           <span>{operative.tradeDescription}</span>

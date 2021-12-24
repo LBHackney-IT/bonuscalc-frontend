@@ -11,7 +11,7 @@ import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
 import { setTag } from '@sentry/nextjs'
 
 const SummaryPage = ({ query }) => {
-  const { payrollNumber, bonusPeriod } = query
+  const { payrollNumber, bonusPeriod, backUrl } = query
   const week = Week.default(bonusPeriod)
 
   const {
@@ -50,9 +50,9 @@ const SummaryPage = ({ query }) => {
 
   return (
     <PageContext.Provider value={context}>
-      <BackButton href="/search" />
+      <BackButton href={backUrl || '/search'} />
       <OperativeSummary />
-      <OperativeTabs current={0}>
+      <OperativeTabs current={0} backUrl={backUrl}>
         <BonusPeriodSummary />
       </OperativeTabs>
     </PageContext.Provider>
