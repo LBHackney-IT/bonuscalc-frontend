@@ -38,6 +38,12 @@
   }
 }
 
+.lbh-link--no-visited-state {
+  &:hover {
+    color: lbh-colour('lbh-link-hover');
+  }
+}
+
 .lbh-simple-pagination__link {
   padding: 15px 0px 10px 20px;
 
@@ -56,7 +62,9 @@
   }
 }
 
-.lbh-header, .lbh-phase-banner, .lbh-announcement {
+.lbh-header,
+.lbh-phase-banner,
+.lbh-announcement {
   @include govuk-media-query($media-type: print) {
     display: none !important;
   }
