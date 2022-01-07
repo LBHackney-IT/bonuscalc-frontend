@@ -16,7 +16,7 @@
  * @type {Cypress.PluginConfig}
  */
 const { lighthouse, prepareAudit } = require('cypress-audit')
-const dotenvPlugin = require('cypress-dotenv')
+const dotenvFlowPlugin = require('cypress-dotenv-flow')
 const fs = require('fs')
 const path = require('path')
 const downloads = path.join(__dirname, '..', 'downloads')
@@ -98,6 +98,6 @@ module.exports = (on, config) => {
     },
   })
 
-  config = dotenvPlugin(config)
+  config = dotenvFlowPlugin(config, { silent: true })
   return config
 }

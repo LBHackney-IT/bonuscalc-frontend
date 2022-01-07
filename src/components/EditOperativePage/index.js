@@ -3,6 +3,7 @@ import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
+import { setTag } from '@sentry/nextjs'
 import { BonusPeriod } from '@/models'
 import {
   useOperative,
@@ -73,6 +74,12 @@ const EditOperativePage = ({
 
   const payElements = selectPayElements(timesheet)
   const payElementTypes = selectPayElementTypes(allPayElementTypes)
+
+  // Add Sentry tags
+  setTag('operative', operative.id)
+  setTag('bonus_period', bonusPeriod)
+  setTag('week', week)
+  setTag('timesheet', timesheet.id)
 
   const context = {
     operative,

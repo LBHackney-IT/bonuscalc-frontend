@@ -5,6 +5,7 @@ import OperativeSummary from '@/components/OperativeSummary'
 import OperativeTabs from '@/components/OperativeTabs'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
+import { setTag } from '@sentry/nextjs'
 import { BonusPeriod } from '@/models'
 import { useOperative, useTimesheet } from '@/utils/apiClient'
 
@@ -38,6 +39,12 @@ const OperativePage = ({ query, tab, component }) => {
 
   const bonusPeriod = BonusPeriod.forWeek(week)
   const context = { operative, timesheet, week, bonusPeriod }
+
+  // Add Sentry tags
+  setTag('operative', operative.id)
+  setTag('bonus_period', bonusPeriod)
+  setTag('week', week)
+  setTag('timesheet', timesheet.id)
 
   return (
     <PageContext.Provider value={context}>

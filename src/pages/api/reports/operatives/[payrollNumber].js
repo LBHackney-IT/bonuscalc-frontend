@@ -5,6 +5,7 @@ import { Operative, Summary, Timesheet } from '@/models'
 import { generateCombinedReport } from '@/utils/reports'
 import { authoriseAPIRequest } from '@/utils/apiAuth'
 import { operativeUrl, summaryUrl, timesheetUrl } from '@/utils/apiClient'
+import { setTag } from '@sentry/nextjs'
 
 const { BONUSCALC_SERVICE_API_URL, BONUSCALC_SERVICE_API_KEY } = process.env
 
@@ -50,32 +51,40 @@ const fetchTimesheet = async (payrollNumber, date) => {
 }
 
 export default authoriseAPIRequest(async (req, res) => {
-  const { payrollNumber, date } = req.query
+  try {
+    const { payrollNumber, date } = req.query
 
-  if (!prnRegex.test(payrollNumber)) {
-    throw new Error('Invalid payroll number')
+    if (!prnRegex.test(payrollNumber)) {
+      throw new Error('Invalid payroll number')
+    }
+
+    if (!dateRegex.test(date)) {
+      throw new Error('Invalid bonus period')
+    }
+
+    const operative = await fetchOperative(payrollNumber)
+    const summary = await fetchSummary(payrollNumber, date)
+    const { bonusPeriod, closedWeeklySummaries } = summary
+
+    const timesheets = await Promise.all(
+      closedWeeklySummaries.map(async (ws) => {
+        return fetchTimesheet(payrollNumber, ws.weekId)
+      })
+    )
+
+    // Add Sentry tags
+    setTag('operative', operative.id)
+    setTag('bonus_period', bonusPeriod.id)
+
+    const pdf = generateCombinedReport(operative, summary, timesheets)
+    const filename = `${operative.id}-${bonusPeriod.year}-${bonusPeriod.number}.pdf`
+
+    res.setHeader('content-type', 'application/pdf')
+    res.setHeader('content-disposition', `attachment; filename="${filename}"`)
+
+    const buffer = Buffer.from(pdf.output('arraybuffer'))
+    return res.status(StatusCodes.OK).send(buffer)
+  } catch (error) {
+    throw Error(error)
   }
-
-  if (!dateRegex.test(date)) {
-    throw new Error('Invalid bonus period')
-  }
-
-  const operative = await fetchOperative(payrollNumber)
-  const summary = await fetchSummary(payrollNumber, date)
-  const { bonusPeriod, closedWeeklySummaries } = summary
-
-  const timesheets = await Promise.all(
-    closedWeeklySummaries.map(async (ws) => {
-      return fetchTimesheet(payrollNumber, ws.weekId)
-    })
-  )
-
-  const pdf = generateCombinedReport(operative, summary, timesheets)
-  const filename = `${operative.id}-${bonusPeriod.year}-${bonusPeriod.number}.pdf`
-
-  res.setHeader('content-type', 'application/pdf')
-  res.setHeader('content-disposition', `attachment; filename="${filename}"`)
-
-  const buffer = Buffer.from(pdf.output('arraybuffer'))
-  return res.status(StatusCodes.OK).send(buffer)
 })

@@ -41,7 +41,7 @@ Next, you need to tell your computer to run the app from a `hackney.gov.uk` doma
 127.0.0.1       localdev.hackney.gov.uk
 ```
 
-Lastly, create your `.env` file from `.env.sample`. You will need to grab some secrets from the team.
+Lastly, create your `.env.local` and `.env.test.local` files from `.env`. You will need to grab some secrets from the team.
 
 ### Run the development server:
 

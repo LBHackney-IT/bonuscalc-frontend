@@ -8,6 +8,7 @@ import BonusPeriodSummary from '@/components/BonusPeriodSummary'
 import { Week } from '@/models'
 import { useOperative, useSummary } from '@/utils/apiClient'
 import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { setTag } from '@sentry/nextjs'
 
 const SummaryPage = ({ query }) => {
   const { payrollNumber, bonusPeriod } = query
@@ -42,6 +43,10 @@ const SummaryPage = ({ query }) => {
     )
 
   const context = { operative, summary, week, bonusPeriod }
+
+  // Add Sentry tags
+  setTag('operative', operative.id)
+  setTag('bonus_period', bonusPeriod)
 
   return (
     <PageContext.Provider value={context}>
