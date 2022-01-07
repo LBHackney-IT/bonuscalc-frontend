@@ -48,7 +48,7 @@ export const useBonusPeriods = () => {
 }
 
 export const operativeUrl = (payrollNumber) => {
-  return `/operatives/${encodeURIComponent(payrollNumber)}`
+  return `/operatives/${payrollNumber}`
 }
 
 export const operativeExists = async (payrollNumber) => {
@@ -99,9 +99,7 @@ export const usePayElementTypes = () => {
 }
 
 export const summaryUrl = (payrollNumber, bonusPeriod) => {
-  return `/operatives/${encodeURIComponent(
-    payrollNumber
-  )}/summary?bonusPeriod=${encodeURIComponent(bonusPeriod)}`
+  return `/operatives/${payrollNumber}/summary?bonusPeriod=${bonusPeriod}`
 }
 
 export const useSummary = (payrollNumber, bonusPeriod) => {
@@ -118,9 +116,7 @@ export const useSummary = (payrollNumber, bonusPeriod) => {
 }
 
 export const timesheetUrl = (payrollNumber, week) => {
-  return `/operatives/${encodeURIComponent(
-    payrollNumber
-  )}/timesheet?week=${encodeURIComponent(week)}`
+  return `/operatives/${payrollNumber}/timesheet?week=${week}`
 }
 
 export const useTimesheet = (payrollNumber, week) => {
@@ -148,8 +144,49 @@ export const saveTimesheet = async (payrollNumber, week, data) => {
   }
 }
 
+export const reportSentAtUrl = (payrollNumber, week) => {
+  return `/operatives/${payrollNumber}/timesheet/report?week=${week}`
+}
+
+export const saveReportSentAt = async (payrollNumber, week) => {
+  const url = reportSentAtUrl(payrollNumber, week)
+
+  try {
+    const res = await client.post(url)
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const reportsSentAtUrl = (week) => {
+  return `/weeks/${week}/reports`
+}
+
+export const saveReportsSentAt = async (week) => {
+  const url = reportsSentAtUrl(week)
+
+  try {
+    const res = await client.post(url)
+
+    // Invalidate the cached week
+    mutate(`/weeks/${week}`)
+
+    // Invalidate the cached bonus periods
+    const { status, data } = await client.get(bonusPeriodsUrl())
+
+    if (status == StatusCodes.OK) {
+      mutate('/periods/current', data)
+    }
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
 export const weekUrl = (week) => {
-  return `/weeks/${encodeURIComponent(week)}`
+  return `/weeks/${week}`
 }
 
 export const useWeek = (week) => {
@@ -159,5 +196,20 @@ export const useWeek = (week) => {
     week: data ? new Week(data) : null,
     isLoading: !error && !data,
     isError: error,
+  }
+}
+
+export const saveWeek = async (week, data) => {
+  const url = weekUrl(week)
+
+  try {
+    const res = await client.post(url, data)
+
+    // Invalidate the cached timesheet
+    mutate(url)
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
   }
 }

@@ -6,7 +6,8 @@ import ButtonGroup from '@/components/ButtonGroup'
 import LinkButton from '@/components/LinkButton'
 import ErrorMessage from '@/components/ErrorMessage'
 import Spinner from '@/components/Spinner'
-import { useState, useEffect } from 'react'
+import UserContext from '@/components/UserContext'
+import { useState, useEffect, useContext } from 'react'
 import { BonusPeriod } from '@/models'
 import { useWeek } from '@/utils/apiClient'
 
@@ -50,9 +51,23 @@ const ClosedWeek = ({ week }) => {
   )
 }
 
+const CloseWeek = ({ week }) => {
+  return (
+    <Link href={`/manage/weeks/${week.id}/close`}>
+      <a className="lbh-link lbh-link--no-visited-state">
+        {week.isClosed ? (
+          <>Send outstanding reports</>
+        ) : (
+          <>Close week and send reports</>
+        )}
+      </a>
+    </Link>
+  )
+}
+
 const OperativeListItem = ({ operative, week }) => {
   const baseUrl = `/operatives/${operative.id}/timesheets/${week.id}`
-  const backUrl = '/manage/weeks'
+  const backUrl = encodeURIComponent('/manage/weeks')
 
   return (
     <li>
@@ -139,7 +154,8 @@ const OperativeList = ({ date }) => {
   )
 }
 
-const ManageWeek = ({ week, showAll }) => {
+const ManageWeek = ({ week, showAll, firstOpenWeek }) => {
+  const { user } = useContext(UserContext)
   const [isVisible, setIsVisible] = useState(week.isVisible)
 
   useEffect(() => {
@@ -159,7 +175,13 @@ const ManageWeek = ({ week, showAll }) => {
             {week.description} <span>({week.dateRange})</span>
           </h3>
           {week.isCurrent && <CurrentWeek />}
-          {week.isClosed && <ClosedWeek week={week} />}
+          {week.isCompleted && <ClosedWeek week={week} />}
+          {week.hasOutstandingReports && user.hasWeekManagerPermissions && (
+            <CloseWeek week={week} />
+          )}
+          {week.id == firstOpenWeek?.id &&
+            !week.isCurrent &&
+            user.hasWeekManagerPermissions && <CloseWeek week={week} />}
         </header>
         {week.isFuture ? <WeekNotStarted /> : <OperativeList date={week.id} />}
       </section>
@@ -173,6 +195,8 @@ const ManageBonusPeriod = ({ period }) => {
   const toggleShowAllWeeks = () => {
     setShowAllWeeks(!showAllWeeks)
   }
+
+  const firstOpenWeek = period.weeks.find((week) => week.isEditable)
 
   return (
     <section className="bc-open-weeks__period">
@@ -190,7 +214,12 @@ const ManageBonusPeriod = ({ period }) => {
       </header>
 
       {period.weeks.map((week, index) => (
-        <ManageWeek week={week} key={index} showAll={showAllWeeks} />
+        <ManageWeek
+          week={week}
+          key={index}
+          showAll={showAllWeeks}
+          firstOpenWeek={firstOpenWeek}
+        />
       ))}
 
       <ButtonGroup>

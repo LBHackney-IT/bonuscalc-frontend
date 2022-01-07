@@ -35,6 +35,13 @@
         margin: 0;
         @include lbh-rem(margin-bottom, 9);
       }
+
+      a {
+        @include lbh-body-xs;
+        line-height: 1;
+        margin: 0;
+        @include lbh-rem(margin-bottom, 9);
+      }
     }
 
     &--current {

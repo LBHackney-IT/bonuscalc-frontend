@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useOperative } from '@/utils/apiClient'
 import { BonusPeriod } from '@/models'
-import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
 const OperativeRedirect = ({ query }) => {
   const { payrollNumber } = query
@@ -42,6 +42,6 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-OperativeRedirect.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+OperativeRedirect.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
 
 export default OperativeRedirect

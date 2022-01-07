@@ -72,7 +72,7 @@ const Search = ({ week }) => {
 
 const Operatives = ({ week, operatives }) => {
   const baseUrl = `/operatives`
-  const backUrl = `/manage/weeks/${week}/operatives`
+  const backUrl = encodeURIComponent(`/manage/weeks/${week}/operatives`)
   const productiveUrl = `timesheets/${week}/productive?backUrl=${backUrl}`
   const nonProductiveUrl = `timesheets/${week}/non-productive?backUrl=${backUrl}`
 

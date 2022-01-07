@@ -1,5 +1,5 @@
 import ManagePage from '@/components/ManagePage'
-import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
 const ManageBandsPage = ({ userDetails }) => {
   return (
@@ -10,7 +10,7 @@ const ManageBandsPage = ({ userDetails }) => {
   )
 }
 
-ManageBandsPage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+ManageBandsPage.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
 
 export const getServerSideProps = async (ctx) => {
   const { query } = ctx

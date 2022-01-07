@@ -2,7 +2,7 @@ import EditOperativePage from '@/components/EditOperativePage'
 import EditOutOfHours from '@/components/EditOutOfHours'
 import { PayElement } from '@/models'
 import { compareStrings } from '@/utils/string'
-import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
 const EditOutOfHoursPage = ({ query }) => {
   const selectPayElements = (timesheet) => {
@@ -40,6 +40,6 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-EditOutOfHoursPage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+EditOutOfHoursPage.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
 
 export default EditOutOfHoursPage

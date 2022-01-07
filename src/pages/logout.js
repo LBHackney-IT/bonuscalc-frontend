@@ -1,5 +1,5 @@
 import { deleteSessions } from '@/utils/googleAuth'
-import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
 const LogoutPage = () => null
 
@@ -8,6 +8,6 @@ export const getServerSideProps = async ({ res }) => {
   return { props: {} }
 }
 
-LogoutPage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+LogoutPage.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
 
 export default LogoutPage

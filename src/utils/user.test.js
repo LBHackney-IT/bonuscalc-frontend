@@ -1,6 +1,7 @@
 import { buildUser, OPERATIVE_MANAGER_ROLE } from './user'
 
-const { OPERATIVE_MANAGERS_GOOGLE_GROUPNAME } = process.env
+const { OPERATIVE_MANAGERS_GOOGLE_GROUPNAME, WEEK_MANAGERS_GOOGLE_GROUPNAME } =
+  process.env
 
 describe('buildUser', () => {
   describe('hasOperativeManagerPermissions', () => {
@@ -25,6 +26,32 @@ describe('buildUser', () => {
 
       it('returns false', () => {
         expect(user.hasOperativeManagerPermissions).toBe(false)
+      })
+    })
+  })
+
+  describe('hasWeekManagerPermissions', () => {
+    const user = buildUser('', '', [WEEK_MANAGERS_GOOGLE_GROUPNAME])
+
+    describe('when the supplied role maps to the group name for the user', () => {
+      it('returns true', () => {
+        expect(user.hasWeekManagerPermissions).toBe(true)
+      })
+    })
+
+    describe('when the group name for the user does not map to a recognised role', () => {
+      const user = buildUser('', '', ['a made up group'])
+
+      it('returns false', () => {
+        expect(user.hasWeekManagerPermissions).toBe(false)
+      })
+    })
+
+    describe('when no group names are supplied', () => {
+      const user = buildUser('', '', [])
+
+      it('returns false', () => {
+        expect(user.hasWeekManagerPermissions).toBe(false)
       })
     })
   })

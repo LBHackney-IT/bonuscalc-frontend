@@ -43,6 +43,7 @@ export default class Week {
     this.startAt = dayjs(attrs.startAt)
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
     this.closedBy = attrs.closedBy
+    this.reportsSentAt = attrs.reportsSentAt ? dayjs(attrs.reportsSentAt) : null
     this.bonusPeriod = attrs.bonusPeriod
       ? new BonusPeriod(attrs.bonusPeriod)
       : null
@@ -156,6 +157,26 @@ export default class Week {
   }
 
   get isVisible() {
-    return this.isEditable && (this.isCurrent || this.isPast)
+    return !this.isCompleted && (this.isCurrent || this.isPast)
+  }
+
+  get operativeCount() {
+    return this.operativeSummaries.length
+  }
+
+  get sentOperatives() {
+    return this.operativeSummaries.filter((os) => os.reportSentAt)
+  }
+
+  get sentOperativeCount() {
+    return this.sentOperatives.length
+  }
+
+  get hasOutstandingReports() {
+    return this.isClosed && !this.reportsSentAt
+  }
+
+  get isCompleted() {
+    return this.isClosed && this.reportsSentAt
   }
 }

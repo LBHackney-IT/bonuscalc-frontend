@@ -13,6 +13,7 @@ export default class OperativeSummary {
     this.utilisation = attrs.utilisation
     this.projectedValue = attrs.projectedValue
     this.averageUtilisation = attrs.averageUtilisation
+    this.reportSentAt = attrs.reportSentAt
   }
 
   get description() {
