@@ -54,6 +54,32 @@ describe('Summary page', () => {
       })
     })
 
+    context('And the operative is archived', () => {
+      beforeEach(() => {
+        cy.intercept(
+          { method: 'GET', path: '/api/v1/operatives/123456' },
+          { statusCode: 200, fixture: 'operatives/archived.json' }
+        ).as('get_operative')
+
+        cy.intercept(
+          {
+            method: 'GET',
+            path: '/api/v1/operatives/123456/summary?bonusPeriod=2021-08-02',
+          },
+          { statusCode: 200, fixture: 'summaries/2021-08-02.json' }
+        ).as('get_summary')
+
+        cy.visit('/operatives/123456/summaries/2021-08-02')
+        cy.wait(['@get_operative', '@get_summary'])
+      })
+
+      it('Shows the operative is archived', () => {
+        cy.get('.lbh-heading-h2').within(() => {
+          cy.contains('(Archived)')
+        })
+      })
+    })
+
     context('And the operative exists', () => {
       beforeEach(() => {
         cy.intercept(

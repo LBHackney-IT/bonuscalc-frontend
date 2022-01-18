@@ -3,9 +3,9 @@ import { smvhOrUnits, bandForValue } from '@/utils/scheme'
 import { truncate } from '@/utils/string'
 import { SVGPathData } from 'svg-pathdata'
 import { jsPDF } from 'jspdf'
-import './fonts/OpenSans-Regular'
-import './fonts/OpenSans-SemiBold'
-import './fonts/OpenSans-Bold'
+import OpenSans_Regular from './fonts/OpenSans-Regular'
+import OpenSans_SemiBold from './fonts/OpenSans-SemiBold'
+import OpenSans_Bold from './fonts/OpenSans-Bold'
 
 const LOGO = `
   M36 15.999C36 9.039 32.058 3.005 26.291 0v12.033H9.709V0
@@ -40,6 +40,21 @@ const LOGO = `
   -1.02-3.112-8.803-3.562-10.026L184 9h8.681l3.401 12.145h.082
   L199.604 9H208l-7.045 19.522
 `
+
+const createPDF = () => {
+  const pdf = new jsPDF({ compress: true })
+
+  pdf.addFileToVFS('OpenSans-Regular.ttf', OpenSans_Regular)
+  pdf.addFont('OpenSans-Regular.ttf', 'OpenSans', 'normal', 400)
+
+  pdf.addFileToVFS('OpenSans-SemiBold.ttf', OpenSans_SemiBold)
+  pdf.addFont('OpenSans-SemiBold.ttf', 'OpenSans', 'normal', 600)
+
+  pdf.addFileToVFS('OpenSans-Bold.ttf', OpenSans_Bold)
+  pdf.addFont('OpenSans-Bold.ttf', 'OpenSans', 'normal', 700)
+
+  return pdf
+}
 
 const drawSVGPath = (pdf, data, location, scale) => {
   const [x, y] = location ? location : [0, 0]
@@ -875,7 +890,7 @@ const drawBonusSummary = (pdf, operative, summary) => {
 }
 
 export const generateWeeklyReport = (operative, timesheet) => {
-  const pdf = new jsPDF({ compress: true })
+  const pdf = createPDF()
 
   withGraphicsState(pdf, () => {
     drawLogo(pdf)
@@ -897,7 +912,7 @@ export const generateWeeklyReport = (operative, timesheet) => {
 }
 
 export const generateSummaryReport = (operative, summary) => {
-  const pdf = new jsPDF({ compress: true })
+  const pdf = createPDF()
 
   withGraphicsState(pdf, () => {
     drawLogo(pdf)
@@ -909,6 +924,44 @@ export const generateSummaryReport = (operative, summary) => {
 
   withGraphicsState(pdf, () => {
     drawBonusSummary(pdf, operative, summary)
+  })
+
+  return pdf
+}
+
+export const generateCombinedReport = (operative, summary, timesheets) => {
+  const pdf = createPDF()
+
+  withGraphicsState(pdf, () => {
+    drawLogo(pdf)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawOperativeSummary(pdf, operative)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawBonusSummary(pdf, operative, summary)
+  })
+
+  timesheets.forEach((timesheet) => {
+    pdf.addPage()
+
+    withGraphicsState(pdf, () => {
+      drawLogo(pdf)
+    })
+
+    withGraphicsState(pdf, () => {
+      drawWeeklyOperativeSummary(pdf, operative, timesheet)
+    })
+
+    withGraphicsState(pdf, () => {
+      drawWeeklyNonProductiveTime(pdf, operative, timesheet)
+    })
+
+    withGraphicsState(pdf, () => {
+      drawWeeklyProductiveTime(pdf, operative, timesheet)
+    })
   })
 
   return pdf

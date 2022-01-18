@@ -27,7 +27,7 @@ const OutOfHoursSummary = () => {
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>
 
-        {week.isEditable && (
+        {week.isEditable && operative.isEditable && (
           <ButtonLink href={`${baseUrl}/out-of-hours/edit`} secondary={true}>
             Edit out of hours
           </ButtonLink>

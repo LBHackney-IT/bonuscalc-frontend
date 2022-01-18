@@ -7,10 +7,11 @@ import NotFound from '@/components/NotFound'
 import BonusPeriodSummary from '@/components/BonusPeriodSummary'
 import { Week } from '@/models'
 import { useOperative, useSummary } from '@/utils/apiClient'
-import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
+import { setTag } from '@sentry/nextjs'
 
 const SummaryPage = ({ query }) => {
-  const { payrollNumber, bonusPeriod } = query
+  const { payrollNumber, bonusPeriod, backUrl } = query
   const week = Week.default(bonusPeriod)
 
   const {
@@ -43,11 +44,15 @@ const SummaryPage = ({ query }) => {
 
   const context = { operative, summary, week, bonusPeriod }
 
+  // Add Sentry tags
+  setTag('operative', operative.id)
+  setTag('bonus_period', bonusPeriod)
+
   return (
     <PageContext.Provider value={context}>
-      <BackButton href="/" />
+      <BackButton href={backUrl || '/search'} />
       <OperativeSummary />
-      <OperativeTabs current={0}>
+      <OperativeTabs current={0} backUrl={backUrl}>
         <BonusPeriodSummary />
       </OperativeTabs>
     </PageContext.Provider>
@@ -64,6 +69,6 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-SummaryPage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+SummaryPage.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
 
 export default SummaryPage

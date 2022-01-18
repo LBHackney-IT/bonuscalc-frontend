@@ -5,8 +5,15 @@ const OperativeSummary = () => {
   const { operative } = useContext(PageContext)
 
   return (
-    <section className="section">
-      <h1 className="lbh-heading-h2">{operative.name}</h1>
+    <section>
+      <h1 className="lbh-heading-h2">
+        {operative.name}
+        {operative.isArchived && (
+          <span className="govuk-caption-m lbh-caption govuk-!-display-inline-block govuk-!-margin-left-3">
+            (Archived)
+          </span>
+        )}
+      </h1>
 
       <dl className="govuk-summary-list lbh-summary-list govuk-!-margin-top-5">
         <div className="govuk-summary-list__row">

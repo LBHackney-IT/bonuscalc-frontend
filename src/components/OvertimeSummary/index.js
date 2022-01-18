@@ -27,7 +27,7 @@ const OvertimeSummary = () => {
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>
 
-        {week.isEditable && (
+        {week.isEditable && operative.isEditable && (
           <ButtonLink href={`${baseUrl}/overtime/edit`} secondary={true}>
             Edit overtime
           </ButtonLink>

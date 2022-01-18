@@ -6,7 +6,7 @@ import Announcement from '../Announcement'
 import AnnouncementContext from '../AnnouncementContext'
 import { useState } from 'react'
 
-const Layout = ({ serviceName, feedbackLink, children }) => {
+const Layout = ({ serviceName, feedbackLink, currentPage, children }) => {
   const [announcement, setAnnouncement] = useState({})
 
   return (
@@ -23,7 +23,7 @@ const Layout = ({ serviceName, feedbackLink, children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header serviceName={serviceName} />
+      <Header serviceName={serviceName} currentPage={currentPage} />
       <PhaseBanner feedbackLink={feedbackLink} />
 
       <AnnouncementContext.Provider value={{ setAnnouncement }}>

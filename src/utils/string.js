@@ -8,6 +8,10 @@ export const compareStrings = (a, b) => {
   }
 }
 
+export const escapeRegExp = (string) => {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 export const truncate = (text, length, options) => {
   const separator = options?.separator || ' '
   const omission = options?.omission || '...'

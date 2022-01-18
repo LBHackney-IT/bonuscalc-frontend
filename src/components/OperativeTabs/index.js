@@ -4,29 +4,34 @@ import Link from 'next/link'
 import PageContext from '@/components/PageContext'
 import { useContext } from 'react'
 
-const OperativeTabs = ({ current, children }) => {
+const OperativeTabs = ({ current, children, backUrl }) => {
   const { operative, week, bonusPeriod } = useContext(PageContext)
+
+  const baseUrl = `/operatives/${operative.id}`
+  const summaryUrl = `${baseUrl}/summaries/${bonusPeriod}`
+  const timesheetUrl = `${baseUrl}/timesheets/${week}`
+  const query = backUrl ? `?backUrl=${backUrl}` : ''
 
   const tabs = [
     {
       content: 'Summary',
-      href: `/operatives/${operative.id}/summaries/${bonusPeriod}`,
+      href: `${summaryUrl}${query}`,
     },
     {
       content: 'Productive (P)',
-      href: `/operatives/${operative.id}/timesheets/${week}/productive`,
+      href: `${timesheetUrl}/productive${query}`,
     },
     {
       content: 'Non-productive (NP)',
-      href: `/operatives/${operative.id}/timesheets/${week}/non-productive`,
+      href: `${timesheetUrl}/non-productive${query}`,
     },
     {
       content: 'Out of hours',
-      href: `/operatives/${operative.id}/timesheets/${week}/out-of-hours`,
+      href: `${timesheetUrl}/out-of-hours${query}`,
     },
     {
       content: 'Overtime',
-      href: `/operatives/${operative.id}/timesheets/${week}/overtime`,
+      href: `${timesheetUrl}/overtime${query}`,
     },
   ]
 
@@ -59,6 +64,7 @@ const OperativeTabs = ({ current, children }) => {
 
 OperativeTabs.propTypes = {
   current: PropTypes.number.isRequired,
+  backUrl: PropTypes.string,
 }
 
 export default OperativeTabs

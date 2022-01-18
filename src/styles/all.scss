@@ -1,6 +1,9 @@
 @import 'lbh-frontend/lbh/all';
 @import 'environments';
+@import 'all-operatives';
 @import 'bonus-summary';
+@import 'close-week';
+@import 'open-weeks';
 @import 'out-of-hours';
 @import 'overtime';
 @import 'pay-elements';
@@ -23,6 +26,24 @@
 
 .lbh-back-link {
   border-bottom: 1px solid transparent;
+
+  &:visited {
+    color: lbh-colour('lbh-link');
+  }
+
+  &:hover {
+    color: lbh-colour('lbh-link-hover');
+  }
+
+  @include govuk-media-query($media-type: print) {
+    display: none !important;
+  }
+}
+
+.lbh-link--no-visited-state {
+  &:hover {
+    color: lbh-colour('lbh-link-hover');
+  }
 }
 
 .lbh-simple-pagination__link {
@@ -40,6 +61,20 @@
   svg {
     left: inherit;
     right: 0px;
+  }
+}
+
+.lbh-header,
+.lbh-phase-banner,
+.lbh-announcement {
+  @include govuk-media-query($media-type: print) {
+    display: none !important;
+  }
+}
+
+.lbh-main-wrapper {
+  @include govuk-media-query($media-type: print) {
+    padding-top: 0 !important;
   }
 }
 

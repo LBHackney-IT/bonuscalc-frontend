@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "type": "SMV",
+    "description": "Planned",
+    "conversionFactor": 1.0,
+    "payBands": [
+      {
+        "band": 1,
+        "value": 2160.0
+      },
+      {
+        "band": 2,
+        "value": 2700.0
+      },
+      {
+        "band": 3,
+        "value": 3132.0
+      },
+      {
+        "band": 4,
+        "value": 3348.0
+      },
+      {
+        "band": 5,
+        "value": 3564.0
+      },
+      {
+        "band": 6,
+        "value": 3780.0
+      },
+      {
+        "band": 7,
+        "value": 3996.0
+      },
+      {
+        "band": 8,
+        "value": 4320.0
+      },
+      {
+        "band": 9,
+        "value": 4644.0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "SMV",
+    "description": "Reactive",
+    "conversionFactor": 1.0,
+    "payBands": [
+      {
+        "band": 1,
+        "value": 2160.0
+      },
+      {
+        "band": 2,
+        "value": 2772.0
+      },
+      {
+        "band": 3,
+        "value": 3132.0
+      },
+      {
+        "band": 4,
+        "value": 3366.0
+      },
+      {
+        "band": 5,
+        "value": 3618.0
+      },
+      {
+        "band": 6,
+        "value": 3888.0
+      },
+      {
+        "band": 7,
+        "value": 4182.0
+      },
+      {
+        "band": 8,
+        "value": 4494.0
+      },
+      {
+        "band": 9,
+        "value": 4836.0
+      }
+    ]
+  }
+]

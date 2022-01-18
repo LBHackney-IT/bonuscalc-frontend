@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'next/link'
 import UserContext from '../UserContext'
 
-const Header = ({ serviceName }) => {
+const Header = ({ serviceName, currentPage }) => {
   const { user } = useContext(UserContext)
 
   const showDevelopmentNote = () => {
@@ -27,7 +27,7 @@ const Header = ({ serviceName }) => {
         <a className="govuk-skip-link lbh-skip-link">Skip to main content</a>
       </Link>
 
-      <header className="lbh-header govuk-!-display-none-print">
+      <header className="lbh-header">
         <div className="lbh-header__main">
           <div className="lbh-container lbh-header__wrapper lbh-header__wrapper--stacked">
             <div className="lbh-header__title">
@@ -49,7 +49,16 @@ const Header = ({ serviceName }) => {
             </div>
             {user && (
               <div className="lbh-header__links">
-                <p>{user.name}</p>
+                {currentPage == 'manage' ? (
+                  <p>Manage Bonus</p>
+                ) : (
+                  <a href="/manage">Manage Bonus</a>
+                )}
+                {currentPage == 'search' ? (
+                  <p>Search</p>
+                ) : (
+                  <a href="/search">Search</a>
+                )}
                 <a href="/logout" id="signout">
                   Sign out
                 </a>
@@ -64,6 +73,7 @@ const Header = ({ serviceName }) => {
 
 Header.propTypes = {
   serviceName: PropTypes.string.isRequired,
+  currentPage: PropTypes.string,
 }
 
 export default Header

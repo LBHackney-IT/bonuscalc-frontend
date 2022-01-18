@@ -1,14 +1,16 @@
-import OperativeSearch from '@/components/OperativeSearch'
-import { OPERATIVE_MANAGER_ROLE } from '@/utils/user'
+import Spinner from '@/components/Spinner'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
-const HomePage = ({ query }) => {
-  return (
-    <>
-      <section className="section">
-        <OperativeSearch query={query} />
-      </section>
-    </>
-  )
+const HomeRedirect = () => {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.push('/manage/weeks')
+  })
+
+  return <Spinner />
 }
 
 export const getServerSideProps = async (ctx) => {
@@ -21,6 +23,6 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-HomePage.permittedRoles = [OPERATIVE_MANAGER_ROLE]
+HomeRedirect.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
 
-export default HomePage
+export default HomeRedirect

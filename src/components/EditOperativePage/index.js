@@ -3,6 +3,7 @@ import PageContext from '@/components/PageContext'
 import BackButton from '@/components/BackButton'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
+import { setTag } from '@sentry/nextjs'
 import { BonusPeriod } from '@/models'
 import {
   useOperative,
@@ -46,6 +47,23 @@ const EditOperativePage = ({
       </NotFound>
     )
 
+  const bonusPeriod = BonusPeriod.forWeek(week)
+  const baseUrl = `/operatives/${operative.id}`
+  const backUrl = `${baseUrl}/timesheets/${week}/${tab}`
+
+  if (operative.isArchived)
+    return (
+      <>
+        <BackButton href={backUrl} />
+        <section>
+          <h1 className="lbh-heading-h1">Access Denied</h1>
+          <p className="lbh-body">
+            Sorry, {operative.name} has been archived and is no longer editable.
+          </p>
+        </section>
+      </>
+    )
+
   if (isTimesheetLoading) return <Spinner />
   if (isTimesheetError || !timesheet)
     return <NotFound>Couldn’t find a timesheet for the date {week}.</NotFound>
@@ -54,12 +72,14 @@ const EditOperativePage = ({
   if (isPayElementTypesError || !allPayElementTypes)
     return <NotFound>Couldn’t fetch the list of pay element types.</NotFound>
 
-  const bonusPeriod = BonusPeriod.forWeek(week)
-  const baseUrl = `/operatives/${operative.id}`
-  const backUrl = `${baseUrl}/timesheets/${week}/${tab}`
-
   const payElements = selectPayElements(timesheet)
   const payElementTypes = selectPayElementTypes(allPayElementTypes)
+
+  // Add Sentry tags
+  setTag('operative', operative.id)
+  setTag('bonus_period', bonusPeriod)
+  setTag('week', week)
+  setTag('timesheet', timesheet.id)
 
   const context = {
     operative,
