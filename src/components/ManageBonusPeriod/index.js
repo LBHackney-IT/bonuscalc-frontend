@@ -142,11 +142,13 @@ const OperativeList = ({ date }) => {
                 />
               ))}
             </ol>
-            <footer>
-              <LinkButton onClick={toggleShowAllOperatives}>
-                {showAllOperatives ? <>Show fewer</> : <>Show all</>}
-              </LinkButton>
-            </footer>
+            {allOperatives.length > 5 && (
+              <footer>
+                <LinkButton onClick={toggleShowAllOperatives}>
+                  {showAllOperatives ? <>Show fewer</> : <>Show all</>}
+                </LinkButton>
+              </footer>
+            )}
           </>
         )}
       </section>
