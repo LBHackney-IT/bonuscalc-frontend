@@ -6,7 +6,7 @@ import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
 import { Scheme, Week } from '@/models'
 import { numberWithPrecision } from '@/utils/number'
 import { smvh, bandForValue } from '@/utils/scheme'
-import { escapeRegExp } from '@/utils/string'
+import { escapeRegExp, transliterate } from '@/utils/string'
 
 const Header = ({ week }) => {
   return (
@@ -26,7 +26,7 @@ const Search = ({ week }) => {
 
   const filterOperatives = (filter) => {
     if (filter) {
-      const regex = new RegExp(escapeRegExp(filter), 'i')
+      const regex = new RegExp(escapeRegExp(transliterate(filter)), 'i')
       setOperatives(allOperatives.filter((o) => o.matches(regex)))
     } else {
       setOperatives(allOperatives)

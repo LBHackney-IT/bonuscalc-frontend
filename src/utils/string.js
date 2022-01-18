@@ -12,6 +12,10 @@ export const escapeRegExp = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+export const transliterate = (string) => {
+  return string.normalize('NFD').replace(/[^\sa-zA-Z0-9]+/, '')
+}
+
 export const truncate = (text, length, options) => {
   const separator = options?.separator || ' '
   const omission = options?.omission || '...'

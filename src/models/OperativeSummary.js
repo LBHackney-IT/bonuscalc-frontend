@@ -1,4 +1,5 @@
 import Trade from './Trade'
+import { transliterate } from '@/utils/string'
 
 export default class OperativeSummary {
   constructor(attrs) {
@@ -27,7 +28,7 @@ export default class OperativeSummary {
   matches(pattern) {
     return (
       pattern.test(this.id) ||
-      pattern.test(this.name) ||
+      pattern.test(transliterate(this.name)) ||
       pattern.test(this.tradeDescription)
     )
   }
