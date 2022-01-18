@@ -12,7 +12,7 @@ const NotFound = ({ children }) => {
   return (
     <>
       <BackButton href="/" />
-      <section className="section">
+      <section>
         <h1 className="lbh-heading-h1">Not Found</h1>
         <p className="lbh-body">{children}</p>
       </section>

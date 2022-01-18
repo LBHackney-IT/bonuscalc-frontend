@@ -6,6 +6,7 @@ const {
   HACKNEY_JWT_SECRET,
   GSSO_TOKEN_NAME,
   OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
+  WEEK_MANAGERS_GOOGLE_GROUPNAME,
 } = process.env
 
 describe('isAuthorised', () => {
@@ -14,7 +15,10 @@ describe('isAuthorised', () => {
       {
         name: 'name',
         email: 'name@example.com',
-        groups: [OPERATIVE_MANAGERS_GOOGLE_GROUPNAME],
+        groups: [
+          OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
+          WEEK_MANAGERS_GOOGLE_GROUPNAME,
+        ],
       },
       HACKNEY_JWT_SECRET
     )
@@ -32,6 +36,7 @@ describe('isAuthorised', () => {
         name: 'name',
         email: 'name@example.com',
         hasOperativeManagerPermissions: true,
+        hasWeekManagerPermissions: true,
         hasAnyPermissions: true,
       })
     })

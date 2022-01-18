@@ -55,7 +55,7 @@ const EditOperativePage = ({
     return (
       <>
         <BackButton href={backUrl} />
-        <section className="section">
+        <section>
           <h1 className="lbh-heading-h1">Access Denied</h1>
           <p className="lbh-body">
             Sorry, {operative.name} has been archived and is no longer editable.

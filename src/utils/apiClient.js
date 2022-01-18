@@ -1,9 +1,22 @@
 import axios from 'axios'
 import useSWR, { mutate } from 'swr'
 import { StatusCodes } from 'http-status-codes'
-import { Operative, Timesheet, PayElementType, Summary } from '@/models'
+import {
+  BonusPeriod,
+  Operative,
+  Timesheet,
+  PayElementType,
+  Scheme,
+  Summary,
+  Week,
+} from '@/models'
 
 const client = axios.create({ baseURL: '/api/v1' })
+
+const arrayMap = (klass, items) => items.map((item) => new klass(item))
+
+const objectMap = (key, klass, items) =>
+  Object.fromEntries(items.map((item) => [item[key], new klass(item)]))
 
 export const fetcher = async (url) => {
   const { status, data } = await client.get(url)
@@ -20,8 +33,22 @@ export const fetcher = async (url) => {
   return data
 }
 
+export const bonusPeriodsUrl = () => {
+  return `/periods/current`
+}
+
+export const useBonusPeriods = () => {
+  const { data, error } = useSWR(bonusPeriodsUrl(), fetcher)
+
+  return {
+    bonusPeriods: data ? arrayMap(BonusPeriod, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const operativeUrl = (payrollNumber) => {
-  return `/operatives/${encodeURIComponent(payrollNumber)}`
+  return `/operatives/${payrollNumber}`
 }
 
 export const operativeExists = async (payrollNumber) => {
@@ -43,6 +70,20 @@ export const useOperative = (payrollNumber) => {
   }
 }
 
+export const payBandsUrl = () => {
+  return '/pay/bands'
+}
+
+export const useSchemes = () => {
+  const { data, error } = useSWR(payBandsUrl(), fetcher)
+
+  return {
+    schemes: data ? objectMap('id', Scheme, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const payElementTypesUrl = () => {
   return '/pay/types'
 }
@@ -51,18 +92,14 @@ export const usePayElementTypes = () => {
   const { data, error } = useSWR(payElementTypesUrl(), fetcher)
 
   return {
-    payElementTypes: data
-      ? data.map((payElementType) => new PayElementType(payElementType))
-      : null,
+    payElementTypes: data ? arrayMap(PayElementType, data) : null,
     isLoading: !error && !data,
     isError: error,
   }
 }
 
 export const summaryUrl = (payrollNumber, bonusPeriod) => {
-  return `/operatives/${encodeURIComponent(
-    payrollNumber
-  )}/summary?bonusPeriod=${encodeURIComponent(bonusPeriod)}`
+  return `/operatives/${payrollNumber}/summary?bonusPeriod=${bonusPeriod}`
 }
 
 export const useSummary = (payrollNumber, bonusPeriod) => {
@@ -79,9 +116,7 @@ export const useSummary = (payrollNumber, bonusPeriod) => {
 }
 
 export const timesheetUrl = (payrollNumber, week) => {
-  return `/operatives/${encodeURIComponent(
-    payrollNumber
-  )}/timesheet?week=${encodeURIComponent(week)}`
+  return `/operatives/${payrollNumber}/timesheet?week=${week}`
 }
 
 export const useTimesheet = (payrollNumber, week) => {
@@ -96,6 +131,76 @@ export const useTimesheet = (payrollNumber, week) => {
 
 export const saveTimesheet = async (payrollNumber, week, data) => {
   const url = timesheetUrl(payrollNumber, week)
+
+  try {
+    const res = await client.post(url, data)
+
+    // Invalidate the cached timesheet
+    mutate(url)
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const reportSentAtUrl = (payrollNumber, week) => {
+  return `/operatives/${payrollNumber}/timesheet/report?week=${week}`
+}
+
+export const saveReportSentAt = async (payrollNumber, week) => {
+  const url = reportSentAtUrl(payrollNumber, week)
+
+  try {
+    const res = await client.post(url)
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const reportsSentAtUrl = (week) => {
+  return `/weeks/${week}/reports`
+}
+
+export const saveReportsSentAt = async (week) => {
+  const url = reportsSentAtUrl(week)
+
+  try {
+    const res = await client.post(url)
+
+    // Invalidate the cached week
+    mutate(`/weeks/${week}`)
+
+    // Invalidate the cached bonus periods
+    const { status, data } = await client.get(bonusPeriodsUrl())
+
+    if (status == StatusCodes.OK) {
+      mutate('/periods/current', data)
+    }
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const weekUrl = (week) => {
+  return `/weeks/${week}`
+}
+
+export const useWeek = (week) => {
+  const { data, error } = useSWR(weekUrl(week), fetcher)
+
+  return {
+    week: data ? new Week(data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const saveWeek = async (week, data) => {
+  const url = weekUrl(week)
 
   try {
     const res = await client.post(url, data)

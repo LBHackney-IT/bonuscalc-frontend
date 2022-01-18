@@ -1,4 +1,5 @@
 import BonusPeriod from './BonusPeriod'
+import OperativeSummary from './OperativeSummary'
 import dayjs from '@/utils/date'
 import { wrap } from '@/utils/number'
 
@@ -39,13 +40,24 @@ export default class Week {
   constructor(attrs) {
     this.id = attrs.id
     this.number = attrs.number
-    this.bonusPeriod = new BonusPeriod(attrs.bonusPeriod)
     this.startAt = dayjs(attrs.startAt)
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
+    this.closedBy = attrs.closedBy
+    this.reportsSentAt = attrs.reportsSentAt ? dayjs(attrs.reportsSentAt) : null
+    this.bonusPeriod = attrs.bonusPeriod
+      ? new BonusPeriod(attrs.bonusPeriod)
+      : null
+    this.operativeSummaries = attrs.operativeSummaries
+      ? attrs.operativeSummaries.map((os) => new OperativeSummary(os))
+      : null
   }
 
   get startDate() {
     return this.startAt.format('DD/MM/YYYY')
+  }
+
+  get closedDate() {
+    return this.closedAt?.format('DD/MM/YYYY')
   }
 
   get description() {
@@ -130,5 +142,41 @@ export default class Week {
 
   get isEditable() {
     return !this.isClosed
+  }
+
+  get isCurrent() {
+    return dayjs().isBetween(this.startAt, this.endAt)
+  }
+
+  get isPast() {
+    return dayjs().isAfter(this.endAt)
+  }
+
+  get isFuture() {
+    return dayjs().isBefore(this.startAt)
+  }
+
+  get isVisible() {
+    return !this.isCompleted && (this.isCurrent || this.isPast)
+  }
+
+  get operativeCount() {
+    return this.operativeSummaries.length
+  }
+
+  get sentOperatives() {
+    return this.operativeSummaries.filter((os) => os.reportSentAt)
+  }
+
+  get sentOperativeCount() {
+    return this.sentOperatives.length
+  }
+
+  get hasOutstandingReports() {
+    return this.isClosed && !this.reportsSentAt
+  }
+
+  get isCompleted() {
+    return this.isClosed && this.reportsSentAt
   }
 }

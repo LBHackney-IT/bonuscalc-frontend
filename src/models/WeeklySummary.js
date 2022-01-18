@@ -25,4 +25,20 @@ export default class WeeklySummary {
   get isClosed() {
     return this.closedAt ? true : false
   }
+
+  get startDate() {
+    return this.startAt.format('D MMM')
+  }
+
+  get next() {
+    return this.startAt.add(1, 'week')
+  }
+
+  get endAt() {
+    return this.next.subtract(1, 'millisecond')
+  }
+
+  get endDate() {
+    return this.endAt.format('D MMM')
+  }
 }

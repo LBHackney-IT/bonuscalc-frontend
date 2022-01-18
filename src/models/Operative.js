@@ -12,6 +12,7 @@ export default class Operative {
     this.fixedBand = attrs.fixedBand
     this.trade = new Trade(attrs.trade)
     this.isArchived = attrs.isArchived
+    this.emailAddress = attrs.emailAddress
   }
 
   payBand(payAtBand) {

@@ -5,7 +5,7 @@ const OperativeSummary = () => {
   const { operative } = useContext(PageContext)
 
   return (
-    <section className="section">
+    <section>
       <h1 className="lbh-heading-h2">
         {operative.name}
         {operative.isArchived && (

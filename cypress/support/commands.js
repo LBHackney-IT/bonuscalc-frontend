@@ -26,8 +26,18 @@
 
 import 'cypress-audit/commands'
 
-Cypress.Commands.add('login', () => {
-  const GSSO_TEST_KEY = Cypress.env('GSSO_TEST_KEY')
+Cypress.Commands.add('login', (user) => {
+  const gssoTestKey = (user) => {
+    if (user == 'a.week_manager') {
+      return Cypress.env('GSSO_WEEK_MANAGER_TEST_KEY')
+    } else if (user == 'an.operative_manager') {
+      return Cypress.env('GSSO_OPERATIVE_MANAGER_TEST_KEY')
+    } else {
+      return Cypress.env('GSSO_TEST_KEY')
+    }
+  }
+
+  const GSSO_TEST_KEY = gssoTestKey(user)
   const GSSO_TOKEN_NAME = Cypress.env('GSSO_TOKEN_NAME')
 
   cy.getCookies().should('be.empty')

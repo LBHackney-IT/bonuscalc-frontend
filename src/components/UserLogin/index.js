@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 const UserLogin = ({ gssoUrl, submitText }) => {
   return (
     <>
-      <section className="section">
+      <section>
         <h1 className="lbh-heading-h1">Sign in</h1>
         <a
           href={gssoUrl}

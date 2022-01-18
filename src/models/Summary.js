@@ -54,6 +54,10 @@ export default class Summary {
     return this.weeklySummaries.filter((ws) => ws.isClosed)
   }
 
+  get lastClosedWeeklySummary() {
+    return this.closedWeeklySummaries[this.closedWeeklySummaries.length - 1]
+  }
+
   get hasClosedWeeklySummaries() {
     return this.closedWeeklySummaries.length > 0
   }
