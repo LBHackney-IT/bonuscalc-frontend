@@ -109,6 +109,10 @@
         @extend .lbh-link;
         @extend .lbh-link--no-visited-state;
       }
+
+      abbr {
+        text-decoration: none;
+      }
     }
   }
 
