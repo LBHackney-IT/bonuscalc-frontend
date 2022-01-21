@@ -66,7 +66,7 @@ BonusCalcApp.getInitialProps = async ({ ctx, Component: pageComponent }) => {
 
   configureScope((scope) => {
     scope.addEventProcessor((event) => {
-      if (event.request.cookies[GSSO_TOKEN_NAME]) {
+      if (event.request?.cookies[GSSO_TOKEN_NAME]) {
         event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
       }
 
