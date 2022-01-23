@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import ButtonGroup from '@/components/ButtonGroup'
+import ButtonLink from '@/components/ButtonLink'
 import { useState, useRef } from 'react'
 import { SearchIcon, CrossIcon } from '@/components/Icons'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
-import { Scheme, Week } from '@/models'
+import { BonusPeriod, Scheme, Week } from '@/models'
 import { numberWithPrecision } from '@/utils/number'
 import { smvh, bandForValue } from '@/utils/scheme'
 import { escapeRegExp, transliterate } from '@/utils/string'
@@ -174,20 +176,34 @@ const Operatives = ({ week, operatives }) => {
   )
 }
 
-const AllOperativesList = ({ week, schemes }) => {
+const AllOperativesList = ({ period, week, schemes }) => {
   week.operativeSummaries.forEach((os) => {
     os.scheme = schemes[os.schemeId]
   })
+
+  const firstOpenWeek = period.weeks.find((week) => week.isEditable)
+  const showCloseWeek = week.id == firstOpenWeek.id
+  const baseUrl = `/manage/weeks/${week.id}/close`
+  const backUrl = encodeURIComponent(`/manage/weeks/${week.id}/operatives`)
 
   return (
     <section className="bc-all-operatives">
       <Header week={week} />
       <Search week={week} />
+
+      {showCloseWeek && (
+        <ButtonGroup>
+          <ButtonLink href={`${baseUrl}?backUrl=${backUrl}`}>
+            Close week
+          </ButtonLink>
+        </ButtonGroup>
+      )}
     </section>
   )
 }
 
 AllOperativesList.propTypes = {
+  period: PropTypes.instanceOf(BonusPeriod),
   week: PropTypes.instanceOf(Week).isRequired,
   schemes: PropTypes.objectOf(PropTypes.instanceOf(Scheme)).isRequired,
 }

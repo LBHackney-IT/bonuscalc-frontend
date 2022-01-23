@@ -2,7 +2,7 @@ import BackButton from '@/components/BackButton'
 import NotFound from '@/components/NotFound'
 import Spinner from '@/components/Spinner'
 import AllOperativesList from '@/components/AllOperativesList'
-import { useSchemes, useWeek } from '@/utils/apiClient'
+import { useSchemes, useWeek, useBonusPeriods } from '@/utils/apiClient'
 import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
 const AllOperativesPage = ({ query }) => {
@@ -17,6 +17,12 @@ const AllOperativesPage = ({ query }) => {
     isLoading: isSchemesLoading,
     isError: isSchemesError,
   } = useSchemes()
+
+  const {
+    bonusPeriods,
+    isLoading: isBonusPeriodsLoading,
+    isError: isBonusPeriodsError,
+  } = useBonusPeriods()
 
   if (isWeekLoading) return <Spinner />
   if (isWeekError || !week)
@@ -34,10 +40,16 @@ const AllOperativesPage = ({ query }) => {
       </NotFound>
     )
 
+  if (isBonusPeriodsLoading) return <Spinner />
+  if (isBonusPeriodsError || !bonusPeriods)
+    return <NotFound>Couldn’t find any current bonus periods.</NotFound>
+
+  const period = bonusPeriods.find((p) => p.id == week.bonusPeriod.id)
+
   return (
     <>
       <BackButton href="/manage/weeks" />
-      <AllOperativesList week={week} schemes={schemes} />
+      <AllOperativesList period={period} week={week} schemes={schemes} />
     </>
   )
 }
