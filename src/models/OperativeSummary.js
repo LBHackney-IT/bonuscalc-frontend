@@ -1,4 +1,5 @@
 import Trade from './Trade'
+import { bandForValue } from '@/utils/scheme'
 import { transliterate } from '@/utils/string'
 
 export default class OperativeSummary {
@@ -21,8 +22,24 @@ export default class OperativeSummary {
     return `${this.name} (${this.id})`
   }
 
+  get tradeCode() {
+    return this.trade.id
+  }
+
   get tradeDescription() {
     return `${this.trade.description} (${this.trade.id})`
+  }
+
+  get payBand() {
+    return this.payBandFor(this.totalValue, this.utilisation)
+  }
+
+  get projectedPayBand() {
+    return this.payBandFor(this.projectedValue, this.averageUtilisation)
+  }
+
+  payBandFor(value, utilisation) {
+    return bandForValue(this.scheme.payBands, value, utilisation)
   }
 
   matches(pattern) {
