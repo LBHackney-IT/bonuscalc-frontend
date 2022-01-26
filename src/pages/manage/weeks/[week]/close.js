@@ -14,7 +14,7 @@ const CloseWeekPage = ({ query }) => {
 
   return (
     <>
-      <BackButton href="/manage/weeks" />
+      <BackButton href={query.backUrl || '/manage/weeks'} />
       <CloseWeek week={week} />
     </>
   )

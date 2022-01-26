@@ -10,6 +10,12 @@ import { setTag, captureException } from '@sentry/nextjs'
 
 const { NOTIFY_TEMPLATE_ID, NOTIFY_API_KEY } = process.env
 
+const BAD_REQUEST_ERROR = {
+  type: 'https://tools.ietf.org/html/rfc7231#section-6.5.1',
+  title: 'Bad Request',
+  status: StatusCodes.BAD_REQUEST,
+}
+
 const NOT_FOUND_ERROR = {
   type: 'https://tools.ietf.org/html/rfc7231#section-6.5.4',
   title: 'Not Found',
@@ -55,14 +61,19 @@ export default authoriseAPIRequest(async (req, res) => {
       const { payrollNumber, date } = req.query
 
       if (!prnRegex.test(payrollNumber)) {
-        throw new Error('Invalid payroll number')
+        return res.status(StatusCodes.BAD_REQUEST).json(BAD_REQUEST_ERROR)
       }
 
       if (!dateRegex.test(date)) {
-        throw new Error('Invalid bonus period')
+        return res.status(StatusCodes.BAD_REQUEST).json(BAD_REQUEST_ERROR)
       }
 
       const operative = await fetchOperative(payrollNumber)
+
+      if (operative.isArchived || !operative.emailAddress) {
+        return res.status(StatusCodes.NO_CONTENT).json({})
+      }
+
       const summary = await fetchSummary(payrollNumber, date)
       const { bonusPeriod, closedWeeklySummaries } = summary
 

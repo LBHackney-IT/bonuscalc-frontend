@@ -2,6 +2,7 @@ import '@/styles/all.scss'
 import App from 'next/app'
 import Layout from '@/components/Layout'
 import AccessDenied from '@/components/AccessDenied'
+import { StrictMode } from 'react'
 import { configureScope, setUser } from '@sentry/nextjs'
 
 import {
@@ -30,7 +31,7 @@ class BonusCalcApp extends App {
     }
 
     return (
-      <>
+      <StrictMode>
         <UserContext.Provider value={{ user: this.props.userDetails }}>
           <Layout
             serviceName="DLO Bonus Scheme"
@@ -43,7 +44,7 @@ class BonusCalcApp extends App {
             />
           </Layout>
         </UserContext.Provider>
-      </>
+      </StrictMode>
     )
   }
 }
@@ -66,7 +67,7 @@ BonusCalcApp.getInitialProps = async ({ ctx, Component: pageComponent }) => {
 
   configureScope((scope) => {
     scope.addEventProcessor((event) => {
-      if (event.request.cookies[GSSO_TOKEN_NAME]) {
+      if (event.request?.cookies[GSSO_TOKEN_NAME]) {
         event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
       }
 
