@@ -1,0 +1,168 @@
+{
+  "id": "123456/2021-08-02",
+  "bonusPeriod": {
+    "id": "2021-08-02",
+    "startAt": "2021-08-01T23:00:00Z",
+    "year": 2021,
+    "number": 3,
+    "closedAt": null
+  },
+  "weeklySummaries": [
+    {
+      "number": 1,
+      "startAt": "2021-08-01T23:00:00Z",
+      "closedAt": "2021-08-13T16:00:00Z",
+      "productiveValue": 2620.2,
+      "nonProductiveDuration": 14.25,
+      "nonProductiveValue": 1453.8,
+      "totalValue": 4074.0,
+      "utilisation": 1,
+      "projectedValue": 4074.0,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 2,
+      "startAt": "2021-08-08T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 739.8,
+      "utilisation": 1,
+      "projectedValue": 2406.9,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 3,
+      "startAt": "2021-08-15T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 1960.2,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 2700.0,
+      "utilisation": 1,
+      "projectedValue": 2504.6,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 4,
+      "startAt": "2021-08-22T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 739.8,
+      "utilisation": 1,
+      "projectedValue": 2063.4,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 5,
+      "startAt": "2021-08-29T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 3289.8,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 4029.6,
+      "utilisation": 1,
+      "projectedValue": 2456.64,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 6,
+      "startAt": "2021-09-05T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 6840.0,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 7579.8,
+      "utilisation": 1,
+      "projectedValue": 3310.5,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 7,
+      "startAt": "2021-09-12T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 397.2,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 1137.0,
+      "utilisation": 1,
+      "projectedValue": 3000.0,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 8,
+      "startAt": "2021-09-19T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 3265.8,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 4005.6,
+      "utilisation": 1,
+      "projectedValue": 3125.7,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 9,
+      "startAt": "2021-09-26T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 739.8,
+      "utilisation": 1,
+      "projectedValue": 2860.6,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 10,
+      "startAt": "2021-10-03T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 7.25,
+      "nonProductiveValue": 739.8,
+      "totalValue": 739.8,
+      "utilisation": 1,
+      "projectedValue": 2648.52,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 11,
+      "startAt": "2021-10-10T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 14.5,
+      "nonProductiveValue": 1479.0,
+      "totalValue": 1479.0,
+      "utilisation": 1,
+      "projectedValue": 2542.2,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 12,
+      "startAt": "2021-10-17T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 36.0,
+      "nonProductiveValue": 3672.0,
+      "totalValue": 3672.0,
+      "utilisation": 1,
+      "projectedValue": 2636.35,
+      "averageUtilisation": 1
+    },
+    {
+      "number": 13,
+      "startAt": "2021-10-24T23:00:00Z",
+      "closedAt": null,
+      "productiveValue": 5626.2,
+      "nonProductiveDuration": 28.75,
+      "nonProductiveValue": 2832.6,
+      "totalValue": 8458.8,
+      "utilisation": 1,
+      "projectedValue": 3084.23,
+      "averageUtilisation": 1
+    }
+  ]
+}

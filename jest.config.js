@@ -22,8 +22,11 @@ module.exports = {
   moduleNameMapper: {
     '^.+\\.(css|scss)$': '<rootDir>/src/styles/__mocks__/styleMock.js',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
+    '^@/fixtures/(.*)$': '<rootDir>/tests/fixtures/$1',
     '^@/models': '<rootDir>/src/models/index.js',
     '^@/models/(.*)$': '<rootDir>/src/models/$1',
+    '^@/reports/(.*)$': '<rootDir>/src/pages/api/reports/$1',
+    '^@/root/(.*)$': '<rootDir>/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@/utils/(.*)$': '<rootDir>/src/utils/$1',
   },

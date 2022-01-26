@@ -1,0 +1,46 @@
+{
+  "id": "123456/2021-08-02",
+  "utilisation": 1,
+  "week": {
+    "id": "2021-08-02",
+    "bonusPeriod": {
+      "id": "2021-08-02",
+      "startAt": "2021-08-01T23:00:00Z",
+      "year": 2021,
+      "number": 3,
+      "closedAt": null
+    },
+    "startAt": "2021-08-01T23:00:00Z",
+    "number": 1,
+    "closedAt": "2021-08-13T16:00:00Z"
+  },
+  "payElements": [
+    {
+      "id": 1,
+      "payElementType": {
+        "id": 102,
+        "description": "Annual Leave",
+        "payAtBand": true,
+        "paid": true,
+        "nonProductive": true,
+        "productive": false,
+        "adjustment": false,
+        "outOfHours": false,
+        "overtime": false,
+        "selectable": true
+      },
+      "monday": 7.25,
+      "tuesday": 7.25,
+      "wednesday": 7.25,
+      "thursday": 7.25,
+      "friday": 7,
+      "saturday": 0,
+      "sunday": 0,
+      "workOrder": null,
+      "address": null,
+      "comment": null,
+      "duration": 36,
+      "value": 3564
+    }
+  ]
+}
