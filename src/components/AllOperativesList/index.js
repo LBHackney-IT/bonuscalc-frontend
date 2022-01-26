@@ -1,11 +1,15 @@
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import ButtonGroup from '@/components/ButtonGroup'
+import ButtonLink from '@/components/ButtonLink'
 import { useState, useRef } from 'react'
 import { SearchIcon, CrossIcon } from '@/components/Icons'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
-import { Scheme, Week } from '@/models'
+import { BonusPeriod, Scheme, Week } from '@/models'
 import { numberWithPrecision } from '@/utils/number'
-import { smvh, bandForValue } from '@/utils/scheme'
+import { smvh } from '@/utils/scheme'
+import { compareStrings } from '@/utils/string'
 import { escapeRegExp, transliterate } from '@/utils/string'
 
 const Header = ({ week }) => {
@@ -76,34 +80,83 @@ const Operatives = ({ week, operatives }) => {
   const productiveUrl = `timesheets/${week}/productive?backUrl=${backUrl}`
   const nonProductiveUrl = `timesheets/${week}/non-productive?backUrl=${backUrl}`
 
+  const [sortBy, setSortBy] = useState('id')
+  const [sortOrder, setSortOrder] = useState('ASC')
+
+  const sortOn = (property) => {
+    return () => {
+      if (sortBy == property) {
+        if (sortOrder == 'ASC') {
+          setSortOrder('DESC')
+        } else {
+          setSortOrder('ASC')
+        }
+      } else {
+        setSortBy(property)
+      }
+    }
+  }
+
+  const sortClass = (property) => {
+    return cx(
+      sortBy == property ? 'bc-sort' : null,
+      sortBy == property && sortOrder == 'DESC' ? 'bc-sort-desc' : null
+    )
+  }
+
+  const buttonProps = (property) => {
+    return {
+      onClick: sortOn(property),
+      className: sortClass(property),
+    }
+  }
+
+  if (sortOrder == 'ASC') {
+    operatives.sort((a, b) => {
+      return compareStrings(a[sortBy], b[sortBy])
+    })
+  } else {
+    operatives.sort((a, b) => {
+      return compareStrings(b[sortBy], a[sortBy])
+    })
+  }
+
   return (
     <Table className="bc-all-operatives__list">
       <THead>
         <TR>
-          <TH scope="col">{'Operative\u00A0name'}</TH>
-          <TH scope="col" align="centre">
-            {'Payroll\u00A0no.'}
+          <TH scope="col">
+            <button {...buttonProps('name')}>{'Operative\u00A0name'}</button>
           </TH>
           <TH scope="col" align="centre">
-            Trade
+            <button {...buttonProps('id')}>{'Payroll\u00A0no.'}</button>
+          </TH>
+          <TH scope="col" align="centre">
+            <button {...buttonProps('tradeCode')}>Trade</button>
           </TH>
           <TH scope="col" numeric={true}>
-            {'SMVh\u00A0(P)'}
+            <button {...buttonProps('productiveValue')}>
+              {'SMVh\u00A0(P)'}
+            </button>
           </TH>
           <TH scope="col" numeric={true}>
-            {'Hours\u00A0(NP)'}
+            <button {...buttonProps('nonProductiveDuration')}>
+              {'Hours\u00A0(NP)'}
+            </button>
           </TH>
           <TH scope="col" numeric={true}>
-            {'SMVh\u00A0(NP)'}
+            <button {...buttonProps('nonProductiveValue')}>
+              {'SMVh\u00A0(NP)'}
+            </button>
           </TH>
           <TH scope="col" numeric={true}>
-            {'Total\u00A0SMVh'}
+            <button {...buttonProps('totalValue')}>{'Total\u00A0SMVh'}</button>
           </TH>
           <TH scope="col" align="centre">
             <div className="bc-summary-payband">
-              <span>Band</span>
+              <button {...buttonProps('payBand')}>Band</button>
               <span> </span>
-              <span>Projected</span>
+              <button {...buttonProps('projectedPayBand')}>Projected</button>
             </div>
           </TH>
         </TR>
@@ -145,21 +198,9 @@ const Operatives = ({ week, operatives }) => {
               </TD>
               <TD align="centre">
                 <div className="bc-summary-payband">
-                  <span>
-                    {bandForValue(
-                      o.scheme.payBands,
-                      o.totalValue,
-                      o.utilisation
-                    )}
-                  </span>
+                  <span>{o.payBand}</span>
                   <span> </span>
-                  <span>
-                    {bandForValue(
-                      o.scheme.payBands,
-                      o.projectedValue,
-                      o.averageUtilisation
-                    )}
-                  </span>
+                  <span>{o.projectedPayBand}</span>
                 </div>
               </TD>
             </TR>
@@ -174,20 +215,34 @@ const Operatives = ({ week, operatives }) => {
   )
 }
 
-const AllOperativesList = ({ week, schemes }) => {
+const AllOperativesList = ({ period, week, schemes }) => {
   week.operativeSummaries.forEach((os) => {
     os.scheme = schemes[os.schemeId]
   })
+
+  const firstOpenWeek = period.weeks.find((week) => week.isEditable)
+  const showCloseWeek = week.id == firstOpenWeek.id
+  const baseUrl = `/manage/weeks/${week.id}/close`
+  const backUrl = encodeURIComponent(`/manage/weeks/${week.id}/operatives`)
 
   return (
     <section className="bc-all-operatives">
       <Header week={week} />
       <Search week={week} />
+
+      {showCloseWeek && (
+        <ButtonGroup>
+          <ButtonLink href={`${baseUrl}?backUrl=${backUrl}`}>
+            Close week
+          </ButtonLink>
+        </ButtonGroup>
+      )}
     </section>
   )
 }
 
 AllOperativesList.propTypes = {
+  period: PropTypes.instanceOf(BonusPeriod),
   week: PropTypes.instanceOf(Week).isRequired,
   schemes: PropTypes.objectOf(PropTypes.instanceOf(Scheme)).isRequired,
 }
