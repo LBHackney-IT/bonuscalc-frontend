@@ -92,7 +92,7 @@ jobs:
             export NEXT_PUBLIC_SENTRY_ENVIRONMENT=development
             export NEXT_PUBLIC_SENTRY_RELEASE=$CIRCLE_SHA1
             export NEXT_PUBLIC_SENTRY_DEBUG=false
-            yarn build && yarn --production=true && npm i --prefix=$HOME/.local -g serverless && sls deploy -s development
+            yarn build && yarn --production=true && npm i --prefix=$HOME/.local -g serverless@"<3.0.0" && sls deploy -s development
 
   build-deploy-staging:
     executor: aws-cli/default
@@ -116,7 +116,7 @@ jobs:
             export NEXT_PUBLIC_SENTRY_ENVIRONMENT=staging
             export NEXT_PUBLIC_SENTRY_RELEASE=$CIRCLE_SHA1
             export NEXT_PUBLIC_SENTRY_DEBUG=false
-            yarn build && yarn --production=true && npm i --prefix=$HOME/.local -g serverless && sls deploy -s staging
+            yarn build && yarn --production=true && npm i --prefix=$HOME/.local -g serverless@"<3.0.0" && sls deploy -s staging
 
   build-deploy-production:
     executor: aws-cli/default
@@ -140,7 +140,7 @@ jobs:
             export NEXT_PUBLIC_SENTRY_ENVIRONMENT=production
             export NEXT_PUBLIC_SENTRY_RELEASE=$CIRCLE_SHA1
             export NEXT_PUBLIC_SENTRY_DEBUG=false
-            yarn build && yarn --production=true && npm i --prefix=$HOME/.local -g serverless && sls deploy -s production
+            yarn build && yarn --production=true && npm i --prefix=$HOME/.local -g serverless@"<3.0.0" && sls deploy -s production
 
   assume-role-development:
     executor: docker-python
