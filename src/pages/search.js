@@ -1,11 +1,11 @@
-import OperativeSearch from '@/components/OperativeSearch'
+import CombinedSearch from '@/components/CombinedSearch'
 import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
-const SearchPage = ({ query }) => {
+const SearchPage = () => {
   return (
     <>
-      <section>
-        <OperativeSearch query={query} />
+      <section className="govuk-!-margin-bottom-9">
+        <CombinedSearch />
       </section>
     </>
   )

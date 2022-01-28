@@ -9,6 +9,7 @@ import Timesheet from './Timesheet'
 import Trade from './Trade'
 import Week from './Week'
 import WeeklySummary from './WeeklySummary'
+import WorkElement from './WorkElement'
 
 export {
   BonusPeriod,
@@ -22,4 +23,5 @@ export {
   Trade,
   Week,
   WeeklySummary,
+  WorkElement,
 }

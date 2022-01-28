@@ -1,0 +1,16 @@
+.bc-search {
+  th,
+  td {
+    @include lbh-rem(font-size, 16);
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  &__work-elements {
+    tbody {
+      td:nth-child(4) {
+        white-space: normal;
+      }
+    }
+  }
+}
