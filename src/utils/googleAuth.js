@@ -2,7 +2,7 @@ import cookie from 'cookie'
 import jsonwebtoken from 'jsonwebtoken'
 import { buildUser } from './user'
 
-const { GSSO_TOKEN_NAME } = process.env
+const { GSSO_TOKEN_NAME, GSSO_DOMAIN_NAME } = process.env
 
 export const AUTH_WHITELIST = ['/login', '/access-denied']
 
@@ -32,7 +32,7 @@ export const deleteSessions = (res, options = { additionalCookies: {} }) => {
 
   const googleAuthCookie = {
     [GSSO_TOKEN_NAME]: {
-      domain: '.hackney.gov.uk',
+      domain: GSSO_DOMAIN_NAME,
       path: '/',
     },
   }

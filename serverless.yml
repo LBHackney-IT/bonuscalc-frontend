@@ -50,6 +50,7 @@ functions:
       BINARY_CONTENT_TYPES: application/pdf
       GSSO_URL: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/gsso-url}
       GSSO_TOKEN_NAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/gsso-token-name}
+      GSSO_DOMAIN_NAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/gsso-domain-name}
       HACKNEY_JWT_SECRET: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/hackney-jwt-secret}
       OPERATIVE_MANAGERS_GOOGLE_GROUPNAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/operative-managers-group}
       WEEK_MANAGERS_GOOGLE_GROUPNAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/week-managers-group}

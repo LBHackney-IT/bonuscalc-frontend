@@ -5,6 +5,7 @@ import { createRequest, createResponse } from 'node-mocks-http'
 const {
   HACKNEY_JWT_SECRET,
   GSSO_TOKEN_NAME,
+  GSSO_DOMAIN_NAME,
   OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
   WEEK_MANAGERS_GOOGLE_GROUPNAME,
 } = process.env
@@ -58,7 +59,7 @@ describe('deleteSessions', () => {
       })
 
       expect(res.getHeaders()['set-cookie']).toContain(
-        `${GSSO_TOKEN_NAME}=null; Max-Age=-1; Domain=.hackney.gov.uk; Path=/`
+        `${GSSO_TOKEN_NAME}=null; Max-Age=-1; Domain=${GSSO_DOMAIN_NAME}; Path=/`
       )
 
       expect(res.getHeaders()['set-cookie']).toContain(

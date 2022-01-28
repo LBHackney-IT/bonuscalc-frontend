@@ -59,6 +59,8 @@ describe('Closing a week', () => {
           })
         })
       })
+
+      cy.audit()
     })
   })
 
@@ -220,6 +222,8 @@ describe('Closing a week', () => {
       })
 
       cy.get('.lbh-page-announcement').should('not.exist')
+
+      cy.audit()
     })
   })
 })
