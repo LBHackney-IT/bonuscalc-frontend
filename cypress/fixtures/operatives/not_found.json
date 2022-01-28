@@ -3,5 +3,5 @@
   "title": "Not Found",
   "status": 404,
   "detail": "The requested payroll number was not found",
-  "instance": "/api/v2/operatives/123456"
+  "instance": "/api/v1/operatives/123456"
 }
