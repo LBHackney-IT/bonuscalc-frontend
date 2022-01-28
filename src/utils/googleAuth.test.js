@@ -58,7 +58,7 @@ describe('deleteSessions', () => {
       })
 
       expect(res.getHeaders()['set-cookie']).toContain(
-        `${GSSO_TOKEN_NAME}=null; Max-Age=-1; Domain=.hackney.gov.uk; Path=/`
+        `${GSSO_TOKEN_NAME}=null; Max-Age=-1; Domain=localhost; Path=/`
       )
 
       expect(res.getHeaders()['set-cookie']).toContain(
