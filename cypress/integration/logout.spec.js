@@ -5,7 +5,7 @@ describe('Signing out', () => {
     cy.login()
 
     cy.visit('/search')
-    cy.contains('h1', 'Find operative')
+    cy.contains('h1', 'Find operatives or work orders')
   })
 
   it('Redirects to the login page', () => {
