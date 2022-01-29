@@ -1,7 +1,0 @@
-{
-  "type": "https://tools.ietf.org/html/rfc7231#section-6.6.1",
-  "title": "Internal Server Error",
-  "status": 500,
-  "detail": "An unexpected error occurred",
-  "instance": "/api/v1/operatives?query=123456"
-}

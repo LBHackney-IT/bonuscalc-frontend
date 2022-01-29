@@ -69,17 +69,5 @@ describe('Home page', () => {
 
       cy.audit()
     })
-
-    it('Redirects to sign in page once logout is clicked and the cookies are cleared', () => {
-      cy.logout()
-      cy.visit('/')
-
-      cy.get('.lbh-heading-h1').contains('Sign in')
-      cy.get('.lbh-body').contains(
-        'Please sign in with your Hackney email account.'
-      )
-
-      cy.audit()
-    })
   })
 })
