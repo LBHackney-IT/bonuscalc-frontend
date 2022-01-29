@@ -9,7 +9,6 @@ import {
   Scheme,
   Summary,
   Week,
-  WorkElement,
 } from '@/models'
 
 const client = axios.create({ baseURL: '/api/v1' })
@@ -210,34 +209,6 @@ export const saveWeek = async (week, data) => {
     mutate(url)
 
     return res.status == StatusCodes.OK
-  } catch (error) {
-    return false
-  }
-}
-
-export const findOperatives = async (query) => {
-  try {
-    const res = await client.get('/operatives', { params: { query } })
-
-    if (res.status == StatusCodes.OK) {
-      return arrayMap(Operative, res.data)
-    } else {
-      return false
-    }
-  } catch (error) {
-    return false
-  }
-}
-
-export const findWorkElements = async (query) => {
-  try {
-    const res = await client.get('/work/elements', { params: { query } })
-
-    if (res.status == StatusCodes.OK) {
-      return arrayMap(WorkElement, res.data)
-    } else {
-      return false
-    }
   } catch (error) {
     return false
   }
