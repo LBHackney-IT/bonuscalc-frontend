@@ -123,9 +123,9 @@ custom:
     staging: dlo-bonus-scheme-staging.hackney.gov.uk
     production: dlo-bonus-scheme.hackney.gov.uk
   certificate-arn:
-    development: arn:aws:acm:us-east-1:364864573329:certificate/d903d9e2-c3da-482b-8768-916ec09e461f
-    staging: arn:aws:acm:us-east-1:087586271961:certificate/baffa134-abb5-4b71-b84f-013e9dd2d044
-    production: arn:aws:acm:us-east-1:282997303675:certificate/a43b1303-83ff-496e-b7a2-a75fa3ebfe87
+    development: arn:aws:acm:us-east-1:364864573329:certificate/b2ac20b8-1b03-490e-b62d-f5ab9d6ed7e4
+    staging: arn:aws:acm:us-east-1:087586271961:certificate/e2dbb992-e8dc-454d-8fbe-bf03e61a2b04
+    production: arn:aws:acm:us-east-1:282997303675:certificate/615d5f88-4ee6-4500-a112-bf16ad1d8a6a
   securityGroups:
     development:
       - sg-0a8a71b913edbb0ed
