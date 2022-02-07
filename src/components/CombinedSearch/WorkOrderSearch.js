@@ -96,7 +96,7 @@ const WorkOrderSearch = () => {
                       Payroll no.
                     </TH>
                     <TH scope="col" align="centre">
-                      Reference
+                      Work order
                     </TH>
                     <TH scope="col">Property</TH>
                     <TH scope="col" align="centre">
