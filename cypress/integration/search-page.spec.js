@@ -208,7 +208,7 @@ describe('Search page', () => {
           cy.get('thead > tr:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Operative name')
             cy.get(':nth-child(2)').contains('Payroll no.')
-            cy.get(':nth-child(3)').contains('Reference')
+            cy.get(':nth-child(3)').contains('Work order')
             cy.get(':nth-child(4)').contains('Property')
             cy.get(':nth-child(5)').contains('Close date')
             cy.get(':nth-child(6)').contains('SMVh')

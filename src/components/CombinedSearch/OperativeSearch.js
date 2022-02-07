@@ -46,7 +46,7 @@ const OperativeSearch = () => {
     <form onSubmit={handleSearch}>
       <div className="govuk-form-group lbh-form-group">
         <label className="govuk-label lbh-label" htmlFor="operativeSearch">
-          Search by payroll number or operative name
+          Search by payroll number, operative name or trade code
         </label>
         <input
           className="govuk-input lbh-input govuk-input--width-20"
