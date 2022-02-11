@@ -221,7 +221,7 @@ const AllOperativesList = ({ period, week, schemes }) => {
   })
 
   const firstOpenWeek = period.weeks.find((week) => week.isEditable)
-  const showCloseWeek = week.id == firstOpenWeek.id
+  const showCloseWeek = week.id == firstOpenWeek?.id
   const baseUrl = `/manage/weeks/${week.id}/close`
   const backUrl = encodeURIComponent(`/manage/weeks/${week.id}/operatives`)
 
