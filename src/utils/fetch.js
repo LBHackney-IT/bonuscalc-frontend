@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { StatusCodes } from 'http-status-codes'
 import { Operative, Summary, Timesheet } from '@/models'
+import { OutOfHoursSummary, OvertimeSummary } from '@/models'
 import { operativeUrl, summaryUrl, timesheetUrl } from '@/utils/apiClient'
 
 const { BONUSCALC_SERVICE_API_URL, BONUSCALC_SERVICE_API_KEY } = process.env
@@ -12,6 +13,16 @@ const client = axios.create({
     'content-type': 'application/json',
   },
 })
+
+const outOfHoursSummariesUrl = (date) => {
+  return `/weeks/${date}/out-of-hours`
+}
+
+const overtimeSummariesUrl = (date) => {
+  return `/weeks/${date}/overtime`
+}
+
+const arrayMap = (klass, items) => items.map((item) => new klass(item))
 
 export const prnRegex = new RegExp('^[0-9]{6}$')
 export const dateRegex = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
@@ -43,5 +54,25 @@ export const fetchTimesheet = async (payrollNumber, date) => {
     return new Timesheet(response.data)
   } else {
     throw new Error(`Unable to fetch timesheet ${payrollNumber}/${date}`)
+  }
+}
+
+export const fetchOutOfHoursSummaries = async (date) => {
+  const response = await client.get(outOfHoursSummariesUrl(date))
+
+  if (response.status == StatusCodes.OK) {
+    return arrayMap(OutOfHoursSummary, response.data)
+  } else {
+    throw new Error(`Unable to fetch out-of-hours summaries for ${date}`)
+  }
+}
+
+export const fetchOvertimeSummaries = async (date) => {
+  const response = await client.get(overtimeSummariesUrl(date))
+
+  if (response.status == StatusCodes.OK) {
+    return arrayMap(OvertimeSummary, response.data)
+  } else {
+    throw new Error(`Unable to fetch overtime summaries for ${date}`)
   }
 }
