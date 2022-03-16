@@ -1,0 +1,33 @@
+{
+  "id": "2021-10-11",
+  "bonusPeriod": {
+    "id": "2021-08-02",
+    "startAt": "2021-08-01T23:00:00Z",
+    "year": 2021,
+    "number": 3,
+    "closedAt": null
+  },
+  "startAt": "2021-10-10T23:00:00Z",
+  "number": 1,
+  "closedAt": "2021-10-20T16:00:00Z",
+  "closedBy": "a.week_manager@hackney.gov.uk",
+  "reportsSentAt": null,
+  "operativeSummaries": [
+    {
+      "id": "123456",
+      "name": "Alex Cable",
+      "trade": {
+        "id": "EL",
+        "description": "Electrician"
+      },
+      "schemeId": 2,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 0,
+      "nonProductiveValue": 0,
+      "totalValue": 0,
+      "utilisation": 1,
+      "projectedValue": 0,
+      "averageUtilisation": 1
+    }
+  ]
+}

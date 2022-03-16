@@ -1,0 +1,12 @@
+[
+  {
+    "id": "123456",
+    "name": "Alex Cable",
+    "trade": {
+      "id": "EL",
+      "description": "Electrician"
+    },
+    "costCode": "H3007",
+    "totalValue": 453.6
+  }
+]

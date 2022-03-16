@@ -20,6 +20,7 @@ module.exports = {
   ],
   moduleDirectories: ['node_modules', '.'],
   moduleNameMapper: {
+    '^csv/sync': '<rootDir>/node_modules/csv/dist/cjs/sync.cjs',
     '^.+\\.(css|scss)$': '<rootDir>/src/styles/__mocks__/styleMock.js',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/fixtures/(.*)$': '<rootDir>/tests/fixtures/$1',
