@@ -86,6 +86,16 @@
 
       a {
         @include lbh-rem(font-size, 14);
+        display: block;
+        margin: 0;
+        width: 100%;
+      }
+
+      a {
+        @include lbh-rem(margin-top, 6);
+      }
+
+      nav {
         margin: 0;
         width: 100%;
       }
@@ -95,9 +105,17 @@
           width: auto;
         }
 
-        a {
-          @include lbh-rem(font-size, 16);
+        nav {
           width: auto;
+
+          a:first-child {
+            margin-top: 0;
+          }
+        }
+
+        a {
+          text-align: right;
+          width: 100%;
         }
       }
     }

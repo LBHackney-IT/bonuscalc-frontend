@@ -179,4 +179,8 @@ export default class Week {
   get isCompleted() {
     return this.isClosed && this.reportsSentAt
   }
+
+  get closedByName() {
+    return this.closedBy?.split('@')[0]
+  }
 }

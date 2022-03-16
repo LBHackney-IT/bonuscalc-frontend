@@ -27,6 +27,7 @@
     "@sentry/nextjs": "^6.16.1",
     "axios": "^0.25.0",
     "cookie": "^0.4.1",
+    "csv": "^6.0.5",
     "dayjs": "^1.10.7",
     "dotenv-flow": "^3.2.0",
     "govuk-frontend": "^3.14.0",

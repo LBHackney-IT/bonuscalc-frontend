@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "payElementType": {
+      "id": 401,
+      "description": "Overtime Job",
+      "payAtBand": true,
+      "paid": true,
+      "nonProductive": false,
+      "productive": false,
+      "adjustment": false,
+      "outOfHours": false,
+      "overtime": true,
+      "selectable": false
+    },
+    "workOrder": "12345678",
+    "address": "2 Somewhere Street",
+    "description": "Replace broken light switch",
+    "operativeId": "123456",
+    "operativeName": "Alex Cable",
+    "week": {
+      "id": "2021-10-18",
+      "bonusPeriod": {
+        "id": "2021-08-02",
+        "startAt": "2021-08-01T23:00:00Z",
+        "year": 2021,
+        "number": 3,
+        "closedAt": null
+      },
+      "startAt": "2021-10-17T23:00:00Z",
+      "number": 12,
+      "closedAt": null,
+      "closedBy": null,
+      "reportsSentAt": null
+    },
+    "value": 21.6,
+    "closedAt": "2021-10-19T10:30:00Z"
+  }
+]

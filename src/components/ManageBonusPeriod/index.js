@@ -46,7 +46,7 @@ const ClosedWeek = ({ week }) => {
         <ClosedTime week={week} />
         &nbsp;
       </span>
-      <span>by {week.closedBy}</span>
+      <span>by {week.closedByName}</span>
     </p>
   )
 }
@@ -82,6 +82,7 @@ const OperativeListItem = ({ operative, week }) => {
 }
 
 const OperativeList = ({ date }) => {
+  const { user } = useContext(UserContext)
   const { week, isLoading, isError } = useWeek(date)
   const [operatives, setOperatives] = useState(null)
   const [allOperatives, setAllOperatives] = useState(null)
@@ -125,11 +126,29 @@ const OperativeList = ({ date }) => {
       <section className="bc-open-weeks__operatives">
         <header>
           <h4>Operatives with no SMVs ({allOperatives.length})</h4>
-          <Link href={`/manage/weeks/${week.id}/operatives`}>
-            <a className="lbh-link lbh-link--no-visited-state">
-              View all operatives
-            </a>
-          </Link>
+          <nav>
+            <Link href={`/manage/weeks/${week.id}/operatives`}>
+              <a className="lbh-link lbh-link--no-visited-state">
+                View all operatives
+              </a>
+            </Link>
+            {week.isClosed && user.hasWeekManagerPermissions && (
+              <>
+                <a
+                  href={`/api/reports/overtime/${week.id}`}
+                  className="lbh-link lbh-link--no-visited-state"
+                >
+                  Download Overtime CSV file
+                </a>
+                <a
+                  href={`/api/reports/out-of-hours/${week.id}`}
+                  className="lbh-link lbh-link--no-visited-state"
+                >
+                  Download Out of hours CSV file
+                </a>
+              </>
+            )}
+          </nav>
         </header>
         {week.isEditable && operatives.length > 0 && (
           <>

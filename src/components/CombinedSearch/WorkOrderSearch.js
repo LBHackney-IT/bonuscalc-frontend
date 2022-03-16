@@ -5,8 +5,6 @@ import Spinner from '@/components/Spinner'
 import { useState, useRef } from 'react'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
 import { findWorkElements } from '@/utils/apiClient'
-import { numberWithPrecision } from '@/utils/number'
-import { smvh } from '@/utils/scheme'
 
 const WorkOrderSearch = () => {
   const repairsHubUrl = process.env.NEXT_PUBLIC_REPAIRS_HUB_URL
@@ -103,7 +101,7 @@ const WorkOrderSearch = () => {
                       Close date
                     </TH>
                     <TH scope="col" numeric={true}>
-                      SMVh
+                      Value
                     </TH>
                     <TH scope="col" align="centre">
                       Period
@@ -144,9 +142,7 @@ const WorkOrderSearch = () => {
                       </TD>
                       <TD>{workElement.address}</TD>
                       <TD align="centre">{workElement.closedDate}</TD>
-                      <TD numeric={true}>
-                        {numberWithPrecision(smvh(workElement.value), 2)}
-                      </TD>
+                      <TD numeric={true}>{workElement.formattedValue}</TD>
                       <TD align="centre">
                         <Link href={workElement.summaryUrl}>
                           <a className="lbh-link lbh-link--no-visited-state">
