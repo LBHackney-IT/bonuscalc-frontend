@@ -211,7 +211,7 @@ describe('Search page', () => {
             cy.get(':nth-child(3)').contains('Work order')
             cy.get(':nth-child(4)').contains('Property')
             cy.get(':nth-child(5)').contains('Close date')
-            cy.get(':nth-child(6)').contains('SMVh')
+            cy.get(':nth-child(6)').contains('Value')
             cy.get(':nth-child(7)').contains('Period')
             cy.get(':nth-child(8)').contains('Week')
           })
@@ -253,6 +253,162 @@ describe('Search page', () => {
                 expect(link).to.have.attr(
                   'href',
                   '/operatives/123456/timesheets/2021-10-18/productive'
+                )
+              })
+          })
+        })
+
+        cy.audit()
+      })
+    })
+
+    describe('Search for an out-of-hours work order', () => {
+      beforeEach(() => {
+        cy.visit('/search')
+
+        cy.get('#formView_workOrder').click()
+        cy.get('#workOrderSearch').clear()
+      })
+
+      it('Displays a list of work orders', () => {
+        cy.intercept(
+          { method: 'GET', path: '/api/v1/work/elements?query=12345678' },
+          { statusCode: 200, fixture: 'search/work_elements/out-of-hours.json' }
+        ).as('get_work_elements')
+
+        cy.get('#workOrderSearch').type('12345678')
+        cy.get('button').click()
+
+        cy.wait('@get_work_elements')
+        cy.contains('We found 1 matching result for: 12345678')
+
+        cy.get('table').within(() => {
+          cy.get('thead > tr:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Operative name')
+            cy.get(':nth-child(2)').contains('Payroll no.')
+            cy.get(':nth-child(3)').contains('Work order')
+            cy.get(':nth-child(4)').contains('Property')
+            cy.get(':nth-child(5)').contains('Close date')
+            cy.get(':nth-child(6)').contains('Value')
+            cy.get(':nth-child(7)').contains('Period')
+            cy.get(':nth-child(8)').contains('Week')
+          })
+
+          cy.get('tbody > tr:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)')
+              .contains('a', 'Alex Cable')
+              .should((link) => {
+                expect(link).to.have.attr('href', '/operatives/123456')
+              })
+            cy.get(':nth-child(2)')
+              .contains('a', '123456')
+              .should((link) => {
+                expect(link).to.have.attr('href', '/operatives/123456')
+              })
+            cy.get(':nth-child(3)')
+              .contains('a', '12345678')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  'https://repairs-hub.hackney.gov.uk/work-orders/12345678'
+                )
+                expect(link).to.have.attr('target', '_blank')
+              })
+            cy.get(':nth-child(4)').contains('2 Somewhere Street')
+            cy.get(':nth-child(5)').contains('19/10/2021')
+            cy.get(':nth-child(6)').contains('£20.00')
+            cy.get(':nth-child(7)')
+              .contains('a', '3')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  '/operatives/123456/summaries/2021-08-02'
+                )
+              })
+            cy.get(':nth-child(8)')
+              .contains('a', '12')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  '/operatives/123456/timesheets/2021-10-18/out-of-hours'
+                )
+              })
+          })
+        })
+
+        cy.audit()
+      })
+    })
+
+    describe('Search for an overtime work order', () => {
+      beforeEach(() => {
+        cy.visit('/search')
+
+        cy.get('#formView_workOrder').click()
+        cy.get('#workOrderSearch').clear()
+      })
+
+      it('Displays a list of work orders', () => {
+        cy.intercept(
+          { method: 'GET', path: '/api/v1/work/elements?query=12345678' },
+          { statusCode: 200, fixture: 'search/work_elements/overtime.json' }
+        ).as('get_work_elements')
+
+        cy.get('#workOrderSearch').type('12345678')
+        cy.get('button').click()
+
+        cy.wait('@get_work_elements')
+        cy.contains('We found 1 matching result for: 12345678')
+
+        cy.get('table').within(() => {
+          cy.get('thead > tr:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Operative name')
+            cy.get(':nth-child(2)').contains('Payroll no.')
+            cy.get(':nth-child(3)').contains('Work order')
+            cy.get(':nth-child(4)').contains('Property')
+            cy.get(':nth-child(5)').contains('Close date')
+            cy.get(':nth-child(6)').contains('Value')
+            cy.get(':nth-child(7)').contains('Period')
+            cy.get(':nth-child(8)').contains('Week')
+          })
+
+          cy.get('tbody > tr:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)')
+              .contains('a', 'Alex Cable')
+              .should((link) => {
+                expect(link).to.have.attr('href', '/operatives/123456')
+              })
+            cy.get(':nth-child(2)')
+              .contains('a', '123456')
+              .should((link) => {
+                expect(link).to.have.attr('href', '/operatives/123456')
+              })
+            cy.get(':nth-child(3)')
+              .contains('a', '12345678')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  'https://repairs-hub.hackney.gov.uk/work-orders/12345678'
+                )
+                expect(link).to.have.attr('target', '_blank')
+              })
+            cy.get(':nth-child(4)').contains('2 Somewhere Street')
+            cy.get(':nth-child(5)').contains('19/10/2021')
+            cy.get(':nth-child(6)').contains('£21.60')
+            cy.get(':nth-child(7)')
+              .contains('a', '3')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  '/operatives/123456/summaries/2021-08-02'
+                )
+              })
+            cy.get(':nth-child(8)')
+              .contains('a', '12')
+              .should((link) => {
+                expect(link).to.have.attr(
+                  'href',
+                  '/operatives/123456/timesheets/2021-10-18/overtime'
                 )
               })
           })

@@ -1,6 +1,8 @@
 import PayElementType from './PayElementType'
 import Week from './Week'
 import dayjs from '@/utils/date'
+import { numberWithPrecision } from '@/utils/number'
+import { smvh } from '@/utils/scheme'
 
 export default class WorkElement {
   constructor(attrs) {
@@ -44,5 +46,13 @@ export default class WorkElement {
 
   get summaryUrl() {
     return `${this.baseUrl}/summaries/${this.week.bonusPeriod.id}`
+  }
+
+  get formattedValue() {
+    if (this.isOutOfHours || this.isOvertime) {
+      return `£${numberWithPrecision(this.value, 2)}`
+    } else {
+      return numberWithPrecision(smvh(this.value), 2)
+    }
   }
 }
