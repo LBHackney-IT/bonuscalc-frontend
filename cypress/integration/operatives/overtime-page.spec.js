@@ -276,7 +276,7 @@ describe('Overtime page', () => {
             cy.get(':nth-child(7)').contains('0').should('not.exist')
             cy.get(':nth-child(8)').contains('0').should('not.exist')
             cy.get(':nth-child(9)').contains('4')
-            cy.get(':nth-child(10)').contains('£43.20')
+            cy.get(':nth-child(10)').contains('£43.96')
           })
 
           cy.get('.govuk-table__row:nth-child(2)').within(() => {
@@ -312,7 +312,7 @@ describe('Overtime page', () => {
             cy.get(':nth-child(2)').contains('2 Somewhere Street')
             cy.get(':nth-child(3)').contains('Replace broken light switch')
             cy.get(':nth-child(4)').contains('20/10/2021')
-            cy.get(':nth-child(5)').contains('£21.60')
+            cy.get(':nth-child(5)').contains('£21.98')
           })
 
           cy.get('.govuk-table__row:nth-child(2)').within(() => {
@@ -328,14 +328,14 @@ describe('Overtime page', () => {
             cy.get(':nth-child(2)').contains('1 Knowhere Road')
             cy.get(':nth-child(3)').contains('Replace fuse in plug')
             cy.get(':nth-child(4)').contains('19/10/2021')
-            cy.get(':nth-child(5)').contains('£21.60')
+            cy.get(':nth-child(5)').contains('£21.98')
           })
         })
 
         cy.get('#overtime-jobs tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('£86.40')
+            cy.get(':nth-child(2)').contains('£87.92')
           })
         })
       })

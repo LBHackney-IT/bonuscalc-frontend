@@ -264,7 +264,7 @@
       "address": null,
       "comment": "Cover for André",
       "duration": 4,
-      "value": 43.2,
+      "value": 43.96,
       "readOnly": false
     },
     {
@@ -293,7 +293,7 @@
       "address": "2 Somewhere Street",
       "comment": "Replace broken light switch",
       "duration": 1,
-      "value": 21.6,
+      "value": 21.98,
       "readOnly": true
     },
     {
@@ -322,7 +322,7 @@
       "address": "1 Knowhere Road",
       "comment": "Replace fuse in plug",
       "duration": 1,
-      "value": 21.6,
+      "value": 21.98,
       "readOnly": true
     }
   ]
