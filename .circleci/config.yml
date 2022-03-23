@@ -85,7 +85,7 @@ jobs:
             export NEXT_PUBLIC_LAST_WEEK=2022-04-25
             export NEXT_PUBLIC_OVERTIME_HOURS_TYPE_ID=400
             export NEXT_PUBLIC_OVERTIME_JOB_TYPE_ID=401
-            export NEXT_PUBLIC_OVERTIME_RATE=21.60
+            export NEXT_PUBLIC_OVERTIME_RATE=21.98
             export NEXT_PUBLIC_OOH_ROTA_TYPE_ID=500
             export NEXT_PUBLIC_OOH_JOB_TYPE_ID=501
             export NEXT_PUBLIC_OOH_RATE=25.00
@@ -109,7 +109,7 @@ jobs:
             export NEXT_PUBLIC_LAST_WEEK=2022-04-25
             export NEXT_PUBLIC_OVERTIME_HOURS_TYPE_ID=400
             export NEXT_PUBLIC_OVERTIME_JOB_TYPE_ID=401
-            export NEXT_PUBLIC_OVERTIME_RATE=21.60
+            export NEXT_PUBLIC_OVERTIME_RATE=21.98
             export NEXT_PUBLIC_OOH_ROTA_TYPE_ID=500
             export NEXT_PUBLIC_OOH_JOB_TYPE_ID=501
             export NEXT_PUBLIC_OOH_RATE=25.00
@@ -133,7 +133,7 @@ jobs:
             export NEXT_PUBLIC_LAST_WEEK=2022-04-25
             export NEXT_PUBLIC_OVERTIME_HOURS_TYPE_ID=400
             export NEXT_PUBLIC_OVERTIME_JOB_TYPE_ID=401
-            export NEXT_PUBLIC_OVERTIME_RATE=21.60
+            export NEXT_PUBLIC_OVERTIME_RATE=21.98
             export NEXT_PUBLIC_OOH_ROTA_TYPE_ID=500
             export NEXT_PUBLIC_OOH_JOB_TYPE_ID=501
             export NEXT_PUBLIC_OOH_RATE=25.00
