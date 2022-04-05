@@ -52,6 +52,10 @@ export default class Week {
       : null
   }
 
+  dayOfWeek(day) {
+    return this.startAt.isoWeekday(day)
+  }
+
   get startDate() {
     return this.startAt.format('DD/MM/YYYY')
   }

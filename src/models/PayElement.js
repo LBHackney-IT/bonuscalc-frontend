@@ -96,6 +96,34 @@ export default class PayElement {
     this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
   }
 
+  valueFor(day) {
+    switch (day) {
+      case 1:
+        return this.monday
+
+      case 2:
+        return this.tuesday
+
+      case 3:
+        return this.wednesday
+
+      case 4:
+        return this.thursday
+
+      case 5:
+        return this.friday
+
+      case 6:
+        return this.saturday
+
+      case 7:
+        return this.sunday
+
+      default:
+        throw new Error(`Invalid day of the week: ${day}`)
+    }
+  }
+
   get payElementTypeId() {
     return this.payElementType.id
   }
