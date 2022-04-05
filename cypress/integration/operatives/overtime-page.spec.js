@@ -360,6 +360,15 @@ describe('Overtime page', () => {
           cy.contains('a', 'Edit overtime').should('not.exist')
         })
       })
+
+      it('Allows the weekly report to be downloaded', () => {
+        cy.get('.govuk-tabs__panel').within(() => {
+          const filename = '123456-0093-2021-3-12-overtime.pdf'
+
+          cy.contains('button', 'Download report').click()
+          cy.task('downloadExists', filename).should('equal', true)
+        })
+      })
     })
   })
 })

@@ -6,16 +6,27 @@ import ButtonGroup from '@/components/ButtonGroup'
 import ButtonLink from '@/components/ButtonLink'
 import PageContext from '@/components/PageContext'
 import Pagination from '@/components/Pagination'
+import { generateOvertimeReport } from '@/utils/reports'
 import { useContext } from 'react'
 
 const OvertimeSummary = () => {
   const {
     operative,
-    timesheet: { week },
+    timesheet,
+    timesheet: {
+      week,
+      week: { bonusPeriod },
+    },
   } = useContext(PageContext)
   const baseUrl = `/operatives/${operative.id}/timesheets/${week.id}`
 
-  const downloadReport = () => {}
+  const downloadReport = () => {
+    const pdf = generateOvertimeReport(operative, timesheet)
+
+    pdf.save(
+      `${operative.id}-0093-${bonusPeriod.year}-${bonusPeriod.number}-${week.number}-overtime.pdf`
+    )
+  }
 
   return (
     <>

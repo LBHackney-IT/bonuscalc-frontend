@@ -103,13 +103,13 @@ const drawLogo = (pdf) => {
   drawSVGPath(pdf, LOGO, [154.3, 16.3], [0.2, 0.2])
 }
 
-const drawWeeklyOperativeSummary = (pdf, operative, timesheet) => {
+const drawWeeklyOperativeSummary = (pdf, operative, timesheet, title) => {
   const { week } = timesheet
   const { bonusPeriod } = week
 
   pdf.setFont('OpenSans', 'normal', 700)
   pdf.setFontSize(24)
-  pdf.text('Bonus – Weekly Report', 15.7, 22.2)
+  pdf.text(title, 15.7, 22.2)
 
   pdf.setFontSize(18)
   pdf.text(operative.name, 17.7, 32.2)
@@ -889,6 +889,414 @@ const drawBonusSummary = (pdf, operative, summary) => {
   pdf.text('NP: Non-Productive time', originX, originY + 131.3)
 }
 
+const drawWeeklyManualOvertime = (pdf, operative, timesheet) => {
+  const originX = 17.7
+  const originY = 76.6
+  const width = 174.6
+  const lineHeight = 5.8
+
+  const { hasOvertimeHours, overtimeHours, week } = timesheet
+
+  let x, y, x1, y1, x2, y2, text
+
+  pdf.setFillColor(223)
+  pdf.rect(originX, originY, 21.3, 7.0, 'F')
+
+  pdf.setFont('OpenSans', 'normal', 700)
+  pdf.setFontSize(14)
+  pdf.text('Manual', 18.8, 81.9)
+
+  pdf.setFont('OpenSans', 'normal', 600)
+  pdf.setFontSize(9)
+
+  x = originX + 3.6
+  y = originY + 13.1
+
+  pdf.text('Week starting', x, y)
+
+  for (var day = 1; day <= 7; day++) {
+    x = originX + 32.7 + day * 13
+    y = originY + 13.1
+    pdf.text(week.dayOfWeek(day).format('ddd'), x, y, { align: 'center' })
+  }
+
+  x = originX + width - 30.0
+  y = originY + 13.1
+
+  pdf.text('Hours', x, y, { align: 'center' })
+
+  x = originX + width - 3.6
+  y = originY + 13.1
+
+  pdf.text('Value', x, y, { align: 'right' })
+
+  pdf.setLineWidth(0.3)
+
+  x1 = originX
+  y1 = originY + 14.9
+  x2 = originX + width
+  y2 = originY + 14.9
+
+  pdf.line(x1, y1, x2, y2, 'S')
+
+  pdf.setFont('OpenSans', 'normal', 400)
+  pdf.setLineWidth(0.1)
+
+  let row = 0
+  let commentOffset = 0
+
+  if (hasOvertimeHours) {
+    overtimeHours.forEach((payElement) => {
+      row = row + 1
+
+      x = originX + 3.6
+      y = originY + 13.1 + lineHeight * row
+
+      pdf.text(week.startDate, x, y)
+
+      for (var day = 1; day <= 7; day++) {
+        x = originX + 32.7 + day * 13
+        y = originY + 13.1 + lineHeight * row
+        text = numberWithPrecision(payElement.valueFor(day), 0)
+
+        if (text !== '0') {
+          pdf.text(text, x, y, { align: 'center' })
+        }
+      }
+
+      x = originX + width - 30.0
+      y = originY + 13.1 + lineHeight * row
+      text = numberWithPrecision(payElement.duration, 0)
+
+      pdf.text(text, x, y, { align: 'center' })
+
+      x = originX + width - 3.6
+      y = originY + 13.1 + lineHeight * row
+      text = numberWithPrecision(payElement.value, 2)
+
+      pdf.text(`£${text}`, x, y, { align: 'right' })
+
+      if (payElement.comment) {
+        commentOffset = -1.5
+        row = row + 1
+
+        x = originX + 3.6
+        y = originY + 13.1 + commentOffset + lineHeight * row
+        text = truncate(payElement.comment, 100, { omission: ' …' })
+
+        pdf.text(text, x, y)
+      }
+    })
+  } else {
+    row = row + 1
+
+    x = originX + 3.6
+    y = originY + 13.1 + lineHeight * row
+
+    pdf.text('There are no overtime hours for this week.', x, y)
+  }
+
+  x1 = originX
+  y1 = originY + 14.9 + commentOffset + lineHeight * row
+  x2 = originX + width
+  y2 = originY + 14.9 + commentOffset + lineHeight * row
+
+  pdf.line(x1, y1, x2, y2, 'S')
+}
+
+const drawWeeklyManualOutOfHours = (pdf, operative, timesheet) => {
+  const originX = 17.7
+  const originY = 76.6
+  const width = 174.6
+  const lineHeight = 5.8
+
+  const { hasOutOfHoursRota, outOfHoursRota, week } = timesheet
+
+  let x, y, x1, y1, x2, y2, text
+
+  pdf.setFillColor(223)
+  pdf.rect(originX, originY, 21.3, 7.0, 'F')
+
+  pdf.setFont('OpenSans', 'normal', 700)
+  pdf.setFontSize(14)
+  pdf.text('Manual', 18.8, 81.9)
+
+  pdf.setFont('OpenSans', 'normal', 600)
+  pdf.setFontSize(9)
+
+  x = originX + 3.6
+  y = originY + 13.1
+
+  pdf.text('Week starting', x, y)
+
+  for (var day = 1; day <= 7; day++) {
+    x = originX + 32.7 + day * 13
+    y = originY + 13.1
+    pdf.text(week.dayOfWeek(day).format('ddd'), x, y, { align: 'center' })
+  }
+
+  x = originX + width - 30.0
+  y = originY + 13.1
+
+  pdf.text('Days', x, y, { align: 'center' })
+
+  x = originX + width - 3.6
+  y = originY + 13.1
+
+  pdf.text('Value', x, y, { align: 'right' })
+
+  pdf.setLineWidth(0.3)
+
+  x1 = originX
+  y1 = originY + 14.9
+  x2 = originX + width
+  y2 = originY + 14.9
+
+  pdf.line(x1, y1, x2, y2, 'S')
+
+  pdf.setFont('OpenSans', 'normal', 400)
+  pdf.setLineWidth(0.1)
+
+  let row = 0
+  let commentOffset = 0
+
+  if (hasOutOfHoursRota) {
+    outOfHoursRota.forEach((payElement) => {
+      row = row + 1
+
+      x = originX + 3.6
+      y = originY + 13.1 + lineHeight * row
+
+      pdf.text(week.startDate, x, y)
+
+      for (var day = 1; day <= 7; day++) {
+        x = originX + 32.7 + day * 13
+        y = originY + 13.1 + lineHeight * row
+        text = numberWithPrecision(payElement.valueFor(day), 0)
+
+        if (text !== '0') {
+          pdf.text(text, x, y, { align: 'center' })
+        }
+      }
+
+      x = originX + width - 30.0
+      y = originY + 13.1 + lineHeight * row
+      text = numberWithPrecision(payElement.duration, 0)
+
+      pdf.text(text, x, y, { align: 'center' })
+
+      x = originX + width - 3.6
+      y = originY + 13.1 + lineHeight * row
+      text = numberWithPrecision(payElement.value, 2)
+
+      pdf.text(`£${text}`, x, y, { align: 'right' })
+
+      if (payElement.comment) {
+        commentOffset = -1.5
+        row = row + 1
+
+        x = originX + 3.6
+        y = originY + 13.1 + commentOffset + lineHeight * row
+        text = truncate(payElement.comment, 100, { omission: ' …' })
+
+        pdf.text(text, x, y)
+      }
+    })
+  } else {
+    row = row + 1
+
+    x = originX + 3.6
+    y = originY + 13.1 + lineHeight * row
+
+    pdf.text('There are no out of hours entries for this week.', x, y)
+  }
+
+  x1 = originX
+  y1 = originY + 14.9 + commentOffset + lineHeight * row
+  x2 = originX + width
+  y2 = originY + 14.9 + commentOffset + lineHeight * row
+
+  pdf.line(x1, y1, x2, y2, 'S')
+}
+
+const drawWeeklyPaidWorkOrders = (
+  pdf,
+  operative,
+  timesheet,
+  workOrders,
+  total,
+  message
+) => {
+  let originX = 17.7
+  let originY = 116.6
+  let pageBreak = 42
+  let rowOffset = 18
+  const width = 174.6
+  const lineHeight = 5.8
+
+  let x, y, x1, y1, x2, y2, text
+
+  pdf.setFillColor(223)
+  pdf.rect(originX, originY, 33.0, 7.0, 'F')
+
+  pdf.setFont('OpenSans', 'normal', 700)
+  pdf.setFontSize(14)
+  pdf.text('Work orders', originX + 1.1, originY + 5.3)
+
+  x = originX + 3.6
+  y = originY + 13.1
+
+  pdf.setFont('OpenSans', 'normal', 600)
+  pdf.setFontSize(9)
+
+  pdf.text('Reference', x, y)
+
+  x = originX + 24.1
+  y = originY + 13.1
+
+  pdf.text('Address', x, y)
+
+  x = originX + 72.2
+  y = originY + 13.1
+
+  pdf.text('Description', x, y)
+
+  x = originX + width - 3.6
+  y = originY + 13.1
+
+  pdf.text('Value', x, y, { align: 'right' })
+
+  pdf.setLineWidth(0.3)
+
+  x1 = originX
+  y1 = originY + 14.9
+  x2 = originX + width
+  y2 = originY + 14.9
+
+  pdf.line(x1, y1, x2, y2, 'S')
+
+  pdf.setFont('OpenSans', 'normal', 400)
+  pdf.setLineWidth(0.1)
+
+  let row = 0
+
+  if (workOrders.length > 0) {
+    workOrders.forEach((payElement) => {
+      row = row + 1
+
+      if (row + rowOffset > pageBreak) {
+        pdf.addPage()
+
+        originY = 14.0
+        row = 1
+        rowOffset = 0
+
+        pdf.setFont('OpenSans', 'normal', 600)
+        pdf.setFontSize(9)
+
+        x = originX + 3.6
+        y = originY + 13.1
+
+        pdf.text('Reference', x, y)
+
+        x = originX + 24.1
+        y = originY + 13.1
+
+        pdf.text('Address', x, y)
+
+        x = originX + 72.2
+        y = originY + 13.1
+
+        pdf.text('Description', x, y)
+
+        x = originX + width - 3.6
+        y = originY + 13.1
+
+        pdf.text('Value', x, y, { align: 'right' })
+
+        pdf.setLineWidth(0.3)
+
+        x1 = originX
+        y1 = originY + 14.9
+        x2 = originX + width
+        y2 = originY + 14.9
+
+        pdf.line(x1, y1, x2, y2, 'S')
+
+        pdf.setFont('OpenSans', 'normal', 400)
+        pdf.setLineWidth(0.1)
+      }
+
+      x = originX + 3.6
+      y = originY + 13.1 + lineHeight * row
+
+      pdf.text(payElement.workOrder, x, y)
+
+      if (payElement.address) {
+        x = originX + 24.1
+        y = originY + 13.1 + lineHeight * row
+        text = truncate(payElement.address, 25, { omission: ' …' })
+
+        pdf.text(text, x, y)
+      }
+
+      if (payElement.comment) {
+        x = originX + 72.2
+        y = originY + 13.1 + lineHeight * row
+        text = truncate(payElement.comment, 50, { omission: ' …' })
+
+        pdf.text(text, x, y)
+      }
+
+      x = originX + width - 3.6
+      y = originY + 13.1 + lineHeight * row
+      text = numberWithPrecision(payElement.value, 2)
+
+      pdf.text(`£${text}`, x, y, { align: 'right' })
+
+      x1 = originX
+      y1 = originY + 14.9 + lineHeight * row
+      x2 = originX + width
+      y2 = originY + 14.9 + lineHeight * row
+
+      pdf.line(x1, y1, x2, y2, 'S')
+    })
+  } else {
+    row = row + 1
+
+    x = originX + 3.6
+    y = originY + 13.1 + lineHeight * row
+
+    pdf.text(message, x, y)
+
+    x1 = originX
+    y1 = originY + 14.9 + lineHeight * row
+    x2 = originX + width
+    y2 = originY + 14.9 + lineHeight * row
+
+    pdf.line(x1, y1, x2, y2, 'S')
+
+    x = originX + width - 3.6
+    y = originY + 13.1 + lineHeight * row
+
+    pdf.text('£0.00', x, y, { align: 'right' })
+  }
+
+  row = row + 1
+
+  x = originX + width - 3.6
+  y = originY + 13.1 + lineHeight * row
+  text = numberWithPrecision(total, 2)
+
+  pdf.text(`£${text}`, x, y, { align: 'right' })
+
+  x = originX + width - 24.0
+  y = originY + 13.1 + lineHeight * row
+
+  pdf.setFont('OpenSans', 'normal', 600)
+  pdf.text('Total', x, y, { align: 'right' })
+}
+
 export const generateWeeklyReport = (operative, timesheet) => {
   const pdf = createPDF()
 
@@ -897,7 +1305,12 @@ export const generateWeeklyReport = (operative, timesheet) => {
   })
 
   withGraphicsState(pdf, () => {
-    drawWeeklyOperativeSummary(pdf, operative, timesheet)
+    drawWeeklyOperativeSummary(
+      pdf,
+      operative,
+      timesheet,
+      'Bonus – Weekly Report'
+    )
   })
 
   withGraphicsState(pdf, () => {
@@ -952,7 +1365,12 @@ export const generateCombinedReport = (operative, summary, timesheets) => {
     })
 
     withGraphicsState(pdf, () => {
-      drawWeeklyOperativeSummary(pdf, operative, timesheet)
+      drawWeeklyOperativeSummary(
+        pdf,
+        operative,
+        timesheet,
+        'Bonus – Weekly Report'
+      )
     })
 
     withGraphicsState(pdf, () => {
@@ -962,6 +1380,138 @@ export const generateCombinedReport = (operative, summary, timesheets) => {
     withGraphicsState(pdf, () => {
       drawWeeklyProductiveTime(pdf, operative, timesheet)
     })
+
+    if (timesheet.hasOutOfHoursRota || timesheet.hasOutOfHoursJobs) {
+      pdf.addPage()
+
+      withGraphicsState(pdf, () => {
+        drawLogo(pdf)
+      })
+
+      withGraphicsState(pdf, () => {
+        drawWeeklyOperativeSummary(
+          pdf,
+          operative,
+          timesheet,
+          'Bonus – Out of hours Report'
+        )
+      })
+
+      withGraphicsState(pdf, () => {
+        drawWeeklyManualOutOfHours(pdf, operative, timesheet)
+      })
+
+      withGraphicsState(pdf, () => {
+        drawWeeklyPaidWorkOrders(
+          pdf,
+          operative,
+          timesheet,
+          timesheet.outOfHoursJobs,
+          timesheet.outOfHoursTotal,
+          'There are no out of hours work orders for this week.'
+        )
+      })
+    }
+
+    if (timesheet.hasOvertimeHours || timesheet.hasOvertimeJobs) {
+      pdf.addPage()
+
+      withGraphicsState(pdf, () => {
+        drawLogo(pdf)
+      })
+
+      withGraphicsState(pdf, () => {
+        drawWeeklyOperativeSummary(
+          pdf,
+          operative,
+          timesheet,
+          'Bonus – Overtime Report'
+        )
+      })
+
+      withGraphicsState(pdf, () => {
+        drawWeeklyManualOvertime(pdf, operative, timesheet)
+      })
+
+      withGraphicsState(pdf, () => {
+        drawWeeklyPaidWorkOrders(
+          pdf,
+          operative,
+          timesheet,
+          timesheet.overtimeJobs,
+          timesheet.overtimeTotal,
+          'There are no overtime work orders for this week.'
+        )
+      })
+    }
+  })
+
+  return pdf
+}
+
+export const generateOvertimeReport = (operative, timesheet) => {
+  const pdf = createPDF()
+
+  withGraphicsState(pdf, () => {
+    drawLogo(pdf)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawWeeklyOperativeSummary(
+      pdf,
+      operative,
+      timesheet,
+      'Bonus – Overtime Report'
+    )
+  })
+
+  withGraphicsState(pdf, () => {
+    drawWeeklyManualOvertime(pdf, operative, timesheet)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawWeeklyPaidWorkOrders(
+      pdf,
+      operative,
+      timesheet,
+      timesheet.overtimeJobs,
+      timesheet.overtimeTotal,
+      'There are no overtime work orders for this week.'
+    )
+  })
+
+  return pdf
+}
+
+export const generateOutOfHoursReport = (operative, timesheet) => {
+  const pdf = createPDF()
+
+  withGraphicsState(pdf, () => {
+    drawLogo(pdf)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawWeeklyOperativeSummary(
+      pdf,
+      operative,
+      timesheet,
+      'Bonus – Out of hours Report'
+    )
+  })
+
+  withGraphicsState(pdf, () => {
+    drawWeeklyManualOutOfHours(pdf, operative, timesheet)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawWeeklyPaidWorkOrders(
+      pdf,
+      operative,
+      timesheet,
+      timesheet.outOfHoursJobs,
+      timesheet.outOfHoursTotal,
+      'There are no out of hours work orders for this week.'
+    )
   })
 
   return pdf
