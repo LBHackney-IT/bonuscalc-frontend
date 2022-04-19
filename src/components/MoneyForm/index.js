@@ -83,6 +83,10 @@ const DayField = ({ index, weekday, min, max }) => {
 
     if (!isNaN(number)) {
       event.target.value = numberWithPrecision(number, 0)
+
+      setTimeout(() => {
+        setValue(fieldName, event.target.value, { shouldDirty: true })
+      }, 10)
     } else if (!value) {
       event.target.value = '0'
 
