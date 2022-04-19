@@ -156,7 +156,7 @@ const TotalField = ({
   })
 
   useEffect(() => {
-    const duration = watchDays.reduce(sum, 0)
+    const duration = watchDays.map((v) => parseInt(v)).reduce(sum, 0)
     const value = duration * rate
 
     setValue(`payElements.${index}.duration`, duration)
