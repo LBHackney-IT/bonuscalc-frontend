@@ -32,8 +32,8 @@ const OvertimeSummary = () => {
     <>
       <Header />
       <Pagination tab="overtime" />
-      <OvertimeHours />
       <OvertimeJobs />
+      <OvertimeHours />
 
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>

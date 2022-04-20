@@ -250,40 +250,6 @@ describe('Overtime page', () => {
       })
 
       it('Shows the summary of the overtime for that week', () => {
-        cy.get('#overtime-hours thead').within(() => {
-          cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(1)').contains('Overtime')
-            cy.get(':nth-child(2)').contains('Mon')
-            cy.get(':nth-child(3)').contains('Tue')
-            cy.get(':nth-child(4)').contains('Wed')
-            cy.get(':nth-child(5)').contains('Thu')
-            cy.get(':nth-child(6)').contains('Fri')
-            cy.get(':nth-child(7)').contains('Sat')
-            cy.get(':nth-child(8)').contains('Sun')
-            cy.get(':nth-child(9)').contains('Hours')
-            cy.get(':nth-child(10)').contains('Total')
-          })
-        })
-
-        cy.get('#overtime-hours tbody').within(() => {
-          cy.get('.govuk-table__row:nth-child(1)').within(() => {
-            cy.get(':nth-child(1)').contains('18 – 24 Oct')
-            cy.get(':nth-child(2)').contains('0').should('not.exist')
-            cy.get(':nth-child(3)').contains('0').should('not.exist')
-            cy.get(':nth-child(4)').contains('0').should('not.exist')
-            cy.get(':nth-child(5)').contains('1')
-            cy.get(':nth-child(6)').contains('1')
-            cy.get(':nth-child(7)').contains('0').should('not.exist')
-            cy.get(':nth-child(8)').contains('0').should('not.exist')
-            cy.get(':nth-child(9)').contains('4')
-            cy.get(':nth-child(10)').contains('£43.96')
-          })
-
-          cy.get('.govuk-table__row:nth-child(2)').within(() => {
-            cy.get(':nth-child(1)').contains('Cover for André')
-          })
-        })
-
         cy.get('#overtime-jobs').within(() => {
           cy.get('.govuk-table__caption').contains('Overtime – Work orders')
         })
@@ -332,7 +298,25 @@ describe('Overtime page', () => {
           })
         })
 
-        cy.get('#overtime-jobs tfoot').within(() => {
+        cy.get('#overtime-hours thead').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Day')
+            cy.get(':nth-child(2)').contains('Address')
+            cy.get(':nth-child(3)').contains('Hours')
+            cy.get(':nth-child(4)').contains('Value')
+          })
+        })
+
+        cy.get('#overtime-hours tbody').within(() => {
+          cy.get('.govuk-table__row:nth-child(1)').within(() => {
+            cy.get(':nth-child(1)').contains('Thursday')
+            cy.get(':nth-child(2)').contains('Cover for André')
+            cy.get(':nth-child(3)').contains('4.00')
+            cy.get(':nth-child(4)').contains('£43.96')
+          })
+        })
+
+        cy.get('#overtime-hours tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
             cy.get(':nth-child(2)').contains('£87.92')

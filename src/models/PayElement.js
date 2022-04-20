@@ -178,6 +178,24 @@ export default class PayElement {
     }, 0)
   }
 
+  weekday(startAt) {
+    const firstDay = PayElement.days.findIndex((day) => this[day] > 0)
+    return startAt.add(firstDay, 'days').format('dddd')
+  }
+
+  compare(other) {
+    const firstDay = PayElement.days.findIndex((day) => this[day] > 0)
+    const otherFirstDay = PayElement.days.findIndex((day) => other[day] > 0)
+
+    if (firstDay > otherFirstDay) {
+      return 1
+    } else if (firstDay < otherFirstDay) {
+      return -1
+    } else {
+      return 0
+    }
+  }
+
   toRow(precision = 4) {
     return {
       id: this.id,

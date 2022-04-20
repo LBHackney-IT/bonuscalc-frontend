@@ -15,7 +15,7 @@ export default class WorkElement {
     this.operativeName = attrs.operativeName
     this.week = new Week(attrs.week)
     this.value = attrs.value
-    this.closedAt = dayjs(attrs.closedAt)
+    this.closedAt = attrs.closedAt ? dayjs(attrs.closedAt) : null
   }
 
   get closedDate() {

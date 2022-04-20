@@ -69,6 +69,10 @@ export default class Timesheet {
     return this.payElements.filter((pe) => pe.isOvertimeHours)
   }
 
+  get sortedOvertimeHours() {
+    return this.overtimeHours.sort((a, b) => a.compare(b))
+  }
+
   get hasOvertimeJobs() {
     return this.overtimeJobs.length > 0
   }

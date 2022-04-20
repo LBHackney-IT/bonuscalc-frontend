@@ -1,4 +1,4 @@
-import { compareStrings, transliterate, truncate } from './string'
+import { compareStrings, humanize, transliterate, truncate } from './string'
 
 describe('String functions', () => {
   describe('compareStrings', () => {
@@ -12,6 +12,13 @@ describe('String functions', () => {
 
     it('A and A returns 0', () => {
       expect(compareStrings('A', 'A')).toBe(0)
+    })
+  })
+
+  describe('humanize', () => {
+    it('uppercases the first letter and lowercases the rest', () => {
+      expect(humanize('WEDNESDAY')).toBe('Wednesday')
+      expect(humanize('wednesday')).toBe('Wednesday')
     })
   })
 
