@@ -83,6 +83,10 @@ const DayField = ({ index, weekday, min, max }) => {
 
     if (!isNaN(number)) {
       event.target.value = numberWithPrecision(number, 0)
+
+      setTimeout(() => {
+        setValue(fieldName, event.target.value, { shouldDirty: true })
+      }, 10)
     } else if (!value) {
       event.target.value = '0'
 
@@ -152,7 +156,7 @@ const TotalField = ({
   })
 
   useEffect(() => {
-    const duration = watchDays.reduce(sum, 0)
+    const duration = watchDays.map((v) => parseInt(v)).reduce(sum, 0)
     const value = duration * rate
 
     setValue(`payElements.${index}.duration`, duration)
