@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import PageContext from '@/components/PageContext'
 import { Table, Caption } from '@/components/Table'
-import { THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
+import { THead, TBody, TR, TH, TD } from '@/components/Table'
 import { useContext } from 'react'
 import { numberWithPrecision } from '@/utils/number'
 
@@ -9,11 +9,11 @@ const OvertimeJobs = () => {
   const repairsHubUrl = process.env.NEXT_PUBLIC_REPAIRS_HUB_URL
 
   const {
-    timesheet: { hasOvertimeJobs, overtimeJobs, overtimeTotal },
+    timesheet: { hasOvertimeJobs, overtimeJobs },
   } = useContext(PageContext)
 
   return (
-    <Table id="overtime-jobs" className="bc-overtime-jobs govuk-!-margin-top-9">
+    <Table id="overtime-jobs" className="bc-overtime-jobs">
       <Caption className="govuk-!-margin-bottom-2 lbh-heading-h4">
         Overtime – Work orders
       </Caption>
@@ -55,16 +55,6 @@ const OvertimeJobs = () => {
               </TR>
             ))}
           </TBody>
-          <TFoot>
-            <TR>
-              <TH scope="row" colSpan="4" align="right">
-                Total
-              </TH>
-              <TD numeric={true}>
-                &pound;{numberWithPrecision(overtimeTotal, 2)}
-              </TD>
-            </TR>
-          </TFoot>
         </>
       ) : (
         <TBody>

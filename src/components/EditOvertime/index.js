@@ -1,6 +1,6 @@
 import AnnouncementContext from '@/components/AnnouncementContext'
 import PageContext from '@/components/PageContext'
-import MoneyForm from '@/components/MoneyForm'
+import OvertimeForm from './OvertimeForm'
 import { useEffect, useContext, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -21,12 +21,6 @@ const EditOvertime = () => {
   const summaryUrl = `${baseUrl}/${timesheet.weekId}/overtime`
 
   const onSubmit = async (data) => {
-    const [payElement] = data.payElements
-
-    if (payElement.duration < 1) {
-      data.payElements = []
-    }
-
     timesheet.payElements.forEach((pe) => {
       if (!pe.isOvertime) {
         data.payElements.push(pe.toRow())
@@ -75,18 +69,13 @@ const EditOvertime = () => {
       </section>
 
       <FormProvider {...methods}>
-        <MoneyForm
+        <OvertimeForm
           onSubmit={onSubmit}
-          cancelUrl={summaryUrl}
-          typeLabel="Overtime"
-          minDuration={0}
-          maxDuration={56}
-          minValue={0}
-          maxValue={2000}
-          minDay={0}
-          maxDay={8}
+          appendLabel="Add overtime"
           rate={PayElementType.overtimeRate}
-        />
+        >
+          There is no manually added overtime for this week.
+        </OvertimeForm>
       </FormProvider>
     </>
   )

@@ -1,47 +1,69 @@
-.bc-overtime-hours {
-  .govuk-table__header:nth-child(n + 2):nth-child(-n + 8) {
-    width: 7%;
-  }
-
-  .govuk-table__header:nth-child(1) {
-    width: 23%;
-  }
-
-  .govuk-table__header:nth-child(9) {
-    width: 12%;
-  }
-
-  .govuk-table__header:nth-child(10) {
-    width: 16%;
-  }
-
-  .govuk-table__body {
-    .govuk-table__row:nth-last-of-type(2) {
-      .govuk-table__cell {
-        border-bottom: none;
-        padding-bottom: 5px;
-      }
-    }
-
-    .govuk-table__row:nth-of-type(2) {
-      .govuk-table__cell {
-        padding-top: 0;
-        @include lbh-rem(font-size, 16);
-      }
-    }
-  }
-}
-
 .bc-overtime-jobs {
-  .govuk-table__cell:nth-child(1) {
+  .govuk-table__header:nth-child(1) {
     width: 14%;
   }
 
-  .govuk-table__cell:nth-child(2) {
-    width: 30%;
+  .govuk-table__header:nth-child(2) {
+    width: 24%;
   }
 
+  .govuk-table__header:nth-child(3) {
+    width: 35%;
+  }
+
+  .govuk-table__header:nth-child(4) {
+    width: 15%;
+  }
+
+  .govuk-table__header:nth-child(5) {
+    width: 12%;
+  }
+}
+
+.bc-overtime-hours {
+  .govuk-table__header:nth-child(1) {
+    width: 14%;
+  }
+
+  .govuk-table__header:nth-child(2) {
+    width: 59%;
+  }
+
+  .govuk-table__header:nth-child(3) {
+    width: 15%;
+  }
+
+  .govuk-table__header:nth-child(4) {
+    width: 12%;
+  }
+}
+
+.bc-overtime-head {
+  .govuk-table__header:nth-child(3) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.bc-overtime-row {
   .govuk-table__cell:nth-child(3) {
-    width: 56%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .govuk-table__cell {
+    padding-top: 15px;
+  }
+
+  .lbh-input,
+  .lbh-select {
+    margin-top: -10px;
+  }
+}
+
+.bc-overtime-totals {
+  .govuk-table__cell:nth-child(2) {
+    padding-left: 10px;
+    padding-right: 17px;
   }
 }

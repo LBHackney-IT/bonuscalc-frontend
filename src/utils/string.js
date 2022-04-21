@@ -12,6 +12,10 @@ export const escapeRegExp = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+export const humanize = (string) => {
+  return string[0].toUpperCase() + string.slice(1).toLowerCase()
+}
+
 export const transliterate = (string) => {
   return string.normalize('NFD').replace(/[^\sa-zA-Z0-9]+/, '')
 }
