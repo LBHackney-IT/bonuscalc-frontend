@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import PageContext from '@/components/PageContext'
 import { Table, Caption } from '@/components/Table'
-import { THead, TBody, TR, TH, TD } from '@/components/Table'
+import { THead, TBody, TFoot, TR, TH, TD } from '@/components/Table'
 import { useContext } from 'react'
 import { numberWithPrecision } from '@/utils/number'
 
@@ -9,29 +9,34 @@ const OvertimeJobs = () => {
   const repairsHubUrl = process.env.NEXT_PUBLIC_REPAIRS_HUB_URL
 
   const {
-    timesheet: { hasOvertimeJobs, overtimeJobs },
+    timesheet: {
+      hasOvertimeHours,
+      hasOvertimeJobs,
+      overtimeJobs,
+      overtimeTotal,
+    },
   } = useContext(PageContext)
 
   return (
-    <Table id="overtime-jobs" className="bc-overtime-jobs">
-      <Caption className="govuk-!-margin-bottom-2 lbh-heading-h4">
-        Overtime – Work orders
-      </Caption>
-      <THead>
-        <TR>
-          <TH scope="col">Reference</TH>
-          <TH scope="col">Address</TH>
-          <TH scope="col">Description</TH>
-          <TH scope="col" align="centre">
-            Date
-          </TH>
-          <TH scope="col" numeric={true}>
-            Value
-          </TH>
-        </TR>
-      </THead>
-      {hasOvertimeJobs ? (
-        <>
+    <>
+      {hasOvertimeJobs && (
+        <Table id="overtime-jobs" className="bc-overtime-jobs">
+          <Caption className="govuk-!-margin-bottom-2 lbh-heading-h4">
+            Overtime – Work orders
+          </Caption>
+          <THead>
+            <TR>
+              <TH scope="col">Reference</TH>
+              <TH scope="col">Address</TH>
+              <TH scope="col">Description</TH>
+              <TH scope="col" align="centre">
+                Date
+              </TH>
+              <TH scope="col" numeric={true}>
+                Value
+              </TH>
+            </TR>
+          </THead>
           <TBody>
             {overtimeJobs.map((payElement, index) => (
               <TR key={index}>
@@ -55,17 +60,21 @@ const OvertimeJobs = () => {
               </TR>
             ))}
           </TBody>
-        </>
-      ) : (
-        <TBody>
-          <TR>
-            <TD colSpan="5">
-              There are no overtime work orders for this week.
-            </TD>
-          </TR>
-        </TBody>
+          {!hasOvertimeHours && (
+            <TFoot>
+              <TR>
+                <TH scope="row" colSpan="4" align="right">
+                  Total
+                </TH>
+                <TD numeric={true}>
+                  &pound;{numberWithPrecision(overtimeTotal, 2)}
+                </TD>
+              </TR>
+            </TFoot>
+          )}
+        </Table>
       )}
-    </Table>
+    </>
   )
 }
 

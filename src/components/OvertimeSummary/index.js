@@ -1,4 +1,5 @@
 import Header from './Header'
+import NoOvertime from './NoOvertime'
 import OvertimeHours from './OvertimeHours'
 import OvertimeJobs from './OvertimeJobs'
 import Button from '@/components/Button'
@@ -15,6 +16,8 @@ const OvertimeSummary = () => {
     timesheet,
     timesheet: {
       week,
+      hasOvertimeJobs,
+      hasOvertimeHours,
       week: { bonusPeriod },
     },
   } = useContext(PageContext)
@@ -32,8 +35,16 @@ const OvertimeSummary = () => {
     <>
       <Header />
       <Pagination tab="overtime" />
-      <OvertimeJobs />
-      <OvertimeHours />
+      <>
+        {hasOvertimeJobs || hasOvertimeHours ? (
+          <>
+            <OvertimeJobs />
+            <OvertimeHours />
+          </>
+        ) : (
+          <NoOvertime />
+        )}
+      </>
 
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>
