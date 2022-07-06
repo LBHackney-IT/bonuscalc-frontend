@@ -144,6 +144,10 @@ export default class Week {
     return this.closedAt ? true : false
   }
 
+  get isOpen() {
+    return !this.isClosed
+  }
+
   get isEditable() {
     return !this.isClosed
   }

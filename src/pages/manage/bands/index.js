@@ -1,11 +1,24 @@
+import Spinner from '@/components/Spinner'
+import NotFound from '@/components/NotFound'
 import ManagePage from '@/components/ManagePage'
+import OperativeProjections from '@/components/OperativeProjections'
+import { useBandChangePeriod } from '@/utils/apiClient'
 import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
 const ManageBandsPage = ({ userDetails }) => {
+  const { bonusPeriod, isLoading, isError } = useBandChangePeriod()
+
+  if (isLoading) return <Spinner />
+  if (isError || !bonusPeriod)
+    return <NotFound>Couldn’t find a current bonus period.</NotFound>
+
   return (
     <ManagePage user={userDetails} section="bands">
-      <h1 className="lbh-heading-h2">Band change</h1>
-      <p className="lbh-body">Under construction</p>
+      {bonusPeriod.hasOpenWeeks ? (
+        <OperativeProjections period={bonusPeriod} />
+      ) : (
+        <p className="lbh-body">Under construction</p>
+      )}
     </ManagePage>
   )
 }
