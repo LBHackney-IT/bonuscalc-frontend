@@ -164,12 +164,16 @@ export default class Week {
     return !this.isCompleted && (this.isCurrent || this.isPast)
   }
 
+  get operatives() {
+    return this.operativeSummaries.filter((os) => !os.isArchived)
+  }
+
   get operativeCount() {
-    return this.operativeSummaries.length
+    return this.operatives.length
   }
 
   get sentOperatives() {
-    return this.operativeSummaries.filter((os) => os.reportSentAt)
+    return this.operatives.filter((os) => os.reportSentAt)
   }
 
   get sentOperativeCount() {

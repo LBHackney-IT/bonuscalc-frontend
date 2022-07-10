@@ -27,7 +27,26 @@
       "totalValue": 8458.8,
       "utilisation": 1,
       "projectedValue": 3084.23,
-      "averageUtilisation": 1
+      "averageUtilisation": 1,
+      "reportSentAt": null
+    },
+    {
+      "id": "654321",
+      "name": "André Wood",
+      "trade": {
+        "id": "CP",
+        "description": "Carpenter"
+      },
+      "schemeId": 2,
+      "isArchived": true,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 0.0,
+      "nonProductiveValue": 0.0,
+      "totalValue": 0.0,
+      "utilisation": 1,
+      "projectedValue": 0.0,
+      "averageUtilisation": 1,
+      "reportSentAt": null
     }
   ]
 }
