@@ -21,13 +21,33 @@
         "description": "Electrician"
       },
       "schemeId": 2,
+      "isArchived": false,
       "productiveValue": 0.0,
       "nonProductiveDuration": 36.0,
       "nonProductiveValue": 3672.0,
       "totalValue": 3672.0,
       "utilisation": 1,
       "projectedValue": 2636.35,
-      "averageUtilisation": 1
+      "averageUtilisation": 1,
+      "reportSentAt": "2021-10-29T16:05:00Z"
+    },
+    {
+      "id": "654321",
+      "name": "André Wood",
+      "trade": {
+        "id": "CP",
+        "description": "Carpenter"
+      },
+      "schemeId": 2,
+      "isArchived": true,
+      "productiveValue": 0.0,
+      "nonProductiveDuration": 0.0,
+      "nonProductiveValue": 0.0,
+      "totalValue": 0.0,
+      "utilisation": 1,
+      "projectedValue": 0.0,
+      "averageUtilisation": 1,
+      "reportSentAt": null
     }
   ]
 }

@@ -22,11 +22,11 @@ const Header = ({ week }) => {
 }
 
 const Search = ({ week }) => {
-  const allOperatives = week.operativeSummaries
+  const allOperatives = week.operatives
   const searchInput = useRef(null)
 
   const [value, setValue] = useState('')
-  const [operatives, setOperatives] = useState(week.operativeSummaries)
+  const [operatives, setOperatives] = useState(week.operatives)
 
   const filterOperatives = (filter) => {
     if (filter) {
@@ -216,8 +216,8 @@ const Operatives = ({ week, operatives }) => {
 }
 
 const AllOperativesList = ({ period, week, schemes }) => {
-  week.operativeSummaries.forEach((os) => {
-    os.scheme = schemes[os.schemeId]
+  week.operatives.forEach((o) => {
+    o.scheme = schemes[o.schemeId]
   })
 
   const firstOpenWeek = period.weeks.find((week) => week.isEditable)

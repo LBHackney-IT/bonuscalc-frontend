@@ -15,7 +15,7 @@ import {
 } from '@/utils/apiClient'
 
 const Summary = ({ week }) => {
-  const operatives = week.operativeSummaries
+  const operatives = week.operatives
   const zeroSMVOperatives = operatives.filter((o) => o.totalValue == 0)
 
   return (
@@ -78,7 +78,7 @@ const CloseWeek = ({ week }) => {
   const { setAnnouncement } = useContext(AnnouncementContext)
 
   const sendReports = async () => {
-    for (const operative of week.operativeSummaries) {
+    for (const operative of week.operatives) {
       if (!operative.reportSentAt) {
         if (await sendReportEmail(operative.id, week.bonusPeriod.id)) {
           if (await saveReportSentAt(operative.id, week.id)) {
