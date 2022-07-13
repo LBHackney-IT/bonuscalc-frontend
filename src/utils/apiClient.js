@@ -36,7 +36,7 @@ export const fetcher = async (url) => {
 }
 
 export const bandChangePeriodUrl = () => {
-  return `/changes/period`
+  return `/band-changes/period`
 }
 
 export const useBandChangePeriod = () => {
@@ -64,7 +64,7 @@ export const useBonusPeriods = () => {
 }
 
 export const operativeProjectionsUrl = () => {
-  return `/changes/projected`
+  return `/band-changes/projected`
 }
 
 export const useOperativeProjections = () => {

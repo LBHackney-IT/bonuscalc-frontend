@@ -28,7 +28,7 @@ describe('Viewing operative projections', () => {
       cy.intercept(
         {
           method: 'GET',
-          path: '/api/v1/changes/period',
+          path: '/api/v1/band-changes/period',
         },
         { statusCode: 200, fixture: 'changes/period.json' }
       ).as('get_period')
@@ -36,7 +36,7 @@ describe('Viewing operative projections', () => {
       cy.intercept(
         {
           method: 'GET',
-          path: '/api/v1/changes/projected',
+          path: '/api/v1/band-changes/projected',
         },
         { statusCode: 200, fixture: 'changes/projected.json' }
       ).as('get_projected')
