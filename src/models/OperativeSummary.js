@@ -8,6 +8,7 @@ export default class OperativeSummary {
     this.name = attrs.name
     this.trade = new Trade(attrs.trade)
     this.schemeId = attrs.schemeId
+    this.isArchived = attrs.isArchived
     this.productiveValue = attrs.productiveValue
     this.nonProductiveDuration = attrs.nonProductiveDuration
     this.nonProductiveValue = attrs.nonProductiveValue

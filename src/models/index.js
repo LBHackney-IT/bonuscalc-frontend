@@ -1,5 +1,6 @@
 import BonusPeriod from './BonusPeriod'
 import Operative from './Operative'
+import OperativeProjection from './OperativeProjection'
 import OperativeSummary from './OperativeSummary'
 import OutOfHoursSummary from './OutOfHoursSummary'
 import OvertimeSummary from './OvertimeSummary'
@@ -16,6 +17,7 @@ import WorkElement from './WorkElement'
 export {
   BonusPeriod,
   Operative,
+  OperativeProjection,
   OperativeSummary,
   OutOfHoursSummary,
   OvertimeSummary,

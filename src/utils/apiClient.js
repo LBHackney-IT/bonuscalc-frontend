@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 import {
   BonusPeriod,
   Operative,
+  OperativeProjection,
   Timesheet,
   PayElementType,
   Scheme,
@@ -34,6 +35,20 @@ export const fetcher = async (url) => {
   return data
 }
 
+export const bandChangePeriodUrl = () => {
+  return `/band-changes/period`
+}
+
+export const useBandChangePeriod = () => {
+  const { data, error } = useSWR(bandChangePeriodUrl(), fetcher)
+
+  return {
+    bonusPeriod: data ? new BonusPeriod(data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const bonusPeriodsUrl = () => {
   return `/periods/current`
 }
@@ -43,6 +58,20 @@ export const useBonusPeriods = () => {
 
   return {
     bonusPeriods: data ? arrayMap(BonusPeriod, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const operativeProjectionsUrl = () => {
+  return `/band-changes/projected`
+}
+
+export const useOperativeProjections = () => {
+  const { data, error } = useSWR(operativeProjectionsUrl(), fetcher)
+
+  return {
+    operativeProjections: data ? arrayMap(OperativeProjection, data) : null,
     isLoading: !error && !data,
     isError: error,
   }

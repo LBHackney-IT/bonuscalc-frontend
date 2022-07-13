@@ -216,6 +216,7 @@ describe('Closing a week', () => {
       cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
         cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
           cy.get('header').within(() => {
+            cy.contains('h4', 'Operatives with no SMVs (0)')
             cy.contains('a', 'Close week and send reports').click()
 
             cy.location().should((loc) => {
@@ -335,6 +336,9 @@ describe('Closing a week', () => {
       cy.get('.bc-all-operatives').within(() => {
         cy.contains('h1', 'Period 3 – 2021 / week 13')
         cy.contains('p', 'All operatives')
+
+        cy.get('tbody tr:nth-child(1)').contains('td:first-child', 'Alex Cable')
+        cy.get('tbody tr:nth-child(2)').should('not.exist')
       })
 
       cy.get('.lbh-page-announcement').should('not.exist')
