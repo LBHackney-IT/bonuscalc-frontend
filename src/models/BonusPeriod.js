@@ -103,4 +103,8 @@ export default class BonusPeriod {
   get isLast() {
     return this.last.isSameOrBefore(this.startAt)
   }
+
+  get hasOpenWeeks() {
+    return this.weeks.some((week) => week.isOpen)
+  }
 }
