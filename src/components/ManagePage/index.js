@@ -36,11 +36,6 @@ const ManagePage = ({ user, section, children }) => {
               </MenuItem>
             </li>
             <li>
-              <MenuItem item="reports" section={section}>
-                Reports
-              </MenuItem>
-            </li>
-            <li>
               <MenuItem item="bands" section={section}>
                 Band change
               </MenuItem>
