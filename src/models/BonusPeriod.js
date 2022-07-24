@@ -42,6 +42,10 @@ export default class BonusPeriod {
     }
   }
 
+  get closedDate() {
+    return this.closedAt ? this.closedAt.format('D MMM YYYY') : '–'
+  }
+
   get dateRange() {
     return `${this.startAt.format('D MMM')} – ${this.endAt.format('D MMM')}`
   }
@@ -106,5 +110,13 @@ export default class BonusPeriod {
 
   get hasOpenWeeks() {
     return this.weeks.some((week) => week.isOpen)
+  }
+
+  get isClosed() {
+    return this.closedAt ? true : false
+  }
+
+  get isOpen() {
+    return !this.isClosed
   }
 }

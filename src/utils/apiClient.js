@@ -50,11 +50,40 @@ export const useBandChangePeriod = () => {
 }
 
 export const bonusPeriodsUrl = () => {
-  return `/periods/current`
+  return `/periods`
 }
 
 export const useBonusPeriods = () => {
   const { data, error } = useSWR(bonusPeriodsUrl(), fetcher)
+
+  return {
+    bonusPeriods: data ? arrayMap(BonusPeriod, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const createBonusPeriod = async (date) => {
+  const url = bonusPeriodsUrl()
+
+  try {
+    const res = await client.post(url, { id: date })
+
+    // Invalidate the cached bonus periods
+    mutate(bonusPeriodsUrl())
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const currentBonusPeriodsUrl = () => {
+  return `/periods/current`
+}
+
+export const useCurrentBonusPeriods = () => {
+  const { data, error } = useSWR(currentBonusPeriodsUrl(), fetcher)
 
   return {
     bonusPeriods: data ? arrayMap(BonusPeriod, data) : null,
@@ -203,7 +232,7 @@ export const saveReportsSentAt = async (week) => {
     mutate(`/weeks/${week}`)
 
     // Invalidate the cached bonus periods
-    const { status, data } = await client.get(bonusPeriodsUrl())
+    const { status, data } = await client.get(currentBonusPeriodsUrl())
 
     if (status == StatusCodes.OK) {
       mutate('/periods/current', data)

@@ -2,7 +2,7 @@ import BackButton from '@/components/BackButton'
 import NotFound from '@/components/NotFound'
 import Spinner from '@/components/Spinner'
 import AllOperativesList from '@/components/AllOperativesList'
-import { useSchemes, useWeek, useBonusPeriods } from '@/utils/apiClient'
+import { useSchemes, useWeek, useCurrentBonusPeriods } from '@/utils/apiClient'
 import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
 
 const AllOperativesPage = ({ query }) => {
@@ -22,7 +22,7 @@ const AllOperativesPage = ({ query }) => {
     bonusPeriods,
     isLoading: isBonusPeriodsLoading,
     isError: isBonusPeriodsError,
-  } = useBonusPeriods()
+  } = useCurrentBonusPeriods()
 
   if (isWeekLoading) return <Spinner />
   if (isWeekError || !week)

@@ -35,6 +35,13 @@ const ManagePage = ({ user, section, children }) => {
                 Open weeks
               </MenuItem>
             </li>
+            {user.hasWeekManagerPermissions && (
+              <li>
+                <MenuItem item="periods" section={section}>
+                  Bonus periods
+                </MenuItem>
+              </li>
+            )}
             <li>
               <MenuItem item="bands" section={section}>
                 Band change
