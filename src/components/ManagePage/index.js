@@ -28,8 +28,8 @@ const ManagePage = ({ user, section, children }) => {
       <hr className="govuk-section-break govuk-section-break--visible" />
 
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-quarter">
-          <ul className="lbh-list">
+        <div className="govuk-grid-column-one-fifth">
+          <ul className="lbh-list lbh-body-s">
             <li>
               <MenuItem item="weeks" section={section}>
                 Open weeks
@@ -49,7 +49,7 @@ const ManagePage = ({ user, section, children }) => {
             </li>
           </ul>
         </div>
-        <div className="govuk-grid-column-three-quarters">{children}</div>
+        <div className="govuk-grid-column-four-fifths">{children}</div>
       </div>
     </>
   )

@@ -1,3 +1,14 @@
+$govuk-grid-widths: (
+  one-fifth: 20%,
+  one-quarter: 25%,
+  one-third: 33.3333%,
+  one-half: 50%,
+  two-thirds: 66.6666%,
+  three-quarters: 75%,
+  four-fifths: 80%,
+  full: 100%,
+) !default;
+
 @import 'lbh-frontend/lbh/all';
 @import 'environments';
 @import 'all-operatives';

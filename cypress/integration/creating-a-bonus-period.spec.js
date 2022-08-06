@@ -52,7 +52,7 @@ describe('Creating a bonus period', () => {
       cy.visit('/manage/weeks')
       cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
 
-      cy.get('.govuk-grid-column-one-quarter').within(() => {
+      cy.get('.govuk-grid-column-one-fifth').within(() => {
         cy.get('.lbh-list').within(() => {
           cy.contains('a', 'Bonus periods').should('not.exist')
         })
@@ -95,7 +95,7 @@ describe('Creating a bonus period', () => {
       cy.visit('/manage/weeks')
       cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
 
-      cy.get('.govuk-grid-column-one-quarter').within(() => {
+      cy.get('.govuk-grid-column-one-fifth').within(() => {
         cy.get('.lbh-list').within(() => {
           cy.contains('a', 'Bonus periods').should('exist')
           cy.contains('a', 'Bonus periods').should(
