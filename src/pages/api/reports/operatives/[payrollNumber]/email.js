@@ -71,7 +71,7 @@ export default authoriseAPIRequest(async (req, res) => {
       const operative = await fetchOperative(payrollNumber)
 
       if (operative.isArchived || !operative.emailAddress) {
-        return res.status(StatusCodes.NO_CONTENT).json({})
+        return res.status(StatusCodes.NO_CONTENT).json()
       }
 
       const summary = await fetchSummary(payrollNumber, date)
