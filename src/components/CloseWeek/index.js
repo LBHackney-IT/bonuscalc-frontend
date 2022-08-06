@@ -12,6 +12,8 @@ import {
   saveWeek,
   saveReportSentAt,
   saveReportsSentAt,
+  getBandChangePeriod,
+  startBandChangeProcess,
 } from '@/utils/apiClient'
 
 const Summary = ({ week }) => {
@@ -90,6 +92,12 @@ const CloseWeek = ({ week }) => {
     }
 
     if (await saveReportsSentAt(week.id)) {
+      const period = await getBandChangePeriod()
+
+      if (!period.hasOpenWeeks) {
+        await startBandChangeProcess()
+      }
+
       setCompleted(true)
     }
   }

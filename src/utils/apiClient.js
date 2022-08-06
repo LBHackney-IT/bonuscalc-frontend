@@ -49,6 +49,42 @@ export const useBandChangePeriod = () => {
   }
 }
 
+export const getBandChangePeriod = async () => {
+  const url = bandChangePeriodUrl()
+
+  try {
+    const { status, data } = await client.get(url)
+
+    if (status == StatusCodes.OK) {
+      return new BonusPeriod(data)
+    } else {
+      return false
+    }
+  } catch (error) {
+    return false
+  }
+}
+
+export const startBandChangeProcessUrl = () => {
+  return `/band-changes/start`
+}
+
+export const startBandChangeProcess = async () => {
+  const url = startBandChangeProcessUrl()
+
+  try {
+    const { status } = await client.post(url)
+
+    if (status == StatusCodes.OK) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    return false
+  }
+}
+
 export const bonusPeriodsUrl = () => {
   return `/periods`
 }
