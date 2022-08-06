@@ -100,6 +100,21 @@ export const useBandChanges = () => {
   }
 }
 
+export const bandChangeReportSentAtUrl = (payrollNumber) => {
+  return `/band-changes/${payrollNumber}/report`
+}
+
+export const saveBandChangeReportSentAt = async (payrollNumber) => {
+  const url = bandChangeReportSentAtUrl(payrollNumber)
+
+  try {
+    const res = await client.post(url)
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
 export const bonusPeriodsUrl = () => {
   return `/periods`
 }
@@ -317,6 +332,22 @@ export const saveWeek = async (week, data) => {
 
     // Invalidate the cached timesheet
     mutate(url)
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const bonusPeriodUrl = (period) => {
+  return `/periods/${period}`
+}
+
+export const saveBonusPeriod = async (period, data) => {
+  const url = bonusPeriodUrl(period)
+
+  try {
+    const res = await client.post(url, data)
 
     return res.status == StatusCodes.OK
   } catch (error) {

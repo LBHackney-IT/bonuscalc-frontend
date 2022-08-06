@@ -12,3 +12,13 @@ export const sendReportEmail = async (operative, bonusPeriod) => {
     response.status == StatusCodes.NO_CONTENT
   )
 }
+
+export const sendBandChangeReportEmail = async (operative) => {
+  const url = `/operatives/${operative}/band-change`
+  const response = await client.post(url)
+
+  return (
+    response.status == StatusCodes.OK ||
+    response.status == StatusCodes.NO_CONTENT
+  )
+}

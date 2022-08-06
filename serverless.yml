@@ -63,6 +63,7 @@ functions:
       SENTRY_RELEASE: ${env:CIRCLE_SHA1}
       NOTIFY_API_KEY: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/notify-api-key}
       NOTIFY_TEMPLATE_ID: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/notify-template-id}
+      NOTIFY_BC_TEMPLATE_ID: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/notify-bc-template-id}
       TZ: Europe/London
 
 resources:
