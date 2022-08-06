@@ -7,9 +7,10 @@ import LinkButton from '@/components/LinkButton'
 import ErrorMessage from '@/components/ErrorMessage'
 import Spinner from '@/components/Spinner'
 import UserContext from '@/components/UserContext'
+import { useRouter } from 'next/router'
 import { useState, useEffect, useContext } from 'react'
 import { BonusPeriod } from '@/models'
-import { useWeek } from '@/utils/apiClient'
+import { useBandChangePeriod, useBandChanges, useWeek } from '@/utils/apiClient'
 
 const WeekNotStarted = () => {
   return (
@@ -210,12 +211,55 @@ const ManageWeek = ({ week, showAll, firstOpenWeek }) => {
 
 const ManageBonusPeriod = ({ period }) => {
   const [showAllWeeks, setShowAllWeeks] = useState(false)
+  const router = useRouter()
+
+  const {
+    bonusPeriod: currentPeriod,
+    isLoading: isPeriodLoading,
+    isError: isPeriodError,
+  } = useBandChangePeriod()
+
+  const {
+    bandChanges,
+    isLoading: isBandChangesLoading,
+    isError: isBandChangesError,
+  } = useBandChanges()
 
   const toggleShowAllWeeks = () => {
     setShowAllWeeks(!showAllWeeks)
   }
 
   const firstOpenWeek = period.weeks.find((week) => week.isEditable)
+
+  const isDisabled = () => {
+    return (
+      period.id != currentPeriod.id ||
+      bandChanges.length == 0 ||
+      bandChanges.some((bc) => bc.isPending)
+    )
+  }
+
+  const onClick = () => {
+    router.push('/manage/periods/close')
+  }
+
+  if (isPeriodLoading) return <Spinner />
+  if (isPeriodError || !currentPeriod)
+    return (
+      <p className="lbh-body-s govuk-!-margin-top-2">
+        <ErrorMessage
+          description={`Unable to fetch the current bonus period`}
+        />
+      </p>
+    )
+
+  if (isBandChangesLoading) return <Spinner />
+  if (isBandChangesError || !bandChanges)
+    return (
+      <p className="lbh-body-s govuk-!-margin-top-2">
+        <ErrorMessage description={`Unable to fetch band changes`} />
+      </p>
+    )
 
   return (
     <section className="bc-open-weeks__period">
@@ -241,9 +285,13 @@ const ManageBonusPeriod = ({ period }) => {
         />
       ))}
 
-      <ButtonGroup>
-        <Button disabled={true}>Close Period</Button>
-      </ButtonGroup>
+      {currentPeriod.id == period.id && (
+        <ButtonGroup className="govuk-!-margin-top-0">
+          <Button disabled={isDisabled()} onClick={onClick}>
+            Close Period
+          </Button>
+        </ButtonGroup>
+      )}
     </section>
   )
 }

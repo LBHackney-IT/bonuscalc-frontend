@@ -1,3 +1,5 @@
+import BandApprover from './BandApprover'
+import BandChange from './BandChange'
 import BonusPeriod from './BonusPeriod'
 import Operative from './Operative'
 import OperativeProjection from './OperativeProjection'
@@ -15,6 +17,8 @@ import WeeklySummary from './WeeklySummary'
 import WorkElement from './WorkElement'
 
 export {
+  BandApprover,
+  BandChange,
   BonusPeriod,
   Operative,
   OperativeProjection,

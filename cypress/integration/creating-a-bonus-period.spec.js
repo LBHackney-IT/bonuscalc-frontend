@@ -49,8 +49,30 @@ describe('Creating a bonus period', () => {
         { statusCode: 200, fixture: 'weeks/2021-10-25.json' }
       ).as('get_week_13')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes',
+        },
+        { statusCode: 200, fixture: 'changes/empty.json' }
+      ).as('get_band_changes')
+
       cy.visit('/manage/weeks')
-      cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
+      cy.wait([
+        '@get_periods',
+        '@get_week_12',
+        '@get_week_13',
+        '@get_period',
+        '@get_band_changes',
+      ])
 
       cy.get('.govuk-grid-column-one-fifth').within(() => {
         cy.get('.lbh-list').within(() => {
@@ -92,8 +114,30 @@ describe('Creating a bonus period', () => {
         { statusCode: 200, fixture: 'weeks/2021-10-25.json' }
       ).as('get_week_13')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes',
+        },
+        { statusCode: 200, fixture: 'changes/empty.json' }
+      ).as('get_band_changes')
+
       cy.visit('/manage/weeks')
-      cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
+      cy.wait([
+        '@get_periods',
+        '@get_week_12',
+        '@get_week_13',
+        '@get_period',
+        '@get_band_changes',
+      ])
 
       cy.get('.govuk-grid-column-one-fifth').within(() => {
         cy.get('.lbh-list').within(() => {

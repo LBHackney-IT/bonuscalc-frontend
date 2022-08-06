@@ -2,6 +2,7 @@ import axios from 'axios'
 import useSWR, { mutate } from 'swr'
 import { StatusCodes } from 'http-status-codes'
 import {
+  BandChange,
   BonusPeriod,
   Operative,
   OperativeProjection,
@@ -82,6 +83,20 @@ export const startBandChangeProcess = async () => {
     }
   } catch (error) {
     return false
+  }
+}
+
+export const bandChangesUrl = () => {
+  return `/band-changes`
+}
+
+export const useBandChanges = () => {
+  const { data, error } = useSWR(bandChangesUrl(), fetcher)
+
+  return {
+    bandChanges: data ? arrayMap(BandChange, data) : null,
+    isLoading: !error && !data,
+    isError: error,
   }
 }
 

@@ -49,8 +49,30 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'weeks/2021-10-25.json' }
       ).as('get_week_13')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes',
+        },
+        { statusCode: 200, fixture: 'changes/empty.json' }
+      ).as('get_band_changes')
+
       cy.visit('/manage/weeks')
-      cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
+      cy.wait([
+        '@get_periods',
+        '@get_week_12',
+        '@get_week_13',
+        '@get_period',
+        '@get_band_changes',
+      ])
 
       cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
         cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
@@ -88,8 +110,30 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'weeks/2021-10-25.json' }
       ).as('get_week_13')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes',
+        },
+        { statusCode: 200, fixture: 'changes/empty.json' }
+      ).as('get_band_changes')
+
       cy.visit('/manage/weeks')
-      cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
+      cy.wait([
+        '@get_periods',
+        '@get_week_12',
+        '@get_week_13',
+        '@get_period',
+        '@get_band_changes',
+      ])
 
       cy.intercept(
         { method: 'GET', path: '/api/v1/weeks/2021-08-02' },
@@ -210,8 +254,30 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'weeks/2021-10-25.json' }
       ).as('get_week_13')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes',
+        },
+        { statusCode: 200, fixture: 'changes/empty.json' }
+      ).as('get_band_changes')
+
       cy.visit('/manage/weeks')
-      cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
+      cy.wait([
+        '@get_periods',
+        '@get_week_12',
+        '@get_week_13',
+        '@get_period',
+        '@get_band_changes',
+      ])
 
       cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
         cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
@@ -290,6 +356,14 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'periods/current-closed-and-sent.json' }
       ).as('get_periods_closed_and_sent')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
       cy.get('.bc-close-week').within(() => {
         cy.contains('button', 'Close and send reports').click()
       })
@@ -297,6 +371,7 @@ describe('Closing a week', () => {
       cy.wait(['@post_week_12', '@get_week_12_closed'])
       cy.wait(['@email_123456_report', '@post_123456_report'])
       cy.wait(['@post_week_12_report', '@get_periods_closed_and_sent'])
+      cy.wait(['@get_period'])
 
       cy.location().should((loc) => {
         expect(loc.pathname).to.eq('/manage/weeks')
@@ -371,8 +446,30 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'weeks/2021-10-25.json' }
       ).as('get_week_13')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes',
+        },
+        { statusCode: 200, fixture: 'changes/empty.json' }
+      ).as('get_band_changes')
+
       cy.visit('/manage/weeks')
-      cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
+      cy.wait([
+        '@get_periods',
+        '@get_week_12',
+        '@get_week_13',
+        '@get_period',
+        '@get_band_changes',
+      ])
 
       cy.intercept(
         { method: 'GET', path: '/api/v1/weeks/2021-08-02' },
