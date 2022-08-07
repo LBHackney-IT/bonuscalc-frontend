@@ -1,6 +1,7 @@
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
 import ManagePage from '@/components/ManagePage'
+import BandChanges from '@/components/BandChanges'
 import OperativeProjections from '@/components/OperativeProjections'
 import { useBandChangePeriod } from '@/utils/apiClient'
 import {
@@ -21,7 +22,7 @@ const ManageBandsPage = ({ userDetails }) => {
       {bonusPeriod.hasOpenWeeks ? (
         <OperativeProjections period={bonusPeriod} />
       ) : (
-        <p className="lbh-body">Under construction</p>
+        <BandChanges period={bonusPeriod} />
       )}
     </ManagePage>
   )

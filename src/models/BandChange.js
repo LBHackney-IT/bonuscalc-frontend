@@ -40,6 +40,14 @@ export default class BandChange {
     return this.trade.replace(TRADE_PATTERN, '$1')
   }
 
+  get isDisabled() {
+    return (this.fixedBand && this.isCompleted) || this.hasManagerDecision
+  }
+
+  get isSelectable() {
+    return !this.isDisabled
+  }
+
   get isFixedBand() {
     return this.fixedBand
   }
@@ -64,8 +72,16 @@ export default class BandChange {
     return this.supervisor?.decision ? true : false
   }
 
+  get supervisorName() {
+    return this.supervisor?.name
+  }
+
   get supervisorBand() {
     return this.supervisor?.salaryBand
+  }
+
+  get supervisorDate() {
+    return this.supervisor?.date
   }
 
   get supervisorReason() {
@@ -76,8 +92,16 @@ export default class BandChange {
     return this.manager?.reason
   }
 
+  get managerName() {
+    return this.manager?.name
+  }
+
   get managerBand() {
     return this.manager?.salaryBand
+  }
+
+  get managerDate() {
+    return this.manager?.date
   }
 
   get isManagerApproved() {
@@ -88,12 +112,44 @@ export default class BandChange {
     return this.manager?.decision == 'Rejected'
   }
 
+  get hasManagerDecision() {
+    return this.manager?.decision ? true : false
+  }
+
+  get isApproved() {
+    if (this.hasManagerDecision) {
+      return this.isManagerApproved
+    } else {
+      return this.isSupervisorApproved
+    }
+  }
+
+  get isRejected() {
+    if (this.hasManagerDecision) {
+      return this.isManagerRejected
+    } else {
+      return this.isSupervisorRejected
+    }
+  }
+
   get isPending() {
     return this.finalBand ? false : true
   }
 
   get isCompleted() {
     return !this.isPending
+  }
+
+  get changedBand() {
+    if (this.hasManagerDecision) {
+      return `${this.finalBand}`
+    } else if (this.isSupervisorRejected) {
+      return `(${this.supervisorBand})`
+    } else if (this.isSupervisorApproved) {
+      return `${this.finalBand}`
+    } else {
+      return '–'
+    }
   }
 
   get hasBeenSent() {

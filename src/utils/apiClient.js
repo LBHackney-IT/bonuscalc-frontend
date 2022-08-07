@@ -133,6 +133,26 @@ export const saveManagerDecision = async (operative, data) => {
   }
 }
 
+export const supervisorDecisionUrl = (operative) => {
+  return `/band-changes/${operative}/supervisor`
+}
+
+export const saveSupervisorDecision = async (operative, data) => {
+  const url = supervisorDecisionUrl(operative)
+
+  try {
+    const res = await client.post(url, data)
+
+    // Invalidate the cached band changes
+    mutate(bandChangesUrl())
+    mutate(authorisationsUrl())
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
 export const bandChangeReportSentAtUrl = (payrollNumber) => {
   return `/band-changes/${payrollNumber}/report`
 }

@@ -16,6 +16,10 @@ export const humanize = (string) => {
   return string[0].toUpperCase() + string.slice(1).toLowerCase()
 }
 
+export const pluralize = (count, singular, plural) => {
+  return count == 1 ? singular : plural
+}
+
 export const transliterate = (string) => {
   return string.normalize('NFD').replace(/[^\sa-zA-Z0-9]+/, '')
 }
