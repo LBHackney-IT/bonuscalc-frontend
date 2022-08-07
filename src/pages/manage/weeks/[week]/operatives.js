@@ -3,7 +3,11 @@ import NotFound from '@/components/NotFound'
 import Spinner from '@/components/Spinner'
 import AllOperativesList from '@/components/AllOperativesList'
 import { useSchemes, useWeek, useCurrentBonusPeriods } from '@/utils/apiClient'
-import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
+import {
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+} from '@/utils/user'
 
 const AllOperativesPage = ({ query }) => {
   const {
@@ -64,6 +68,10 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-AllOperativesPage.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
+AllOperativesPage.permittedRoles = [
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+]
 
 export default AllOperativesPage

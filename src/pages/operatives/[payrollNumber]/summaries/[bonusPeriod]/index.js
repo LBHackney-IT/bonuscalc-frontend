@@ -7,7 +7,11 @@ import NotFound from '@/components/NotFound'
 import BonusPeriodSummary from '@/components/BonusPeriodSummary'
 import { Week } from '@/models'
 import { useOperative, useSummary } from '@/utils/apiClient'
-import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
+import {
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+} from '@/utils/user'
 import { setTag } from '@sentry/nextjs'
 
 const SummaryPage = ({ query }) => {
@@ -69,6 +73,10 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-SummaryPage.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
+SummaryPage.permittedRoles = [
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+]
 
 export default SummaryPage

@@ -84,6 +84,71 @@ describe('Creating a bonus period', () => {
     })
   })
 
+  context('When logged in as an authorisations manager', () => {
+    beforeEach(() => {
+      cy.login('an.authorisations_manager')
+    })
+
+    it('Does not show the manage bonus periods link', () => {
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/periods/current',
+        },
+        { statusCode: 200, fixture: 'periods/current.json' }
+      ).as('get_periods')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/weeks/2021-10-18',
+        },
+        { statusCode: 200, fixture: 'weeks/2021-10-18.json' }
+      ).as('get_week_12')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/weeks/2021-10-25',
+        },
+        { statusCode: 200, fixture: 'weeks/2021-10-25.json' }
+      ).as('get_week_13')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes',
+        },
+        { statusCode: 200, fixture: 'changes/empty.json' }
+      ).as('get_band_changes')
+
+      cy.visit('/manage/weeks')
+      cy.wait([
+        '@get_periods',
+        '@get_week_12',
+        '@get_week_13',
+        '@get_period',
+        '@get_band_changes',
+      ])
+
+      cy.get('.govuk-grid-column-one-fifth').within(() => {
+        cy.get('.lbh-list').within(() => {
+          cy.contains('a', 'Bonus periods').should('not.exist')
+        })
+      })
+
+      cy.audit()
+    })
+  })
+
   context('When logged in as a week manager', () => {
     beforeEach(() => {
       cy.login('a.week_manager')

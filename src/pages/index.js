@@ -1,7 +1,11 @@
 import Spinner from '@/components/Spinner'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
+import {
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+} from '@/utils/user'
 
 const HomeRedirect = () => {
   const router = useRouter()
@@ -23,6 +27,10 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-HomeRedirect.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
+HomeRedirect.permittedRoles = [
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+]
 
 export default HomeRedirect

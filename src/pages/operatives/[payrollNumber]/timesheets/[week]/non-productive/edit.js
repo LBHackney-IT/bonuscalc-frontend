@@ -1,7 +1,11 @@
 import EditOperativePage from '@/components/EditOperativePage'
 import EditNonProductive from '@/components/EditNonProductive'
 import { compareStrings } from '@/utils/string'
-import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
+import {
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+} from '@/utils/user'
 
 const EditNonProductivePage = ({ query }) => {
   const selectPayElements = (timesheet) => {
@@ -38,6 +42,7 @@ export const getServerSideProps = async (ctx) => {
 EditNonProductivePage.permittedRoles = [
   OPERATIVE_MANAGER_ROLE,
   WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
 ]
 
 export default EditNonProductivePage
