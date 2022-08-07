@@ -65,6 +65,14 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -72,6 +80,7 @@ describe('Closing a week', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
@@ -126,6 +135,14 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -133,6 +150,7 @@ describe('Closing a week', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.intercept(
@@ -270,6 +288,14 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -277,6 +303,7 @@ describe('Closing a week', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
@@ -331,6 +358,14 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -338,6 +373,7 @@ describe('Closing a week', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.intercept(
@@ -475,6 +511,14 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -482,6 +526,7 @@ describe('Closing a week', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
@@ -667,6 +712,14 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -674,6 +727,7 @@ describe('Closing a week', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.intercept(

@@ -63,6 +63,14 @@ describe('Home page', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/')
       cy.wait([
         '@get_periods',
@@ -70,6 +78,7 @@ describe('Home page', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
     })
 

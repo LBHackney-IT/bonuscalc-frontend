@@ -36,6 +36,20 @@ export const fetcher = async (url) => {
   return data
 }
 
+export const authorisationsUrl = () => {
+  return `/band-changes/authorisations`
+}
+
+export const useAuthorisations = () => {
+  const { data, error } = useSWR(authorisationsUrl(), fetcher)
+
+  return {
+    authorisations: data ? arrayMap(BandChange, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const bandChangePeriodUrl = () => {
   return `/band-changes/period`
 }
@@ -97,6 +111,25 @@ export const useBandChanges = () => {
     bandChanges: data ? arrayMap(BandChange, data) : null,
     isLoading: !error && !data,
     isError: error,
+  }
+}
+
+export const managerDecisionUrl = (operative) => {
+  return `/band-changes/${operative}/manager`
+}
+
+export const saveManagerDecision = async (operative, data) => {
+  const url = managerDecisionUrl(operative)
+
+  try {
+    const res = await client.post(url, data)
+
+    // Invalidate the cached band changes
+    mutate(authorisationsUrl())
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
   }
 }
 

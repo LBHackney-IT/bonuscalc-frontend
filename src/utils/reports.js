@@ -1384,7 +1384,7 @@ const drawBandChangeDecision = (pdf, bandChange) => {
   pdf.text(`${bandChange.decision} on:`, originX, originY + 5.8)
   pdf.text(`${bandChange.decision} by:`, originX, originY + 11.6)
 
-  if (bandChange.decision == 'Rejected') {
+  if (bandChange.isSupervisorRejected) {
     pdf.text('Reason:', originX, originY + 21.3)
   }
 
@@ -1393,7 +1393,7 @@ const drawBandChangeDecision = (pdf, bandChange) => {
   pdf.text(bandChange.decisionOn, originX + 24.0, originY + 5.8)
   pdf.text(bandChange.decisionBy, originX + 24.0, originY + 11.6)
 
-  if (bandChange.decision == 'Rejected') {
+  if (bandChange.isSupervisorRejected) {
     pdf.text(bandChange.reason, originX, originY + 27.1, {
       maxWidth: 100,
       lineHeightFactor: 1.4,

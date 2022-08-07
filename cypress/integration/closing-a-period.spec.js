@@ -65,6 +65,14 @@ describe('Closing a bonus period', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/periods/close')
       cy.wait([
         '@get_periods',
@@ -72,6 +80,7 @@ describe('Closing a bonus period', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.get('.bc-open-weeks').within(() => {
@@ -128,6 +137,14 @@ describe('Closing a bonus period', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/periods/close')
       cy.wait([
         '@get_periods',
@@ -135,6 +152,7 @@ describe('Closing a bonus period', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.get('.bc-open-weeks').within(() => {
@@ -221,12 +239,20 @@ describe('Closing a bonus period', () => {
         { statusCode: 200, fixture: 'weeks/2022-05-02.json' }
       ).as('get_week_1')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.get('.bc-close-period').within(() => {
         cy.contains('button', 'Close and send reports').click()
       })
 
       cy.wait(['@email_123456_report', '@post_123456_report', '@post_period'])
-      cy.wait(['@get_periods', '@get_week_1'])
+      cy.wait(['@get_periods', '@get_week_1', '@get_authorisations'])
 
       cy.location().should((loc) => {
         expect(loc.pathname).to.eq('/manage/weeks')

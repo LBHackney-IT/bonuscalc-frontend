@@ -64,6 +64,30 @@ export default class BandChange {
     return this.supervisor?.decision ? true : false
   }
 
+  get supervisorBand() {
+    return this.supervisor?.salaryBand
+  }
+
+  get supervisorReason() {
+    return this.supervisor?.reason
+  }
+
+  get managerReason() {
+    return this.manager?.reason
+  }
+
+  get managerBand() {
+    return this.manager?.salaryBand
+  }
+
+  get isManagerApproved() {
+    return this.manager?.decision == 'Approved'
+  }
+
+  get isManagerRejected() {
+    return this.manager?.decision == 'Rejected'
+  }
+
   get isPending() {
     return this.finalBand ? false : true
   }

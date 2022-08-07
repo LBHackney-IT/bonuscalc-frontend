@@ -1,0 +1,165 @@
+.bc-authorisations {
+  p {
+    @include lbh-body-m;
+  }
+
+  &__header {
+    @include lbh-heading-h2;
+
+    span {
+      display: inline-block !important;
+    }
+
+    span:first-child {
+      margin-right: govuk-spacing(3);
+    }
+
+    span:last-child {
+      @extend .govuk-caption-l;
+      @extend .lbh-caption;
+
+      margin-top: 0;
+    }
+  }
+
+  &__group {
+    & > h2 {
+      @include lbh-heading-h4;
+    }
+  }
+
+  &__operatives {
+    @extend .lbh-list;
+
+    margin-top: 0;
+  }
+
+  &__operative {
+    background-color: rgba(lbh-colour('lbh-grey-2'), 0.15);
+    margin: 0;
+    margin-top: govuk-spacing(2);
+    padding: govuk-spacing(3);
+    position: relative;
+
+    &--approved {
+      background-color: rgba(lbh-colour('lbh-a04'), 0.15);
+    }
+
+    &--rejected {
+      background-color: rgba(lbh-colour('lbh-f03'), 0.15);
+    }
+
+    &--details {
+      @include lbh-body-s;
+
+      display: flex;
+      margin: 0;
+
+      div {
+        display: flex;
+        flex-flow: column-reverse;
+        margin: 0;
+        width: 15%;
+
+        &:nth-child(1) {
+          flex-flow: column;
+          width: 40%;
+
+          dt {
+            @include lbh-rem(font-size, 16);
+
+            display: flex;
+            flex-flow: row;
+
+            span {
+              margin: 0;
+
+              &.operative-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 70%;
+                white-space: nowrap;
+              }
+
+              &.operative-id {
+                margin-left: 4px;
+              }
+            }
+          }
+
+          dd {
+            @include lbh-rem(font-size, 14);
+          }
+        }
+      }
+
+      dt {
+        @include lbh-rem(font-size, 14);
+
+        margin: 0;
+        font-weight: 600;
+      }
+
+      dd {
+        margin: 0;
+
+        &.sick-warning {
+          color: lbh-colour('lbh-error');
+          font-weight: bold;
+        }
+      }
+    }
+
+    form {
+      background-color: lbh-colour('lbh-text-white');
+      display: none;
+      margin: 0;
+      margin-top: govuk-spacing(3);
+      padding: govuk-spacing(3);
+
+      h3 {
+        @include lbh-heading-h5;
+        margin: 0;
+        margin-bottom: govuk-spacing(1);
+      }
+
+      p {
+        @include lbh-body-s;
+        line-height: 1.5;
+        margin: 0;
+        margin-bottom: govuk-spacing(2);
+      }
+
+      input:read-only {
+        background-color: lbh-colour('lbh-grey-3');
+      }
+    }
+
+    &--expanded {
+      form {
+        display: block;
+      }
+    }
+
+    &--expand {
+      @extend .lbh-search-box__action;
+
+      align-items: flex-start;
+      bottom: auto;
+      padding: 24px 22px;
+
+      span {
+        @include govuk-visually-hidden;
+      }
+    }
+
+    .lbh-page-announcement {
+      @include lbh-rem(padding, 16, 16, 16, 25);
+      margin-bottom: 0;
+
+      &__title {
+        @include lbh-rem(margin-bottom, 6);
+      }
+    }
+  }
+}

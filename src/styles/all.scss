@@ -12,6 +12,7 @@ $govuk-grid-widths: (
 @import 'lbh-frontend/lbh/all';
 @import 'environments';
 @import 'all-operatives';
+@import 'authorisations';
 @import 'bonus-summary';
 @import 'close-week';
 @import 'close-period';
@@ -142,4 +143,10 @@ $govuk-grid-widths: (
   .govuk-table__header {
     border-bottom: 0;
   }
+}
+
+/* Font customisations */
+
+.lbh-\!-font-colour-warning {
+  color: lbh-colour('lbh-error') !important;
 }

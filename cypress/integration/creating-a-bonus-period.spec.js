@@ -65,6 +65,14 @@ describe('Creating a bonus period', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -72,6 +80,7 @@ describe('Creating a bonus period', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.get('.govuk-grid-column-one-fifth').within(() => {
@@ -130,6 +139,14 @@ describe('Creating a bonus period', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -137,6 +154,7 @@ describe('Creating a bonus period', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.get('.govuk-grid-column-one-fifth').within(() => {
@@ -195,6 +213,14 @@ describe('Creating a bonus period', () => {
         { statusCode: 200, fixture: 'changes/empty.json' }
       ).as('get_band_changes')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/weeks')
       cy.wait([
         '@get_periods',
@@ -202,6 +228,7 @@ describe('Creating a bonus period', () => {
         '@get_week_13',
         '@get_period',
         '@get_band_changes',
+        '@get_authorisations',
       ])
 
       cy.get('.govuk-grid-column-one-fifth').within(() => {
@@ -227,8 +254,16 @@ describe('Creating a bonus period', () => {
         { statusCode: 200, fixture: 'periods/all.json' }
       ).as('get_periods')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/periods')
-      cy.wait('@get_periods')
+      cy.wait(['@get_periods', '@get_authorisations'])
 
       cy.get('.bc-bonus-periods table').within(() => {
         cy.get('thead > tr:nth-child(1)').within(() => {
