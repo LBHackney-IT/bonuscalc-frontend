@@ -7,10 +7,14 @@ import ButtonGroup from '@/components/ButtonGroup'
 import ButtonLink from '@/components/ButtonLink'
 import PageContext from '@/components/PageContext'
 import Pagination from '@/components/Pagination'
+import UserContext from '@/components/UserContext'
+import { isEditable } from '@/utils/auth'
 import { generateOvertimeReport } from '@/utils/reports'
 import { useContext } from 'react'
 
 const OvertimeSummary = () => {
+  const { user } = useContext(UserContext)
+
   const {
     operative,
     timesheet,
@@ -49,7 +53,7 @@ const OvertimeSummary = () => {
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>
 
-        {week.isEditable && operative.isEditable && (
+        {isEditable(operative, week, bonusPeriod, user) && (
           <ButtonLink href={`${baseUrl}/overtime/edit`} secondary={true}>
             Edit overtime
           </ButtonLink>
