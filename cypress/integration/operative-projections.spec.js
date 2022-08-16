@@ -41,8 +41,16 @@ describe('Viewing operative projections', () => {
         { statusCode: 200, fixture: 'changes/projected.json' }
       ).as('get_projected')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/manage/bands')
-      cy.wait(['@get_period', '@get_projected'])
+      cy.wait(['@get_period', '@get_projected', '@get_authorisations'])
 
       cy.get('.bc-projections').within(() => {
         cy.contains('h1', 'Band change')

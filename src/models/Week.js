@@ -3,13 +3,35 @@ import OperativeSummary from './OperativeSummary'
 import dayjs from '@/utils/date'
 import { wrap } from '@/utils/number'
 
+const MS_PER_WEEK = 86400 * 7 * 1000
+const WEEKS_PER_PERIOD = 13
+
 export default class Week {
   static get first() {
     return dayjs(process.env.NEXT_PUBLIC_FIRST_WEEK)
   }
 
   static get last() {
-    return dayjs(process.env.NEXT_PUBLIC_LAST_WEEK)
+    const firstWeek = dayjs(process.env.NEXT_PUBLIC_FIRST_WEEK)
+    const currentWeek = dayjs().startOf('isoWeek')
+    const numberOfWeeks = Math.round(
+      (currentWeek - firstWeek) / MS_PER_WEEK + 1
+    )
+    const numberOfPeriods = Math.floor(numberOfWeeks / WEEKS_PER_PERIOD)
+    const weekNumber = numberOfWeeks - numberOfPeriods * WEEKS_PER_PERIOD
+
+    if (weekNumber >= 11) {
+      // From week 11 start showing the next period
+      return firstWeek.add(
+        (numberOfPeriods + 2) * WEEKS_PER_PERIOD - 1,
+        'weeks'
+      )
+    } else {
+      return firstWeek.add(
+        (numberOfPeriods + 1) * WEEKS_PER_PERIOD - 1,
+        'weeks'
+      )
+    }
   }
 
   static get current() {

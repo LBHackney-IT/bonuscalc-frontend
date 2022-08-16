@@ -144,6 +144,8 @@ describe('Summary page', () => {
       })
 
       it('Allows navigating between bonus periods', () => {
+        cy.clock(new Date('2022-01-05T12:00:00Z'))
+
         cy.get('.govuk-tabs__panel').within(() => {
           cy.get('.lbh-heading-h3').contains('Period 3 – 2021')
 

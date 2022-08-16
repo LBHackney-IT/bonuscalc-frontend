@@ -1,14 +1,28 @@
+$govuk-grid-widths: (
+  one-fifth: 20%,
+  one-quarter: 25%,
+  one-third: 33.3333%,
+  one-half: 50%,
+  two-thirds: 66.6666%,
+  three-quarters: 75%,
+  four-fifths: 80%,
+  full: 100%,
+) !default;
+
 @import 'lbh-frontend/lbh/all';
 @import 'environments';
 @import 'all-operatives';
+@import 'authorisations';
 @import 'bonus-summary';
 @import 'close-week';
+@import 'close-period';
 @import 'open-weeks';
 @import 'out-of-hours';
 @import 'overtime';
 @import 'pay-elements';
 @import 'search';
 @import 'projections';
+@import 'band-changes';
 
 /* Bug fixes - remove when fixed in lbh-frontend */
 
@@ -130,4 +144,10 @@
   .govuk-table__header {
     border-bottom: 0;
   }
+}
+
+/* Font customisations */
+
+.lbh-\!-font-colour-warning {
+  color: lbh-colour('lbh-error') !important;
 }

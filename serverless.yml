@@ -54,6 +54,7 @@ functions:
       HACKNEY_JWT_SECRET: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/hackney-jwt-secret}
       OPERATIVE_MANAGERS_GOOGLE_GROUPNAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/operative-managers-group}
       WEEK_MANAGERS_GOOGLE_GROUPNAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/week-managers-group}
+      AUTHORISATION_MANAGERS_GOOGLE_GROUPNAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/authorisation-managers-group}
       REDIRECT_URL: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/redirect-url}
       NEXT_PUBLIC_ENV_NAME: ${self:provider.stage}
       NODE_ENV: production
@@ -63,6 +64,7 @@ functions:
       SENTRY_RELEASE: ${env:CIRCLE_SHA1}
       NOTIFY_API_KEY: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/notify-api-key}
       NOTIFY_TEMPLATE_ID: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/notify-template-id}
+      NOTIFY_BC_TEMPLATE_ID: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/notify-bc-template-id}
       TZ: Europe/London
 
 resources:

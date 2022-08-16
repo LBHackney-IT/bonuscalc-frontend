@@ -1,6 +1,10 @@
 import OperativePage from '@/components/OperativePage'
 import NonProductiveSummary from '@/components/NonProductiveSummary'
-import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
+import {
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+} from '@/utils/user'
 
 const NonProductivePage = ({ query }) => (
   <OperativePage query={query} tab={2} component={NonProductiveSummary} />
@@ -16,6 +20,10 @@ export const getServerSideProps = async (ctx) => {
   }
 }
 
-NonProductivePage.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
+NonProductivePage.permittedRoles = [
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+]
 
 export default NonProductivePage

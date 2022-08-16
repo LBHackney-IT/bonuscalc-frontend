@@ -3,6 +3,10 @@
     @include lbh-heading-h2;
   }
 
+  & > p {
+    @include lbh-body-m;
+  }
+
   &__period {
     header {
       h2 {

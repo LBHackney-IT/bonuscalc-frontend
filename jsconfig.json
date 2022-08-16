@@ -9,5 +9,6 @@
       "@/styles/*": ["src/styles/*"],
       "@/utils/*": ["src/utils/*"]
     }
-  }
+  },
+  "exclude": ["build", "node_modules"]
 }
