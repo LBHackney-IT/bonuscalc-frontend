@@ -885,8 +885,8 @@ const drawBonusSummary = (pdf, operative, summary) => {
 
   pdf.setFont('OpenSans', 'normal', 400)
 
-  pdf.text('P: Productive time', originX, originY + 127.1)
-  pdf.text('NP: Non-Productive time', originX, originY + 131.3)
+  pdf.text('P: Productive time', originX, originY + 117.1)
+  pdf.text('NP: Non-Productive time', originX, originY + 121.3)
 }
 
 const drawWeeklyManualOvertime = (pdf, operative, timesheet) => {
@@ -1373,6 +1373,34 @@ const drawWeeklyPaidWorkOrders = (
   }
 }
 
+const drawBandChangeDecision = (pdf, bandChange) => {
+  const originX = 17.7
+  const originY = 200.0
+
+  pdf.setFontSize(9)
+  pdf.setFont('OpenSans', 'normal', 600)
+
+  pdf.text('Changed to:', originX, originY)
+  pdf.text(`${bandChange.decision} on:`, originX, originY + 5.8)
+  pdf.text(`${bandChange.decision} by:`, originX, originY + 11.6)
+
+  if (bandChange.isSupervisorRejected) {
+    pdf.text('Reason:', originX, originY + 21.3)
+  }
+
+  pdf.setFont('OpenSans', 'normal', 400)
+  pdf.text(bandChange.changedTo, originX + 24.0, originY)
+  pdf.text(bandChange.decisionOn, originX + 24.0, originY + 5.8)
+  pdf.text(bandChange.decisionBy, originX + 24.0, originY + 11.6)
+
+  if (bandChange.isSupervisorRejected) {
+    pdf.text(bandChange.reason, originX, originY + 27.1, {
+      maxWidth: 100,
+      lineHeightFactor: 1.4,
+    })
+  }
+}
+
 export const generateWeeklyReport = (operative, timesheet) => {
   const pdf = createPDF()
 
@@ -1595,6 +1623,28 @@ export const generateOutOfHoursReport = (operative, timesheet) => {
       true,
       false
     )
+  })
+
+  return pdf
+}
+
+export const generateBandChangeReport = (operative, bandChange) => {
+  const pdf = createPDF()
+
+  withGraphicsState(pdf, () => {
+    drawLogo(pdf)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawOperativeSummary(pdf, operative)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawBonusSummary(pdf, operative, bandChange)
+  })
+
+  withGraphicsState(pdf, () => {
+    drawBandChangeDecision(pdf, bandChange)
   })
 
   return pdf

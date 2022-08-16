@@ -1,0 +1,204 @@
+{
+  "id": "2022-01-31",
+  "startAt": "2022-01-31T00:00:00Z",
+  "year": 2022,
+  "number": 1,
+  "closedAt": null,
+  "weeks": [
+    {
+      "id": "2022-01-31",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-01-31T00:00:00Z",
+      "number": 1,
+      "closedAt": "2022-04-11T06:50:53.573Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T06:51:10.123127Z"
+    },
+    {
+      "id": "2022-02-07",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-02-07T00:00:00Z",
+      "number": 2,
+      "closedAt": "2022-04-11T06:51:24.007Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T06:51:40.107967Z"
+    },
+    {
+      "id": "2022-02-14",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-02-14T00:00:00Z",
+      "number": 3,
+      "closedAt": "2022-04-11T06:54:17.33Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T06:54:35.738824Z"
+    },
+    {
+      "id": "2022-02-21",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-02-21T00:00:00Z",
+      "number": 4,
+      "closedAt": "2022-04-11T06:54:46.153Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T06:55:02.328725Z"
+    },
+    {
+      "id": "2022-02-28",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-02-28T00:00:00Z",
+      "number": 5,
+      "closedAt": "2022-04-11T06:55:16.347Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T06:55:32.866008Z"
+    },
+    {
+      "id": "2022-03-07",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-03-07T00:00:00Z",
+      "number": 6,
+      "closedAt": "2022-04-11T06:55:46.325Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T06:56:02.219619Z"
+    },
+    {
+      "id": "2022-03-14",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-03-14T00:00:00Z",
+      "number": 7,
+      "closedAt": "2022-04-11T06:56:11.426Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T06:56:27.570527Z"
+    },
+    {
+      "id": "2022-03-21",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-03-21T00:00:00Z",
+      "number": 8,
+      "closedAt": "2022-04-11T09:05:28.943Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T09:05:53.513756Z"
+    },
+    {
+      "id": "2022-03-28",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-03-27T23:00:00Z",
+      "number": 9,
+      "closedAt": "2022-04-11T09:06:03.797Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T09:06:30.453001Z"
+    },
+    {
+      "id": "2022-04-04",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-04-03T23:00:00Z",
+      "number": 10,
+      "closedAt": "2022-04-11T09:09:33.483Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": "2022-04-11T09:09:53.820272Z"
+    },
+    {
+      "id": "2022-04-11",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-04-10T23:00:00Z",
+      "number": 11,
+      "closedAt": "2022-04-18T09:09:33.483Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": null
+    },
+    {
+      "id": "2022-04-18",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-04-17T23:00:00Z",
+      "number": 12,
+      "closedAt": "2022-04-25T09:09:33.483Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": null
+    },
+    {
+      "id": "2022-04-25",
+      "bonusPeriod": {
+        "id": "2022-01-31",
+        "startAt": "2022-01-31T00:00:00Z",
+        "year": 2022,
+        "number": 1,
+        "closedAt": null
+      },
+      "startAt": "2022-04-24T23:00:00Z",
+      "number": 13,
+      "closedAt": "2022-05-02T09:09:33.483Z",
+      "closedBy": "a.week.manager@hackney.gov.uk",
+      "reportsSentAt": null
+    }
+  ]
+}

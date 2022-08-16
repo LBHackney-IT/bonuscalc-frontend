@@ -1,0 +1,44 @@
+[
+  {
+    "id": "123456/2022-01-31",
+    "operativeId": "123456",
+    "operativeName": "Alex Cable",
+    "emailAddress": null,
+    "bonusPeriod": {
+      "id": "2022-01-31",
+      "startAt": "2022-01-31T00:00:00Z",
+      "year": 2022,
+      "number": 1,
+      "closedAt": null,
+      "closedBy": null
+    },
+    "trade": "Electrician (EL)",
+    "scheme": "Reactive",
+    "bandValue": 28080,
+    "maxValue": 62868,
+    "sickDuration": 72.0,
+    "totalValue": 0,
+    "utilisation": 1,
+    "fixedBand": false,
+    "salaryBand": 5,
+    "projectedBand": 1,
+    "supervisor": {
+      "name": "A Supervisor",
+      "emailAddress": "a.supervisor@hackney.gov.uk",
+      "decision": "Rejected",
+      "reason": "Reason for keeping this operative at their current band",
+      "salaryBand": 5,
+      "updatedAt": "2022-05-06T09:04:48.045089Z"
+    },
+    "manager": {
+      "name": "An Authorisations Manager",
+      "emailAddress": "an.authorisations_manager",
+      "decision": "Approved",
+      "reason": "Because of reason",
+      "salaryBand": 5,
+      "updatedAt": "2022-05-07T09:04:48.045089Z"
+    },
+    "finalBand": 5,
+    "reportSentAt": null
+  }
+]

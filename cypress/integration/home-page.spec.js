@@ -47,8 +47,39 @@ describe('Home page', () => {
         { statusCode: 200, fixture: 'weeks/2021-10-25.json' }
       ).as('get_week_13')
 
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/period',
+        },
+        { statusCode: 200, fixture: 'changes/period.json' }
+      ).as('get_period')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes',
+        },
+        { statusCode: 200, fixture: 'changes/empty.json' }
+      ).as('get_band_changes')
+
+      cy.intercept(
+        {
+          method: 'GET',
+          path: '/api/v1/band-changes/authorisations',
+        },
+        { statusCode: 200, body: [] }
+      ).as('get_authorisations')
+
       cy.visit('/')
-      cy.wait(['@get_periods', '@get_week_12', '@get_week_13'])
+      cy.wait([
+        '@get_periods',
+        '@get_week_12',
+        '@get_week_13',
+        '@get_period',
+        '@get_band_changes',
+        '@get_authorisations',
+      ])
     })
 
     it('Shows the manage open weeks page', () => {

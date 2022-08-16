@@ -2,11 +2,15 @@ import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
 import ManagePage from '@/components/ManagePage'
 import ManageBonusPeriod from '@/components/ManageBonusPeriod'
-import { useBonusPeriods } from '@/utils/apiClient'
-import { OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE } from '@/utils/user'
+import { useCurrentBonusPeriods } from '@/utils/apiClient'
+import {
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+} from '@/utils/user'
 
 const ManageWeeksPage = ({ userDetails }) => {
-  const { bonusPeriods, isLoading, isError } = useBonusPeriods()
+  const { bonusPeriods, isLoading, isError } = useCurrentBonusPeriods()
 
   if (isLoading) return <Spinner />
   if (isError || !bonusPeriods)
@@ -30,7 +34,11 @@ const ManageWeeksPage = ({ userDetails }) => {
   )
 }
 
-ManageWeeksPage.permittedRoles = [OPERATIVE_MANAGER_ROLE, WEEK_MANAGER_ROLE]
+ManageWeeksPage.permittedRoles = [
+  OPERATIVE_MANAGER_ROLE,
+  WEEK_MANAGER_ROLE,
+  AUTHORISATIONS_MANAGER_ROLE,
+]
 
 export const getServerSideProps = async (ctx) => {
   const { query } = ctx

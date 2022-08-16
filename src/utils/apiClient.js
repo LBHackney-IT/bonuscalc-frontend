@@ -2,6 +2,7 @@ import axios from 'axios'
 import useSWR, { mutate } from 'swr'
 import { StatusCodes } from 'http-status-codes'
 import {
+  BandChange,
   BonusPeriod,
   Operative,
   OperativeProjection,
@@ -35,6 +36,20 @@ export const fetcher = async (url) => {
   return data
 }
 
+export const authorisationsUrl = () => {
+  return `/band-changes/authorisations`
+}
+
+export const useAuthorisations = () => {
+  const { data, error } = useSWR(authorisationsUrl(), fetcher)
+
+  return {
+    authorisations: data ? arrayMap(BandChange, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
 export const bandChangePeriodUrl = () => {
   return `/band-changes/period`
 }
@@ -49,12 +64,145 @@ export const useBandChangePeriod = () => {
   }
 }
 
+export const getBandChangePeriod = async () => {
+  const url = bandChangePeriodUrl()
+
+  try {
+    const { status, data } = await client.get(url)
+
+    if (status == StatusCodes.OK) {
+      return new BonusPeriod(data)
+    } else {
+      return false
+    }
+  } catch (error) {
+    return false
+  }
+}
+
+export const startBandChangeProcessUrl = () => {
+  return `/band-changes/start`
+}
+
+export const startBandChangeProcess = async () => {
+  const url = startBandChangeProcessUrl()
+
+  try {
+    const { status } = await client.post(url)
+
+    if (status == StatusCodes.OK) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    return false
+  }
+}
+
+export const bandChangesUrl = () => {
+  return `/band-changes`
+}
+
+export const useBandChanges = () => {
+  const { data, error } = useSWR(bandChangesUrl(), fetcher)
+
+  return {
+    bandChanges: data ? arrayMap(BandChange, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const managerDecisionUrl = (operative) => {
+  return `/band-changes/${operative}/manager`
+}
+
+export const saveManagerDecision = async (operative, data) => {
+  const url = managerDecisionUrl(operative)
+
+  try {
+    const res = await client.post(url, data)
+
+    // Invalidate the cached band changes
+    mutate(authorisationsUrl())
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const supervisorDecisionUrl = (operative) => {
+  return `/band-changes/${operative}/supervisor`
+}
+
+export const saveSupervisorDecision = async (operative, data) => {
+  const url = supervisorDecisionUrl(operative)
+
+  try {
+    const res = await client.post(url, data)
+
+    // Invalidate the cached band changes
+    mutate(bandChangesUrl())
+    mutate(authorisationsUrl())
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const bandChangeReportSentAtUrl = (payrollNumber) => {
+  return `/band-changes/${payrollNumber}/report`
+}
+
+export const saveBandChangeReportSentAt = async (payrollNumber) => {
+  const url = bandChangeReportSentAtUrl(payrollNumber)
+
+  try {
+    const res = await client.post(url)
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
 export const bonusPeriodsUrl = () => {
-  return `/periods/current`
+  return `/periods`
 }
 
 export const useBonusPeriods = () => {
   const { data, error } = useSWR(bonusPeriodsUrl(), fetcher)
+
+  return {
+    bonusPeriods: data ? arrayMap(BonusPeriod, data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const createBonusPeriod = async (date) => {
+  const url = bonusPeriodsUrl()
+
+  try {
+    const res = await client.post(url, { id: date })
+
+    // Invalidate the cached bonus periods
+    mutate(bonusPeriodsUrl())
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const currentBonusPeriodsUrl = () => {
+  return `/periods/current`
+}
+
+export const useCurrentBonusPeriods = () => {
+  const { data, error } = useSWR(currentBonusPeriodsUrl(), fetcher)
 
   return {
     bonusPeriods: data ? arrayMap(BonusPeriod, data) : null,
@@ -203,7 +351,7 @@ export const saveReportsSentAt = async (week) => {
     mutate(`/weeks/${week}`)
 
     // Invalidate the cached bonus periods
-    const { status, data } = await client.get(bonusPeriodsUrl())
+    const { status, data } = await client.get(currentBonusPeriodsUrl())
 
     if (status == StatusCodes.OK) {
       mutate('/periods/current', data)
@@ -237,6 +385,22 @@ export const saveWeek = async (week, data) => {
 
     // Invalidate the cached timesheet
     mutate(url)
+
+    return res.status == StatusCodes.OK
+  } catch (error) {
+    return false
+  }
+}
+
+export const bonusPeriodUrl = (period) => {
+  return `/periods/${period}`
+}
+
+export const saveBonusPeriod = async (period, data) => {
+  const url = bonusPeriodUrl(period)
+
+  try {
+    const res = await client.post(url, data)
 
     return res.status == StatusCodes.OK
   } catch (error) {

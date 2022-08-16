@@ -32,6 +32,8 @@ Cypress.Commands.add('login', (user) => {
       return Cypress.env('GSSO_WEEK_MANAGER_TEST_KEY')
     } else if (user == 'an.operative_manager') {
       return Cypress.env('GSSO_OPERATIVE_MANAGER_TEST_KEY')
+    } else if (user == 'an.authorisations_manager') {
+      return Cypress.env('GSSO_AUTHORISATIONS_MANAGER_TEST_KEY')
     } else {
       return Cypress.env('GSSO_TEST_KEY')
     }

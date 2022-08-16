@@ -1,0 +1,28 @@
+[
+  {
+    "id": "2022-05-02",
+    "startAt": "2022-05-01T23:00:00Z",
+    "year": 2022,
+    "number": 2,
+    "closedAt": null,
+    "closedBy": null,
+    "weeks": [
+      {
+        "id": "2022-05-02",
+        "bonusPeriod": {
+          "id": "2022-05-02",
+          "startAt": "2022-05-01T23:00:00Z",
+          "year": 2022,
+          "number": 2,
+          "closedAt": null,
+          "closedBy": null
+        },
+        "startAt": "2022-05-01T23:00:00Z",
+        "number": 1,
+        "closedAt": null,
+        "closedBy": null,
+        "reportsSentAt": null
+      }
+    ]
+  }
+]
