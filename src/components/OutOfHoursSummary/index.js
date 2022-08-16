@@ -6,10 +6,14 @@ import ButtonGroup from '@/components/ButtonGroup'
 import ButtonLink from '@/components/ButtonLink'
 import PageContext from '@/components/PageContext'
 import Pagination from '@/components/Pagination'
+import UserContext from '@/components/UserContext'
+import { isEditable } from '@/utils/auth'
 import { generateOutOfHoursReport } from '@/utils/reports'
 import { useContext } from 'react'
 
 const OutOfHoursSummary = () => {
+  const { user } = useContext(UserContext)
+
   const {
     operative,
     timesheet,
@@ -38,7 +42,7 @@ const OutOfHoursSummary = () => {
       <ButtonGroup>
         <Button onClick={downloadReport}>Download report</Button>
 
-        {week.isEditable && operative.isEditable && (
+        {isEditable(operative, week, bonusPeriod, user) && (
           <ButtonLink href={`${baseUrl}/out-of-hours/edit`} secondary={true}>
             Edit out of hours
           </ButtonLink>
