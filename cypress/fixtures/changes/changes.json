@@ -23,16 +23,16 @@
     "salaryBand": 5,
     "projectedBand": 1,
     "supervisor": {
-      "name": null,
-      "emailAddress": null,
+      "name": "An Operative Manager",
+      "emailAddress": "an.operative_manager@hackney.gov.uk",
       "decision": null,
       "reason": null,
       "salaryBand": null,
       "updatedAt": null
     },
     "manager": {
-      "name": null,
-      "emailAddress": null,
+      "name": "An Authorisations Manager",
+      "emailAddress": "an.authorisations_manager@hackney.gov.uk",
       "decision": null,
       "reason": null,
       "salaryBand": null,
@@ -65,16 +65,16 @@
     "salaryBand": 5,
     "projectedBand": 1,
     "supervisor": {
-      "name": null,
-      "emailAddress": null,
+      "name": "An Operative Manager",
+      "emailAddress": "an.operative_manager@hackney.gov.uk",
       "decision": null,
       "reason": null,
       "salaryBand": null,
       "updatedAt": null
     },
     "manager": {
-      "name": null,
-      "emailAddress": null,
+      "name": "An Authorisations Manager",
+      "emailAddress": "an.authorisations_manager@hackney.gov.uk",
       "decision": null,
       "reason": null,
       "salaryBand": null,

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import AnnouncementContext from '@/components/AnnouncementContext'
 import Button from '@/components/Button'
 import ButtonGroup from '@/components/ButtonGroup'
+import LinkButton from '@/components/LinkButton'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
 import ErrorMessage from '@/components/ErrorMessage'
@@ -621,6 +622,10 @@ const OperativeList = ({ operatives, period, form, selectAllId }) => {
     })
   }
 
+  useEffect(() => {
+    setChecked([])
+  }, [operatives])
+
   return (
     <>
       <Table className="bc-band-changes__list">
@@ -776,7 +781,7 @@ const OperativeList = ({ operatives, period, form, selectAllId }) => {
   )
 }
 
-const Search = ({ allOperatives, period }) => {
+const Search = ({ allOperatives, period, showAll, setShowAll }) => {
   const searchInput = useRef(null)
 
   const [value, setValue] = useState('')
@@ -812,7 +817,17 @@ const Search = ({ allOperatives, period }) => {
   return (
     <>
       <div className="bc-band-changes__search">
-        <p>All operatives</p>
+        <div>
+          <h2>{showAll ? <>All operatives</> : <>My operatives</>}</h2>
+          <p>
+            <LinkButton
+              className={'govuk-!-font-size-14'}
+              onClick={() => setShowAll(!showAll)}
+            >
+              {showAll ? <>Show my operatives</> : <>Show all operatives</>}
+            </LinkButton>
+          </p>
+        </div>
         <p className="lbh-search-box">
           <label htmlFor="search">Search</label>
           <input
@@ -873,6 +888,8 @@ const Search = ({ allOperatives, period }) => {
 
 const BandChanges = ({ period }) => {
   const { bandChanges, isLoading, isError } = useBandChanges()
+  const { user } = useContext(UserContext)
+  const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -890,10 +907,19 @@ const BandChanges = ({ period }) => {
 
   if (bandChanges.length == 0) return <StartBandChangeProcess period={period} />
 
+  const myBandChanges = bandChanges.filter(
+    (bc) => bc.supervisorEmail == user.email
+  )
+
   return (
     <section className="bc-band-changes">
       <Header period={period} />
-      <Search allOperatives={bandChanges} period={period} />
+      <Search
+        allOperatives={showAll ? bandChanges : myBandChanges}
+        period={period}
+        showAll={showAll}
+        setShowAll={setShowAll}
+      />
     </section>
   )
 }

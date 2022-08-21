@@ -156,9 +156,77 @@ describe('Starting the band change process', () => {
       cy.get('.bc-band-changes').within(() => {
         cy.contains('h1', 'Band change')
         cy.contains('h1', '(Period 1 – 2022)')
-        cy.contains('p', 'All operatives')
+        cy.contains('h2', 'My operatives')
+        cy.contains('#tab_bonus-band', 'Bonus band (0)')
+        cy.contains('#tab_fixed-band', 'Fixed band (0)')
+
+        cy.get('.bc-band-changes__search').within(() => {
+          cy.get('div:first-child button').click()
+        })
+
+        cy.contains('h2', 'All operatives')
         cy.contains('#tab_bonus-band', 'Bonus band (1)')
         cy.contains('#tab_fixed-band', 'Fixed band (1)')
+
+        cy.contains('#tab_bonus-band', 'Bonus band (1)').click()
+
+        cy.get('#bonus-band').within(() => {
+          cy.get('thead').within(() => {
+            cy.get('tr:nth-child(1)').within(() => {
+              cy.contains('th:nth-child(2)', 'Operative')
+              cy.contains('th:nth-child(3)', 'Payroll no.')
+              cy.contains('th:nth-child(4)', 'Trade')
+              cy.contains('th:nth-child(5)', 'Sick')
+              cy.contains('th:nth-child(6)', 'Total')
+              cy.contains('th:nth-child(7) button:first-child', 'Band')
+              cy.contains('th:nth-child(7) button:last-child', 'Proj.')
+              cy.contains('th:nth-child(8)', 'Change')
+            })
+          })
+
+          cy.get('tbody:nth-of-type(1)').within(() => {
+            cy.get('tr:nth-child(1)').within(() => {
+              cy.contains('td:nth-child(2)', 'Alex Cable')
+              cy.contains('td:nth-child(3)', '123456')
+              cy.contains('td:nth-child(4)', 'EL')
+              cy.contains('td:nth-child(5)', '72.00')
+              cy.contains('td:nth-child(6)', '0.00')
+              cy.contains('td:nth-child(7) span:first-child', '5')
+              cy.contains('td:nth-child(7) span:last-child', '1')
+              cy.contains('td:nth-child(8)', '–')
+            })
+          })
+        })
+
+        cy.contains('#tab_fixed-band', 'Fixed band (1)').click()
+
+        cy.get('#fixed-band').within(() => {
+          cy.get('thead').within(() => {
+            cy.get('tr:nth-child(1)').within(() => {
+              cy.contains('th:nth-child(2)', 'Operative')
+              cy.contains('th:nth-child(3)', 'Payroll no.')
+              cy.contains('th:nth-child(4)', 'Trade')
+              cy.contains('th:nth-child(5)', 'Sick')
+              cy.contains('th:nth-child(6)', 'Total')
+              cy.contains('th:nth-child(7) button:first-child', 'Band')
+              cy.contains('th:nth-child(7) button:last-child', 'Proj.')
+              cy.contains('th:nth-child(8)', 'Change')
+            })
+          })
+
+          cy.get('tbody:nth-of-type(1)').within(() => {
+            cy.get('tr:nth-child(1)').within(() => {
+              cy.contains('td:nth-child(2)', 'André Wood')
+              cy.contains('td:nth-child(3)', '654321')
+              cy.contains('td:nth-child(4)', 'CP')
+              cy.contains('td:nth-child(5)', '72.00')
+              cy.contains('td:nth-child(6)', '0.00')
+              cy.contains('td:nth-child(7) span:first-child', '5')
+              cy.contains('td:nth-child(7) span:last-child', '1')
+              cy.contains('td:nth-child(8)', '–')
+            })
+          })
+        })
       })
 
       cy.audit()

@@ -76,6 +76,10 @@ export default class BandChange {
     return this.supervisor?.name
   }
 
+  get supervisorEmail() {
+    return this.supervisor?.emailAddress
+  }
+
   get supervisorBand() {
     return this.supervisor?.salaryBand
   }
