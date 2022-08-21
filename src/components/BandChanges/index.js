@@ -27,6 +27,7 @@ const StartBandChangeProcess = ({ period }) => {
   const router = useRouter()
   const startButton = useRef(null)
   const [completed, setCompleted] = useState(false)
+  const { user } = useContext(UserContext)
 
   const onClick = async () => {
     startButton.current.disabled = true
@@ -46,15 +47,24 @@ const StartBandChangeProcess = ({ period }) => {
         <span>Band change</span>
         <span>({period.description})</span>
       </h1>
-      <p>
-        All the weeks are closed – click ‘Start’ to begin approving/rejecting
-        band changes.
-      </p>
-      <ButtonGroup>
-        <Button ref={startButton} onClick={onClick}>
-          Start
-        </Button>
-      </ButtonGroup>
+      {user.hasWeekManagerPermissions ? (
+        <>
+          <p>
+            All the weeks are closed – click ‘Start’ to begin
+            approving/rejecting band changes.
+          </p>
+          <ButtonGroup>
+            <Button ref={startButton} onClick={onClick}>
+              Start
+            </Button>
+          </ButtonGroup>
+        </>
+      ) : (
+        <p>
+          All the weeks are closed – waiting for the bonus scheme manager to
+          start the band change process.
+        </p>
+      )}
     </section>
   )
 }

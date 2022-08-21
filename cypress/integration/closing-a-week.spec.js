@@ -606,14 +606,6 @@ describe('Closing a week', () => {
         { statusCode: 200, fixture: 'periods/current-closed-and-sent.json' }
       ).as('get_periods_closed_and_sent')
 
-      cy.intercept(
-        {
-          method: 'GET',
-          path: '/api/v1/band-changes/period',
-        },
-        { statusCode: 200, fixture: 'changes/period.json' }
-      ).as('get_period')
-
       cy.get('.bc-close-week').within(() => {
         cy.contains('button', 'Close and send reports').click()
       })
@@ -621,7 +613,6 @@ describe('Closing a week', () => {
       cy.wait(['@post_week_12', '@get_week_12_closed'])
       cy.wait(['@email_123456_report', '@post_123456_report'])
       cy.wait(['@post_week_12_report', '@get_periods_closed_and_sent'])
-      cy.wait(['@get_period'])
 
       cy.location().should((loc) => {
         expect(loc.pathname).to.eq('/manage/weeks')
