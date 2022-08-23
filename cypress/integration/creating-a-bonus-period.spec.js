@@ -270,18 +270,23 @@ describe('Creating a bonus period', () => {
           cy.get(':nth-child(1)').contains('Period')
           cy.get(':nth-child(2)').contains('Date')
           cy.get(':nth-child(3)').contains('Closed')
+          cy.get(':nth-child(4)').contains('Payroll File')
         })
 
         cy.get('tbody > tr:nth-child(1)').within(() => {
           cy.get(':nth-child(1)').contains('Period 3 – 2021')
           cy.get(':nth-child(2)').contains('2 Aug – 31 Oct')
           cy.get(':nth-child(3)').contains('10 Nov 2021')
+          cy.get(':nth-child(4)')
+            .contains('a', 'Download')
+            .should('have.attr', 'href', '/api/reports/periods/2021-08-02')
         })
 
         cy.get('tbody > tr:nth-child(2)').within(() => {
           cy.get(':nth-child(1)').contains('Period 4 – 2021')
           cy.get(':nth-child(2)').contains('1 Nov – 30 Jan')
           cy.get(':nth-child(3)').contains('–')
+          cy.get(':nth-child(4)').contains('–')
         })
       })
 
@@ -314,6 +319,7 @@ describe('Creating a bonus period', () => {
           cy.get(':nth-child(1)').contains('Period 1 – 2022')
           cy.get(':nth-child(2)').contains('31 Jan – 1 May')
           cy.get(':nth-child(3)').contains('–')
+          cy.get(':nth-child(4)').contains('–')
         })
       })
 

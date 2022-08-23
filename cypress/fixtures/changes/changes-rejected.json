@@ -31,8 +31,8 @@
       "updatedAt": "2022-05-06T09:04:48.045089Z"
     },
     "manager": {
-      "name": null,
-      "emailAddress": null,
+      "name": "An Authorisations Manager",
+      "emailAddress": "an.authorisations_manager@hackney.gov.uk",
       "decision": null,
       "reason": null,
       "salaryBand": null,
