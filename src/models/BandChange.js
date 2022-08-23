@@ -24,6 +24,8 @@ export default class BandChange {
     this.salaryBand = attrs.salaryBand
     this.projectedBand = attrs.projectedBand
     this.finalBand = attrs.finalBand
+    this.rateCode = attrs.rateCode
+    this.bonusRate = attrs.bonusRate
     this.supervisor = new BandApprover(attrs.supervisor)
     this.manager = new BandApprover(attrs.manager)
     this.reportSentAt = attrs.reportSentAt

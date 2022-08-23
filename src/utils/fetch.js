@@ -14,6 +14,10 @@ const client = axios.create({
   },
 })
 
+const bandChangesUrl = (bonusPeriodId) => {
+  return `/band-changes?date=${bonusPeriodId}`
+}
+
 const bandChangeUrl = (payrollNumber) => {
   return `/band-changes/${payrollNumber}`
 }
@@ -30,6 +34,16 @@ const arrayMap = (klass, items) => items.map((item) => new klass(item))
 
 export const prnRegex = new RegExp('^[0-9]{6}$')
 export const dateRegex = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+
+export const fetchBandChanges = async (bonusPeriodId) => {
+  const response = await client.get(bandChangesUrl(bonusPeriodId))
+
+  if (response.status == StatusCodes.OK) {
+    return arrayMap(BandChange, response.data)
+  } else {
+    throw new Error(`Unable to fetch band changes for ${bonusPeriodId}`)
+  }
+}
 
 export const fetchBandChange = async (payrollNumber) => {
   const response = await client.get(bandChangeUrl(payrollNumber))
