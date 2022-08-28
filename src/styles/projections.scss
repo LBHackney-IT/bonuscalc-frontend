@@ -30,12 +30,25 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     margin-top: govuk-spacing(3);
 
     & > * {
       @include lbh-body-l;
       margin-top: govuk-spacing(1);
+    }
+
+    & > div:first-child {
+      & > h2 {
+        @include lbh-heading-h4;
+        font-weight: normal;
+        margin: 0;
+      }
+
+      & > p {
+        @include lbh-body-s;
+        margin: 0;
+      }
     }
 
     & > .lbh-search-box {

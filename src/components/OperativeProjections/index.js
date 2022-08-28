@@ -1,9 +1,12 @@
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import LinkButton from '@/components/LinkButton'
 import Spinner from '@/components/Spinner'
 import NotFound from '@/components/NotFound'
-import { useState, useRef, useEffect } from 'react'
+import UserContext from '@/components/UserContext'
+import { useContext, useState, useRef } from 'react'
+import { useEffect, useCallback } from 'react'
 import { SearchIcon, CrossIcon } from '@/components/Icons'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
 import { BonusPeriod } from '@/models'
@@ -162,20 +165,23 @@ const OperativeList = ({ operatives, period }) => {
   )
 }
 
-const Search = ({ allOperatives, period }) => {
+const Search = ({ allOperatives, period, showAll, setShowAll }) => {
   const searchInput = useRef(null)
 
   const [value, setValue] = useState('')
   const [operatives, setOperatives] = useState(allOperatives)
 
-  const filterOperatives = (filter) => {
-    if (filter) {
-      const regex = new RegExp(escapeRegExp(transliterate(filter)), 'i')
-      setOperatives(allOperatives.filter((o) => o.matches(regex)))
-    } else {
-      setOperatives(allOperatives)
-    }
-  }
+  const filterOperatives = useCallback(
+    (filter) => {
+      if (filter) {
+        const regex = new RegExp(escapeRegExp(transliterate(filter)), 'i')
+        setOperatives(allOperatives.filter((o) => o.matches(regex)))
+      } else {
+        setOperatives(allOperatives)
+      }
+    },
+    [allOperatives]
+  )
 
   const onChange = (event) => {
     setValue(event.target.value)
@@ -188,10 +194,24 @@ const Search = ({ allOperatives, period }) => {
     searchInput.current.focus()
   }
 
+  useEffect(() => {
+    filterOperatives(value)
+  }, [allOperatives, filterOperatives, value])
+
   return (
     <>
       <div className="bc-projections__search">
-        <p>All operatives</p>
+        <div>
+          <h2>{showAll ? <>All operatives</> : <>My operatives</>}</h2>
+          <p>
+            <LinkButton
+              className={'govuk-!-font-size-14'}
+              onClick={() => setShowAll(!showAll)}
+            >
+              {showAll ? <>Show my operatives</> : <>Show all operatives</>}
+            </LinkButton>
+          </p>
+        </div>
         <p className="lbh-search-box">
           <label htmlFor="search">Search</label>
           <input
@@ -248,6 +268,8 @@ const Search = ({ allOperatives, period }) => {
 
 const OperativeProjections = ({ period }) => {
   const { operativeProjections, isLoading, isError } = useOperativeProjections()
+  const { user } = useContext(UserContext)
+  const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -263,11 +285,20 @@ const OperativeProjections = ({ period }) => {
       </NotFound>
     )
 
+  const myOperativeProjections = operativeProjections.filter(
+    (op) => op.supervisorEmailAddress == user.email
+  )
+
   return (
     <section className="bc-projections">
       <Header period={period} />
       <InformationPanel />
-      <Search allOperatives={operativeProjections} period={period} />
+      <Search
+        allOperatives={showAll ? operativeProjections : myOperativeProjections}
+        period={period}
+        showAll={showAll}
+        setShowAll={setShowAll}
+      />
     </section>
   )
 }
