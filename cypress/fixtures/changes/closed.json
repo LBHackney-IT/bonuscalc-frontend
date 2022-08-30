@@ -1,0 +1,86 @@
+[
+  {
+    "id": "123456/2021-08-02",
+    "operativeId": "123456",
+    "operativeName": "Alex Cable",
+    "emailAddress": null,
+    "bonusPeriod": {
+      "id": "2021-08-02",
+      "startAt": "2021-08-01T23:00:00Z",
+      "year": 2021,
+      "number": 3,
+      "closedAt": "2021-11-10T12:00:00Z",
+      "closedBy": "a.week_manager@hackney.gov.uk"
+    },
+    "trade": "Electrician (EL)",
+    "scheme": "Reactive",
+    "bandValue": 28080,
+    "maxValue": 62868,
+    "sickDuration": 72.0,
+    "totalValue": 0,
+    "utilisation": 1,
+    "fixedBand": false,
+    "salaryBand": 5,
+    "projectedBand": 1,
+    "supervisor": {
+      "name": "An Operative Manager",
+      "emailAddress": "an.operative_manager@hackney.gov.uk",
+      "decision": "Approved",
+      "reason": null,
+      "salaryBand": 1,
+      "updatedAt": "2021-11-09T09:04:48.045089Z"
+    },
+    "manager": {
+      "name": null,
+      "emailAddress": null,
+      "decision": null,
+      "reason": null,
+      "salaryBand": null,
+      "updatedAt": null
+    },
+    "finalBand": 1,
+    "reportSentAt": null
+  },
+  {
+    "id": "654321/2021-08-02",
+    "operativeId": "654321",
+    "operativeName": "André Wood",
+    "emailAddress": null,
+    "bonusPeriod": {
+      "id": "2021-08-02",
+      "startAt": "2021-08-01T23:00:00Z",
+      "year": 2021,
+      "number": 3,
+      "closedAt": "2021-11-10T12:00:00Z",
+      "closedBy": "a.week_manager@hackney.gov.uk"
+    },
+    "trade": "Carpenter (CP)",
+    "scheme": "Planned",
+    "bandValue": 28080,
+    "maxValue": 62868,
+    "sickDuration": 72.0,
+    "totalValue": 0,
+    "utilisation": 1,
+    "fixedBand": true,
+    "salaryBand": 5,
+    "projectedBand": 1,
+    "supervisor": {
+      "name": "An Operative Manager",
+      "emailAddress": "an.operative_manager@hackney.gov.uk",
+      "decision": "Approved",
+      "reason": null,
+      "salaryBand": 1,
+      "updatedAt": "2021-11-09T09:04:48.045089Z"
+    },
+    "manager": {
+      "name": "An Authorisations Manager",
+      "emailAddress": "an.authorisations_manager@hackney.gov.uk",
+      "decision": null,
+      "reason": null,
+      "salaryBand": null,
+      "updatedAt": null
+    },
+    "finalBand": 5,
+    "reportSentAt": null
+  }
+]

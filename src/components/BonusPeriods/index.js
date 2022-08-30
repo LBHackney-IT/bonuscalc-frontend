@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import Button from '@/components/Button'
 import ButtonGroup from '@/components/ButtonGroup'
+import Link from 'next/link'
 import UserContext from '@/components/UserContext'
 import { useContext, useRef } from 'react'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/Table'
@@ -41,7 +42,17 @@ const BonusPeriods = ({ periods }) => {
         <TBody>
           {periods.map((bp, index) => (
             <TR key={index}>
-              <TD>{bp.description}</TD>
+              <TD>
+                {bp.isClosed ? (
+                  <Link href={`/manage/periods/${bp.id}`}>
+                    <a className="lbh-link lbh-link--no-visited-state">
+                      {bp.description}
+                    </a>
+                  </Link>
+                ) : (
+                  <>{bp.description}</>
+                )}
+              </TD>
               <TD>{bp.dateRange}</TD>
               <TD>{bp.closedDate}</TD>
               {user.hasWeekManagerPermissions && (

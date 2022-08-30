@@ -100,12 +100,16 @@ export const startBandChangeProcess = async () => {
   }
 }
 
-export const bandChangesUrl = () => {
-  return `/band-changes`
+export const bandChangesUrl = (period) => {
+  if (period) {
+    return `/band-changes?date=${period}`
+  } else {
+    return `/band-changes`
+  }
 }
 
-export const useBandChanges = () => {
-  const { data, error } = useSWR(bandChangesUrl(), fetcher)
+export const useBandChanges = (period) => {
+  const { data, error } = useSWR(bandChangesUrl(period), fetcher)
 
   return {
     bandChanges: data ? arrayMap(BandChange, data) : null,
@@ -394,6 +398,16 @@ export const saveWeek = async (week, data) => {
 
 export const bonusPeriodUrl = (period) => {
   return `/periods/${period}`
+}
+
+export const useBonusPeriod = (period) => {
+  const { data, error } = useSWR(bonusPeriodUrl(period), fetcher)
+
+  return {
+    bonusPeriod: data ? new BonusPeriod(data) : null,
+    isLoading: !error && !data,
+    isError: error,
+  }
 }
 
 export const saveBonusPeriod = async (period, data) => {
