@@ -55,6 +55,15 @@ describe('Viewing operative projections', () => {
       cy.get('.bc-projections').within(() => {
         cy.contains('h1', 'Band change')
         cy.contains('h1', '(Period 1 – 2022)')
+        cy.contains('h2', 'My operatives')
+        cy.contains('#tab_bonus-band', 'Bonus band (0)')
+        cy.contains('#tab_fixed-band', 'Fixed band (0)')
+
+        cy.get('.bc-projections__search').within(() => {
+          cy.get('div:first-child button').click()
+        })
+
+        cy.contains('h2', 'All operatives')
 
         cy.get('.lbh-page-announcement').within(() => {
           cy.contains('h3', 'Band changes cannot be approved or rejected')
