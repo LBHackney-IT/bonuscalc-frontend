@@ -39,6 +39,14 @@ export default class OperativeSummary {
     return this.payBandFor(this.projectedValue, this.averageUtilisation)
   }
 
+  get hasNonProductiveDuration() {
+    return this.nonProductiveDuration > 0
+  }
+
+  get hasZeroSMVs() {
+    return this.totalValue == 0 && !this.hasNonProductiveDuration
+  }
+
   payBandFor(value, utilisation) {
     return bandForValue(this.scheme.payBands, value, utilisation)
   }

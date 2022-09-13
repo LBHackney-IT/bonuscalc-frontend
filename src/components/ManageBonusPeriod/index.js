@@ -95,7 +95,7 @@ const OperativeList = ({ date }) => {
 
   useEffect(() => {
     if (week && !allOperatives) {
-      setAllOperatives(week.operatives.filter((os) => os.totalValue == 0))
+      setAllOperatives(week.operatives.filter((os) => os.hasZeroSMVs))
     }
   }, [isLoading, allOperatives, week])
 
