@@ -16,7 +16,7 @@ import {
 
 const Summary = ({ week }) => {
   const operatives = week.operatives
-  const zeroSMVOperatives = operatives.filter((o) => o.totalValue == 0)
+  const zeroSMVOperatives = operatives.filter((o) => o.hasZeroSMVs)
 
   return (
     <div className="bc-close-week__summary">
