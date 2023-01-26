@@ -224,7 +224,7 @@
         "selectable": false
       },
       "monday": 0,
-      "tuesday": 20,
+      "tuesday": 22,
       "wednesday": 0,
       "thursday": 0,
       "friday": 0,
@@ -235,7 +235,7 @@
       "address": "1 Knowhere Road",
       "comment": "Replace fuse in plug",
       "duration": 0,
-      "value": 20,
+      "value": 22,
       "readOnly": true
     },
     {
