@@ -355,14 +355,14 @@ describe('Out of hours page', () => {
             cy.get(':nth-child(2)').contains('1 Knowhere Road')
             cy.get(':nth-child(3)').contains('Replace fuse in plug')
             cy.get(':nth-child(4)').contains('19/10/2021')
-            cy.get(':nth-child(5)').contains('£22.86')
+            cy.get(':nth-child(5)').contains('£22.00')
           })
         })
 
         cy.get('#ooh-jobs tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('£204.00')
+            cy.get(':nth-child(2)').contains('£206.00')
           })
         })
       })
