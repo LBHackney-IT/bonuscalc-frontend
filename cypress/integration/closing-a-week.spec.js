@@ -532,6 +532,7 @@ describe('Closing a week', () => {
       cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
         cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
           cy.get('header').within(() => {
+            cy.wait(2000)
             cy.contains('h4', 'Operatives with no SMVs (0)')
             cy.contains('a', 'Close week and send reports').click()
 
