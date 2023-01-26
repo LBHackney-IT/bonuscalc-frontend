@@ -26,7 +26,7 @@
   "rules": {
     "@next/next/no-html-link-for-pages": "off",
     "@next/next/no-document-import-in-page": "off",
-    "linebreak-style": 0,
+    "linebreak-style": ["error", "unix"],
     "require-atomic-updates": "off",
     "react/jsx-uses-vars": 2
   }
