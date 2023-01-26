@@ -355,7 +355,7 @@ describe('Out of hours page', () => {
             cy.get(':nth-child(2)').contains('1 Knowhere Road')
             cy.get(':nth-child(3)').contains('Replace fuse in plug')
             cy.get(':nth-child(4)').contains('19/10/2021')
-            cy.get(':nth-child(5)').contains('£20.00')
+            cy.get(':nth-child(5)').contains('£22.86')
           })
         })
 
