@@ -49,7 +49,10 @@ const EditOvertime = () => {
     }
 
     return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
+      setTimeout(
+        () => router.events.off('routeChangeComplete', pushAnnouncement),
+        100
+      )
     }
   }, [confirmed, router.events, setAnnouncement])
 
