@@ -55,7 +55,10 @@ const EditOutOfHours = () => {
     }
 
     return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
+      setTimeout(
+        () => router.events.off('routeChangeComplete', pushAnnouncement),
+        50
+      )
     }
   }, [confirmed, router.events, setAnnouncement])
 

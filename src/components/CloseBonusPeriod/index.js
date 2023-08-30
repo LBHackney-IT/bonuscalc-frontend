@@ -107,7 +107,10 @@ const CloseBonusPeriod = ({ period, bandChanges }) => {
     }
 
     return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
+      setTimeout(
+        () => router.events.off('routeChangeComplete', pushAnnouncement),
+        100
+      )
     }
   }, [completed, router, setAnnouncement, period.description])
 
