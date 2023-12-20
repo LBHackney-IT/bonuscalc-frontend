@@ -127,10 +127,7 @@ const CloseWeek = ({ week }) => {
     }
 
     return () => {
-      setTimeout(
-        () => router.events.off('routeChangeComplete', pushAnnouncement),
-        50
-      )
+      router.events.off('routeChangeComplete', pushAnnouncement)
     }
   }, [completed, router, setAnnouncement, week.number])
 

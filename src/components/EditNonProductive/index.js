@@ -48,10 +48,7 @@ const EditNonProductive = () => {
     }
 
     return () => {
-      setTimeout(
-        () => router.events.off('routeChangeComplete', pushAnnouncement),
-        100
-      )
+      router.events.off('routeChangeComplete', pushAnnouncement)
     }
   }, [confirmed, router.events, setAnnouncement])
 
