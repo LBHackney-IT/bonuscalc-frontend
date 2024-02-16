@@ -305,7 +305,7 @@ describe('Overtime page', () => {
             cy.get(':nth-child(2)').contains('2 Somewhere Street')
             cy.get(':nth-child(3)').contains('Replace broken light switch')
             cy.get(':nth-child(4)').contains('20/10/2021')
-            cy.get(':nth-child(5)').contains('£21.98')
+            cy.get(':nth-child(5)').contains('£23.75')
           })
 
           cy.get('.govuk-table__row:nth-child(2)').within(() => {
@@ -321,7 +321,7 @@ describe('Overtime page', () => {
             cy.get(':nth-child(2)').contains('1 Knowhere Road')
             cy.get(':nth-child(3)').contains('Replace fuse in plug')
             cy.get(':nth-child(4)').contains('19/10/2021')
-            cy.get(':nth-child(5)').contains('£21.98')
+            cy.get(':nth-child(5)').contains('£23.75')
           })
         })
 
@@ -339,14 +339,14 @@ describe('Overtime page', () => {
             cy.get(':nth-child(1)').contains('Thursday')
             cy.get(':nth-child(2)').contains('Cover for André')
             cy.get(':nth-child(3)').contains('4.00')
-            cy.get(':nth-child(4)').contains('£43.96')
+            cy.get(':nth-child(4)').contains('£47.50')
           })
         })
 
         cy.get('#overtime-hours tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('£87.92')
+            cy.get(':nth-child(2)').contains('£95.00')
           })
         })
       })

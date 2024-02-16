@@ -316,7 +316,7 @@ describe('Search page', () => {
               })
             cy.get(':nth-child(4)').contains('2 Somewhere Street')
             cy.get(':nth-child(5)').contains('19/10/2021')
-            cy.get(':nth-child(6)').contains('£20.00')
+            cy.get(':nth-child(6)').contains('£22.00')
             cy.get(':nth-child(7)')
               .contains('a', '3')
               .should((link) => {
@@ -394,7 +394,7 @@ describe('Search page', () => {
               })
             cy.get(':nth-child(4)').contains('2 Somewhere Street')
             cy.get(':nth-child(5)').contains('19/10/2021')
-            cy.get(':nth-child(6)').contains('£21.98')
+            cy.get(':nth-child(6)').contains('£23.75')
             cy.get(':nth-child(7)')
               .contains('a', '3')
               .should((link) => {
