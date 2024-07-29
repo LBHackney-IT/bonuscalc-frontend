@@ -227,17 +227,6 @@ workflows:
       - e2e:
           requires:
             - install-dependencies
-      - assume-role-development:
-          context: api-assume-role-housing-development-context
-          filters:
-            branches:
-              only: develop
-      - nuke-development:
-          requires:
-            - assume-role-development
-          filters:
-            branches:
-              only: develop
       - assume-role-staging:
           context: api-assume-role-housing-staging-context
           requires:
