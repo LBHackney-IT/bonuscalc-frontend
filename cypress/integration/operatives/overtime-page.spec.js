@@ -346,7 +346,7 @@ describe('Overtime page', () => {
         cy.get('#overtime-hours tfoot').within(() => {
           cy.get('.govuk-table__row:nth-child(1)').within(() => {
             cy.get(':nth-child(1)').contains('Total')
-            cy.get(':nth-child(2)').contains('£95.00')
+            cy.get(':nth-child(2)').contains('£96.18')
           })
         })
       })
