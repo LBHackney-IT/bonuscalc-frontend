@@ -1,10 +1,4 @@
 .env {
-  &-development {
-    .lbh-header__main {
-      background-color: lbh-colour('lbh-a01');
-    }
-  }
-
   &-staging {
     .lbh-header__main {
       background-color: lbh-colour('lbh-e01');

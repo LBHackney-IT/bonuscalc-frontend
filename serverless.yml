@@ -121,24 +121,17 @@ custom:
         - eu-west-2
         - amazonaws.com
   aliases:
-    development: dlo-bonus-scheme-development.hackney.gov.uk
     staging: dlo-bonus-scheme-staging.hackney.gov.uk
     production: dlo-bonus-scheme.hackney.gov.uk
   certificate-arn:
-    development: arn:aws:acm:us-east-1:364864573329:certificate/b2ac20b8-1b03-490e-b62d-f5ab9d6ed7e4
     staging: arn:aws:acm:us-east-1:087586271961:certificate/e2dbb992-e8dc-454d-8fbe-bf03e61a2b04
     production: arn:aws:acm:us-east-1:282997303675:certificate/615d5f88-4ee6-4500-a112-bf16ad1d8a6a
   securityGroups:
-    development:
-      - sg-0a8a71b913edbb0ed
     staging:
       - sg-0292b24504fdce1eb
     production:
       - sg-064b1c3ec1577380b
   subnets:
-    development:
-      - subnet-0140d06fb84fdb547
-      - subnet-05ce390ba88c42bfd
     staging:
       - subnet-0ea0020a44b98a2ca
       - subnet-0743d86e9b362fa38
