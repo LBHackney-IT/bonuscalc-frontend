@@ -293,7 +293,7 @@
       "address": "2 Somewhere Street",
       "comment": "Replace broken light switch",
       "duration": 1,
-      "value": 23.75,
+      "value": 24.34,
       "readOnly": true
     },
     {
@@ -322,7 +322,7 @@
       "address": "1 Knowhere Road",
       "comment": "Replace fuse in plug",
       "duration": 1,
-      "value": 23.75,
+      "value": 24.34,
       "readOnly": true
     }
   ]
