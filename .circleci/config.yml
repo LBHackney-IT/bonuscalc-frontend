@@ -7,7 +7,7 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: cimg/node:23.8.0
+      - image: cimg/node:20.16.0-browsers
   docker-python:
     docker:
       - image: cimg/python:3.7
