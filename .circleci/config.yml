@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@5.2.0
   aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
-  node: circleci/node@6.3.0
+  node: circleci/node@7.1.0
 
 executors:
   node-executor:
@@ -16,29 +16,16 @@ executors:
 references:
   workspace_root: &workspace_root '~'
   attach_workspace: &attach_workspace
-    attach_workspace:
+    attach_workspace: 
       at: *workspace_root
 
 jobs:
   install-dependencies:
     executor: node-executor
     steps:
-      - *attach_workspace
       - checkout
-      - restore_cache:
-          key: dependency-cache-v1-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn
-      - save_cache:
-          key: dependency-cache-v1-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-            - ./.next/cache
-            - /home/circleci/.cache/Cypress
-      - persist_to_workspace:
-          root: *workspace_root
-          paths: .
+      - node/install-packages:
+          pkg-manager: yarn
 
   tests:
     executor: node-executor   
@@ -52,8 +39,6 @@ jobs:
       - run:
           name: Run Tests 
           command: |
-            export NEXT_PUBLIC_ENV_NAME=test
-            export NEXT_PUBLIC_NODE_ENV=development
             yarn test:unit
 
   e2e:
