@@ -3,7 +3,6 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@5.2.0
   aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
-  node: circleci/node@7.1.0
 
 executors:
   node-executor:
@@ -23,30 +22,41 @@ jobs:
   install-dependencies:
     executor: node-executor
     steps:
+      - *attach_workspace
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - restore_cache:
+          key: dependency-cache-v1-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: dependency-cache-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+            - ./.next/cache
+            - /home/circleci/.cache/Cypress
+      - persist_to_workspace:
+          root: *workspace_root
+          paths: .
 
   tests:
     executor: node-executor   
     steps:
-      - checkout 
-      - node/install-packages:
-          pkg-manager: yarn
+      - *attach_workspace
+      - run:
+          name: Configure NPM
+          command: npm config set scripts-prepend-node-path true
       - run:
           name: Run Linter
           command: yarn lint
       - run:
           name: Run Tests 
-          command: |
-            yarn test:unit
+          command: yarn test:unit
 
   e2e:
     executor: node-executor
     steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
+      - *attach_workspace
       - run:
           name: Configure NPM
           command: npm config set scripts-prepend-node-path true
