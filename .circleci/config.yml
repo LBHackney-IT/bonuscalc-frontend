@@ -51,7 +51,9 @@ jobs:
           command: yarn lint
       - run:
           name: Run Tests 
-          command: yarn test:unit
+          command: |
+            yarn list --pattern chalk
+            yarn test:unit
 
   e2e:
     executor: node-executor
