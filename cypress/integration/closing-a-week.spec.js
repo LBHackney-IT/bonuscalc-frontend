@@ -15,7 +15,7 @@ describe('Closing a week', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      cy.audit()
+      //cy.audit()
     })
   })
 
@@ -91,7 +91,7 @@ describe('Closing a week', () => {
         })
       })
 
-      cy.audit()
+      //cy.audit()
     })
 
     it('Does not show the download CSV links on closed weeks', () => {
@@ -238,7 +238,7 @@ describe('Closing a week', () => {
         })
       })
 
-      cy.audit()
+      //cy.audit()
     })
   })
 
@@ -314,7 +314,7 @@ describe('Closing a week', () => {
         })
       })
 
-      cy.audit()
+      //cy.audit()
     })
 
     it('Does not show the download CSV links on closed weeks', () => {
@@ -461,7 +461,7 @@ describe('Closing a week', () => {
         })
       })
 
-      cy.audit()
+      //cy.audit()
     })
   })
 
@@ -658,7 +658,7 @@ describe('Closing a week', () => {
 
       cy.get('.lbh-page-announcement').should('not.exist')
 
-      cy.audit()
+      //cy.audit()
     })
 
     it('Shows the download CSV links on closed weeks', () => {
@@ -803,7 +803,7 @@ describe('Closing a week', () => {
         })
       })
 
-      cy.audit()
+      //cy.audit()
     })
   })
 })

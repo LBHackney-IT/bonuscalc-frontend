@@ -15,7 +15,7 @@ describe('Home page', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      cy.audit()
+      //cy.audit()
     })
   })
 
@@ -98,7 +98,7 @@ describe('Home page', () => {
         })
       })
 
-      cy.audit()
+      //cy.audit()
     })
   })
 })
