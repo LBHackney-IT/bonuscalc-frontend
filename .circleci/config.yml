@@ -59,9 +59,9 @@ jobs:
     executor: node-executor
     steps:
       - *attach_workspace
-      # - run:
-      #     name: Configure NPM
-      #     command: npm config set scripts-prepend-node-path true
+      - run:
+          name: Configure NPM
+          command: npm config set scripts-prepend-node-path true
       - run:
           name: Run E2E With Lighthouse Audit
           command: yarn e2e:audit
