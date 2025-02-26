@@ -30,7 +30,7 @@ jobs:
   tests:
     executor: node-executor   
     steps:
-      - *attach_workspace
+      - checkout 
       - node/install-packages:
           pkg-manager: yarn
       - run:
@@ -44,7 +44,7 @@ jobs:
   e2e:
     executor: node-executor
     steps:
-      - *attach_workspace
+      - checkout
       - node/install-packages:
           pkg-manager: yarn
       - run:
