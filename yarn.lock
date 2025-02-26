@@ -5141,7 +5141,7 @@ jest-clean-console-reporter@^0.3.0:
   resolved "https://registry.yarnpkg.com/jest-clean-console-reporter/-/jest-clean-console-reporter-0.3.0.tgz#0d8be932b70494229128d9ed4e9e36940550a3e8"
   integrity sha512-n1PN//5+YbL78v2n/O17gfgJBNWSD1/RJomkaPwSr03it+Ipu3hAp7OwLP8+Fc11U9WA5G+6A5BFTFen70iyBA==
   dependencies:
-    chalk ">=3.0.0"
+    chalk "4.2.1"
 
 jest-cli@^27.5.1:
   version "27.5.1"
