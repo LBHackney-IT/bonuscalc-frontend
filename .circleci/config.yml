@@ -43,25 +43,18 @@ jobs:
     executor: node-executor   
     steps:
       - *attach_workspace
-      # - run:
-      #     name: Configure NPM
-      #     command: npm config set scripts-prepend-node-path true
       - run:
           name: Run Linter
           command: yarn lint
       - run:
           name: Run Tests 
           command: |
-            yarn list --pattern chalk
             yarn test:unit
 
   e2e:
     executor: node-executor
     steps:
       - *attach_workspace
-      - run:
-          name: Configure NPM
-          command: npm config set scripts-prepend-node-path true
       - run:
           name: Run E2E With Lighthouse Audit
           command: yarn e2e:audit
