@@ -54,6 +54,7 @@ jobs:
 
   e2e:
     executor: node-executor
+    parallelism: 4
     steps:
       - *attach_workspace
       - browser-tools/install-chrome
@@ -65,7 +66,7 @@ jobs:
           name: Run E2E With Lighthouse Audit
           command: |
             export NODE_OPTIONS=--openssl-legacy-provider
-            yarn cy:run:audit --reporter cypress-multi-reporters --reporter-options configFile=cypress-reporter-config.json
+            NODE_ENV=test yarn start-test http://localhost:5001 "yarn cy:run:audit --browser chrome"
             yarn node scripts/fix-junit-xml.js
       - store_artifacts:
           path: cypress/screenshots
