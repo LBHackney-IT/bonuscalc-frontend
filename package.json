@@ -14,7 +14,7 @@
     "test:e2e": "NODE_ENV=test start-test 5001 cy:run",
     "test:unit": "jest --runInBand --logHeapUsage",
     "lint": "next lint",
-    "e2e:audit": "NODE_ENV=test start-test 5001 --openssl-legacy-provider cy:run:audit ",
+    "e2e:audit": "NODE_ENV=test start-test 5001 cy:run:audit",
     "e2e:interactive": "NODE_ENV=test start-test 5001 'cypress open'",
     "e2e:server": "NODE_ENV=test start-test 5001",
     "cy:run": "cypress run --browser chrome --headless",

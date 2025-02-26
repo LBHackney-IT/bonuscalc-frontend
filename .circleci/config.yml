@@ -57,7 +57,9 @@ jobs:
       - *attach_workspace
       - run:
           name: Run E2E With Lighthouse Audit
-          command: yarn e2e:audit
+          command: |
+            export NODE_OPTIONS=--openssl-legacy-provider
+            yarn e2e:audit
       - store_artifacts:
           path: cypress/screenshots
       - store_artifacts:
