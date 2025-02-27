@@ -66,8 +66,7 @@ jobs:
           name: Run E2E With Lighthouse Audit
           command: |
             export NODE_OPTIONS=--openssl-legacy-provider
-            NODE_ENV=test yarn start-test http://localhost:5001 "yarn cy:run:audit --browser chrome --headless"
-            yarn node scripts/fix-junit-xml.js
+            yarn e2e:audit
       - store_artifacts:
           path: cypress/screenshots
       - store_artifacts:
