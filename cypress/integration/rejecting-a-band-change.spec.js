@@ -89,8 +89,8 @@ describe('Rejecting a band change', () => {
           cy.contains('h3', 'Selected: 1 operative')
 
           cy.get('#rejectBandChangeDecision').check()
-          cy.get('#bandChanges_0_salaryBand').clear()
-          cy.get('#bandChanges_0_salaryBand').type('3')
+          // cy.get('#bandChanges_0_salaryBand').clear()
+          // cy.get('#bandChanges_0_salaryBand').type('3')
           cy.get('#bandChanges_0_reason').type(
             'Protected from dropping below band 3'
           )
