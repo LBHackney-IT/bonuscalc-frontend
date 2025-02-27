@@ -15,7 +15,7 @@ describe('Starting the band change process', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      //cy.audit()
+      
     })
   })
 
@@ -64,7 +64,7 @@ describe('Starting the band change process', () => {
         cy.contains('button', 'Start').should('not.exist')
       })
 
-      //cy.audit()
+      
     })
   })
 
@@ -229,7 +229,7 @@ describe('Starting the band change process', () => {
         })
       })
 
-      //cy.audit()
+      
     })
   })
 })

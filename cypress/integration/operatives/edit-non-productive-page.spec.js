@@ -15,7 +15,7 @@ describe('Non-productive page', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      //cy.audit()
+      
     })
   })
 
@@ -58,7 +58,7 @@ describe('Non-productive page', () => {
           'Couldn’t find an operative with the payroll number 123456.'
         )
 
-        //cy.audit()
+        
       })
     })
 
@@ -96,7 +96,7 @@ describe('Non-productive page', () => {
           'Sorry, Alex Cable has been archived and is no longer editable.'
         )
 
-        //cy.audit()
+        
       })
     })
 
@@ -138,7 +138,7 @@ describe('Non-productive page', () => {
           cy.contains('(18 – 24 Oct)')
         })
 
-        //cy.audit()
+        
       })
 
       it('Can update the non-productive time', () => {

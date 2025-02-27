@@ -15,7 +15,7 @@ describe('Search page', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      //cy.audit()
+      
     })
   })
 
@@ -39,7 +39,7 @@ describe('Search page', () => {
           cy.contains('Enter a payroll number or operative name')
         })
 
-        //cy.audit()
+        
       })
 
       it('Checks a payroll number is valid', () => {
@@ -50,7 +50,7 @@ describe('Search page', () => {
           cy.contains('Payroll number must be 6 digits (e.g. 123456)')
         })
 
-        //cy.audit()
+        
       })
 
       it('Displays a message when there is an error', () => {
@@ -68,7 +68,7 @@ describe('Search page', () => {
           cy.contains('Sorry, an unexpected error occurred')
         })
 
-        //cy.audit()
+        
       })
 
       it('Displays a message when there are no results', () => {
@@ -83,7 +83,7 @@ describe('Search page', () => {
         cy.wait('@get_operatives')
         cy.contains('No operatives matched your query')
 
-        //cy.audit()
+        
       })
 
       it('Displays a list of operatives', () => {
@@ -126,7 +126,7 @@ describe('Search page', () => {
           })
         })
 
-        //cy.audit()
+        
       })
     })
 
@@ -145,7 +145,7 @@ describe('Search page', () => {
           cy.contains('Enter a work order reference or address')
         })
 
-        //cy.audit()
+        
       })
 
       it('Checks a work order reference is valid', () => {
@@ -156,7 +156,7 @@ describe('Search page', () => {
           cy.contains('Work order reference must be 8 digits (e.g. 12345678)')
         })
 
-        //cy.audit()
+        
       })
 
       it('Displays a message when there is an error', () => {
@@ -174,7 +174,7 @@ describe('Search page', () => {
           cy.contains('Sorry, an unexpected error occurred')
         })
 
-        //cy.audit()
+        
       })
 
       it('Displays a message when there are no results', () => {
@@ -189,7 +189,7 @@ describe('Search page', () => {
         cy.wait('@get_work_elements')
         cy.contains('No work orders matched your query')
 
-        //cy.audit()
+        
       })
 
       it('Displays a list of work orders', () => {
@@ -258,7 +258,7 @@ describe('Search page', () => {
           })
         })
 
-        //cy.audit()
+        
       })
     })
 
@@ -336,7 +336,7 @@ describe('Search page', () => {
           })
         })
 
-        //cy.audit()
+        
       })
     })
 
@@ -414,7 +414,7 @@ describe('Search page', () => {
           })
         })
 
-        //cy.audit()
+        
       })
     })
   })

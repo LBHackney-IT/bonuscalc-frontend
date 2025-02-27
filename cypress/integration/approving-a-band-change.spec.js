@@ -15,7 +15,7 @@ describe('Approving a band change', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      //cy.audit()
+      
     })
   })
 
@@ -129,7 +129,7 @@ describe('Approving a band change', () => {
         cy.contains('h3', 'Band change has been successfully approved')
       })
 
-      //cy.audit()
+      
     })
   })
 })
