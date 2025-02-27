@@ -124,6 +124,7 @@ describe('Rejecting a band change', () => {
           cy.wait(['@post_rejection', '@get_band_changes'])
 
           cy.get('@post_rejection').its('request.body').should('deep.equal', {
+            id: '123456',
             name: 'An Operative Manager',
             emailAddress: 'an.operative_manager@hackney.gov.uk',
             decision: 'Rejected',
