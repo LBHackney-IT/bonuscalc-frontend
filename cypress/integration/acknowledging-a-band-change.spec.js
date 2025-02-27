@@ -108,7 +108,8 @@ describe('Approving a band change', () => {
           cy.get('form > button').click()
           cy.wait(['@post_approval', '@get_band_changes'])
 
-          cy.get('@post_approval').its('request.body').should('equal', {
+          cy.get('@post_approval').its('request.body').should('deep.equal', {
+            id: '654321',
             name: 'An Operative Manager',
             emailAddress: 'an.operative_manager@hackney.gov.uk',
             decision: 'Approved',
