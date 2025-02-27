@@ -156,7 +156,7 @@ describe('Rejecting a band change', () => {
         cy.contains('h3', 'Band change has been successfully rejected')
       })
 
-      //cy.audit()
+      // cy.audit()
     })
   })
 })

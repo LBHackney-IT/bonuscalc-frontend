@@ -3,7 +3,7 @@ export const wrap = (number, max) => {
 }
 
 export const numberWithPrecision = (number, precision) => {
-  return number.toLocaleString('en-GB', {
+  return number?.toLocaleString('en-GB', {
     minimumFractionDigits: precision,
     maximumFractionDigits: precision,
   })
