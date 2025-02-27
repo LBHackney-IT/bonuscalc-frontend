@@ -88,10 +88,13 @@ describe('Rejecting a band change', () => {
           cy.get('#operative_123456').check()
           cy.contains('h3', 'Selected: 1 operative')
 
-          cy.get('#rejectBandChangeDecision').check()
-          cy.get('#bandChanges_5_salaryBand').clear()
-          cy.get('#bandChanges_5_salaryBand').type('3')
-          cy.get('#bandChanges_5_reason').type(
+          cy.get('className="govuk-label govuk-radios__label').within(() => {
+            cy.get('#rejectBandChangeDecision').check()
+          })
+          
+          cy.get('#bandChanges_0_salaryBand').clear()
+          cy.get('#bandChanges_0_salaryBand').type('3')
+          cy.get('#bandChanges_0_reason').type(
             'Protected from dropping below band 3'
           )
 
