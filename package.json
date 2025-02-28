@@ -18,7 +18,7 @@
     "e2e:interactive": "NODE_ENV=test start-test 5001 'cypress open'",
     "e2e:server": "NODE_ENV=test start-test 5001",
     "cy:run": "cypress run --browser chrome --headless",
-    "cy:run:audit": "cypress run --browser chrome --headless --env runAudit=true",
+    "cy:run:audit": "cypress run --headless --env runAudit=true",
     "cy:open": "cypress open"
   },
   "dependencies": {
