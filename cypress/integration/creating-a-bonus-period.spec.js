@@ -15,7 +15,7 @@ describe('Creating a bonus period', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      //cy.audit()
+      cy.audit()
     })
   })
 
@@ -89,7 +89,7 @@ describe('Creating a bonus period', () => {
         })
       })
 
-      //cy.audit()
+      cy.audit()
     })
   })
 
@@ -163,7 +163,7 @@ describe('Creating a bonus period', () => {
         })
       })
 
-      //cy.audit()
+      cy.audit()
     })
   })
 
@@ -242,7 +242,7 @@ describe('Creating a bonus period', () => {
         })
       })
 
-      //cy.audit()
+      cy.audit()
     })
 
     it('They can create a bonus period', () => {

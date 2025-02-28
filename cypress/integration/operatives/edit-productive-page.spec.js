@@ -15,7 +15,7 @@ describe('Productive page', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      //cy.audit()
+      cy.audit()
     })
   })
 
@@ -58,7 +58,7 @@ describe('Productive page', () => {
           'Couldn’t find an operative with the payroll number 123456.'
         )
 
-        //cy.audit()
+        cy.audit()
       })
     })
 
@@ -96,7 +96,7 @@ describe('Productive page', () => {
           'Sorry, Alex Cable has been archived and is no longer editable.'
         )
 
-        //cy.audit()
+        cy.audit()
       })
     })
 
@@ -138,7 +138,7 @@ describe('Productive page', () => {
           cy.contains('(18 – 24 Oct)')
         })
 
-        //cy.audit()
+        cy.audit()
       })
 
       it('Can update the productive time', () => {

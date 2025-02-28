@@ -15,7 +15,7 @@ describe('Overtime page', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      //cy.audit()
+      cy.audit()
     })
   })
 
@@ -50,7 +50,7 @@ describe('Overtime page', () => {
           'Couldn’t find an operative with the payroll number 123456.'
         )
 
-        //cy.audit()
+        cy.audit()
       })
     })
 
@@ -133,7 +133,7 @@ describe('Overtime page', () => {
           })
         })
 
-        //cy.audit()
+        cy.audit()
       })
 
       it('Shows the overtime tab', () => {

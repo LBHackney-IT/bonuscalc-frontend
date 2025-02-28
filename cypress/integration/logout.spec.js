@@ -25,6 +25,6 @@ describe('Signing out', () => {
       'Please sign in with your Hackney email account.'
     )
 
-    //cy.audit()
+    cy.audit()
   })
 })

@@ -15,7 +15,7 @@ describe('Closing a bonus period', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      //cy.audit()
+      cy.audit()
     })
   })
 
@@ -87,7 +87,7 @@ describe('Closing a bonus period', () => {
         cy.contains('h1', 'Open weeks')
       })
 
-      //cy.audit()
+      cy.audit()
     })
   })
 
@@ -159,7 +159,7 @@ describe('Closing a bonus period', () => {
         cy.contains('h1', 'Open weeks')
       })
 
-      //cy.audit()
+      cy.audit()
     })
   })
 
@@ -303,7 +303,7 @@ describe('Closing a bonus period', () => {
 
       cy.get('.lbh-page-announcement').should('not.exist')
 
-      //cy.audit()
+      cy.audit()
     })
   })
 })
