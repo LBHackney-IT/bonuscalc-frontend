@@ -50,6 +50,7 @@ jobs:
       - run:
           name: Run Tests
           command: yarn test:unit
+          no_output_timeout: 45m
 
   e2e:
     executor: node-executor
@@ -65,6 +66,7 @@ jobs:
           command: |
             export NODE_OPTIONS=--openssl-legacy-provider
             yarn e2e:audit
+          no_output_timeout: 45m
       - store_artifacts:
           path: cypress/screenshots
       - store_artifacts:
