@@ -13,8 +13,22 @@ module.exports = defineConfig({
         }
         return launchOptions
       })
+
+      require('cypress-audit/plugins')(on)
       
       return config
+    },
+    
+    defaultCommandTimeout: 10000,
+    baseUrl: 'http://localhost:5001',
+    video: false,
+    viewportHeight: 1536,
+    viewportWidth: 960
+  },
+  
+  env: {
+    lighthouse: {
+      accessibility: 90
     }
   }
 })
