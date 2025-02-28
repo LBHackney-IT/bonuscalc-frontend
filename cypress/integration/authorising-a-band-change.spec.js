@@ -15,7 +15,7 @@ describe('Authorising a band change', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      
+      //cy.audit()
     })
   })
 
@@ -87,7 +87,7 @@ describe('Authorising a band change', () => {
         cy.contains('h1', 'Open weeks')
       })
 
-      
+      //cy.audit()
     })
   })
 
@@ -159,7 +159,7 @@ describe('Authorising a band change', () => {
         cy.contains('h1', 'Open weeks')
       })
 
-      
+      //cy.audit()
     })
   })
 
@@ -238,7 +238,7 @@ describe('Authorising a band change', () => {
         })
       })
 
-      
+      //cy.audit()
     })
 
     it('They can approve band changes', () => {
@@ -362,7 +362,7 @@ describe('Authorising a band change', () => {
         })
       })
 
-      
+      //cy.audit()
     })
 
     it('They can reject band changes', () => {
@@ -489,7 +489,7 @@ describe('Authorising a band change', () => {
         })
       })
 
-      
+      //cy.audit()
     })
   })
 })

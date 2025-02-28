@@ -16,7 +16,7 @@ executors:
 references:
   workspace_root: &workspace_root '~'
   attach_workspace: &attach_workspace
-    attach_workspace:
+    attach_workspace: 
       at: *workspace_root
 
 jobs:
@@ -41,7 +41,7 @@ jobs:
           paths: .
 
   tests:
-    executor: node-executor
+    executor: node-executor   
     steps:
       - *attach_workspace
       - run:
@@ -49,10 +49,12 @@ jobs:
           command: yarn lint
       - run:
           name: Run Tests 
-          command: yarn test:unit
+          command: |
+            yarn test:unit
 
   e2e:
     executor: node-executor
+    parallelism: 4
     steps:
       - *attach_workspace
       - browser-tools/install-chrome

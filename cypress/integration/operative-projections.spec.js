@@ -15,7 +15,7 @@ describe('Viewing operative projections', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      
+      //cy.audit()
     })
   })
 
@@ -210,7 +210,7 @@ describe('Viewing operative projections', () => {
         })
       })
 
-      
+      //cy.audit()
     })
   })
 })

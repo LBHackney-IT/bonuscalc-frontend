@@ -15,7 +15,7 @@ describe('Viewing previous band changes', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      
+      //cy.audit()
     })
   })
 
@@ -87,7 +87,7 @@ describe('Viewing previous band changes', () => {
         cy.contains('h1', 'Open weeks')
       })
 
-      
+      //cy.audit()
     })
   })
 
@@ -159,7 +159,7 @@ describe('Viewing previous band changes', () => {
         cy.contains('h1', 'Open weeks')
       })
 
-      
+      //cy.audit()
     })
   })
 
