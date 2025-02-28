@@ -65,7 +65,7 @@ jobs:
           name: Run E2E With Lighthouse Audit
           command: |
             export NODE_OPTIONS=--openssl-legacy-provider
-            yarn e2e:audit
+            DEBUG=cypress:* yarn e2e:audit
           no_output_timeout: 45m
       - store_artifacts:
           path: cypress/screenshots
