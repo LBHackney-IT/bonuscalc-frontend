@@ -74,12 +74,7 @@ jobs:
             export CYPRESS_CHROME_BINARY=$(which google-chrome)
             export NODE_OPTIONS=--openssl-legacy-provider
 
-            DEBUG=cypress:* yarn e2e:audit -- \
-              --browser chrome \
-              --headless \
-              --no-sandbox \
-              --disable-gpu \
-              --disable-dev-shm-usage
+            DEBUG=cypress:* yarn e2e:audit --browser chrome --headless --no-sandbox --disable-gpu --disable-dev-shm-usage
           no_output_timeout: 45m
       - store_artifacts:
           path: cypress/screenshots
