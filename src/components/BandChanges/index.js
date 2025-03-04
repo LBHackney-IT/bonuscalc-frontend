@@ -106,17 +106,17 @@ const OperativeCheckbox = ({ operative, isChecked, onChange }) => {
       <div className="govuk-checkboxes__item">
         <input
           className="govuk-checkboxes__input"
-          id={`operative_${operative.operativeId}`}
-          name={`operative_${operative.operativeId}`}
+          id={`operative_${operative?.operativeId}`}
+          name={`operative_${operative?.operativeId}`}
           type="checkbox"
-          value={operative.operativeId}
-          checked={isChecked(operative.operativeId)}
+          value={operative?.operativeId}
+          checked={isChecked(operative?.operativeId)}
           onChange={onChange}
-          disabled={operative.isDisabled}
+          disabled={operative?.isDisabled}
         />
         <label
           className="govuk-label govuk-checkboxes__label"
-          htmlFor={`operative_${operative.operativeId}`}
+          htmlFor={`operative_${operative?.operativeId}`}
         >
           <span className="govuk-visually-hidden">Select Operative</span>
         </label>
@@ -127,7 +127,7 @@ const OperativeCheckbox = ({ operative, isChecked, onChange }) => {
 
 const RejectionForm = ({ bandChange, operative, register, errors, index }) => {
   const [characterCount, setCharacterCount] = useState(300)
-  const summaryLink = `/operatives/${operative.operativeId}/summaries/${operative.bonusPeriod.id}`
+  const summaryLink = `/operatives/${operative?.operativeId}/summaries/${operative?.bonusPeriod?.id}`
 
   return (
     <li key={bandChange.id} className="bc-band-changes__rejection">
@@ -138,39 +138,39 @@ const RejectionForm = ({ bandChange, operative, register, errors, index }) => {
             <Link href={summaryLink}>
               <a className="lbh-link lbh-link--no-visited-state">
                 <span className="operative-name">
-                  {operative.operativeName}
+                  {operative?.operativeName}
                 </span>
-                <span className="operative-id">({operative.operativeId})</span>
+                <span className="operative-id">({operative?.operativeId})</span>
               </a>
             </Link>
           </dd>
         </div>
         <div>
           <dt>Trade</dt>
-          <dd>{operative.trade}</dd>
+          <dd>{operative?.trade}</dd>
         </div>
         <div>
           <dt>Sick hours</dt>
-          <dd className={cx({ 'sick-warning': operative.isSickWarning })}>
-            {numberWithPrecision(operative.sickDuration, 2)}
+          <dd className={cx({ 'sick-warning': operative?.isSickWarning })}>
+            {numberWithPrecision(operative?.sickDuration, 2)}
           </dd>
         </div>
         <div>
           <dt>Total SMVh</dt>
-          <dd>{numberWithPrecision(operative.totalValue, 2)}</dd>
+          <dd>{numberWithPrecision(operative?.totalValue, 2)}</dd>
         </div>
         <div>
           <dt>
             Current<span className="govuk-visually-hidden"> band</span>
           </dt>
-          <dd>{operative.salaryBand}</dd>
+          <dd>{operative?.salaryBand}</dd>
         </div>
         <div>
           <dt>
             Projected<span className="govuk-visually-hidden"> band</span>
           </dt>
-          <dd className={cx({ 'sick-warning': operative.isSickWarning })}>
-            {operative.projectedBand}
+          <dd className={cx({ 'sick-warning': operative?.isSickWarning })}>
+            {operative?.projectedBand}
           </dd>
         </div>
       </dl>
@@ -314,8 +314,8 @@ const BonusBandForm = ({ operatives, checked, setChecked }) => {
 
     setSelectedOperatives(
       operatives.reduce((object, item) => {
-        if (checked.includes(item.operativeId)) {
-          object[item.operativeId] = item
+        if (checked.includes(item?.operativeId)) {
+          object[item?.operativeId] = item
         }
 
         return object
@@ -326,10 +326,10 @@ const BonusBandForm = ({ operatives, checked, setChecked }) => {
 
     replace(
       operatives
-        .filter((o) => checked.includes(o.operativeId))
+        .filter((o) => checked.includes(o?.operativeId))
         .map((o) => ({
-          id: o.operativeId,
-          operativeId: o.operativeId,
+          id: o?.operativeId,
+          operativeId: o?.operativeId,
           name: user.name,
           emailAddress: user.email,
           decision: decision,
@@ -493,10 +493,10 @@ const FixedBandForm = ({ operatives, checked, setChecked }) => {
 
     replace(
       operatives
-        .filter((o) => checked.includes(o.operativeId))
+        .filter((o) => checked.includes(o?.operativeId))
         .map((o) => ({
-          id: o.operativeId,
-          operativeId: o.operativeId,
+          id: o?.operativeId,
+          operativeId: o?.operativeId,
           name: user.name,
           emailAddress: user.email,
           decision: 'Approved',
@@ -578,7 +578,7 @@ const OperativeList = ({ operatives, period, form, selectAllId }) => {
     if (event.target.checked) {
       updatedList = operatives
         .filter((o) => o.isSelectable)
-        .map((o) => o.operativeId)
+        .map((o) => o?.operativeId)
     }
 
     setChecked(updatedList)
@@ -690,16 +690,16 @@ const OperativeList = ({ operatives, period, form, selectAllId }) => {
                 </TD>
                 <TD>
                   <Link
-                    href={`${baseUrl}/${o.operativeId}/summaries/${period.id}`}
+                    href={`${baseUrl}/${o?.operativeId}/summaries/${period.id}`}
                   >
                     <a>{o.operativeName}</a>
                   </Link>
                 </TD>
                 <TD align="centre">
                   <Link
-                    href={`${baseUrl}/${o.operativeId}/summaries/${period.id}`}
+                    href={`${baseUrl}/${o?.operativeId}/summaries/${period.id}`}
                   >
-                    <a>{o.operativeId}</a>
+                    <a>{o?.operativeId}</a>
                   </Link>
                 </TD>
                 <TD align="centre">

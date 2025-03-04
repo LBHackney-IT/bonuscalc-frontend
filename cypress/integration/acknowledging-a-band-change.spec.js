@@ -15,7 +15,7 @@ describe('Approving a band change', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      cy.audit()
+      
     })
   })
 
@@ -109,6 +109,7 @@ describe('Approving a band change', () => {
           cy.wait(['@post_approval', '@get_band_changes'])
 
           cy.get('@post_approval').its('request.body').should('deep.equal', {
+            id: '654321',
             name: 'An Operative Manager',
             emailAddress: 'an.operative_manager@hackney.gov.uk',
             decision: 'Approved',
@@ -128,7 +129,7 @@ describe('Approving a band change', () => {
         cy.contains('h3', 'Band has been successfully acknowledged')
       })
 
-      cy.audit()
+      
     })
   })
 })

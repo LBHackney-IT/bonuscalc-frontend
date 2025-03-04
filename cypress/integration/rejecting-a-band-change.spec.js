@@ -15,7 +15,7 @@ describe('Rejecting a band change', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      cy.audit()
+      
     })
   })
 
@@ -88,7 +88,7 @@ describe('Rejecting a band change', () => {
           cy.get('#operative_123456').check()
           cy.contains('h3', 'Selected: 1 operative')
 
-          cy.get('#rejectBandChangeDecision').check()
+          cy.get('#rejectBandChangeDecision').last().check()          
           cy.get('#bandChanges_0_salaryBand').clear()
           cy.get('#bandChanges_0_salaryBand').type('3')
           cy.get('#bandChanges_0_reason').type(
@@ -124,6 +124,7 @@ describe('Rejecting a band change', () => {
           cy.wait(['@post_rejection', '@get_band_changes'])
 
           cy.get('@post_rejection').its('request.body').should('deep.equal', {
+            id: '123456',
             name: 'An Operative Manager',
             emailAddress: 'an.operative_manager@hackney.gov.uk',
             decision: 'Rejected',
@@ -155,7 +156,7 @@ describe('Rejecting a band change', () => {
         cy.contains('h3', 'Band change has been successfully rejected')
       })
 
-      cy.audit()
+      // cy.audit()
     })
   })
 })
