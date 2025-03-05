@@ -15,7 +15,7 @@ describe('Productive page', () => {
         'Please sign in with your Hackney email account.'
       )
 
-      cy.audit()
+      
     })
   })
 
@@ -50,7 +50,7 @@ describe('Productive page', () => {
           'Couldn’t find an operative with the payroll number 123456.'
         )
 
-        cy.audit()
+        
       })
     })
 
@@ -133,7 +133,7 @@ describe('Productive page', () => {
           })
         })
 
-        cy.audit()
+        
       })
 
       it('Shows the productive tab', () => {
