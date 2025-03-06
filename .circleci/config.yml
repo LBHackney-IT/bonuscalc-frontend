@@ -74,12 +74,13 @@ jobs:
           path: cypress/reports
 
   build-deploy-staging:
-    executor: aws-cli/default
+    executor: node-executor
     steps:
       - *attach_workspace
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+      - aws-cli/install
       # - run:
       #     name: Swap node versions
       #     command: |
