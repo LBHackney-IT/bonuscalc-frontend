@@ -4,7 +4,6 @@ orbs:
   aws-cli: circleci/aws-cli@5.2.0
   aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
   browser-tools: circleci/browser-tools@1.4.8
-  node: circleci/node@6.3.0
 
 executors:
   node-executor:
@@ -77,22 +76,19 @@ jobs:
     executor: node-executor
     steps:
       - *attach_workspace
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
       - aws-cli/install
-      # - run:
-      #     name: Swap node versions
-      #     command: |
-      #       set +e
-      #       wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
-      #       export NVM_DIR="$HOME/.nvm"
-      #       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-      #       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-      #       nvm install 20
-      #       nvm use 20
-      #       echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
-      #       echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run:
+          name: Swap node versions
+          command: |
+            set +e
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+            nvm install 20
+            nvm use 20  
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
       - run:
           name: deploy
           command: |
