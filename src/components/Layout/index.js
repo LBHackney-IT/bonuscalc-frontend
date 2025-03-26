@@ -9,18 +9,6 @@ import { useState } from 'react'
 const Layout = ({ serviceName, feedbackLink, currentPage, children }) => {
   const [announcement, setAnnouncement] = useState(null)
 
-  // useEffect(() => {
-  //   const cb = () => {
-  //     console.log('Layout:routeChangeComplete')
-  //   }
-
-  //   router.events.on('routeChangeComplete', cb)
-
-  //   return () => {
-  //     router.events.off('routeChangeComplete', cb)
-  //   }
-  // }, [router])
-
   return (
     <>
       <Head>

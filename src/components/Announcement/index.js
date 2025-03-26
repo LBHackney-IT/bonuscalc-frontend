@@ -10,9 +10,6 @@ const Announcement = ({ announcement, setAnnouncement }) => {
     if (announcement == null) return
 
     const clearAnnouncement = () => {
-      console.log('request to clear announcement', { announcement })
-
-      console.log('clearing this one')
       setAnnouncement(null)
     }
 
