@@ -1,17 +1,31 @@
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useMemo, useRef } from 'react'
 import { useRouter } from 'next/router'
 import AnnouncementContext from '../AnnouncementContext'
 
-const Announcement = ({ announcement }) => {
+const Announcement = ({ announcement, setAnnouncement }) => {
   const router = useRouter()
-  const { setAnnouncement } = useContext(AnnouncementContext)
-  const { title, content, isWarning } = announcement
+  // const { setAnnouncement } = useContext(AnnouncementContext)
+
+  // const annountmentJustSet = useRef(false)
+
+  // const memoizedAnnouncement = useMemo(() => announcement, [announcement])
 
   useEffect(() => {
+    if (announcement == null) return
+
     const clearAnnouncement = () => {
-      setAnnouncement({})
+      console.log('request to clear announcement', { announcement })
+
+      // if (annountmentJustSet.current == true) {
+      //   annountmentJustSet.current = false
+      //   console.log('Not clearing this one, just set')
+      //   return
+      // }
+
+      console.log('clearing this one')
+      setAnnouncement(null)
     }
 
     router.events.on('routeChangeStart', clearAnnouncement)
@@ -19,9 +33,18 @@ const Announcement = ({ announcement }) => {
     return () => {
       router.events.off('routeChangeStart', clearAnnouncement)
     }
-  }, [router.events, setAnnouncement])
+  }, [router.events, setAnnouncement, announcement])
 
-  if (!title) return <></>
+  // useEffect(() => {
+  //   if (announcement != null) {
+  //     console.log('Announcement update, setting true')
+  //     annountmentJustSet.current = true
+  //   }
+  // }, [announcement])
+
+  if (announcement == null) return <></>
+
+  const { title, content, isWarning } = announcement
 
   return (
     <div className="lbh-container">

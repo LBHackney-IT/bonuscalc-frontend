@@ -115,16 +115,21 @@ const CloseWeek = ({ week }) => {
   }
 
   useEffect(() => {
+    const pushAnnouncement = () => {
+      setAnnouncement({
+        title: `Week ${week.number} is successfully closed – weekly and summary reports have been sent`,
+      })
+    }
+
     if (completed) {
-      setTimeout(() => {
-        setAnnouncement({
-          title: `Week ${week.number} is successfully closed – weekly and summary reports have been sent`,
-        })
-      }, 100)
+      router.events.on('routeChangeComplete', pushAnnouncement)
       router.push('/manage/weeks')
     }
-  }, [completed, router, setAnnouncement, week.number])
 
+    return () => {
+      router.events.off('routeChangeComplete', pushAnnouncement)
+    }
+  }, [completed, router, setAnnouncement, week.number])
   return (
     <section className="bc-close-week">
       <Summary week={week} />

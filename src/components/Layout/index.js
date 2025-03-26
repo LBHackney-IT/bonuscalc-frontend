@@ -4,10 +4,25 @@ import Header from '../Header'
 import PhaseBanner from '../PhaseBanner'
 import Announcement from '../Announcement'
 import AnnouncementContext from '../AnnouncementContext'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const Layout = ({ serviceName, feedbackLink, currentPage, children }) => {
-  const [announcement, setAnnouncement] = useState({})
+  const [announcement, setAnnouncement] = useState(null)
+
+  const router = useRouter()
+
+  // useEffect(() => {
+  //   const cb = () => {
+  //     console.log('Layout:routeChangeComplete')
+  //   }
+
+  //   router.events.on('routeChangeComplete', cb)
+
+  //   return () => {
+  //     router.events.off('routeChangeComplete', cb)
+  //   }
+  // }, [router])
 
   return (
     <>
@@ -26,8 +41,18 @@ const Layout = ({ serviceName, feedbackLink, currentPage, children }) => {
       <Header serviceName={serviceName} currentPage={currentPage} />
       <PhaseBanner feedbackLink={feedbackLink} />
 
-      <AnnouncementContext.Provider value={{ setAnnouncement }}>
-        <Announcement announcement={announcement} />
+      <AnnouncementContext.Provider
+        value={{
+          setAnnouncement: (x) => {
+            console.info('Setting announcement')
+            setAnnouncement(x)
+          },
+        }}
+      >
+        <Announcement
+          announcement={announcement}
+          setAnnouncement={setAnnouncement}
+        />
 
         <main className="lbh-main-wrapper" id="main-content" role="main">
           <div className="lbh-container">{children}</div>

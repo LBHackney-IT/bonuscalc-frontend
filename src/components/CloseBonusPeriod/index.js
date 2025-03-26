@@ -31,6 +31,7 @@ const Summary = ({ period, bandChanges }) => {
   )
 }
 
+
 const Progress = ({ sending, sent, total }) => {
   if (!sending) return <></>
 
@@ -95,17 +96,22 @@ const CloseBonusPeriod = ({ period, bandChanges }) => {
   }
 
   useEffect(() => {
-    if (completed) {
-      setTimeout(() => {
-        setAnnouncement({
-          title: `${period.description} is successfully closed – summary reports have been sent`,
-        })
-      }, 100)
+    const pushAnnouncement = () => {
+      setAnnouncement({
+        title: `${period.description} is successfully closed – summary reports have been sent`,
+      })
+    }
 
+    if (completed) {
+      router.events.on('routeChangeComplete', pushAnnouncement)
       router.push('/manage/weeks')
     }
-  }, [completed, setAnnouncement, period.description])
 
+    return () => {
+      router.events.off('routeChangeComplete', pushAnnouncement)
+    }
+  }, [completed, router, setAnnouncement, period.description])
+  
   return (
     <section className="bc-close-period">
       <Summary period={period} bandChanges={bandChanges} />
