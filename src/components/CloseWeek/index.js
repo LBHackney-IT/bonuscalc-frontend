@@ -4,7 +4,7 @@ import ButtonGroup from '@/components/ButtonGroup'
 import Button from '@/components/Button'
 import UserContext from '@/components/UserContext'
 import dayjs from '@/utils/date'
-import { useContext, useRef, useState, useEffect } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Week } from '@/models'
 import { sendReportEmail } from '@/utils/email'
@@ -70,7 +70,6 @@ const CloseWeek = ({ week }) => {
 
   const total = week.operativeCount
 
-  const [completed, setCompleted] = useState(false)
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(week.sentOperativeCount)
 
@@ -90,7 +89,12 @@ const CloseWeek = ({ week }) => {
     }
 
     if (await saveReportsSentAt(week.id)) {
-      setCompleted(true)
+      setTimeout(() => {
+        setAnnouncement({
+          title: `Week ${week.number} is successfully closed – weekly and summary reports have been sent`,
+        })
+      }, 100)
+      router.push('/manage/weeks')
     }
   }
 
@@ -114,22 +118,6 @@ const CloseWeek = ({ week }) => {
     await sendReports()
   }
 
-  useEffect(() => {
-    const pushAnnouncement = () => {
-      setAnnouncement({
-        title: `Week ${week.number} is successfully closed – weekly and summary reports have been sent`,
-      })
-    }
-
-    if (completed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
-      router.push('/manage/weeks')
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [completed, router, setAnnouncement, week.number])
   return (
     <section className="bc-close-week">
       <Summary week={week} />

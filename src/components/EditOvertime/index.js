@@ -1,7 +1,7 @@
 import AnnouncementContext from '@/components/AnnouncementContext'
 import PageContext from '@/components/PageContext'
 import OvertimeForm from './OvertimeForm'
-import { useEffect, useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { PayElementType } from '@/models'
@@ -15,8 +15,6 @@ const EditOvertime = () => {
   const { operative, timesheet } = useContext(PageContext)
   const { week } = timesheet
 
-  const [confirmed, setConfirmed] = useState(false)
-
   const baseUrl = `/operatives/${operative.id}/timesheets`
   const summaryUrl = `${baseUrl}/${timesheet.weekId}/overtime`
 
@@ -28,7 +26,9 @@ const EditOvertime = () => {
     })
 
     if (await saveTimesheet(operative.id, timesheet.weekId, data)) {
-      setConfirmed(true)
+      setTimeout(() => {
+        setAnnouncement({ title: 'Updated overtime successfully' })
+      }, 100)
 
       router.push(summaryUrl)
     } else {
@@ -38,20 +38,6 @@ const EditOvertime = () => {
       })
     }
   }
-
-  useEffect(() => {
-    const pushAnnouncement = () => {
-      setAnnouncement({ title: 'Updated overtime successfully' })
-    }
-
-    if (confirmed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [confirmed, router.events, setAnnouncement])
 
   return (
     <>

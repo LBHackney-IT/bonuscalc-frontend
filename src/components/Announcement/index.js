@@ -5,23 +5,12 @@ import { useRouter } from 'next/router'
 
 const Announcement = ({ announcement, setAnnouncement }) => {
   const router = useRouter()
-  // const { setAnnouncement } = useContext(AnnouncementContext)
-
-  // const annountmentJustSet = useRef(false)
-
-  // const memoizedAnnouncement = useMemo(() => announcement, [announcement])
 
   useEffect(() => {
     if (announcement == null) return
 
     const clearAnnouncement = () => {
       console.log('request to clear announcement', { announcement })
-
-      // if (annountmentJustSet.current == true) {
-      //   annountmentJustSet.current = false
-      //   console.log('Not clearing this one, just set')
-      //   return
-      // }
 
       console.log('clearing this one')
       setAnnouncement(null)
@@ -33,13 +22,6 @@ const Announcement = ({ announcement, setAnnouncement }) => {
       router.events.off('routeChangeStart', clearAnnouncement)
     }
   }, [router.events, setAnnouncement, announcement])
-
-  // useEffect(() => {
-  //   if (announcement != null) {
-  //     console.log('Announcement update, setting true')
-  //     annountmentJustSet.current = true
-  //   }
-  // }, [announcement])
 
   if (announcement == null) return <></>
 

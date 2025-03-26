@@ -1,59 +1,11 @@
 import AnnouncementContext from '@/components/AnnouncementContext'
 import PageContext from '@/components/PageContext'
 import MoneyForm from '@/components/MoneyForm'
-import { useEffect, useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { PayElementType } from '@/models'
 import { saveTimesheet } from '@/utils/apiClient'
-// import { usePathname } from 'next/navigation'
-
-// const useRouteChangeListener = (callback, shouldListen = true) => {
-//   // const pathname = usePathname()
-//   // const searchParams = useSearchParams()
-//   const router = useRouter()
-//   const previousPathname = useRef(router.pathname)
-//   // const previousSearchParams = useRef(searchParams)
-
-//   useEffect(() => {
-//     console.log('effect')
-//     // Only proceed if shouldListen is true
-//     if (!shouldListen) return
-
-//     // const currentSearchParamsString = searchParams?.toString()
-//     // const previousSearchParamsString = previousSearchParams.current?.toString()
-
-//     // Check if the route has actually changed
-//     if (router.pathname !== previousPathname.current) {
-//       // Update refs
-//       previousPathname.current = router.pathname
-//       // previousSearchParams.current = searchParams
-
-//       // Execute callback
-//       console.log('callback')
-//       callback()
-//     }
-//     console.log('no callback', {
-//       pathname: router.pathname,
-//       previousPathname: previousPathname.current,
-//     })
-//   }, [router?.pathname, callback, shouldListen])
-
-// const router = useRouter()
-
-// useEffect(() => {
-//   // Only attach the event listener if shouldListen is true
-
-//   if (shouldListen) {
-//     router.events.on('routeChangeComplete', callback)
-//   }
-
-//   // Cleanup function always runs on unmount or when dependencies change
-//   return () => {
-//     router.events.off('routeChangeComplete', callback)
-//   }
-// }, [router, shouldListen, callback])
-// }
 
 const EditOutOfHours = () => {
   const router = useRouter()
@@ -62,8 +14,6 @@ const EditOutOfHours = () => {
   const { setAnnouncement } = useContext(AnnouncementContext)
   const { operative, timesheet } = useContext(PageContext)
   const { week } = timesheet
-
-  const [confirmed, setConfirmed] = useState(false)
 
   const baseUrl = `/operatives/${operative.id}/timesheets`
   const summaryUrl = `${baseUrl}/${timesheet.weekId}/out-of-hours`
@@ -82,7 +32,9 @@ const EditOutOfHours = () => {
     })
 
     if (await saveTimesheet(operative.id, timesheet.weekId, data)) {
-      setConfirmed(true)
+      setTimeout(() => {
+        setAnnouncement({ title: 'Updated out of hours successfully' })
+      }, 100)
 
       router.push(summaryUrl)
     } else {
@@ -92,50 +44,6 @@ const EditOutOfHours = () => {
       })
     }
   }
-
-  // useRouteChangeListener(() => {
-
-  //   alert('Route changed')
-  // }, confirmed)
-
-  // const pushAnnouncement = () => {
-  //   console.log('CALLING PUSH_ANNOUNCEMENT')
-  //   setAnnouncement({ title: 'Updated out of hours successfully' })
-  // }
-
-  // useEffect(() => {
-  //   console.log('initializing event')
-  //   router.events.on('routeChangeComplete', pushAnnouncement)
-
-  //   return () => {
-  //     console.log('removing event')
-  //     router.events.off('routeChangeComplete', pushAnnouncement)
-  //   }
-  // }, [router, pushAnnouncement])
-
-  useEffect(() => {
-    const pushAnnouncement = () => {
-      setAnnouncement({ title: 'Updated out of hours successfully' })
-    }
-
-    if (confirmed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [confirmed, router.events, setAnnouncement])
-
-  // useEffect(() => {
-  //   if (confirmed) {
-  //     router.events.on('routeChangeComplete', pushAnnouncement)
-  //   }
-
-  //   return () => {
-  //     router.events.off('routeChangeComplete', pushAnnouncement)
-  //   }
-  // }, [confirmed, router.events, pushAnnouncement])
 
   return (
     <>

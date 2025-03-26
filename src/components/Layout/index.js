@@ -40,10 +40,7 @@ const Layout = ({ serviceName, feedbackLink, currentPage, children }) => {
 
       <AnnouncementContext.Provider
         value={{
-          setAnnouncement: (x) => {
-            console.info('Setting announcement')
-            setAnnouncement(x)
-          },
+          setAnnouncement,
         }}
       >
         <Announcement
