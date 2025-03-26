@@ -1,7 +1,7 @@
 import AnnouncementContext from '@/components/AnnouncementContext'
 import PageContext from '@/components/PageContext'
 import MoneyForm from '@/components/MoneyForm'
-import { useEffect, useContext, useState, useRef } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { PayElementType } from '@/models'

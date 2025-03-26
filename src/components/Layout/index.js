@@ -4,13 +4,10 @@ import Header from '../Header'
 import PhaseBanner from '../PhaseBanner'
 import Announcement from '../Announcement'
 import AnnouncementContext from '../AnnouncementContext'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 const Layout = ({ serviceName, feedbackLink, currentPage, children }) => {
   const [announcement, setAnnouncement] = useState(null)
-
-  const router = useRouter()
 
   // useEffect(() => {
   //   const cb = () => {

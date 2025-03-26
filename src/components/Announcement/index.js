@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import { useContext, useEffect, useMemo, useRef } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import AnnouncementContext from '../AnnouncementContext'
 
 const Announcement = ({ announcement, setAnnouncement }) => {
   const router = useRouter()

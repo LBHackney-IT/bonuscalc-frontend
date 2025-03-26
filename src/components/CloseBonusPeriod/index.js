@@ -31,7 +31,6 @@ const Summary = ({ period, bandChanges }) => {
   )
 }
 
-
 const Progress = ({ sending, sent, total }) => {
   if (!sending) return <></>
 
@@ -111,7 +110,7 @@ const CloseBonusPeriod = ({ period, bandChanges }) => {
       router.events.off('routeChangeComplete', pushAnnouncement)
     }
   }, [completed, router, setAnnouncement, period.description])
-  
+
   return (
     <section className="bc-close-period">
       <Summary period={period} bandChanges={bandChanges} />
