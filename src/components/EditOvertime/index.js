@@ -40,18 +40,10 @@ const EditOvertime = () => {
   }
 
   useEffect(() => {
-    const pushAnnouncement = () => {
+    if (confirmed) {
       setAnnouncement({ title: 'Updated overtime successfully' })
     }
-
-    if (confirmed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [confirmed, router.events, setAnnouncement])
+  }, [confirmed, setAnnouncement])
 
   return (
     <>

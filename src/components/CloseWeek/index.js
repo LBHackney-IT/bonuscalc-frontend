@@ -115,19 +115,13 @@ const CloseWeek = ({ week }) => {
   }
 
   useEffect(() => {
-    const pushAnnouncement = () => {
-      setAnnouncement({
-        title: `Week ${week.number} is successfully closed – weekly and summary reports have been sent`,
-      })
-    }
-
     if (completed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
+      setTimeout(() => {
+        setAnnouncement({
+          title: `Week ${week.number} is successfully closed – weekly and summary reports have been sent`,
+        })
+      }, 100)
       router.push('/manage/weeks')
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
     }
   }, [completed, router, setAnnouncement, week.number])
 

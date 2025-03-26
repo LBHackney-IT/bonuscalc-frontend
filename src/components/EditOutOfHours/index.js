@@ -46,18 +46,10 @@ const EditOutOfHours = () => {
   }
 
   useEffect(() => {
-    const pushAnnouncement = () => {
+    if (confirmed) {
       setAnnouncement({ title: 'Updated out of hours successfully' })
     }
-
-    if (confirmed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [confirmed, router.events, setAnnouncement])
+  }, [confirmed, setAnnouncement])
 
   return (
     <>

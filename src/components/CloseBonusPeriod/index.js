@@ -95,21 +95,16 @@ const CloseBonusPeriod = ({ period, bandChanges }) => {
   }
 
   useEffect(() => {
-    const pushAnnouncement = () => {
-      setAnnouncement({
-        title: `${period.description} is successfully closed – summary reports have been sent`,
-      })
-    }
-
     if (completed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
+      setTimeout(() => {
+        setAnnouncement({
+          title: `${period.description} is successfully closed – summary reports have been sent`,
+        })
+      }, 100)
+
       router.push('/manage/weeks')
     }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [completed, router, setAnnouncement, period.description])
+  }, [completed, setAnnouncement, period.description])
 
   return (
     <section className="bc-close-period">

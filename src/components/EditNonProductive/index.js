@@ -39,18 +39,10 @@ const EditNonProductive = () => {
   }
 
   useEffect(() => {
-    const pushAnnouncement = () => {
+    if (confirmed) {
       setAnnouncement({ title: 'Updated non-productive time successfully' })
     }
-
-    if (confirmed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [confirmed, router.events, setAnnouncement])
+  }, [confirmed, setAnnouncement])
 
   return (
     <>
