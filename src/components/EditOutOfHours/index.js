@@ -1,7 +1,7 @@
 import AnnouncementContext from '@/components/AnnouncementContext'
 import PageContext from '@/components/PageContext'
 import MoneyForm from '@/components/MoneyForm'
-import { useEffect, useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { PayElementType } from '@/models'
@@ -14,8 +14,6 @@ const EditOutOfHours = () => {
   const { setAnnouncement } = useContext(AnnouncementContext)
   const { operative, timesheet } = useContext(PageContext)
   const { week } = timesheet
-
-  const [confirmed, setConfirmed] = useState(false)
 
   const baseUrl = `/operatives/${operative.id}/timesheets`
   const summaryUrl = `${baseUrl}/${timesheet.weekId}/out-of-hours`
@@ -34,7 +32,9 @@ const EditOutOfHours = () => {
     })
 
     if (await saveTimesheet(operative.id, timesheet.weekId, data)) {
-      setConfirmed(true)
+      setTimeout(() => {
+        setAnnouncement({ title: 'Updated out of hours successfully' })
+      }, 100)
 
       router.push(summaryUrl)
     } else {
@@ -44,20 +44,6 @@ const EditOutOfHours = () => {
       })
     }
   }
-
-  useEffect(() => {
-    const pushAnnouncement = () => {
-      setAnnouncement({ title: 'Updated out of hours successfully' })
-    }
-
-    if (confirmed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [confirmed, router.events, setAnnouncement])
 
   return (
     <>

@@ -6,7 +6,7 @@ const ServerError = ({ children }) => {
   const { setAnnouncement } = useContext(AnnouncementContext)
 
   useEffect(() => {
-    setAnnouncement({})
+    setAnnouncement(null)
   }, [setAnnouncement])
 
   return (

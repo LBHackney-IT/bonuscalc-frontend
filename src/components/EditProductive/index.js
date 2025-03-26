@@ -1,7 +1,7 @@
 import AnnouncementContext from '@/components/AnnouncementContext'
 import PageContext from '@/components/PageContext'
 import PayElementsForm from '@/components/PayElementsForm'
-import { useEffect, useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { saveTimesheet } from '@/utils/apiClient'
@@ -14,8 +14,6 @@ const EditProductive = () => {
   const { operative, timesheet } = useContext(PageContext)
   const { week } = timesheet
 
-  const [confirmed, setConfirmed] = useState(false)
-
   const baseUrl = `/operatives/${operative.id}/timesheets`
   const summaryUrl = `${baseUrl}/${timesheet.weekId}/productive`
 
@@ -27,7 +25,9 @@ const EditProductive = () => {
     })
 
     if (await saveTimesheet(operative.id, timesheet.weekId, data)) {
-      setConfirmed(true)
+      setTimeout(() => {
+        setAnnouncement({ title: 'Updated productive time successfully' })
+      }, 100)
 
       router.push(summaryUrl)
     } else {
@@ -37,20 +37,6 @@ const EditProductive = () => {
       })
     }
   }
-
-  useEffect(() => {
-    const pushAnnouncement = () => {
-      setAnnouncement({ title: 'Updated productive time successfully' })
-    }
-
-    if (confirmed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
-    }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [confirmed, router.events, setAnnouncement])
 
   return (
     <>

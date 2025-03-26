@@ -5,7 +5,7 @@ import AnnouncementContext from '@/components/AnnouncementContext'
 import UserContext from '@/components/UserContext'
 import dayjs from '@/utils/date'
 import { useRouter } from 'next/router'
-import { useContext, useRef, useState, useEffect } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { BandChange, BonusPeriod } from '@/models/BonusPeriod'
 import { saveBonusPeriod, saveBandChangeReportSentAt } from '@/utils/apiClient'
 import { sendBandChangeReportEmail } from '@/utils/email'
@@ -58,7 +58,6 @@ const CloseBonusPeriod = ({ period, bandChanges }) => {
   const sentBandChanges = bandChanges.filter((bc) => bc.hasBeenSent)
   const total = bandChanges.length
 
-  const [completed, setCompleted] = useState(false)
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(sentBandChanges.length)
 
@@ -90,26 +89,15 @@ const CloseBonusPeriod = ({ period, bandChanges }) => {
     }
 
     if (await saveBonusPeriod(period.id, data)) {
-      setCompleted(true)
-    }
-  }
+      setTimeout(() => {
+        setAnnouncement({
+          title: `${period.description} is successfully closed – summary reports have been sent`,
+        })
+      }, 100)
 
-  useEffect(() => {
-    const pushAnnouncement = () => {
-      setAnnouncement({
-        title: `${period.description} is successfully closed – summary reports have been sent`,
-      })
-    }
-
-    if (completed) {
-      router.events.on('routeChangeComplete', pushAnnouncement)
       router.push('/manage/weeks')
     }
-
-    return () => {
-      router.events.off('routeChangeComplete', pushAnnouncement)
-    }
-  }, [completed, router, setAnnouncement, period.description])
+  }
 
   return (
     <section className="bc-close-period">

@@ -1,17 +1,16 @@
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import AnnouncementContext from '../AnnouncementContext'
 
-const Announcement = ({ announcement }) => {
+const Announcement = ({ announcement, setAnnouncement }) => {
   const router = useRouter()
-  const { setAnnouncement } = useContext(AnnouncementContext)
-  const { title, content, isWarning } = announcement
 
   useEffect(() => {
+    if (announcement == null) return
+
     const clearAnnouncement = () => {
-      setAnnouncement({})
+      setAnnouncement(null)
     }
 
     router.events.on('routeChangeStart', clearAnnouncement)
@@ -19,9 +18,11 @@ const Announcement = ({ announcement }) => {
     return () => {
       router.events.off('routeChangeStart', clearAnnouncement)
     }
-  }, [router.events, setAnnouncement])
+  }, [router.events, setAnnouncement, announcement])
 
-  if (!title) return <></>
+  if (announcement == null) return <></>
+
+  const { title, content, isWarning } = announcement
 
   return (
     <div className="lbh-container">

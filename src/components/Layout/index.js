@@ -7,7 +7,7 @@ import AnnouncementContext from '../AnnouncementContext'
 import { useState } from 'react'
 
 const Layout = ({ serviceName, feedbackLink, currentPage, children }) => {
-  const [announcement, setAnnouncement] = useState({})
+  const [announcement, setAnnouncement] = useState(null)
 
   return (
     <>
@@ -26,8 +26,15 @@ const Layout = ({ serviceName, feedbackLink, currentPage, children }) => {
       <Header serviceName={serviceName} currentPage={currentPage} />
       <PhaseBanner feedbackLink={feedbackLink} />
 
-      <AnnouncementContext.Provider value={{ setAnnouncement }}>
-        <Announcement announcement={announcement} />
+      <AnnouncementContext.Provider
+        value={{
+          setAnnouncement,
+        }}
+      >
+        <Announcement
+          announcement={announcement}
+          setAnnouncement={setAnnouncement}
+        />
 
         <main className="lbh-main-wrapper" id="main-content" role="main">
           <div className="lbh-container">{children}</div>
