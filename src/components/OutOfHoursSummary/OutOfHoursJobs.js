@@ -37,10 +37,13 @@ const OutOfHoursJobs = () => {
               <TR key={index}>
                 <TD>
                   {payElement.workOrder ? (
-                    <Link href={`${repairsHubUrl}/${payElement.workOrder}`}>
-                      <a target="_blank" className="lbh-link">
-                        {payElement.workOrder}
-                      </a>
+                    <Link
+                      href={`${repairsHubUrl}/${payElement.workOrder}`}
+                      target="_blank"
+                      className="lbh-link">
+
+                      {payElement.workOrder}
+
                     </Link>
                   ) : (
                     <>&ndash;</>
@@ -76,7 +79,7 @@ const OutOfHoursJobs = () => {
         </TBody>
       )}
     </Table>
-  )
+  );
 }
 
 export default OutOfHoursJobs

@@ -50,16 +50,15 @@ const OperativeTabs = ({ current, children, backUrl }) => {
               current === index ? 'govuk-tabs__list-item--selected' : null
             )}
           >
-            <Link href={href}>
-              <a className="govuk-tabs__tab">{content}</a>
+            <Link href={href} className="govuk-tabs__tab">
+              {content}
             </Link>
           </li>
         ))}
       </ul>
-
       <section className="govuk-tabs__panel">{children}</section>
     </div>
-  )
+  );
 }
 
 OperativeTabs.propTypes = {

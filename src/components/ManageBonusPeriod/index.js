@@ -54,16 +54,18 @@ const ClosedWeek = ({ week }) => {
 
 const CloseWeek = ({ week }) => {
   return (
-    <Link href={`/manage/weeks/${week.id}/close`}>
-      <a className="lbh-link lbh-link--no-visited-state">
-        {week.isClosed ? (
-          <>Send outstanding reports</>
-        ) : (
-          <>Close week and send reports</>
-        )}
-      </a>
+    <Link
+      href={`/manage/weeks/${week.id}/close`}
+      className="lbh-link lbh-link--no-visited-state">
+
+      {week.isClosed ? (
+        <>Send outstanding reports</>
+      ) : (
+        <>Close week and send reports</>
+      )}
+
     </Link>
-  )
+  );
 }
 
 const OperativeListItem = ({ operative, week }) => {
@@ -72,14 +74,16 @@ const OperativeListItem = ({ operative, week }) => {
 
   return (
     <li>
-      <Link href={`${baseUrl}/productive?backUrl=${backUrl}`}>
-        <a className="lbh-link lbh-link--no-visited-state">
-          <span>{operative.description}&nbsp;–&nbsp;</span>
-          <span>{operative.tradeDescription}</span>
-        </a>
+      <Link
+        href={`${baseUrl}/productive?backUrl=${backUrl}`}
+        className="lbh-link lbh-link--no-visited-state">
+
+        <span>{operative.description}&nbsp;–&nbsp;</span>
+        <span>{operative.tradeDescription}</span>
+
       </Link>
     </li>
-  )
+  );
 }
 
 const OperativeList = ({ date }) => {
@@ -119,59 +123,57 @@ const OperativeList = ({ date }) => {
       </p>
     )
 
-  return (
-    allOperatives &&
-    operatives && (
-      <section className="bc-open-weeks__operatives">
-        <header>
-          <h4>Operatives with no SMVs ({allOperatives.length})</h4>
-          <nav>
-            <Link href={`/manage/weeks/${week.id}/operatives`}>
-              <a className="lbh-link lbh-link--no-visited-state">
-                View all operatives
-              </a>
-            </Link>
-            {week.isClosed && user.hasWeekManagerPermissions && (
-              <>
-                <a
-                  href={`/api/reports/overtime/${week.id}`}
-                  className="lbh-link lbh-link--no-visited-state"
-                >
-                  Download Overtime CSV file
-                </a>
-                <a
-                  href={`/api/reports/out-of-hours/${week.id}`}
-                  className="lbh-link lbh-link--no-visited-state"
-                >
-                  Download Out of hours CSV file
-                </a>
-              </>
-            )}
-          </nav>
-        </header>
-        {week.isEditable && operatives.length > 0 && (
+  return (allOperatives &&
+  operatives && (<section className="bc-open-weeks__operatives">
+    <header>
+      <h4>Operatives with no SMVs ({allOperatives.length})</h4>
+      <nav>
+        <Link
+          href={`/manage/weeks/${week.id}/operatives`}
+          className="lbh-link lbh-link--no-visited-state">
+          
+            View all operatives
+          
+        </Link>
+        {week.isClosed && user.hasWeekManagerPermissions && (
           <>
-            <ol className="lbh-list">
-              {operatives.map((operative, index) => (
-                <OperativeListItem
-                  operative={operative}
-                  week={week}
-                  key={index}
-                />
-              ))}
-            </ol>
-            {allOperatives.length > 5 && (
-              <footer>
-                <LinkButton onClick={toggleShowAllOperatives}>
-                  {showAllOperatives ? <>Show fewer</> : <>Show all</>}
-                </LinkButton>
-              </footer>
-            )}
+            <a
+              href={`/api/reports/overtime/${week.id}`}
+              className="lbh-link lbh-link--no-visited-state"
+            >
+              Download Overtime CSV file
+            </a>
+            <a
+              href={`/api/reports/out-of-hours/${week.id}`}
+              className="lbh-link lbh-link--no-visited-state"
+            >
+              Download Out of hours CSV file
+            </a>
           </>
         )}
-      </section>
-    )
-  )
+      </nav>
+    </header>
+    {week.isEditable && operatives.length > 0 && (
+      <>
+        <ol className="lbh-list">
+          {operatives.map((operative, index) => (
+            <OperativeListItem
+              operative={operative}
+              week={week}
+              key={index}
+            />
+          ))}
+        </ol>
+        {allOperatives.length > 5 && (
+          <footer>
+            <LinkButton onClick={toggleShowAllOperatives}>
+              {showAllOperatives ? <>Show fewer</> : <>Show all</>}
+            </LinkButton>
+          </footer>
+        )}
+      </>
+    )}
+  </section>));
 }
 
 const ManageWeek = ({ week, showAll, firstOpenWeek }) => {

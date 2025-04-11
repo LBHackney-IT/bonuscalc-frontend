@@ -167,12 +167,12 @@ const Operatives = ({ week, operatives }) => {
             <TR key={index}>
               <TD>
                 <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>
-                  <a>{o.name}</a>
+                  {o.name}
                 </Link>
               </TD>
               <TD align="centre">
                 <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>
-                  <a>{o.id}</a>
+                  {o.id}
                 </Link>
               </TD>
               <TD align="centre">
@@ -180,17 +180,17 @@ const Operatives = ({ week, operatives }) => {
               </TD>
               <TD numeric={true}>
                 <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>
-                  <a>{numberWithPrecision(smvh(o.productiveValue), 2)}</a>
+                  {numberWithPrecision(smvh(o.productiveValue), 2)}
                 </Link>
               </TD>
               <TD numeric={true}>
                 <Link href={`${baseUrl}/${o.id}/${nonProductiveUrl}`}>
-                  <a>{numberWithPrecision(o.nonProductiveDuration, 2)}</a>
+                  {numberWithPrecision(o.nonProductiveDuration, 2)}
                 </Link>
               </TD>
               <TD numeric={true}>
                 <Link href={`${baseUrl}/${o.id}/${nonProductiveUrl}`}>
-                  <a>{numberWithPrecision(o.nonProductiveDuration, 2)}</a>
+                  {numberWithPrecision(o.nonProductiveDuration, 2)}
                 </Link>
               </TD>
               <TD numeric={true}>
@@ -212,7 +212,7 @@ const Operatives = ({ week, operatives }) => {
         )}
       </TBody>
     </Table>
-  )
+  );
 }
 
 const AllOperativesList = ({ period, week, schemes }) => {

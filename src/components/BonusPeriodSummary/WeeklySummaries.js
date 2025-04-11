@@ -63,30 +63,36 @@ const WeeklySummaries = () => {
                   </div>
                 </TD>
                 <TD numeric={true}>
-                  <Link href={`${baseUrl}/${ws.weekId}/productive`}>
-                    <a className="lbh-link lbh-link--no-visited-state">
-                      {numberWithPrecision(
-                        smvhOrUnits(scheme, ws.productiveValue),
-                        scheme.precision
-                      )}
-                    </a>
+                  <Link
+                    href={`${baseUrl}/${ws.weekId}/productive`}
+                    className="lbh-link lbh-link--no-visited-state">
+
+                    {numberWithPrecision(
+                      smvhOrUnits(scheme, ws.productiveValue),
+                      scheme.precision
+                    )}
+
                   </Link>
                 </TD>
                 <TD numeric={true}>
-                  <Link href={`${baseUrl}/${ws.weekId}/non-productive`}>
-                    <a className="lbh-link lbh-link--no-visited-state">
-                      {numberWithPrecision(ws.nonProductiveDuration, 2)}
-                    </a>
+                  <Link
+                    href={`${baseUrl}/${ws.weekId}/non-productive`}
+                    className="lbh-link lbh-link--no-visited-state">
+
+                    {numberWithPrecision(ws.nonProductiveDuration, 2)}
+
                   </Link>
                 </TD>
                 <TD numeric={true}>
-                  <Link href={`${baseUrl}/${ws.weekId}/non-productive`}>
-                    <a className="lbh-link lbh-link--no-visited-state">
-                      {numberWithPrecision(
-                        smvhOrUnits(scheme, ws.nonProductiveValue),
-                        scheme.precision
-                      )}
-                    </a>
+                  <Link
+                    href={`${baseUrl}/${ws.weekId}/non-productive`}
+                    className="lbh-link lbh-link--no-visited-state">
+
+                    {numberWithPrecision(
+                      smvhOrUnits(scheme, ws.nonProductiveValue),
+                      scheme.precision
+                    )}
+
                   </Link>
                 </TD>
                 <TD numeric={true}>
@@ -167,7 +173,7 @@ const WeeklySummaries = () => {
         </TBody>
       )}
     </Table>
-  )
+  );
 }
 
 export default WeeklySummaries
