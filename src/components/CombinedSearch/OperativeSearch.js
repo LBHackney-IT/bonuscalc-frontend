@@ -106,19 +106,17 @@ const OperativeSearch = () => {
                       <TD>
                         <Link
                           href={`/operatives/${operative.id}`}
-                          className="lbh-link lbh-link--no-visited-state">
-
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
                           {operative.name}
-
                         </Link>
                       </TD>
                       <TD align="centre">
                         <Link
                           href={`/operatives/${operative.id}`}
-                          className="lbh-link lbh-link--no-visited-state">
-
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
                           {operative.id}
-
                         </Link>
                       </TD>
                       <TD>{operative.tradeDescription}</TD>
@@ -134,7 +132,7 @@ const OperativeSearch = () => {
         )}
       </div>
     </form>
-  );
+  )
 }
 
 export default OperativeSearch

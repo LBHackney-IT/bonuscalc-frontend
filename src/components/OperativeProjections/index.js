@@ -162,7 +162,7 @@ const OperativeList = ({ operatives, period }) => {
         )}
       </TBody>
     </Table>
-  );
+  )
 }
 
 const Search = ({ allOperatives, period, showAll, setShowAll }) => {

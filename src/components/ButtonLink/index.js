@@ -15,10 +15,9 @@ const ButtonLink = ({ href, className, secondary, children, ...props }) => (
       },
       className
     )}
-    {...props}>
-
+    {...props}
+  >
     {children}
-
   </Link>
 )
 

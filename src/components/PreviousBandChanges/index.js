@@ -199,7 +199,7 @@ const OperativeList = ({ operatives, period }) => {
         )}
       </Table>
     </>
-  );
+  )
 }
 
 const Search = ({ allOperatives, period, showAll, setShowAll }) => {

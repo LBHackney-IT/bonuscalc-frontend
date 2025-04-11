@@ -115,29 +115,26 @@ const WorkOrderSearch = () => {
                       <TD>
                         <Link
                           href={`/operatives/${workElement.operativeId}`}
-                          className="lbh-link lbh-link--no-visited-state">
-
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
                           {workElement.operativeName}
-
                         </Link>
                       </TD>
                       <TD align="centre">
                         <Link
                           href={`/operatives/${workElement.operativeId}`}
-                          className="lbh-link lbh-link--no-visited-state">
-
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
                           {workElement.operativeId}
-
                         </Link>
                       </TD>
                       <TD align="centre">
                         <Link
                           href={`${repairsHubUrl}/${workElement.workOrder}`}
                           className="lbh-link lbh-link--no-visited-state"
-                          target="_blank">
-
+                          target="_blank"
+                        >
                           {workElement.workOrder}
-
                         </Link>
                       </TD>
                       <TD>{workElement.address}</TD>
@@ -146,19 +143,17 @@ const WorkOrderSearch = () => {
                       <TD align="centre">
                         <Link
                           href={workElement.summaryUrl}
-                          className="lbh-link lbh-link--no-visited-state">
-
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
                           {workElement.week.bonusPeriod.number}
-
                         </Link>
                       </TD>
                       <TD align="centre">
                         <Link
                           href={workElement.timesheetUrl}
-                          className="lbh-link lbh-link--no-visited-state">
-
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
                           {workElement.week.number}
-
                         </Link>
                       </TD>
                     </TR>
@@ -170,7 +165,7 @@ const WorkOrderSearch = () => {
         )}
       </div>
     </form>
-  );
+  )
 }
 
 export default WorkOrderSearch

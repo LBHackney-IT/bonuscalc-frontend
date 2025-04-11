@@ -45,10 +45,9 @@ const WorkOrders = () => {
                     <Link
                       href={`${repairsHubUrl}/${payElement.workOrder}`}
                       target="_blank"
-                      className="lbh-link">
-
+                      className="lbh-link"
+                    >
                       {payElement.workOrder}
-
                     </Link>
                   ) : (
                     <>&ndash;</>
@@ -81,7 +80,7 @@ const WorkOrders = () => {
         </Table>
       )}
     </>
-  );
+  )
 }
 
 export default WorkOrders

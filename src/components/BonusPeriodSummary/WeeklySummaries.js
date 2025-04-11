@@ -65,34 +65,31 @@ const WeeklySummaries = () => {
                 <TD numeric={true}>
                   <Link
                     href={`${baseUrl}/${ws.weekId}/productive`}
-                    className="lbh-link lbh-link--no-visited-state">
-
+                    className="lbh-link lbh-link--no-visited-state"
+                  >
                     {numberWithPrecision(
                       smvhOrUnits(scheme, ws.productiveValue),
                       scheme.precision
                     )}
-
                   </Link>
                 </TD>
                 <TD numeric={true}>
                   <Link
                     href={`${baseUrl}/${ws.weekId}/non-productive`}
-                    className="lbh-link lbh-link--no-visited-state">
-
+                    className="lbh-link lbh-link--no-visited-state"
+                  >
                     {numberWithPrecision(ws.nonProductiveDuration, 2)}
-
                   </Link>
                 </TD>
                 <TD numeric={true}>
                   <Link
                     href={`${baseUrl}/${ws.weekId}/non-productive`}
-                    className="lbh-link lbh-link--no-visited-state">
-
+                    className="lbh-link lbh-link--no-visited-state"
+                  >
                     {numberWithPrecision(
                       smvhOrUnits(scheme, ws.nonProductiveValue),
                       scheme.precision
                     )}
-
                   </Link>
                 </TD>
                 <TD numeric={true}>
@@ -173,7 +170,7 @@ const WeeklySummaries = () => {
         </TBody>
       )}
     </Table>
-  );
+  )
 }
 
 export default WeeklySummaries

@@ -16,12 +16,11 @@ const MenuItem = ({ item, section, children }) => {
         {
           'lbh-!-font-weight-bold': item == section,
         }
-      )}>
-
+      )}
+    >
       {children}
-
     </Link>
-  );
+  )
 }
 
 const Menu = ({ section, user }) => {

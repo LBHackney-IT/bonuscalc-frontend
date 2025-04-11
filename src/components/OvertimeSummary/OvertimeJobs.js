@@ -45,10 +45,9 @@ const OvertimeJobs = () => {
                     <Link
                       href={`${repairsHubUrl}/${payElement.workOrder}`}
                       target="_blank"
-                      className="lbh-link">
-
+                      className="lbh-link"
+                    >
                       {payElement.workOrder}
-
                     </Link>
                   ) : (
                     <>&ndash;</>
@@ -78,7 +77,7 @@ const OvertimeJobs = () => {
         </Table>
       )}
     </>
-  );
+  )
 }
 
 export default OvertimeJobs

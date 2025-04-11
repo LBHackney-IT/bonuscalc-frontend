@@ -9,7 +9,7 @@ export const compareStrings = (a, b) => {
 }
 
 export const escapeRegExp = (string) => {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
 export const humanize = (string) => {
@@ -21,7 +21,7 @@ export const pluralize = (count, singular, plural) => {
 }
 
 export const transliterate = (string) => {
-  return string.normalize('NFD').replace(/[^\sa-zA-Z0-9]+/, '');
+  return string.normalize('NFD').replace(/[^\sa-zA-Z0-9]+/, '')
 }
 
 export const truncate = (text, length, options) => {

@@ -58,7 +58,7 @@ const OperativeTabs = ({ current, children, backUrl }) => {
       </ul>
       <section className="govuk-tabs__panel">{children}</section>
     </div>
-  );
+  )
 }
 
 OperativeTabs.propTypes = {

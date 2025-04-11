@@ -171,9 +171,7 @@ const Operatives = ({ week, operatives }) => {
                 </Link>
               </TD>
               <TD align="centre">
-                <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>
-                  {o.id}
-                </Link>
+                <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>{o.id}</Link>
               </TD>
               <TD align="centre">
                 <abbr title={o.trade.description}>{o.trade.id}</abbr>
@@ -212,7 +210,7 @@ const Operatives = ({ week, operatives }) => {
         )}
       </TBody>
     </Table>
-  );
+  )
 }
 
 const AllOperativesList = ({ period, week, schemes }) => {

@@ -135,13 +135,12 @@ const RejectionForm = ({ bandChange, operative, register, errors, index }) => {
         <div>
           <dt>Operative</dt>
           <dd>
-            <Link href={summaryLink} className="lbh-link lbh-link--no-visited-state">
-
-              <span className="operative-name">
-                {operative?.operativeName}
-              </span>
+            <Link
+              href={summaryLink}
+              className="lbh-link lbh-link--no-visited-state"
+            >
+              <span className="operative-name">{operative?.operativeName}</span>
               <span className="operative-id">({operative?.operativeId})</span>
-
             </Link>
           </dd>
         </div>
@@ -241,7 +240,7 @@ const RejectionForm = ({ bandChange, operative, register, errors, index }) => {
         </div>
       )}
     </li>
-  );
+  )
 }
 
 const BonusBandForm = ({ operatives, checked, setChecked }) => {
@@ -778,7 +777,7 @@ const OperativeList = ({ operatives, period, form, selectAllId }) => {
         setChecked={setChecked}
       />
     </>
-  );
+  )
 }
 
 const Search = ({ allOperatives, period, showAll, setShowAll }) => {

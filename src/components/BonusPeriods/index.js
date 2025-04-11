@@ -45,10 +45,9 @@ const BonusPeriods = ({ periods }) => {
                 {bp.isClosed ? (
                   <Link
                     href={`/manage/periods/${bp.id}`}
-                    className="lbh-link lbh-link--no-visited-state">
-
+                    className="lbh-link lbh-link--no-visited-state"
+                  >
                     {bp.description}
-
                   </Link>
                 ) : (
                   <>{bp.description}</>
@@ -82,7 +81,7 @@ const BonusPeriods = ({ periods }) => {
         </Button>
       </ButtonGroup>
     </section>
-  );
+  )
 }
 
 BonusPeriods.propTypes = {

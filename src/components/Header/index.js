@@ -67,7 +67,7 @@ const Header = ({ serviceName, currentPage }) => {
         </div>
       </header>
     </>
-  );
+  )
 }
 
 Header.propTypes = {
