@@ -57,11 +57,9 @@ const OperativeSearch = () => {
           ref={operativeSearch}
         />
       </div>
-
       <Button type="submit" disabled={loading}>
         Search
       </Button>
-
       <div className="govuk-form-group lbh-form-group govuk-!-margin-top-6">
         {error && <ErrorMessage description={error} />}
         {loading && <Spinner />}
@@ -106,17 +104,19 @@ const OperativeSearch = () => {
                   {operatives.map((operative, index) => (
                     <TR key={index}>
                       <TD>
-                        <Link href={`/operatives/${operative.id}`}>
-                          <a className="lbh-link lbh-link--no-visited-state">
-                            {operative.name}
-                          </a>
+                        <Link
+                          href={`/operatives/${operative.id}`}
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
+                          {operative.name}
                         </Link>
                       </TD>
                       <TD align="centre">
-                        <Link href={`/operatives/${operative.id}`}>
-                          <a className="lbh-link lbh-link--no-visited-state">
-                            {operative.id}
-                          </a>
+                        <Link
+                          href={`/operatives/${operative.id}`}
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
+                          {operative.id}
                         </Link>
                       </TD>
                       <TD>{operative.tradeDescription}</TD>

@@ -121,14 +121,14 @@ const OperativeList = ({ operatives, period }) => {
                   <Link
                     href={`${baseUrl}/${o.operativeId}/summaries/${period.id}`}
                   >
-                    <a>{o.operativeName}</a>
+                    {o.operativeName}
                   </Link>
                 </TD>
                 <TD align="centre">
                   <Link
                     href={`${baseUrl}/${o.operativeId}/summaries/${period.id}`}
                   >
-                    <a>{o.operativeId}</a>
+                    {o.operativeId}
                   </Link>
                 </TD>
                 <TD align="centre">

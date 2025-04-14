@@ -27,7 +27,6 @@ const BonusPeriods = ({ periods }) => {
       <header>
         <h2>Bonus periods</h2>
       </header>
-
       <Table className="govuk-!-margin-top-3">
         <THead>
           <TR>
@@ -44,10 +43,11 @@ const BonusPeriods = ({ periods }) => {
             <TR key={index}>
               <TD>
                 {bp.isClosed ? (
-                  <Link href={`/manage/periods/${bp.id}`}>
-                    <a className="lbh-link lbh-link--no-visited-state">
-                      {bp.description}
-                    </a>
+                  <Link
+                    href={`/manage/periods/${bp.id}`}
+                    className="lbh-link lbh-link--no-visited-state"
+                  >
+                    {bp.description}
                   </Link>
                 ) : (
                   <>{bp.description}</>
@@ -75,7 +75,6 @@ const BonusPeriods = ({ periods }) => {
           ))}
         </TBody>
       </Table>
-
       <ButtonGroup>
         <Button ref={createButton} disabled={isDisabled()} onClick={onClick}>
           Create Period

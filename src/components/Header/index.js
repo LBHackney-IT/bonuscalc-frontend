@@ -23,10 +23,9 @@ const Header = ({ serviceName, currentPage }) => {
   return (
     <>
       {showDevelopmentNote()}
-      <Link href="#main-content">
-        <a className="govuk-skip-link lbh-skip-link">Skip to main content</a>
+      <Link href="#main-content" className="govuk-skip-link lbh-skip-link">
+        Skip to main content
       </Link>
-
       <header className="lbh-header">
         <div className="lbh-header__main">
           <div className="lbh-container lbh-header__wrapper lbh-header__wrapper--stacked">

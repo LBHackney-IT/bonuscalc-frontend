@@ -54,14 +54,15 @@ const ClosedWeek = ({ week }) => {
 
 const CloseWeek = ({ week }) => {
   return (
-    <Link href={`/manage/weeks/${week.id}/close`}>
-      <a className="lbh-link lbh-link--no-visited-state">
-        {week.isClosed ? (
-          <>Send outstanding reports</>
-        ) : (
-          <>Close week and send reports</>
-        )}
-      </a>
+    <Link
+      href={`/manage/weeks/${week.id}/close`}
+      className="lbh-link lbh-link--no-visited-state"
+    >
+      {week.isClosed ? (
+        <>Send outstanding reports</>
+      ) : (
+        <>Close week and send reports</>
+      )}
     </Link>
   )
 }
@@ -72,11 +73,12 @@ const OperativeListItem = ({ operative, week }) => {
 
   return (
     <li>
-      <Link href={`${baseUrl}/productive?backUrl=${backUrl}`}>
-        <a className="lbh-link lbh-link--no-visited-state">
-          <span>{operative.description}&nbsp;–&nbsp;</span>
-          <span>{operative.tradeDescription}</span>
-        </a>
+      <Link
+        href={`${baseUrl}/productive?backUrl=${backUrl}`}
+        className="lbh-link lbh-link--no-visited-state"
+      >
+        <span>{operative.description}&nbsp;–&nbsp;</span>
+        <span>{operative.tradeDescription}</span>
       </Link>
     </li>
   )
@@ -126,10 +128,11 @@ const OperativeList = ({ date }) => {
         <header>
           <h4>Operatives with no SMVs ({allOperatives.length})</h4>
           <nav>
-            <Link href={`/manage/weeks/${week.id}/operatives`}>
-              <a className="lbh-link lbh-link--no-visited-state">
-                View all operatives
-              </a>
+            <Link
+              href={`/manage/weeks/${week.id}/operatives`}
+              className="lbh-link lbh-link--no-visited-state"
+            >
+              View all operatives
             </Link>
             {week.isClosed && user.hasWeekManagerPermissions && (
               <>

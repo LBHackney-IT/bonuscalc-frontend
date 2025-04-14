@@ -167,30 +167,28 @@ const Operatives = ({ week, operatives }) => {
             <TR key={index}>
               <TD>
                 <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>
-                  <a>{o.name}</a>
+                  {o.name}
                 </Link>
               </TD>
               <TD align="centre">
-                <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>
-                  <a>{o.id}</a>
-                </Link>
+                <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>{o.id}</Link>
               </TD>
               <TD align="centre">
                 <abbr title={o.trade.description}>{o.trade.id}</abbr>
               </TD>
               <TD numeric={true}>
                 <Link href={`${baseUrl}/${o.id}/${productiveUrl}`}>
-                  <a>{numberWithPrecision(smvh(o.productiveValue), 2)}</a>
+                  {numberWithPrecision(smvh(o.productiveValue), 2)}
                 </Link>
               </TD>
               <TD numeric={true}>
                 <Link href={`${baseUrl}/${o.id}/${nonProductiveUrl}`}>
-                  <a>{numberWithPrecision(o.nonProductiveDuration, 2)}</a>
+                  {numberWithPrecision(o.nonProductiveDuration, 2)}
                 </Link>
               </TD>
               <TD numeric={true}>
                 <Link href={`${baseUrl}/${o.id}/${nonProductiveUrl}`}>
-                  <a>{numberWithPrecision(o.nonProductiveDuration, 2)}</a>
+                  {numberWithPrecision(o.nonProductiveDuration, 2)}
                 </Link>
               </TD>
               <TD numeric={true}>

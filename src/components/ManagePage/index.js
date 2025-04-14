@@ -7,19 +7,18 @@ import { useAuthorisations } from '@/utils/apiClient'
 
 const MenuItem = ({ item, section, children }) => {
   return (
-    <Link href={`/manage/${item}`}>
-      <a
-        className={cx(
-          'lbh-link',
-          'lbh-link--no-visited-state',
-          'govuk-link--no-underline',
-          {
-            'lbh-!-font-weight-bold': item == section,
-          }
-        )}
-      >
-        {children}
-      </a>
+    <Link
+      href={`/manage/${item}`}
+      className={cx(
+        'lbh-link',
+        'lbh-link--no-visited-state',
+        'govuk-link--no-underline',
+        {
+          'lbh-!-font-weight-bold': item == section,
+        }
+      )}
+    >
+      {children}
     </Link>
   )
 }

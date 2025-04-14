@@ -58,11 +58,9 @@ const WorkOrderSearch = () => {
           ref={workOrderSearch}
         />
       </div>
-
       <Button type="submit" disabled={loading}>
         Search
       </Button>
-
       <div className="govuk-form-group lbh-form-group govuk-!-margin-top-6">
         {error && <ErrorMessage description={error} />}
         {loading && <Spinner />}
@@ -115,46 +113,47 @@ const WorkOrderSearch = () => {
                   {workElements.map((workElement, index) => (
                     <TR key={index}>
                       <TD>
-                        <Link href={`/operatives/${workElement.operativeId}`}>
-                          <a className="lbh-link lbh-link--no-visited-state">
-                            {workElement.operativeName}
-                          </a>
+                        <Link
+                          href={`/operatives/${workElement.operativeId}`}
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
+                          {workElement.operativeName}
                         </Link>
                       </TD>
                       <TD align="centre">
-                        <Link href={`/operatives/${workElement.operativeId}`}>
-                          <a className="lbh-link lbh-link--no-visited-state">
-                            {workElement.operativeId}
-                          </a>
+                        <Link
+                          href={`/operatives/${workElement.operativeId}`}
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
+                          {workElement.operativeId}
                         </Link>
                       </TD>
                       <TD align="centre">
                         <Link
                           href={`${repairsHubUrl}/${workElement.workOrder}`}
+                          className="lbh-link lbh-link--no-visited-state"
+                          target="_blank"
                         >
-                          <a
-                            className="lbh-link lbh-link--no-visited-state"
-                            target="_blank"
-                          >
-                            {workElement.workOrder}
-                          </a>
+                          {workElement.workOrder}
                         </Link>
                       </TD>
                       <TD>{workElement.address}</TD>
                       <TD align="centre">{workElement.closedDate}</TD>
                       <TD numeric={true}>{workElement.formattedValue}</TD>
                       <TD align="centre">
-                        <Link href={workElement.summaryUrl}>
-                          <a className="lbh-link lbh-link--no-visited-state">
-                            {workElement.week.bonusPeriod.number}
-                          </a>
+                        <Link
+                          href={workElement.summaryUrl}
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
+                          {workElement.week.bonusPeriod.number}
                         </Link>
                       </TD>
                       <TD align="centre">
-                        <Link href={workElement.timesheetUrl}>
-                          <a className="lbh-link lbh-link--no-visited-state">
-                            {workElement.week.number}
-                          </a>
+                        <Link
+                          href={workElement.timesheetUrl}
+                          className="lbh-link lbh-link--no-visited-state"
+                        >
+                          {workElement.week.number}
                         </Link>
                       </TD>
                     </TR>
