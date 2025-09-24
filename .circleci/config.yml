@@ -193,6 +193,7 @@ workflows:
       - build-deploy-staging:
           requires:
             - assume-role-staging
+            - install-dependencies
           context:
             - "Serverless Framework"
           # filters:
