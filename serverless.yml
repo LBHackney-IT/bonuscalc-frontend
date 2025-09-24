@@ -21,6 +21,9 @@ functions:
     name: ${self:service}-${self:provider.stage}
     handler: src/lambda.handler
     package:
+      individually: true
+      exclude:
+        - ./**
       patterns:
         - 'src/lambda.js'
         - 'next.config.js'
@@ -34,6 +37,7 @@ functions:
         - '!node_modules/@next/swc-darwin-x64'
         - '!node_modules/@next/swc-linux-x64-gnu'
         - '!node_modules/@next/swc-win32-x64-msvc'
+        - '!node_modules/@next/swc-linux-x64-musl*/**'
         - '!node_modules/@sentry/cli/sentry-cli'
         - '!node_modules/leaflet'
     events:
