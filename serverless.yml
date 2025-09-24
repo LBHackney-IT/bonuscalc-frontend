@@ -21,6 +21,9 @@ functions:
     name: ${self:service}-${self:provider.stage}
     handler: src/lambda.handler
     package:
+      individually: true
+      exclude:
+        - ./**
       patterns:
         - 'src/lambda.js'
         - 'next.config.js'
