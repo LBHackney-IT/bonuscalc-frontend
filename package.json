@@ -60,7 +60,6 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.0",
     "babel-jest": "^27.2.0",
-    "canvas": "^2.9.0",
     "cypress": "^9.3.1",
     "cypress-audit": "^1.0.0",
     "cypress-dotenv-flow": "^1.2.2",
