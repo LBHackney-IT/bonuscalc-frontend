@@ -56,7 +56,6 @@ export const fetchBandChange = async (payrollNumber) => {
 }
 
 export const fetchOperative = async (payrollNumber) => {
-  console.log('Fetch operative', { payrollNumber })
   const response = await client.get(operativeUrl(payrollNumber))
 
   if (response.status == StatusCodes.OK) {

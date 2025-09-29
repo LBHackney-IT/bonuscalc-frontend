@@ -166,9 +166,6 @@ describe('Emailing band change reports', () => {
             }
           })
 
-          // mock email
-
-
           await emailReport(req, res)
 
           expect(status(res)).toBe(200)
