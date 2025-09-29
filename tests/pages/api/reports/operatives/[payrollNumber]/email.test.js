@@ -1,27 +1,8 @@
 import jsonwebtoken from 'jsonwebtoken'
 import { createRequest, createResponse } from 'node-mocks-http'
 import emailReport from '@/reports/operatives/[payrollNumber]/email'
-
-jest.mock('axios', () => {
-  const mockClient = {
-    get: jest.fn(),
-    post: jest.fn(),
-  }
-
-  return {
-    default: {
-      create: jest.fn(() => mockClient),
-    },
-    create: jest.fn(() => mockClient),
-    __mockClient: mockClient,
-  }
-})
-
 import axios from 'axios'
 const mockClient = axios.__mockClient
-
-import { NotifyClient } from 'notifications-node-client'
-jest.mock('notifications-node-client')
 
 const {
   HACKNEY_JWT_SECRET,
@@ -73,19 +54,6 @@ const NOT_FOUND_RESPONSE = {
 }
 
 describe('Emailing operative reports', () => {
-    beforeAll(() => {
-    const mockSendEmail = jest.fn().mockResolvedValue({
-      data: { message: 'Email sent' }
-    })
-
-    const mockPrepareUpload = jest.fn().mockReturnValue('mocked-file-upload')
-
-    NotifyClient.mockImplementation(() => ({
-      sendEmail: mockSendEmail,
-      prepareUpload: mockPrepareUpload
-    }))
-  })
-
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {

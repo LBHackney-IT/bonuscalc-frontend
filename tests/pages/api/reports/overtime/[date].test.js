@@ -2,22 +2,6 @@ import jsonwebtoken from 'jsonwebtoken'
 import { createRequest, createResponse } from 'node-mocks-http'
 import { parse } from 'csv/sync'
 import overtimeReport from '@/reports/overtime/[date]'
-
-jest.mock('axios', () => {
-  const mockClient = {
-    get: jest.fn(),
-    post: jest.fn(),
-  }
-
-  return {
-    default: {
-      create: jest.fn(() => mockClient),
-    },
-    create: jest.fn(() => mockClient),
-    __mockClient: mockClient,
-  }
-})
-
 import axios from 'axios'
 const mockClient = axios.__mockClient
 
