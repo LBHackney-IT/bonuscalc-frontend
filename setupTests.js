@@ -1,5 +1,9 @@
 import '@testing-library/jest-dom'
 import dotenvFlow from 'dotenv-flow'
+import { TextEncoder, TextDecoder } from 'util'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
 
 dotenvFlow.config({ silent: true })
 
