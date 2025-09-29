@@ -1,24 +1,32 @@
-let reporterRules = require('./reporter-rules.json')
+// let reporterRules = require('./reporter-rules.json')
 
 module.exports = {
-  collectCoverageFrom: [
-    '**/*.{js,jsx,ts,tsx}',
-    '!**/*.d.ts',
-    '!**/node_modules/**',
-  ],
-  clearMocks: true,
+  // collectCoverageFrom: [
+  //   '**/*.{js,jsx,ts,tsx}',
+  //   '!**/*.d.ts',
+  //   '!**/node_modules/**',
+  // ],
+  // clearMocks: true,
+
+  setupFiles: ['<rootDir>/jest.globals.js'],
+  
   testEnvironment: 'jsdom',
   testMatch: ['<rootDir>/**/*.test.[jt]s?(x)'],
-  testPathIgnorePatterns: ['/node_modules/', '/build/'],
+  // testPathIgnorePatterns: ['/node_modules/', '/build/'],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(axios|notifications-node-client)/)',
+    'node_modules/(?!(axios|notifications-node-client|uuid))',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
+  //  extensionsToTreatAsEsm: ['.js', '.jsx'],
+
+
   moduleDirectories: ['node_modules', '.'],
+  // moduleDirectories: ["node_modules", "<rootDir>"],
+  // moduleDirectories: ["node_modules", __dirname],
   moduleNameMapper: {
     '^csv/sync': '<rootDir>/node_modules/csv/dist/cjs/sync.cjs',
     '^.+\\.(css|scss)$': '<rootDir>/src/styles/__mocks__/styleMock.js',

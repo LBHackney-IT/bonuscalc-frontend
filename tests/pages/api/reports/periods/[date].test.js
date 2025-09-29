@@ -1,8 +1,25 @@
-import nock from 'nock'
 import jsonwebtoken from 'jsonwebtoken'
-import { createMocks } from 'node-mocks-http'
+import { createRequest, createResponse } from 'node-mocks-http'
 import { parse } from 'csv/sync'
 import bonusPeriodReport from '@/reports/periods/[date]'
+
+jest.mock('axios', () => {
+  const mockClient = {
+    get: jest.fn(),
+    post: jest.fn(),
+  }
+
+  return {
+    default: {
+      create: jest.fn(() => mockClient),
+    },
+    create: jest.fn(() => mockClient),
+    __mockClient: mockClient,
+  }
+})
+
+import axios from 'axios'
+const mockClient = axios.__mockClient
 
 const {
   HACKNEY_JWT_SECRET,
@@ -22,8 +39,6 @@ const signedCookie = jsonwebtoken.sign(
   },
   HACKNEY_JWT_SECRET
 )
-
-const BASE_URL = 'http://localhost:5101'
 
 const status = (res) => {
   return res._getStatusCode()
@@ -58,23 +73,16 @@ const FORBIDDEN_RESPONSE = {
 }
 
 describe('Downloading bonus peroid reports', () => {
-  beforeAll(() => {
-    nock.disableNetConnect()
-  })
-
-  afterAll(() => {
-    nock.enableNetConnect()
-  })
-
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
-        const { req, res } = createMocks({
+        const req = createRequest({
           method: 'GET',
           query: {
             date: '2021-10-18',
           },
         })
+        const res = createResponse()
 
         await bonusPeriodReport(req, res)
 
@@ -86,7 +94,7 @@ describe('Downloading bonus peroid reports', () => {
     describe('When authorized', () => {
       describe('And the date is invalid', () => {
         test('It returns a 400 response', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -95,6 +103,7 @@ describe('Downloading bonus peroid reports', () => {
               date: '20211018',
             },
           })
+          const res = createResponse()
 
           await bonusPeriodReport(req, res)
 
@@ -107,7 +116,7 @@ describe('Downloading bonus peroid reports', () => {
 
       describe('And the request is valid', () => {
         test('It downloads a CSV file', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -116,10 +125,16 @@ describe('Downloading bonus peroid reports', () => {
               date: '2021-08-02',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/band-changes?date=2021-08-02')
-            .reply(200, fixture('band-changes/changes'))
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/band-changes?date=2021-08-02`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('band-changes/changes')
+              })
+            }
+          })
 
           await bonusPeriodReport(req, res)
           const csv = parse(data(res))
@@ -168,7 +183,7 @@ describe('Downloading bonus peroid reports', () => {
 
       describe('And the request is valid but there is no data', () => {
         test('It downloads a CSV file', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -177,10 +192,16 @@ describe('Downloading bonus peroid reports', () => {
               date: '2021-08-02',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/band-changes?date=2021-08-02')
-            .reply(200, fixture('band-changes/empty'))
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/band-changes?date=2021-08-02`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('band-changes/empty')
+              })
+            }
+          })
 
           await bonusPeriodReport(req, res)
           const csv = parse(data(res))

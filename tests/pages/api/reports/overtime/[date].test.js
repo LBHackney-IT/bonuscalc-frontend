@@ -1,8 +1,25 @@
-import nock from 'nock'
 import jsonwebtoken from 'jsonwebtoken'
-import { createMocks } from 'node-mocks-http'
+import { createRequest, createResponse } from 'node-mocks-http'
 import { parse } from 'csv/sync'
 import overtimeReport from '@/reports/overtime/[date]'
+
+jest.mock('axios', () => {
+  const mockClient = {
+    get: jest.fn(),
+    post: jest.fn(),
+  }
+
+  return {
+    default: {
+      create: jest.fn(() => mockClient),
+    },
+    create: jest.fn(() => mockClient),
+    __mockClient: mockClient,
+  }
+})
+
+import axios from 'axios'
+const mockClient = axios.__mockClient
 
 const {
   HACKNEY_JWT_SECRET,
@@ -58,23 +75,16 @@ const FORBIDDEN_RESPONSE = {
 }
 
 describe('Downloading overtime reports', () => {
-  beforeAll(() => {
-    nock.disableNetConnect()
-  })
-
-  afterAll(() => {
-    nock.enableNetConnect()
-  })
-
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
-        const { req, res } = createMocks({
+        const req = createRequest({
           method: 'GET',
           query: {
             date: '2021-10-18',
           },
         })
+        const res = createResponse()
 
         await overtimeReport(req, res)
 
@@ -86,7 +96,7 @@ describe('Downloading overtime reports', () => {
     describe('When authorized', () => {
       describe('And the date is invalid', () => {
         test('It returns a 400 response', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -95,6 +105,7 @@ describe('Downloading overtime reports', () => {
               date: '20211018',
             },
           })
+          const res = createResponse()
 
           await overtimeReport(req, res)
 
@@ -107,7 +118,7 @@ describe('Downloading overtime reports', () => {
 
       describe('And the request is valid', () => {
         test('It downloads a CSV file', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -116,10 +127,18 @@ describe('Downloading overtime reports', () => {
               date: '2021-10-18',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/weeks/2021-10-18/overtime')
-            .reply(200, fixture('overtime/2021-10-18'))
+
+          mockClient.get.mockImplementation((url) => {
+
+            if (url === `/weeks/2021-10-18/overtime`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('overtime/2021-10-18')
+              })
+            }
+          })
 
           await overtimeReport(req, res)
           const csv = parse(data(res))
@@ -152,7 +171,7 @@ describe('Downloading overtime reports', () => {
 
       describe('And the request is valid but there is no data', () => {
         test('It downloads a CSV file', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -161,10 +180,17 @@ describe('Downloading overtime reports', () => {
               date: '2021-10-18',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/weeks/2021-10-18/overtime')
-            .reply(200, fixture('overtime/empty'))
+          mockClient.get.mockImplementation((url) => {
+
+            if (url === `/weeks/2021-10-18/overtime`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('overtime/empty')
+              })
+            }
+          })
 
           await overtimeReport(req, res)
           const csv = parse(data(res))
