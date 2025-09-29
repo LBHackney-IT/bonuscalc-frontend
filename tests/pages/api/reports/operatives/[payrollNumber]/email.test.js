@@ -230,12 +230,6 @@ describe('Emailing operative reports', () => {
             }
           })
 
-          // mock email
-
-          // nock(NOTIFY_URL)
-          //   .post('/v2/notifications/email')
-          //   .reply(200, { message: 'Email sent' })
-
           await emailReport(req, res)
 
           expect(status(res)).toBe(200)
@@ -289,10 +283,6 @@ describe('Emailing operative reports', () => {
             },
           })
           const res = createResponse()
-
-          // nock(BASE_URL)
-          //   .get('/api/v1/operatives/123456')
-          //   .reply(200, fixture('operatives/no-email'))
 
           mockClient.get.mockImplementation((url) => {
             if (url === `/operatives/123456`) {

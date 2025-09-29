@@ -1,7 +1,5 @@
 import '@testing-library/jest-dom'
 import dotenvFlow from 'dotenv-flow'
-import nock from 'nock'
-
 
 dotenvFlow.config({ silent: true })
 
@@ -16,6 +14,3 @@ jest.mock('@sentry/nextjs', () => {
     setTag: jest.fn(() => 'Sentry.setTag'),
   }
 })
-
-
-// Either, we need to disbale the options/cors request, which im strugging to to. Or we need to instercept the options request
