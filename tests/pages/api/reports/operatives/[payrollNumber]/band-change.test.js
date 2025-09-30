@@ -1,7 +1,8 @@
-import nock from 'nock'
 import jsonwebtoken from 'jsonwebtoken'
-import { createMocks } from 'node-mocks-http'
+import { createRequest, createResponse } from 'node-mocks-http'
 import emailReport from '@/reports/operatives/[payrollNumber]/band-change'
+import axios from 'axios'
+const mockClient = axios.__mockClient
 
 const {
   HACKNEY_JWT_SECRET,
@@ -21,9 +22,6 @@ const signedCookie = jsonwebtoken.sign(
   },
   HACKNEY_JWT_SECRET
 )
-
-const BASE_URL = 'http://localhost:5101'
-const NOTIFY_URL = 'https://api.notifications.service.gov.uk'
 
 const status = (res) => {
   return res._getStatusCode()
@@ -55,24 +53,18 @@ const NOT_FOUND_RESPONSE = {
   status: 404,
 }
 
+
 describe('Emailing band change reports', () => {
-  beforeAll(() => {
-    nock.disableNetConnect()
-  })
-
-  afterAll(() => {
-    nock.enableNetConnect()
-  })
-
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
-        const { req, res } = createMocks({
+        const req = createRequest({
           method: 'GET',
           query: {
             payrollNumber: '123456',
           },
         })
+        const res = createResponse()
 
         await emailReport(req, res)
 
@@ -84,7 +76,7 @@ describe('Emailing band change reports', () => {
 
   describe('When authorized', () => {
     test('It returns a 404 response', async () => {
-      const { req, res } = createMocks({
+      const req = createRequest({
         method: 'GET',
         headers: {
           Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -93,6 +85,7 @@ describe('Emailing band change reports', () => {
           payrollNumber: '123456',
         },
       })
+      const res = createResponse()
 
       await emailReport(req, res)
 
@@ -104,12 +97,13 @@ describe('Emailing band change reports', () => {
   describe('A POST request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
-        const { req, res } = createMocks({
+        const req = createRequest({
           method: 'POST',
           query: {
             payrollNumber: '123456',
           },
         })
+        const res = createResponse()
 
         await emailReport(req, res)
 
@@ -121,7 +115,7 @@ describe('Emailing band change reports', () => {
     describe('When authorized', () => {
       describe('And the payroll number is invalid', () => {
         test('It returns a 400 response', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -130,6 +124,7 @@ describe('Emailing band change reports', () => {
               payrollNumber: '999',
             },
           })
+          const res = createResponse()
 
           await emailReport(req, res)
 
@@ -142,7 +137,7 @@ describe('Emailing band change reports', () => {
 
       describe('And the request is valid', () => {
         test('It sends an email', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -152,15 +147,24 @@ describe('Emailing band change reports', () => {
             },
           })
 
-          nock(BASE_URL)
-            .get('/api/v1/operatives/123456')
-            .reply(200, fixture('operatives/electrician'))
-            .get('/api/v1/band-changes/123456')
-            .reply(200, fixture('band-changes/2021-08-02'))
+          const res = createResponse()
 
-          nock(NOTIFY_URL)
-            .post('/v2/notifications/email')
-            .reply(200, { message: 'Email sent' })
+          mockClient.get.mockImplementation((url) => {
+
+            if (url === `/operatives/123456`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('operatives/electrician')
+              })
+            }
+
+            if (url === `/band-changes/123456`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('band-changes/2021-08-02')
+              })
+            }
+          })
 
           await emailReport(req, res)
 
@@ -175,7 +179,7 @@ describe('Emailing band change reports', () => {
 
       describe('And the operative is archived', () => {
         test('It does not send an email', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -184,10 +188,16 @@ describe('Emailing band change reports', () => {
               payrollNumber: '123456',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/operatives/123456')
-            .reply(200, fixture('operatives/archived'))
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/operatives/123456`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('operatives/archived')
+              })
+            }
+          })
 
           await emailReport(req, res)
 
@@ -197,7 +207,7 @@ describe('Emailing band change reports', () => {
 
       describe('And the operative has no email address', () => {
         test('It does not send an email', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -206,10 +216,17 @@ describe('Emailing band change reports', () => {
               payrollNumber: '123456',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/operatives/123456')
-            .reply(200, fixture('operatives/no-email'))
+
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/operatives/123456`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('operatives/no-email')
+              })
+            }
+          })
 
           await emailReport(req, res)
 

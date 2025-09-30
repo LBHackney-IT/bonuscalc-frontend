@@ -1,5 +1,10 @@
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import dotenvFlow from 'dotenv-flow'
+import { TextEncoder, TextDecoder } from 'util'
+import { NotifyClient } from 'notifications-node-client'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
 
 dotenvFlow.config({ silent: true })
 
@@ -15,12 +20,32 @@ jest.mock('@sentry/nextjs', () => {
   }
 })
 
-// Force the axios default adapter to Node's http module.
-// Otherwise all the requests will use the XHR adapter and
-// will run pre-flight CORS checks.
 jest.mock('axios', () => {
-  const axios = jest.requireActual('axios')
-  axios.defaults.adapter = jest.requireActual('axios/lib/adapters/http')
+  const mockClient = {
+    get: jest.fn(),
+    post: jest.fn(),
+  }
 
-  return axios
+  return {
+    default: {
+      create: jest.fn(() => mockClient),
+    },
+    create: jest.fn(() => mockClient),
+    __mockClient: mockClient,
+  }
+})
+
+jest.mock('notifications-node-client')
+
+beforeAll(() => {
+  const mockSendEmail = jest.fn().mockResolvedValue({
+    data: { message: 'Email sent' }
+  })
+
+  const mockPrepareUpload = jest.fn().mockReturnValue('mocked-file-upload')
+
+  NotifyClient.mockImplementation(() => ({
+    sendEmail: mockSendEmail,
+    prepareUpload: mockPrepareUpload
+  }))
 })

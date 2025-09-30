@@ -1,7 +1,8 @@
-import nock from 'nock'
 import jsonwebtoken from 'jsonwebtoken'
-import { createMocks } from 'node-mocks-http'
+import { createRequest, createResponse } from 'node-mocks-http'
 import emailReport from '@/reports/operatives/[payrollNumber]/email'
+import axios from 'axios'
+const mockClient = axios.__mockClient
 
 const {
   HACKNEY_JWT_SECRET,
@@ -21,9 +22,6 @@ const signedCookie = jsonwebtoken.sign(
   },
   HACKNEY_JWT_SECRET
 )
-
-const BASE_URL = 'http://localhost:5101'
-const NOTIFY_URL = 'https://api.notifications.service.gov.uk'
 
 const status = (res) => {
   return res._getStatusCode()
@@ -56,24 +54,17 @@ const NOT_FOUND_RESPONSE = {
 }
 
 describe('Emailing operative reports', () => {
-  beforeAll(() => {
-    nock.disableNetConnect()
-  })
-
-  afterAll(() => {
-    nock.enableNetConnect()
-  })
-
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
-        const { req, res } = createMocks({
+        const req = createRequest({
           method: 'GET',
           query: {
             payrollNumber: '123456',
             date: '2021-08-02',
           },
         })
+        const res = createResponse()
 
         await emailReport(req, res)
 
@@ -84,7 +75,7 @@ describe('Emailing operative reports', () => {
 
     describe('When authorized', () => {
       test('It returns a 404 response', async () => {
-        const { req, res } = createMocks({
+        const req = createRequest({
           method: 'GET',
           headers: {
             Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -94,6 +85,7 @@ describe('Emailing operative reports', () => {
             date: '2021-08-02',
           },
         })
+        const res = createResponse()
 
         await emailReport(req, res)
 
@@ -106,13 +98,14 @@ describe('Emailing operative reports', () => {
   describe('A POST request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
-        const { req, res } = createMocks({
+        const req = createRequest({
           method: 'POST',
           query: {
             payrollNumber: '123456',
             date: '2021-08-02',
           },
         })
+        const res = createResponse()
 
         await emailReport(req, res)
 
@@ -124,7 +117,7 @@ describe('Emailing operative reports', () => {
     describe('When authorized', () => {
       describe('And the payroll number is invalid', () => {
         test('It returns a 400 response', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -134,6 +127,7 @@ describe('Emailing operative reports', () => {
               date: '2021-08-02',
             },
           })
+          const res = createResponse()
 
           await emailReport(req, res)
 
@@ -146,7 +140,7 @@ describe('Emailing operative reports', () => {
 
       describe('And the date is invalid', () => {
         test('It returns a 400 response', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -156,6 +150,7 @@ describe('Emailing operative reports', () => {
               date: '20210802',
             },
           })
+          const res = createResponse()
 
           await emailReport(req, res)
 
@@ -168,7 +163,7 @@ describe('Emailing operative reports', () => {
 
       describe('And the request is valid', () => {
         test('It sends an email', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -178,18 +173,30 @@ describe('Emailing operative reports', () => {
               date: '2021-08-02',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/operatives/123456')
-            .reply(200, fixture('operatives/electrician'))
-            .get('/api/v1/operatives/123456/summary?bonusPeriod=2021-08-02')
-            .reply(200, fixture('summaries/2021-08-02'))
-            .get('/api/v1/operatives/123456/timesheet?week=2021-08-02')
-            .reply(200, fixture('timesheets/2021-08-02'))
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/operatives/123456`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('operatives/electrician')
+              })
+            }
 
-          nock(NOTIFY_URL)
-            .post('/v2/notifications/email')
-            .reply(200, { message: 'Email sent' })
+            if (url === `/operatives/123456/summary?bonusPeriod=2021-08-02`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('summaries/2021-08-02')
+              })
+            }
+
+            if (url === `/operatives/123456/timesheet?week=2021-08-02`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('timesheets/2021-08-02')
+              })
+            }
+          })
 
           await emailReport(req, res)
 
@@ -204,7 +211,7 @@ describe('Emailing operative reports', () => {
 
       describe('And the operative is archived', () => {
         test('It does not send an email', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -214,10 +221,16 @@ describe('Emailing operative reports', () => {
               date: '2021-08-02',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/operatives/123456')
-            .reply(200, fixture('operatives/archived'))
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/operatives/123456`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('operatives/archived')
+              })
+            }
+          })
 
           await emailReport(req, res)
 
@@ -227,7 +240,7 @@ describe('Emailing operative reports', () => {
 
       describe('And the operative has no email address', () => {
         test('It does not send an email', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'POST',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -237,10 +250,16 @@ describe('Emailing operative reports', () => {
               date: '2021-08-02',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/operatives/123456')
-            .reply(200, fixture('operatives/no-email'))
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/operatives/123456`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('operatives/no-email')
+              })
+            }
+          })
 
           await emailReport(req, res)
 

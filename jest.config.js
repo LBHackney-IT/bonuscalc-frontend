@@ -1,21 +1,12 @@
-let reporterRules = require('./reporter-rules.json')
-
 module.exports = {
-  collectCoverageFrom: [
-    '**/*.{js,jsx,ts,tsx}',
-    '!**/*.d.ts',
-    '!**/node_modules/**',
-  ],
-  clearMocks: true,
   testEnvironment: 'jsdom',
   testMatch: ['<rootDir>/**/*.test.[jt]s?(x)'],
-  testPathIgnorePatterns: ['/node_modules/', '/build/'],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
   },
   transformIgnorePatterns: [
-    '/node_modules/',
+    'node_modules/(?!(axios|notifications-node-client|uuid))',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   moduleDirectories: ['node_modules', '.'],

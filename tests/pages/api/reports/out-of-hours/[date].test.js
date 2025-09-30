@@ -1,8 +1,9 @@
-import nock from 'nock'
 import jsonwebtoken from 'jsonwebtoken'
-import { createMocks } from 'node-mocks-http'
+import { createRequest, createResponse } from 'node-mocks-http'
 import { parse } from 'csv/sync'
 import outOfHoursReport from '@/reports/out-of-hours/[date]'
+import axios from 'axios'
+const mockClient = axios.__mockClient
 
 const {
   HACKNEY_JWT_SECRET,
@@ -22,8 +23,6 @@ const signedCookie = jsonwebtoken.sign(
   },
   HACKNEY_JWT_SECRET
 )
-
-const BASE_URL = 'http://localhost:5101'
 
 const status = (res) => {
   return res._getStatusCode()
@@ -58,23 +57,16 @@ const FORBIDDEN_RESPONSE = {
 }
 
 describe('Downloading out-of-hours reports', () => {
-  beforeAll(() => {
-    nock.disableNetConnect()
-  })
-
-  afterAll(() => {
-    nock.enableNetConnect()
-  })
-
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
-        const { req, res } = createMocks({
+        const req = createRequest({
           method: 'GET',
           query: {
             date: '2021-10-18',
           },
         })
+        const res = createResponse()
 
         await outOfHoursReport(req, res)
 
@@ -86,7 +78,7 @@ describe('Downloading out-of-hours reports', () => {
     describe('When authorized', () => {
       describe('And the date is invalid', () => {
         test('It returns a 400 response', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -95,6 +87,7 @@ describe('Downloading out-of-hours reports', () => {
               date: '20211018',
             },
           })
+          const res = createResponse()
 
           await outOfHoursReport(req, res)
 
@@ -107,7 +100,7 @@ describe('Downloading out-of-hours reports', () => {
 
       describe('And the request is valid', () => {
         test('It downloads a CSV file', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -116,10 +109,16 @@ describe('Downloading out-of-hours reports', () => {
               date: '2021-10-18',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/weeks/2021-10-18/out-of-hours')
-            .reply(200, fixture('out-of-hours/2021-10-18'))
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/weeks/2021-10-18/out-of-hours`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('out-of-hours/2021-10-18')
+              })
+            }
+          })
 
           await outOfHoursReport(req, res)
           const csv = parse(data(res))
@@ -152,7 +151,7 @@ describe('Downloading out-of-hours reports', () => {
 
       describe('And the request is valid but there is no data', () => {
         test('It downloads a CSV file', async () => {
-          const { req, res } = createMocks({
+          const req = createRequest({
             method: 'GET',
             headers: {
               Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
@@ -161,10 +160,16 @@ describe('Downloading out-of-hours reports', () => {
               date: '2021-10-18',
             },
           })
+          const res = createResponse()
 
-          nock(BASE_URL)
-            .get('/api/v1/weeks/2021-10-18/out-of-hours')
-            .reply(200, fixture('out-of-hours/empty'))
+          mockClient.get.mockImplementation((url) => {
+            if (url === `/weeks/2021-10-18/out-of-hours`) {
+              return Promise.resolve({
+                status: 200,
+                data: fixture('out-of-hours/empty')
+              })
+            }
+          })
 
           await outOfHoursReport(req, res)
           const csv = parse(data(res))
