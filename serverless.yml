@@ -11,11 +11,6 @@ provider:
     binaryMediaTypes:
       - '*/*'
 
-package:
-  individually: true
-  patterns:
-    - '!./**'
-
 functions:
   bonuscalc-frontend:
     name: ${self:service}-${self:provider.stage}
