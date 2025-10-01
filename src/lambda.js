@@ -5,19 +5,17 @@ const path = require('path')
 
 const getHandler = async () => {
   await app.prepare()
-
   const nextRequestHandler = app.getRequestHandler()
 
-  return nextRequestHandler
+  server.use(files(path.join(__dirname, 'build')))
+  server.use(files(path.join(__dirname, 'public')))
 
-  // handler = require('serverless-http')(server);
+  server.all('*', (req, res) => nextRequestHandler(req, res))
+
+  return require('serverless-http')(server)
 }
 
-const nextRequestHandler = await getHandler()
-
-server.use(files(path.join(__dirname, 'build')))
-server.use(files(path.join(__dirname, 'public')))
-
-server.all('*', (req, res) => nextRequestHandler(req, res))
-
-module.exports.handler = require('serverless-http')(server)
+module.exports.handler = async (event, context) => {
+  const serverlessHandler = await getHandler()
+  return serverlessHandler(event, context)
+}
