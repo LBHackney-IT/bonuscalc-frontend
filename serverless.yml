@@ -11,11 +11,6 @@ provider:
     binaryMediaTypes:
       - '*/*'
 
-package:
-  individually: true
-  patterns:
-    - '!./**'
-
 functions:
   bonuscalc-frontend:
     name: ${self:service}-${self:provider.stage}
@@ -25,6 +20,7 @@ functions:
       exclude:
         - ./**
       patterns:
+        # Include
         - 'src/lambda.js'
         - 'next.config.js'
         - 'public/**'
@@ -33,6 +29,7 @@ functions:
         - 'build/_next/server/**'
         - 'build/_next/static/**'
         - 'node_modules/**'
+        # Exclude
         - '!node_modules/@next/swc-darwin-arm64'
         - '!node_modules/@next/swc-darwin-x64'
         - '!node_modules/@next/swc-linux-x64-gnu'
