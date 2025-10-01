@@ -11,10 +11,10 @@ provider:
     binaryMediaTypes:
       - '*/*'
 
-package:
-  individually: true
-  patterns:
-    - '!./**'
+# package:
+#   individually: true
+#   patterns:
+#     - '!./**'
 
 functions:
   bonuscalc-frontend:
