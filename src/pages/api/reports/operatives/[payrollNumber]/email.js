@@ -52,8 +52,7 @@ const sendEmail = async (operative, summary, buffer) => {
 
     return await notify.sendEmail(template, email, options)
   } catch (error) {
-
-    console.log("NOTIFY ERROR", {error})
+    console.log('NOTIFY ERROR', { error })
 
     throw Error(error)
   }
