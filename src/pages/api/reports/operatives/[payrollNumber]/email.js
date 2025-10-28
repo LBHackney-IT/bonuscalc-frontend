@@ -28,9 +28,10 @@ const INTERNAL_SERVER_ERROR = {
   status: StatusCodes.INTERNAL_SERVER_ERROR,
 }
 
+const notify = new NotifyClient(NOTIFY_API_KEY)
+
 const sendEmail = async (operative, summary, buffer) => {
   try {
-    const notify = new NotifyClient(NOTIFY_API_KEY)
     const period = summary.bonusPeriod
     const week = summary.lastClosedWeeklySummary
 
@@ -51,6 +52,8 @@ const sendEmail = async (operative, summary, buffer) => {
 
     return await notify.sendEmail(template, email, options)
   } catch (error) {
+    console.log('NOTIFY ERROR', JSON.stringify(error.response?.data, null, 2))
+
     throw Error(error)
   }
 }
