@@ -1,0 +1,10 @@
+{
+  "name": "bonuscalc-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "restana": "^4.9.1",
+    "serve-static": "^1.14.1",
+    "serverless-http": "^2.7.0"
+  }
+}
