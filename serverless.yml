@@ -19,11 +19,11 @@ functions:
       individually: true
       patterns:
         - 'build/_next/standalone/**'
-        - '!build/_next/standalone/.next/cache/**'
+        - '!build/_next/standalone/.next/cache/**'    
         - 'build/_next/static/**'
-        - 'src/lambda.js'
-        - 'next.config.js'
-        - 'public/**'
+        - src/lambda.js
+        - next.config.js
+        - public/**
         - '!node_modules/**'
         - 'lambda/node_modules/**'
     events:

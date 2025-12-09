@@ -3,15 +3,16 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@5.2.0
   aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
-  browser-tools: circleci/browser-tools@1.4.8
+  browser-tools: circleci/browser-tools@2.1.0
+  node: circleci/node@7.1.0
 
 executors:
   node-executor:
     docker:
-      - image: cimg/node:20.16.0-browsers
+      - image: cimg/node:24.11-browsers
   docker-python:
     docker:
-      - image: cimg/python:3.7
+      - image: cimg/python:3.12
 
 references:
   workspace_root: &workspace_root '~'
@@ -23,22 +24,10 @@ jobs:
   install-dependencies:
     executor: node-executor
     steps:
-      - *attach_workspace
       - checkout
-      - restore_cache:
-          key: dependency-cache-v1-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn
-      - save_cache:
-          key: dependency-cache-v1-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-            - ./.next/cache
-            - /home/circleci/.cache/Cypress
-      - persist_to_workspace:
-          root: *workspace_root
-          paths: .
+      - node/install-packages:
+          pkg-manager: yarn
+
 
   tests:
     executor: node-executor
@@ -55,8 +44,10 @@ jobs:
     executor: node-executor
     steps:
       - *attach_workspace
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - node/install-packages:
+          pkg-manager: yarn
+      - browser-tools/install_chrome
+      - browser-tools/install_chromedriver
       - run:
           name: Force install
           command: yarn cypress install --force
@@ -76,6 +67,8 @@ jobs:
     executor: node-executor
     steps:
       - *attach_workspace
+      - node/install-packages:
+          pkg-manager: yarn
       - aws-cli/install
       - run:
           name: Swap node versions
@@ -110,13 +103,10 @@ jobs:
             # yarn build && yarn --production=true && npx --yes serverless deploy --stage staging
 
             yarn build
-            # Fetch production dependencies
             rm -rf node_modules
-            # node_modules specific for lambda.js
             cd lambda
             yarn install --production --frozen-lockfile
             cd ..
-
             npx --yes serverless deploy --stage staging
 
   build-deploy-production:
