@@ -23,7 +23,7 @@ async function headers() {
         },
       ],
     },
-  ];
+  ]
 }
 
 const moduleExports = {

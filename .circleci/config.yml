@@ -204,7 +204,7 @@ workflows:
           requires:
             - assume-role-staging
           context:
-            - "Serverless Framework"
+            - 'Serverless Framework'
           # filters:
           #   branches:
           #     only: main
