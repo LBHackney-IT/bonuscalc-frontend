@@ -71,18 +71,6 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - aws-cli/install
-      # - run:
-      #     name: Swap node versions
-      #     command: |
-      #       set +e
-      #       wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
-      #       export NVM_DIR="$HOME/.nvm"
-      #       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-      #       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-      #       nvm install 20
-      #       nvm use 20
-      #       echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
-      #       echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
       - run:
           name: deploy
           command: |
@@ -101,7 +89,6 @@ jobs:
             export NEXT_PUBLIC_SENTRY_RELEASE=$CIRCLE_SHA1
             export NEXT_PUBLIC_SENTRY_DEBUG=false
             export NODE_OPTIONS=--openssl-legacy-provider
-            # yarn build && yarn --production=true && npx --yes serverless deploy --stage staging
 
             yarn build
             rm -rf node_modules
@@ -114,19 +101,10 @@ jobs:
     executor: node-executor
     steps:
       - *attach_workspace
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
       - aws-cli/install
-      - run:
-          name: Swap node versions
-          command: |
-            set +e
-            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-            nvm install v20
-            nvm use 20
-            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
-            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
       - run:
           name: deploy
           command: |
@@ -145,7 +123,14 @@ jobs:
             export NEXT_PUBLIC_SENTRY_RELEASE=$CIRCLE_SHA1
             export NEXT_PUBLIC_SENTRY_DEBUG=false
             export NODE_OPTIONS=--openssl-legacy-provider
-            yarn build && yarn --production=true && npx --yes serverless deploy --stage production
+
+            yarn build
+            rm -rf node_modules
+            cd lambda
+            yarn install --production --frozen-lockfile
+            cd ..
+            npx --yes serverless deploy --stage production
+
 
   assume-role-staging:
     executor: docker-python
