@@ -39,7 +39,7 @@ const sendEmail = async (operative, summary, buffer) => {
     const template = NOTIFY_TEMPLATE_ID
     const reference = uuid()
 
-    const email = "callum.macpherson@hackney.gov.uk"
+    const email = 'callum.macpherson@hackney.gov.uk'
     const personalisation = {
       name: operative.name,
       week_start: week.startDate,
