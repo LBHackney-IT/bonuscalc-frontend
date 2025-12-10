@@ -30,7 +30,7 @@ const INTERNAL_SERVER_ERROR = {
 
 const sendEmail = async (operative, summary, buffer) => {
   try {
-    console.info("Sending email to operative:", operative.id);
+    console.info('Sending email to operative:', operative.id)
 
     const notify = new NotifyClient(NOTIFY_API_KEY)
     const period = summary.bonusPeriod
@@ -58,10 +58,8 @@ const sendEmail = async (operative, summary, buffer) => {
 }
 
 export default authoriseAPIRequest(async (req, res) => {
-
   try {
     if (req.method == 'POST') {
-      
       const { payrollNumber, date } = req.query
 
       if (!prnRegex.test(payrollNumber)) {
