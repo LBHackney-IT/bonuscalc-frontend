@@ -33,6 +33,8 @@ jobs:
     executor: node-executor
     steps:
       - *attach_workspace
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
           name: Run Linter
           command: yarn lint
