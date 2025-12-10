@@ -33,6 +33,7 @@ jobs:
     executor: node-executor
     steps:
       - *attach_workspace
+      - checkout
       - node/install-packages:
           pkg-manager: yarn
       - run:
