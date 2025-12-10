@@ -150,9 +150,7 @@ describe('Non-productive page', () => {
           { statusCode: 200, body: {} }
         ).as('update_timesheet')
 
-        cy.wait(500)
-        // cy.get('#confirm-button').click()
-        cy.contains('#confirm-button').click()
+        cy.get('#confirm-button', { timeout: 10000 }).click()
 
         cy.wait('@update_timesheet')
 
