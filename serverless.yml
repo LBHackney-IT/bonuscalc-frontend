@@ -17,26 +17,15 @@ functions:
     handler: src/lambda.handler
     package:
       individually: true
-      exclude:
-        - ./**
       patterns:
-        # Include
-        - 'src/lambda.js'
-        - 'next.config.js'
-        - 'public/**'
-        - 'build/_next/BUILD_ID'
-        - 'build/_next/*.json'
-        - 'build/_next/server/**'
+        - 'build/_next/standalone/**'
+        - '!build/_next/standalone/.next/cache/**'
         - 'build/_next/static/**'
-        - 'node_modules/**'
-        # Exclude
-        - '!node_modules/@next/swc-darwin-arm64'
-        - '!node_modules/@next/swc-darwin-x64'
-        - '!node_modules/@next/swc-linux-x64-gnu'
-        - '!node_modules/@next/swc-win32-x64-msvc'
-        - '!node_modules/@next/swc-linux-x64-musl*/**'
-        - '!node_modules/@sentry/cli/sentry-cli'
-        - '!node_modules/leaflet'
+        - src/lambda.js
+        - next.config.js
+        - public/**
+        - '!node_modules/**'
+        - 'lambda/node_modules/**'
     events:
       - http: ANY /
       - http: ANY /{proxy+}
@@ -44,6 +33,7 @@ functions:
       securityGroupIds: ${self:custom.securityGroups.${self:provider.stage}}
       subnetIds: ${self:custom.subnets.${self:provider.stage}}
     environment:
+      NODE_PATH: '/var/task/lambda/node_modules'
       BONUSCALC_SERVICE_API_URL: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/service-api-url}
       BONUSCALC_SERVICE_API_KEY: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/service-api-key}
       BINARY_CONTENT_TYPES: application/pdf
