@@ -30,8 +30,6 @@ const INTERNAL_SERVER_ERROR = {
 
 const sendEmail = async (operative, summary, buffer) => {
   try {
-    console.info('Sending email to operative:', operative.id)
-
     const notify = new NotifyClient(NOTIFY_API_KEY)
     const period = summary.bonusPeriod
     const week = summary.lastClosedWeeklySummary

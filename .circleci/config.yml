@@ -28,7 +28,6 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
 
-
   tests:
     executor: node-executor
     steps:
@@ -135,7 +134,6 @@ jobs:
             cd ..
             npx --yes serverless deploy --stage production
 
-
   assume-role-staging:
     executor: docker-python
     steps:
@@ -174,39 +172,39 @@ workflows:
             - install-dependencies
       - assume-role-staging:
           context: api-assume-role-housing-staging-context
-          # requires:
-          #   - tests
-          #   - e2e
-          # filters:
-          #   branches:
-          #     only: main
+          requires:
+            - tests
+            - e2e
+          filters:
+            branches:
+              only: main
       - build-deploy-staging:
           requires:
             - assume-role-staging
           context:
             - 'Serverless Framework'
-          # filters:
-          #   branches:
-          #     only: main
-      # - permit-deploy-production:
-      #     type: approval
-      #     requires:
-      #       - build-deploy-staging
-      #     filters:
-      #       branches:
-      #         only: main
-      # - assume-role-production:
-      #     context: api-assume-role-housing-production-context
-      #     requires:
-      #       - permit-deploy-production
-      #     filters:
-      #       branches:
-      #         only: main
-      # - build-deploy-production:
-      #     requires:
-      #       - assume-role-production
-      #     context:
-      #       - "Serverless Framework"
-      #     filters:
-      #       branches:
-      #         only: main
+          filters:
+            branches:
+              only: main
+      - permit-deploy-production:
+          type: approval
+          requires:
+            - build-deploy-staging
+          filters:
+            branches:
+              only: main
+      - assume-role-production:
+          context: api-assume-role-housing-production-context
+          requires:
+            - permit-deploy-production
+          filters:
+            branches:
+              only: main
+      - build-deploy-production:
+          requires:
+            - assume-role-production
+          context:
+            - 'Serverless Framework'
+          filters:
+            branches:
+              only: main
