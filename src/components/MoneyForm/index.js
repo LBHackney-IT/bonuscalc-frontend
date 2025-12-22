@@ -42,6 +42,8 @@ const NoteField = ({ item, index }) => {
   }
 
   const addNote = (event) => {
+    event.preventDefault()
+
     setInput(event.target.nextElementSibling)
     setShowNote(true)
   }
