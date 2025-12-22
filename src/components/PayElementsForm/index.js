@@ -63,6 +63,8 @@ const NoteField = ({ item, index }) => {
   }
 
   const addNote = (event) => {
+    event.preventDefault()
+
     setInput(event.target.nextElementSibling)
     setShowNote(true)
   }
@@ -270,6 +272,9 @@ const PayElementsForm = ({
   useEffect(() => {
     if (!initialized) {
       append(payElements.map((pe) => pe.toRow(2)))
+      // Append creates duplicates locally with strict mode enabled. this could fix it
+      // replace(payElements.map((pe) => pe.toRow(2)))
+
       setInitialized(true)
     }
   }, [append, payElements, initialized])
