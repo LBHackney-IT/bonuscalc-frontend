@@ -205,7 +205,7 @@ const OvertimeForm = ({ onSubmit, appendLabel, children, rate }) => {
                     <DurationField index={index} />
                   </TD>
                   <TD align="right">
-                    <LinkButton onClick={() => remove(index)}>
+                    <LinkButton type="button" onClick={() => remove(index)}>
                       Remove
                     </LinkButton>
                   </TD>
