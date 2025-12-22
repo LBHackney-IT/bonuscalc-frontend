@@ -42,8 +42,6 @@ const NoteField = ({ item, index }) => {
   }
 
   const addNote = (event) => {
-    event.preventDefault()
-
     setInput(event.target.nextElementSibling)
     setShowNote(true)
   }
@@ -60,6 +58,7 @@ const NoteField = ({ item, index }) => {
           showNote ? 'govuk-!-display-none' : null
         )}
         onClick={addNote}
+        type="button"
       >
         Add note
       </LinkButton>
