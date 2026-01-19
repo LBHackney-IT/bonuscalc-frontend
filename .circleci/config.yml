@@ -28,7 +28,7 @@ jobs:
   # - node/install-packages:
   # pkg-manager: yarn
 
-  build-deploy-production:
+  build-deploy-dr:
     executor: node-executor
     steps:
       - *attach_workspace
@@ -85,7 +85,7 @@ workflows:
           context: api-assume-role-disaster-recovery-context
           requires:
             - permit-deploy-dr
-      - build-deploy-production:
+      - build-deploy-dr:
           requires:
             - assume-role-dr
           context:
