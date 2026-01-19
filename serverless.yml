@@ -99,7 +99,7 @@ resources:
     staticImagesBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: dlo-bonus-scheme-${opt:stage}-static-images
+        BucketName: dlo-bonus-scheme-${opt:stage}-dr-static-images
 
 custom:
   domain-name:
@@ -119,11 +119,11 @@ custom:
     staging:
       - sg-0292b24504fdce1eb
     production:
-      - sg-064b1c3ec1577380b
+      - sg-0b7be628d680f9e5f
   subnets:
     staging:
       - subnet-0ea0020a44b98a2ca
       - subnet-0743d86e9b362fa38
     production:
-      - subnet-0beb266003a56ca82
-      - subnet-06a697d86a9b6ed01
+      - subnet-05e595c59b7d6c8df
+      - subnet-0e6bc9b4ac24493cc
