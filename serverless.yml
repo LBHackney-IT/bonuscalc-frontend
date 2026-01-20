@@ -90,7 +90,7 @@ resources:
           Enabled: true
           Origins:
             - Id: my-custom-origin
-              DomainName: yuckadheie.execute-api.eu-west-2.amazonaws.com/
+              DomainName: yuckadheie.execute-api.eu-west-2.amazonaws.com
               OriginPath: /production
               CustomOriginConfig:
                 HTTPPort: 80
