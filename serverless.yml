@@ -62,15 +62,15 @@ resources:
       Type: AWS::CloudFront::Distribution
       Properties:
         DistributionConfig:
-          Aliases:
-            - ${self:custom.aliases.${self:provider.stage}}
+          # Aliases:
+          #   - ${self:custom.aliases.${self:provider.stage}}
           PriceClass: PriceClass_100
-          ViewerCertificate:
-            AcmCertificateArn: ${self:custom.certificate-arn.${self:provider.stage}}
-            MinimumProtocolVersion: TLSv1.2_2018
-            SslSupportMethod: sni-only
+          # ViewerCertificate:
+          #   AcmCertificateArn: ${self:custom.certificate-arn.${self:provider.stage}}
+          #   MinimumProtocolVersion: TLSv1.2_2018
+          #   SslSupportMethod: sni-only
           DefaultCacheBehavior:
-            TargetOriginId: ${self:service}-${self:provider.stage}-custom-origin
+            TargetOriginId: my-custom-origin
             ViewerProtocolPolicy: 'redirect-to-https'
             AllowedMethods:
               - GET
@@ -89,9 +89,9 @@ resources:
                 Forward: all
           Enabled: true
           Origins:
-            - Id: ${self:service}-${self:provider.stage}-custom-origin
-              DomainName: ${self:custom.domain-name}
-              OriginPath: /${self:provider.stage}
+            - Id: my-custom-origin
+              DomainName: placeholder.com
+              OriginPath: /production
               CustomOriginConfig:
                 HTTPPort: 80
                 HTTPSPort: 443
