@@ -79,12 +79,12 @@ workflows:
   continuous-delivery:
     jobs:
       # - install-dependencies
-      - permit-deploy-dr:
-          type: approval
+      # - permit-deploy-dr:
+      #     type: approval
       - assume-role-dr:
           context: api-assume-role-disaster-recovery-context
-          requires:
-            - permit-deploy-dr
+          # requires:
+            # - permit-deploy-dr
       - build-deploy-dr:
           requires:
             - assume-role-dr
