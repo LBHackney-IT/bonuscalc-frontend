@@ -62,6 +62,19 @@ jobs:
             cd ..
             npx --yes serverless deploy --stage production
 
+  remove-dr:
+    executor: node-executor
+    steps:
+      - *attach_workspace
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - aws-cli/install
+      - run:
+          name: remove serverless resources
+          command: |
+            npx --yes serverless remove --stage production
+
   assume-role-dr:
     executor: docker-python
     steps:
@@ -76,16 +89,26 @@ jobs:
             - .aws
 
 workflows:
-  continuous-delivery:
+  # continuous-delivery:
+  #   jobs:
+  #     # - install-dependencies
+  #     # - permit-deploy-dr:
+  #     #     type: approval
+  #     - assume-role-dr:
+  #         context: api-assume-role-disaster-recovery-context
+  #         # requires:
+  #           # - permit-deploy-dr
+  #     - build-deploy-dr:
+  #         requires:
+  #           - assume-role-dr
+  #         context:
+  #           - 'Serverless Framework'
+
+  cleanup-dr-infrastructure:
     jobs:
-      # - install-dependencies
-      # - permit-deploy-dr:
-      #     type: approval
       - assume-role-dr:
           context: api-assume-role-disaster-recovery-context
-          # requires:
-            # - permit-deploy-dr
-      - build-deploy-dr:
+      - remove-dr:
           requires:
             - assume-role-dr
           context:
