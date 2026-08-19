@@ -87,18 +87,14 @@ describe('Home page', () => {
         cy.contains('h1', 'Open weeks')
         cy.contains('h2', 'Period 3 – 2021')
 
-        cy.get('section:nth-of-type(1)').within(() => {
-          cy.get('section:nth-of-type(1)').within(() => {
-            cy.contains('h3', 'Period 3 – 2021 / week 12')
-          })
-
-          cy.get('section:nth-of-type(2)').within(() => {
-            cy.contains('h3', 'Period 3 – 2021 / week 13')
-          })
+        cy.get('section:nth-of-type(1) section:nth-of-type(1)').within(() => {
+          cy.contains('h3', 'Period 3 – 2021 / week 12')
         })
-      })
 
-      
+        cy.get('section:nth-of-type(1) section:nth-of-type(2)').within(() => {
+          cy.contains('h3', 'Period 3 – 2021 / week 13')
+        })
+      })      
     })
   })
 })

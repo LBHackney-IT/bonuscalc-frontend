@@ -14,8 +14,6 @@ describe('Closing a week', () => {
       cy.get('.lbh-body').contains(
         'Please sign in with your Hackney email account.'
       )
-
-      
     })
   })
 
@@ -83,15 +81,13 @@ describe('Closing a week', () => {
         '@get_authorisations',
       ])
 
-      cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
-        cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
-          cy.get('header').within(() => {
-            cy.contains('a', 'Close week and send reports').should('not.exist')
-          })
+      cy.get(
+        '.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)'
+      ).within(() => {
+        cy.get('header').within(() => {
+          cy.contains('a', 'Close week and send reports').should('not.exist')
         })
       })
-
-      
     })
 
     it('Does not show the download CSV links on closed weeks', () => {
@@ -237,8 +233,6 @@ describe('Closing a week', () => {
           })
         })
       })
-
-      
     })
   })
 
@@ -306,15 +300,11 @@ describe('Closing a week', () => {
         '@get_authorisations',
       ])
 
-      cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
-        cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
-          cy.get('header').within(() => {
-            cy.contains('a', 'Close week and send reports').should('not.exist')
-          })
+      cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)').within(() => {
+        cy.get('header').within(() => {
+          cy.contains('a', 'Close week and send reports').should('not.exist')
         })
       })
-
-      
     })
 
     it('Does not show the download CSV links on closed weeks', () => {
@@ -460,8 +450,6 @@ describe('Closing a week', () => {
           })
         })
       })
-
-      
     })
   })
 
@@ -529,14 +517,12 @@ describe('Closing a week', () => {
         '@get_authorisations',
       ])
 
-      cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
-        cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
-          cy.get('header').within(() => {
-            cy.contains('a', 'Close week and send reports').click()
+      cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)').within(() => {
+        cy.get('header').within(() => {
+          cy.contains('a', 'Close week and send reports').click()
 
-            cy.location().should((loc) => {
-              expect(loc.pathname).to.eq('/manage/weeks/2021-10-18/close')
-            })
+          cy.location().should((loc) => {
+            expect(loc.pathname).to.eq('/manage/weeks/2021-10-18/close')
           })
         })
       })
@@ -544,16 +530,15 @@ describe('Closing a week', () => {
       cy.get('.bc-close-week__summary').within(() => {
         cy.get('h1').contains('Close week and send reports')
         cy.get('p').contains('Summary for Period 3 – 2021 / week 1')
-        cy.get('dl').within(() => {
-          cy.get('div:nth-of-type(1)').within(() => {
-            cy.get('dt').contains('Total number of operatives')
-            cy.get('dd').contains('1')
-          })
 
-          cy.get('div:nth-of-type(2)').within(() => {
-            cy.get('dt').contains('Operatives with no SMVs')
-            cy.get('dd').contains('0')
-          })
+        cy.get('dl div:nth-of-type(1)').within(() => {
+          cy.get('dt').contains('Total number of operatives')
+          cy.get('dd').contains('1')
+        })
+
+        cy.get('dl div:nth-of-type(2)').within(() => {
+          cy.get('dt').contains('Operatives with no SMVs')
+          cy.get('dd').contains('0')
         })
       })
 
@@ -623,11 +608,9 @@ describe('Closing a week', () => {
         )
       })
 
-      cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
-        cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
-          cy.get('header').within(() => {
-            cy.contains('h3', 'Period 3 – 2021 / week 13')
-          })
+      cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)').within(() => {
+        cy.get('header').within(() => {
+          cy.contains('h3', 'Period 3 – 2021 / week 13')
         })
       })
 
@@ -657,8 +640,6 @@ describe('Closing a week', () => {
       })
 
       cy.get('.lbh-page-announcement').should('not.exist')
-
-      
     })
 
     it('Shows the download CSV links on closed weeks', () => {
@@ -802,8 +783,6 @@ describe('Closing a week', () => {
           })
         })
       })
-
-      
     })
   })
 })

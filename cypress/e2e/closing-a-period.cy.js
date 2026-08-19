@@ -192,10 +192,9 @@ describe('Closing a bonus period', () => {
         cy.get('h1').contains('Close period and send reports')
         cy.get('p').contains('Summary for Period 1 – 2022')
         cy.get('dl').within(() => {
-          cy.get('div:nth-of-type(1)').within(() => {
-            cy.get('dt').contains('Total number of operatives')
-            cy.get('dd').contains('1')
-          })
+
+          cy.get('div:nth-of-type(1) dt').contains('Total number of operatives')
+          cy.get('div:nth-of-type(1) dd').contains('1')
         })
       })
 
@@ -264,16 +263,12 @@ describe('Closing a bonus period', () => {
         )
       })
 
-      cy.get('.bc-open-weeks__period:nth-of-type(1)').within(() => {
-        cy.get('header').within(() => {
-          cy.contains('h2', 'Period 2 – 2022')
-        })
+      cy.get('.bc-open-weeks__period:nth-of-type(1) header').within(() => {
+        cy.contains('h2', 'Period 2 – 2022')
+      })
 
-        cy.get('.bc-open-weeks__week:nth-of-type(1)').within(() => {
-          cy.get('header').within(() => {
-            cy.contains('h3', 'Period 2 – 2022 / week 1')
-          })
-        })
+      cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1) header').within(() => {
+        cy.contains('h3', 'Period 2 – 2022 / week 1')
       })
 
       // Navigate to another page to check announcement is removed

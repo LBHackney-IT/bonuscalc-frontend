@@ -235,9 +235,7 @@ describe('Viewing previous band changes', () => {
         cy.contains('#tab_bonus-band', 'Bonus band (0)')
         cy.contains('#tab_fixed-band', 'Fixed band (0)')
 
-        cy.get('.bc-band-changes__search').within(() => {
-          cy.get('div:first-child button').click()
-        })
+        cy.get('.bc-band-changes__search div:first-child button').click()
 
         cy.contains('h2', 'All operatives')
         cy.contains('#tab_bonus-band', 'Bonus band (1)')
