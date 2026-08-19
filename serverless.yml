@@ -2,7 +2,7 @@ service: bonuscalc-frontend
 
 provider:
   name: aws
-  runtime: nodejs20.x
+  runtime: nodejs24.x
   timeout: 10
   region: eu-west-2
   stage: ${opt:stage}
