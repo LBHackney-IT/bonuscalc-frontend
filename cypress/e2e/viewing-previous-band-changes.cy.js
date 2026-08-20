@@ -14,8 +14,6 @@ describe('Viewing previous band changes', () => {
       cy.get('.lbh-body').contains(
         'Please sign in with your Hackney email account.'
       )
-
-      
     })
   })
 
@@ -86,8 +84,6 @@ describe('Viewing previous band changes', () => {
       cy.get('.bc-open-weeks').within(() => {
         cy.contains('h1', 'Open weeks')
       })
-
-      
     })
   })
 
@@ -158,8 +154,6 @@ describe('Viewing previous band changes', () => {
       cy.get('.bc-open-weeks').within(() => {
         cy.contains('h1', 'Open weeks')
       })
-
-      
     })
   })
 
@@ -188,33 +182,29 @@ describe('Viewing previous band changes', () => {
       cy.visit('/manage/periods')
       cy.wait(['@get_periods', '@get_authorisations'])
 
-      cy.get('.bc-bonus-periods table').within(() => {
-        cy.get('thead > tr:nth-child(1)').within(() => {
-          cy.get(':nth-child(1)').contains('Period')
-          cy.get(':nth-child(2)').contains('Date')
-          cy.get(':nth-child(3)').contains('Closed')
-          cy.get(':nth-child(4)').contains('Payroll File')
-        })
+      cy.get('.bc-bonus-periods table thead > tr:nth-child(1)').within(() => {
+        cy.get(':nth-child(1)').contains('Period')
+        cy.get(':nth-child(2)').contains('Date')
+        cy.get(':nth-child(3)').contains('Closed')
+        cy.get(':nth-child(4)').contains('Payroll File')
+      })
 
-        cy.get('tbody > tr:nth-child(1)').within(() => {
-          cy.get(':nth-child(1)')
-            .contains('a', 'Period 3 – 2021')
-            .should('have.attr', 'href', '/manage/periods/2021-08-02')
-          cy.get(':nth-child(2)').contains('2 Aug – 31 Oct')
-          cy.get(':nth-child(3)').contains('10 Nov 2021')
-          cy.get(':nth-child(4)')
-            .contains('a', 'Download')
-            .should('have.attr', 'href', '/api/reports/periods/2021-08-02')
-        })
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1) :nth-child(1)')
+        .contains('a', 'Period 3 – 2021')
+        .should('have.attr', 'href', '/manage/periods/2021-08-02')
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1) :nth-child(2)').contains('2 Aug – 31 Oct')
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1) :nth-child(3)').contains('10 Nov 2021')
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1) :nth-child(4)')
+        .contains('a', 'Download')
+        .should('have.attr', 'href', '/api/reports/periods/2021-08-02')
 
-        cy.get('tbody > tr:nth-child(2)').within(() => {
-          cy.get(':nth-child(1)').contains('Period 4 – 2021')
-          cy.get(':nth-child(1) a').should('not.exist')
-          cy.get(':nth-child(2)').contains('1 Nov – 30 Jan')
-          cy.get(':nth-child(3)').contains('–')
-          cy.get(':nth-child(4)').contains('–')
-          cy.get(':nth-child(4) a').should('not.exist')
-        })
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(2)').within(() => {
+        cy.get(':nth-child(1)').contains('Period 4 – 2021')
+        cy.get(':nth-child(1) a').should('not.exist')
+        cy.get(':nth-child(2)').contains('1 Nov – 30 Jan')
+        cy.get(':nth-child(3)').contains('–')
+        cy.get(':nth-child(4)').contains('–')
+        cy.get(':nth-child(4) a').should('not.exist')
       })
 
       cy.intercept(
@@ -236,16 +226,14 @@ describe('Viewing previous band changes', () => {
       cy.contains('a', 'Period 3 – 2021').click()
       cy.wait(['@get_period', '@get_band_changes'])
 
-      cy.get('.bc-band-changes--historical').within(() => {
+      cy.get('.bc-band-changes--historical').first(() => {
         cy.contains('h1', 'Band change')
         cy.contains('h1', '(Period 3 – 2021)')
         cy.contains('h2', 'My operatives')
         cy.contains('#tab_bonus-band', 'Bonus band (0)')
         cy.contains('#tab_fixed-band', 'Fixed band (0)')
 
-        cy.get('.bc-band-changes__search').within(() => {
-          cy.get('div:first-child button').click()
-        })
+        cy.get('.bc-band-changes__search div:first-child button').click()
 
         cy.contains('h2', 'All operatives')
         cy.contains('#tab_bonus-band', 'Bonus band (1)')
@@ -253,61 +241,56 @@ describe('Viewing previous band changes', () => {
 
         cy.contains('#tab_bonus-band', 'Bonus band (1)').click()
 
-        cy.get('#bonus-band').within(() => {
-          cy.get('thead').within(() => {
-            cy.get('tr:nth-child(1)').within(() => {
-              cy.contains('th:nth-child(1)', 'Operative')
-              cy.contains('th:nth-child(2)', 'Payroll no.')
-              cy.contains('th:nth-child(3)', 'Trade')
-              cy.contains('th:nth-child(4)', 'Sick')
-              cy.contains('th:nth-child(5)', 'Total')
-              cy.contains('th:nth-child(6) button:first-child', 'Band')
-              cy.contains('th:nth-child(6) button:last-child', 'Proj.')
-              cy.contains('th:nth-child(7)', 'Change')
-            })
+        cy.get('#bonus-band thead').within(() => {
+          cy.get('tr:nth-child(1)').within(() => {
+            cy.contains('th:nth-child(1)', 'Operative')
+            cy.contains('th:nth-child(2)', 'Payroll no.')
+            cy.contains('th:nth-child(3)', 'Trade')
+            cy.contains('th:nth-child(4)', 'Sick')
+            cy.contains('th:nth-child(5)', 'Total')
+            cy.contains('th:nth-child(6) button:first-child', 'Band')
+            cy.contains('th:nth-child(6) button:last-child', 'Proj.')
+            cy.contains('th:nth-child(7)', 'Change')
           })
+        })
 
-          cy.get('tbody:nth-of-type(1)').within(() => {
-            cy.get('tr:nth-child(1)').within(() => {
-              cy.contains('td:nth-child(1)', 'Alex Cable')
-              cy.contains('td:nth-child(2)', '123456')
-              cy.contains('td:nth-child(3)', 'EL')
-              cy.contains('td:nth-child(4)', '72.00')
-              cy.contains('td:nth-child(5)', '0.00')
-              cy.contains('td:nth-child(6) span:first-child', '5')
-              cy.contains('td:nth-child(6) span:last-child', '1')
-              cy.contains('td:nth-child(7)', '1')
-            })
+        cy.get('#fixed-band tbody:nth-of-type(1)').within(() => {
+          cy.get('tr:nth-child(1)').within(() => {
+            cy.contains('td:nth-child(1)', 'Alex Cable')
+            cy.contains('td:nth-child(2)', '123456')
+            cy.contains('td:nth-child(3)', 'EL')
+            cy.contains('td:nth-child(4)', '72.00')
+            cy.contains('td:nth-child(5)', '0.00')
+            cy.contains('td:nth-child(6) span:first-child', '5')
+            cy.contains('td:nth-child(6) span:last-child', '1')
+            cy.contains('td:nth-child(7)', '1')
           })
         })
 
         cy.contains('#tab_fixed-band', 'Fixed band (1)').click()
-
-        cy.get('#fixed-band').within(() => {
-          cy.get('thead').within(() => {
-            cy.get('tr:nth-child(1)').within(() => {
-              cy.contains('th:nth-child(1)', 'Operative')
-              cy.contains('th:nth-child(2)', 'Payroll no.')
-              cy.contains('th:nth-child(3)', 'Trade')
-              cy.contains('th:nth-child(4)', 'Sick')
-              cy.contains('th:nth-child(5)', 'Total')
-              cy.contains('th:nth-child(6) button:first-child', 'Band')
-              cy.contains('th:nth-child(6) button:last-child', 'Proj.')
-              cy.contains('th:nth-child(7)', 'Change')
-            })
+        cy.get('#fixed-band thead').within(() => {
+          cy.get('tr:nth-child(1)').within(() => {
+            cy.contains('th:nth-child(1)', 'Operative')
+            cy.contains('th:nth-child(2)', 'Payroll no.')
+            cy.contains('th:nth-child(3)', 'Trade')
+            cy.contains('th:nth-child(4)', 'Sick')
+            cy.contains('th:nth-child(5)', 'Total')
+            cy.contains('th:nth-child(6) button:first-child', 'Band')
+            cy.contains('th:nth-child(6) button:last-child', 'Proj.')
+            cy.contains('th:nth-child(7)', 'Change')
           })
+        })
 
-          cy.get('tbody:nth-of-type(1)').within(() => {
-            cy.get('tr:nth-child(1)').within(() => {
-              cy.contains('td:nth-child(1)', 'André Wood')
-              cy.contains('td:nth-child(2)', '654321')
-              cy.contains('td:nth-child(3)', 'CP')
-              cy.contains('td:nth-child(4)', '72.00')
-              cy.contains('td:nth-child(5)', '0.00')
-              cy.contains('td:nth-child(6) span:first-child', '5')
-              cy.contains('td:nth-child(6) span:last-child', '1')
-              cy.contains('td:nth-child(7)', '5')
-            })
+        cy.get('#fixed-band tbody:nth-of-type(1)').within(() => {
+          cy.get('tr:nth-child(1)').within(() => {
+            cy.contains('td:nth-child(1)', 'André Wood')
+            cy.contains('td:nth-child(2)', '654321')
+            cy.contains('td:nth-child(3)', 'CP')
+            cy.contains('td:nth-child(4)', '72.00')
+            cy.contains('td:nth-child(5)', '0.00')
+            cy.contains('td:nth-child(6) span:first-child', '5')
+            cy.contains('td:nth-child(6) span:last-child', '1')
+            cy.contains('td:nth-child(7)', '5')
           })
         })
       })
