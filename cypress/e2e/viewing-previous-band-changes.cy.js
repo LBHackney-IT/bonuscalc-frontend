@@ -189,16 +189,14 @@ describe('Viewing previous band changes', () => {
         cy.get(':nth-child(4)').contains('Payroll File')
       })
 
-      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1)').within(() => {
-        cy.get(':nth-child(1)')
-          .contains('a', 'Period 3 – 2021')
-          .should('have.attr', 'href', '/manage/periods/2021-08-02')
-        cy.get(':nth-child(2)').contains('2 Aug – 31 Oct')
-        cy.get(':nth-child(3)').contains('10 Nov 2021')
-        cy.get(':nth-child(4)')
-          .contains('a', 'Download')
-          .should('have.attr', 'href', '/api/reports/periods/2021-08-02')
-      })
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1) :nth-child(1)')
+        .contains('a', 'Period 3 – 2021')
+        .should('have.attr', 'href', '/manage/periods/2021-08-02')
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1) :nth-child(2)').contains('2 Aug – 31 Oct')
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1) :nth-child(3)').contains('10 Nov 2021')
+      cy.get('.bc-bonus-periods table tbody > tr:nth-child(1) :nth-child(4)')
+        .contains('a', 'Download')
+        .should('have.attr', 'href', '/api/reports/periods/2021-08-02')
 
       cy.get('.bc-bonus-periods table tbody > tr:nth-child(2)').within(() => {
         cy.get(':nth-child(1)').contains('Period 4 – 2021')
