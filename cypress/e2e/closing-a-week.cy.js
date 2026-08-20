@@ -84,7 +84,7 @@ describe('Closing a week', () => {
       cy.get(
         '.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)'
       ).within(() => {
-        cy.get('header').within(() => {
+        cy.get('header').first(() => {
           cy.contains('a', 'Close week and send reports').should('not.exist')
         })
       })
@@ -301,7 +301,7 @@ describe('Closing a week', () => {
       ])
 
       cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)').within(() => {
-        cy.get('header').within(() => {
+        cy.get('header').first(() => {
           cy.contains('a', 'Close week and send reports').should('not.exist')
         })
       })
@@ -518,7 +518,7 @@ describe('Closing a week', () => {
       ])
 
       cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)').within(() => {
-        cy.get('header').within(() => {
+        cy.get('header').first(() => {
           cy.contains('a', 'Close week and send reports').click()
 
           cy.location().should((loc) => {

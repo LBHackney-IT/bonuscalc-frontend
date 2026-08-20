@@ -87,7 +87,7 @@ describe('Home page', () => {
         cy.contains('h1', 'Open weeks')
         cy.contains('h2', 'Period 3 – 2021')
 
-        cy.get('section:nth-of-type(1) section:nth-of-type(1)').within(() => {
+        cy.get('section:nth-of-type(1) section:nth-of-type(1)').first(() => {
           cy.contains('h3', 'Period 3 – 2021 / week 12')
         })
 
