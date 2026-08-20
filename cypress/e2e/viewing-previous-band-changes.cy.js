@@ -226,7 +226,8 @@ describe('Viewing previous band changes', () => {
       cy.contains('a', 'Period 3 – 2021').click()
       cy.wait(['@get_period', '@get_band_changes'])
 
-      cy.get('.bc-band-changes--historical').within(() => {
+      cy.get('.bc-band-changes--historical').should('have.length', 1)
+      cy.get('.bc-band-changes--historical').first(() => {
         cy.contains('h1', 'Band change')
         cy.contains('h1', '(Period 3 – 2021)')
         cy.contains('h2', 'My operatives')
