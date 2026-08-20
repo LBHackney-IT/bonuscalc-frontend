@@ -518,12 +518,10 @@ describe('Closing a week', () => {
       ])
 
       cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)').within(() => {
-        cy.get('header').first(() => {
-          cy.contains('a', 'Close week and send reports').click()
+        cy.contains('header a', 'Close week and send reports').click()
 
-          cy.location().should((loc) => {
-            expect(loc.pathname).to.eq('/manage/weeks/2021-10-18/close')
-          })
+        cy.location().should((loc) => {
+          expect(loc.pathname).to.eq('/manage/weeks/2021-10-18/close')
         })
       })
 
