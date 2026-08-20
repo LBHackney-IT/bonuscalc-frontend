@@ -265,7 +265,7 @@ describe('Closing a bonus period', () => {
 
       cy.contains('.bc-open-weeks__period:nth-of-type(1) h2', 'Period 2 – 2022')
 
-      cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1) header').within(() => {
+      cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1) header').first(() => {
         cy.contains('h3', 'Period 2 – 2022 / week 1')
       })
 

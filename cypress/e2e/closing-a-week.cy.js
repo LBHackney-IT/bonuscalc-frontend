@@ -606,10 +606,8 @@ describe('Closing a week', () => {
         )
       })
 
-      cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)').within(() => {
-        cy.get('header').within(() => {
-          cy.contains('h3', 'Period 3 – 2021 / week 13')
-        })
+      cy.get('.bc-open-weeks__period:nth-of-type(1) .bc-open-weeks__week:nth-of-type(1)').first(() => {
+        cy.contains('h3', 'Period 3 – 2021 / week 13')
       })
 
       // Navigate to another page to check announcement is removed
