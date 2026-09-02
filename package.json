@@ -44,7 +44,7 @@
     "react-hook-form": "^7.16.1",
     "svg-pathdata": "^6.0.3",
     "swr": "^1.0.1",
-    "uuid": "^14.0.2"
+    "uuid": "11.1.0"
   },
   "devDependencies": {
     "@babel/core": "7",
