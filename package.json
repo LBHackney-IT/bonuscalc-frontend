@@ -22,10 +22,8 @@
     "cy:open": "cypress open"
   },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/plugin-proposal-decorators": "^7.15.4",
-    "@sentry/nextjs": "^6.16.1",
-    "axios": "1.12",
+    "@sentry/nextjs": "^10.73.0",
+    "axios": "^1.20.0",
     "classnames": "^2.5.1",
     "cookie": "^0.4.1",
     "csv": "^6.0.5",
@@ -38,20 +36,21 @@
     "jspdf": "4",
     "lbh-frontend": "^3.6.1",
     "loglevel": "^1.8.0",
-    "next": "15.5.7",
-    "notifications-node-client": "8",
-    "qs": "^6.10.1",
+    "next": "15",
+    "notifications-node-client": "^8.4.0",
+    "qs": "^6.16.0",
     "react": "19",
     "react-dom": "19",
     "react-hook-form": "^7.16.1",
-    "sass": "^1.39.2",
     "svg-pathdata": "^6.0.3",
     "swr": "^1.0.1",
-    "uuid": "^8.3.2"
+    "uuid": "11.1.0"
   },
   "devDependencies": {
     "@babel/core": "7",
     "@babel/eslint-parser": "^7.28.4",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-decorators": "^7.15.4",
     "@next/eslint-plugin-next": "13",
     "@testing-library/dom": "10",
     "@testing-library/jest-dom": "6",
@@ -76,6 +75,7 @@
     "mockdate": "^3.0.5",
     "node-mocks-http": "^1.10.1",
     "prettier": "^2.4.0",
+    "sass": "^1.39.2",
     "start-server-and-test": "^1.14.0"
   },
   "lint-staged": {

@@ -6,7 +6,7 @@ import { isAuthorised } from '@/utils/googleAuth'
 import { paramsSerializer } from '@/utils/urls'
 
 // Sentry doesn't load the config for API routes automatically
-import { Sentry } from '@/root/sentry.server.config'
+import * as Sentry from '@sentry/nextjs'
 
 const {
   BONUSCALC_SERVICE_API_URL,
@@ -42,14 +42,12 @@ export const authoriseAPIRequest = (callback) => {
         Sentry.setUser({ name: user.name, email: user.email })
       }
 
-      Sentry.configureScope((scope) => {
-        scope.addEventProcessor((event) => {
-          if (event.request?.cookies[GSSO_TOKEN_NAME]) {
-            event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
-          }
+      Sentry.getCurrentScope().addEventProcessor((event) => {
+        if (event.request?.cookies[GSSO_TOKEN_NAME]) {
+          event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
+        }
 
-          return event
-        })
+        return event
       })
 
       return await callback(req, res, user)

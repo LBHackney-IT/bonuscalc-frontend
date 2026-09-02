@@ -17,6 +17,9 @@ jest.mock('@sentry/nextjs', () => {
     configureScope: jest.fn(() => 'Sentry.configureScope'),
     setUser: jest.fn(() => 'Sentry.setUser'),
     setTag: jest.fn(() => 'Sentry.setTag'),
+    getCurrentScope: jest.fn(() => ({
+      addEventProcessor: jest.fn(),
+    })),
   }
 })
 

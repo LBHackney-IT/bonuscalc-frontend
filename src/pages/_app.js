@@ -3,7 +3,7 @@ import App from 'next/app'
 import Layout from '@/components/Layout'
 import AccessDenied from '@/components/AccessDenied'
 import { StrictMode } from 'react'
-import { configureScope, setUser } from '@sentry/nextjs'
+import * as Sentry from '@sentry/nextjs'
 
 import {
   isAuthorised,
@@ -27,7 +27,7 @@ class BonusCalcApp extends App {
     const ComponentToRender = this.props.accessDenied ? AccessDenied : Component
 
     if (userDetails) {
-      setUser({ name: userDetails.name, email: userDetails.email })
+      Sentry.setUser({ name: userDetails.name, email: userDetails.email })
     }
 
     return (
@@ -65,14 +65,12 @@ BonusCalcApp.getInitialProps = async ({ ctx, Component: pageComponent }) => {
     return { accessDenied: true }
   }
 
-  configureScope((scope) => {
-    scope.addEventProcessor((event) => {
-      if (event.request?.cookies[GSSO_TOKEN_NAME]) {
-        event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
-      }
+  Sentry.getCurrentScope().addEventProcessor((event) => {
+    if (event.request?.cookies[GSSO_TOKEN_NAME]) {
+      event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
+    }
 
-      return event
-    })
+    return event
   })
 
   if (userAuthorisedForPage(pageComponent, userDetails)) {
