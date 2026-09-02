@@ -6,7 +6,7 @@ import { isAuthorised } from '@/utils/googleAuth'
 import { paramsSerializer } from '@/utils/urls'
 
 // Sentry doesn't load the config for API routes automatically
-import * as Sentry from '@sentry/nextjs';
+import * as Sentry from '@sentry/nextjs'
 
 const {
   BONUSCALC_SERVICE_API_URL,
