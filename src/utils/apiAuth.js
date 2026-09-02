@@ -42,14 +42,12 @@ export const authoriseAPIRequest = (callback) => {
         Sentry.setUser({ name: user.name, email: user.email })
       }
 
-      Sentry.configureScope((scope) => {
-        scope.addEventProcessor((event) => {
-          if (event.request?.cookies[GSSO_TOKEN_NAME]) {
-            event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
-          }
-
-          return event
-        })
+      Sentry.getCurrentScope().addEventProcessor((event) => {
+        if (event.request?.cookies[GSSO_TOKEN_NAME]) {
+          event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
+        }
+    
+        return event
       })
 
       return await callback(req, res, user)
