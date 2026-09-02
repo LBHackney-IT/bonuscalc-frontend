@@ -38,7 +38,7 @@
     "jspdf": "4",
     "lbh-frontend": "^3.6.1",
     "loglevel": "^1.8.0",
-    "next": "15.5.7",
+    "next": "15",
     "notifications-node-client": "8",
     "qs": "^6.10.1",
     "react": "19",
