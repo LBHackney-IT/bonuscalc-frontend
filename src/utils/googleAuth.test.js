@@ -57,9 +57,9 @@ describe('deleteSessions', () => {
           },
         },
       })
-      
+
       expect(res.getHeaders()['set-cookie']).toContain(
-        [`${GSSO_TOKEN_NAME}=null; Max-Age=-1; Path=/`, `another-cookie=null; Max-Age=-1; Domain=${GSSO_DOMAIN_NAME}; Path=/`]
+        `${GSSO_TOKEN_NAME}=null; Max-Age=-1; Domain=${GSSO_DOMAIN_NAME}; Path=/`
       )
 
       expect(res.getHeaders()['set-cookie']).toContain(
