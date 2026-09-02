@@ -46,7 +46,7 @@ export const authoriseAPIRequest = (callback) => {
         if (event.request?.cookies[GSSO_TOKEN_NAME]) {
           event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
         }
-    
+
         return event
       })
 
