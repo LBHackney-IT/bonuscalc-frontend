@@ -3,7 +3,7 @@ import App from 'next/app'
 import Layout from '@/components/Layout'
 import AccessDenied from '@/components/AccessDenied'
 import { StrictMode } from 'react'
-import { configureScope, setUser } from '@sentry/nextjs'
+import { getCurrentScope, setUser } from '@sentry/nextjs'
 
 import {
   isAuthorised,
@@ -65,14 +65,12 @@ BonusCalcApp.getInitialProps = async ({ ctx, Component: pageComponent }) => {
     return { accessDenied: true }
   }
 
-  configureScope((scope) => {
-    scope.addEventProcessor((event) => {
-      if (event.request?.cookies[GSSO_TOKEN_NAME]) {
-        event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
-      }
+  getCurrentScope().addEventProcessor((event) => {
+    if (event.request?.cookies[GSSO_TOKEN_NAME]) {
+      event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
+    }
 
-      return event
-    })
+    return event
   })
 
   if (userAuthorisedForPage(pageComponent, userDetails)) {
