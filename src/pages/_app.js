@@ -1,4 +1,5 @@
 import '@/styles/all.scss'
+
 import App from 'next/app'
 import Layout from '@/components/Layout'
 import AccessDenied from '@/components/AccessDenied'
