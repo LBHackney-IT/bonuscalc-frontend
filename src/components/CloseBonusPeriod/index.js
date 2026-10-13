@@ -6,7 +6,7 @@ import UserContext from '@/components/UserContext'
 import dayjs from '@/utils/date'
 import { useRouter } from 'next/router'
 import { useContext, useRef, useState } from 'react'
-import { BandChange, BonusPeriod } from '@/models/BonusPeriod'
+import { BandChange, BonusPeriod } from '@/models'
 import { saveBonusPeriod, saveBandChangeReportSentAt } from '@/utils/apiClient'
 import { sendBandChangeReportEmail } from '@/utils/email'
 

@@ -3,10 +3,10 @@ module.exports = {
   testMatch: ['<rootDir>/**/*.test.[jt]s?(x)'],
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(axios|notifications-node-client|uuid))',
+    '/node_modules/(?!(axios|notifications-node-client|uuid|lbh-frontend|govuk-frontend)/)',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   moduleDirectories: ['node_modules', '.'],

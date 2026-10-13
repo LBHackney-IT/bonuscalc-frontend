@@ -30,13 +30,11 @@ async function headers() {
 
 const moduleExports = {
   distDir: 'build/_next',
-  experimental: {
-    forceSwcTransforms: true,
-  },
   productionBrowserSourceMaps: false,
   output: 'standalone',
   swcMinify: true,
   headers: () => headers(),
+  allowedDevOrigins: ['localdev.hackney.gov.uk'],
 }
 
 module.exports = moduleExports
