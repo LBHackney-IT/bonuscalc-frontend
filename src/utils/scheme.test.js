@@ -64,6 +64,18 @@ describe('Scheme functions', () => {
         expect(bandForValue(payBands, 5000, 0.5)).toBe(9)
       })
     })
+
+    describe('when the value exactly meets a scaled threshold', () => {
+      it('is not affected by floating point error', () => {
+        // 4644 * 0.8 is 3715.2000000000003 in floating point
+        const bands = [
+          { band: 8, value: 4320 },
+          { band: 9, value: 4644 },
+        ]
+
+        expect(bandForValue(bands, 3715.2, 0.8)).toBe(9)
+      })
+    })
   })
 
   describe('smvPerHour', () => {
