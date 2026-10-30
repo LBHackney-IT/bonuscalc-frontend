@@ -46,6 +46,9 @@ export const smvPerHour = (operative, payElementType) => {
 
 export const bandForValue = (payBands, value, utilisation) => {
   return payBands.reduce((band, payBand) => {
-    return payBand.value * utilisation > value ? band : payBand.band
+    // Round the scaled threshold to avoid floating point error, e.g.
+    // 4644 * 0.8 is 3715.2000000000003, which would push an operative
+    // sitting exactly on the band 9 threshold down to band 8.
+    return round(payBand.value * utilisation, 4) > value ? band : payBand.band
   }, 1)
 }
