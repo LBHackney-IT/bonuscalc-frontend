@@ -72,6 +72,7 @@ export const forwardAPIRequest = async (req) => {
   const headers = {
     'x-api-key': BONUSCALC_SERVICE_API_KEY,
     'x-hackney-user': token || '',
+    'Authorization': token || '',
     'content-type': 'application/json',
   }
 
@@ -89,6 +90,7 @@ export const forwardAPIRequest = async (req) => {
           ...request.headers,
           'x-api-key': '[REMOVED]',
           'x-hackney-user': '[REMOVED]',
+          'Authorization': '[REMOVED]',
         },
       })
     )
