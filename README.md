@@ -69,7 +69,7 @@ Then open [http://localhost:5001](http://localhost:5001).
 
 Sign in uses [next-auth](https://next-auth.js.org) with an Amazon Cognito user pool, which federates to Google. You need a `@hackney.gov.uk` Google account in the right groups. Speak to Hackney IT if you don't have these.
 
-Create your `.env.local` and `.env.test.local` files from `.env`. You will need to grab some secrets from the team.
+Create your `.env` and `.env.test` files by copying `.env.sample` and `.env.test.sample`. You will need to grab some secrets from the team.
 
 ### Authentication variables
 
