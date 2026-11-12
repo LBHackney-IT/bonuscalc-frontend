@@ -58,6 +58,9 @@ jobs:
           name: Run E2E With Lighthouse Audit
           command: |
             export NODE_OPTIONS=--openssl-legacy-provider
+            export COGNITO_DOMAIN=https://dummy-cognito-domain.example.com
+            export COGNITO_CLIENT_ID=dummy-client-id-for-e2e-tests
+            export NEXTAUTH_URL=http://localhost:5001
             yarn e2e:audit
       - store_artifacts:
           path: cypress/screenshots
