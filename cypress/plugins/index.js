@@ -19,6 +19,7 @@ const { lighthouse, prepareAudit } = require('cypress-audit')
 const dotenvFlowPlugin = require('cypress-dotenv-flow')
 const fs = require('fs')
 const path = require('path')
+const { signSessionCookie } = require('./sessionCookie')
 const downloads = path.join(__dirname, '..', 'downloads')
 
 const findFile = (filename) => {
@@ -90,6 +91,15 @@ module.exports = (on, config) => {
 
       storeData(report, filepath)
     }),
+  })
+
+  on('task', {
+    signSessionCookie(user) {
+      // cypress-dotenv-flow only copies CYPRESS_ prefixed vars into
+      // config.env, but it does load every .env file into process.env, which
+      // is where the app's own settings (NEXTAUTH_SECRET etc.) live.
+      return signSessionCookie(process.env, user)
+    },
   })
 
   on('task', {

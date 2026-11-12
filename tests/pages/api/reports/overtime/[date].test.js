@@ -1,4 +1,4 @@
-import jsonwebtoken from 'jsonwebtoken'
+import { sessionCookie } from 'factories/session'
 import { createRequest, createResponse } from 'node-mocks-http'
 import { parse } from 'csv/sync'
 import overtimeReport from '@/reports/overtime/[date]'
@@ -6,13 +6,11 @@ import axios from 'axios'
 const mockClient = axios.__mockClient
 
 const {
-  HACKNEY_JWT_SECRET,
-  GSSO_TOKEN_NAME,
   OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
   WEEK_MANAGERS_GOOGLE_GROUPNAME,
 } = process.env
 
-const signedCookie = jsonwebtoken.sign(
+const signedCookie = sessionCookie(
   {
     name: 'A Week Manager',
     email: 'a.weekmanager@hackney.gov.uk',
@@ -20,8 +18,7 @@ const signedCookie = jsonwebtoken.sign(
       OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
       WEEK_MANAGERS_GOOGLE_GROUPNAME,
     ],
-  },
-  HACKNEY_JWT_SECRET
+  }
 )
 
 const BASE_URL = 'http://localhost:5101'
@@ -83,7 +80,7 @@ describe('Downloading overtime reports', () => {
           const req = createRequest({
             method: 'GET',
             headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+              Cookie: signedCookie,
             },
             query: {
               date: '20211018',
@@ -105,7 +102,7 @@ describe('Downloading overtime reports', () => {
           const req = createRequest({
             method: 'GET',
             headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+              Cookie: signedCookie,
             },
             query: {
               date: '2021-10-18',
@@ -158,7 +155,7 @@ describe('Downloading overtime reports', () => {
           const req = createRequest({
             method: 'GET',
             headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+              Cookie: signedCookie,
             },
             query: {
               date: '2021-10-18',

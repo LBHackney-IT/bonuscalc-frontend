@@ -26,23 +26,13 @@
 
 import 'cypress-audit/commands'
 
+// Signs in without going through Cognito by setting a next-auth session cookie
+// signed with NEXTAUTH_SECRET, which is what the app would set after sign in.
 Cypress.Commands.add('login', (user) => {
-  const gssoTestKey = (user) => {
-    if (user == 'a.week_manager') {
-      return Cypress.env('GSSO_WEEK_MANAGER_TEST_KEY')
-    } else if (user == 'an.operative_manager') {
-      return Cypress.env('GSSO_OPERATIVE_MANAGER_TEST_KEY')
-    } else if (user == 'an.authorisations_manager') {
-      return Cypress.env('GSSO_AUTHORISATIONS_MANAGER_TEST_KEY')
-    } else {
-      return Cypress.env('GSSO_TEST_KEY')
-    }
-  }
-
-  const GSSO_TEST_KEY = gssoTestKey(user)
-  const GSSO_TOKEN_NAME = Cypress.env('GSSO_TOKEN_NAME')
-
   cy.getCookies().should('be.empty')
-  cy.setCookie(GSSO_TOKEN_NAME, GSSO_TEST_KEY)
-  cy.getCookie(GSSO_TOKEN_NAME).should('have.property', 'value', GSSO_TEST_KEY)
+
+  cy.task('signSessionCookie', user).then(({ name, value }) => {
+    cy.setCookie(name, value)
+    cy.getCookie(name).should('have.property', 'value', value)
+  })
 })

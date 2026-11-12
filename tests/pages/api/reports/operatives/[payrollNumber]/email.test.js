@@ -1,17 +1,15 @@
-import jsonwebtoken from 'jsonwebtoken'
+import { sessionCookie } from 'factories/session'
 import { createRequest, createResponse } from 'node-mocks-http'
 import emailReport from '@/reports/operatives/[payrollNumber]/email'
 import axios from 'axios'
 const mockClient = axios.__mockClient
 
 const {
-  HACKNEY_JWT_SECRET,
-  GSSO_TOKEN_NAME,
   OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
   WEEK_MANAGERS_GOOGLE_GROUPNAME,
 } = process.env
 
-const signedCookie = jsonwebtoken.sign(
+const signedCookie = sessionCookie(
   {
     name: 'A Week Manager',
     email: 'a.weekmanager@hackney.gov.uk',
@@ -19,8 +17,7 @@ const signedCookie = jsonwebtoken.sign(
       OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
       WEEK_MANAGERS_GOOGLE_GROUPNAME,
     ],
-  },
-  HACKNEY_JWT_SECRET
+  }
 )
 
 const status = (res) => {
@@ -78,7 +75,7 @@ describe('Emailing operative reports', () => {
         const req = createRequest({
           method: 'GET',
           headers: {
-            Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+            Cookie: signedCookie,
           },
           query: {
             payrollNumber: '123456',
@@ -120,7 +117,7 @@ describe('Emailing operative reports', () => {
           const req = createRequest({
             method: 'POST',
             headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+              Cookie: signedCookie,
             },
             query: {
               payrollNumber: '999',
@@ -143,7 +140,7 @@ describe('Emailing operative reports', () => {
           const req = createRequest({
             method: 'POST',
             headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+              Cookie: signedCookie,
             },
             query: {
               payrollNumber: '123456',
@@ -166,7 +163,7 @@ describe('Emailing operative reports', () => {
           const req = createRequest({
             method: 'POST',
             headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+              Cookie: signedCookie,
             },
             query: {
               payrollNumber: '123456',
@@ -214,7 +211,7 @@ describe('Emailing operative reports', () => {
           const req = createRequest({
             method: 'POST',
             headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+              Cookie: signedCookie,
             },
             query: {
               payrollNumber: '123456',
@@ -243,7 +240,7 @@ describe('Emailing operative reports', () => {
           const req = createRequest({
             method: 'POST',
             headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
+              Cookie: signedCookie,
             },
             query: {
               payrollNumber: '123456',
