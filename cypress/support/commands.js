@@ -36,3 +36,15 @@ Cypress.Commands.add('login', (user) => {
     cy.getCookie(name).should('have.property', 'value', value)
   })
 })
+
+// Signs in with the real Cognito test user (see cypress/plugins/cognitoSession.js)
+// and yields the groups the app read from the real id token
+Cypress.Commands.add('loginWithRealCognito', () => {
+  cy.getCookies().should('be.empty')
+
+  return cy.task('signRealCognitoSession').then(({ name, value, groups }) => {
+    cy.setCookie(name, value)
+
+    return cy.wrap(groups)
+  })
+})

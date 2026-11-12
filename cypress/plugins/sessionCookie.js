@@ -67,4 +67,4 @@ const signSessionCookie = async (env, requestedUser) => {
   return { name: cookieName(env), value }
 }
 
-module.exports = { signSessionCookie }
+module.exports = { signSessionCookie, cookieName }

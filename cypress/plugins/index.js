@@ -20,6 +20,7 @@ const dotenvFlowPlugin = require('cypress-dotenv-flow')
 const fs = require('fs')
 const path = require('path')
 const { signSessionCookie } = require('./sessionCookie')
+const { signRealCognitoSession } = require('./cognitoSession')
 const downloads = path.join(__dirname, '..', 'downloads')
 
 const findFile = (filename) => {
@@ -99,6 +100,12 @@ module.exports = (on, config) => {
       // config.env, but it does load every .env file into process.env, which
       // is where the app's own settings (NEXTAUTH_SECRET etc.) live.
       return signSessionCookie(process.env, user)
+    },
+  })
+
+  on('task', {
+    signRealCognitoSession() {
+      return signRealCognitoSession()
     },
   })
 
