@@ -1,25 +1,23 @@
-import { sessionCookie } from 'factories/session'
+import { isAuthorised } from '@/utils/session'
 import { createRequest, createResponse } from 'node-mocks-http'
 import { parse } from 'csv/sync'
 import outOfHoursReport from '@/reports/out-of-hours/[date]'
 import axios from 'axios'
 const mockClient = axios.__mockClient
 
-const {
-  OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
-  WEEK_MANAGERS_GOOGLE_GROUPNAME,
-} = process.env
+jest.mock('@/utils/session')
 
-const signedCookie = sessionCookie(
-  {
-    name: 'A Week Manager',
-    email: 'a.weekmanager@hackney.gov.uk',
-    groups: [
-      OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
-      WEEK_MANAGERS_GOOGLE_GROUPNAME,
-    ],
-  }
-)
+const user = {
+  name: 'A Week Manager',
+  email: 'a.weekmanager@hackney.gov.uk',
+  hasOperativeManagerPermissions: true,
+  hasWeekManagerPermissions: true,
+  hasAnyPermissions: true,
+}
+
+beforeEach(() => {
+  isAuthorised.mockResolvedValue(user)
+})
 
 const status = (res) => {
   return res._getStatusCode()
@@ -57,6 +55,8 @@ describe('Downloading out-of-hours reports', () => {
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
+        isAuthorised.mockResolvedValue(false)
+
         const req = createRequest({
           method: 'GET',
           query: {
@@ -77,9 +77,6 @@ describe('Downloading out-of-hours reports', () => {
         test('It returns a 400 response', async () => {
           const req = createRequest({
             method: 'GET',
-            headers: {
-              Cookie: signedCookie,
-            },
             query: {
               date: '20211018',
             },
@@ -99,9 +96,6 @@ describe('Downloading out-of-hours reports', () => {
         test('It downloads a CSV file', async () => {
           const req = createRequest({
             method: 'GET',
-            headers: {
-              Cookie: signedCookie,
-            },
             query: {
               date: '2021-10-18',
             },
@@ -112,7 +106,7 @@ describe('Downloading out-of-hours reports', () => {
             if (url === `/weeks/2021-10-18/out-of-hours`) {
               return Promise.resolve({
                 status: 200,
-                data: fixture('out-of-hours/2021-10-18')
+                data: fixture('out-of-hours/2021-10-18'),
               })
             }
           })
@@ -150,9 +144,6 @@ describe('Downloading out-of-hours reports', () => {
         test('It downloads a CSV file', async () => {
           const req = createRequest({
             method: 'GET',
-            headers: {
-              Cookie: signedCookie,
-            },
             query: {
               date: '2021-10-18',
             },
@@ -163,7 +154,7 @@ describe('Downloading out-of-hours reports', () => {
             if (url === `/weeks/2021-10-18/out-of-hours`) {
               return Promise.resolve({
                 status: 200,
-                data: fixture('out-of-hours/empty')
+                data: fixture('out-of-hours/empty'),
               })
             }
           })

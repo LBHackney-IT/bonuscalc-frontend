@@ -1,41 +1,27 @@
 import { createRequest, createResponse } from 'node-mocks-http'
 import logout from '@/root/src/pages/api/logout'
+import { cognitoLogoutUrl } from '@/utils/cognito'
+import { clearStaffSessionCookies } from '@/utils/session'
+
+jest.mock('@/utils/cognito')
+jest.mock('@/utils/session')
+
+const LOGOUT_URL = 'https://auth.example.com/logout?client_id=client-id'
 
 describe('Signing out', () => {
-  const original = { ...process.env }
-
   beforeEach(() => {
-    process.env.COGNITO_DOMAIN = 'auth.example.com'
-    process.env.COGNITO_CLIENT_ID = 'client-id'
-    process.env.NEXTAUTH_URL = 'https://app.example.com'
+    jest.clearAllMocks()
+    cognitoLogoutUrl.mockReturnValue(LOGOUT_URL)
   })
 
-  afterEach(() => {
-    process.env = { ...original }
-  })
-
-  test('clears the auth cookies and redirects to Cognito', () => {
-    const req = createRequest({
-      method: 'GET',
-      headers: {
-        Cookie:
-          '__Secure-next-auth.session-token=abc; next-auth.csrf-token=def; another-cookie=ghi',
-      },
-    })
+  test('clears the session cookies and redirects to Cognito', () => {
+    const req = createRequest({ method: 'GET' })
     const res = createResponse()
 
     logout(req, res)
 
-    expect(res.statusCode).toBe(302)
-    expect(res._getRedirectUrl()).toMatch(
-      /^https:\/\/auth\.example\.com\/logout\?client_id=client-id/
-    )
-
-    const cookies = res.getHeader('Set-Cookie')
-
-    expect(cookies).toHaveLength(2)
-    expect(cookies[0]).toMatch(/^__Secure-next-auth\.session-token=;.*Secure/)
-    expect(cookies[1]).toMatch(/^next-auth\.csrf-token=;/)
+    expect(clearStaffSessionCookies).toHaveBeenCalledWith(req, res)
+    expect(res._getRedirectUrl()).toBe(LOGOUT_URL)
   })
 
   test('only allows GET', () => {
@@ -44,14 +30,19 @@ describe('Signing out', () => {
     logout(createRequest({ method: 'POST' }), res)
 
     expect(res.statusCode).toBe(405)
+    expect(res.getHeader('Allow')).toBe('GET')
+    expect(clearStaffSessionCookies).not.toHaveBeenCalled()
   })
 
   test('fails when Cognito is not configured', () => {
-    delete process.env.COGNITO_DOMAIN
+    cognitoLogoutUrl.mockReturnValue(null)
     const res = createResponse()
 
     logout(createRequest({ method: 'GET' }), res)
 
     expect(res.statusCode).toBe(500)
+    expect(res._getJSONData()).toEqual({
+      title: 'Cognito logout is not configured',
+    })
   })
 })

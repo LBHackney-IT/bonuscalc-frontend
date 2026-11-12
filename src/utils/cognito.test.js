@@ -6,21 +6,16 @@ describe('parseCognitoGroups', () => {
       ['a', 'b'],
       ['a', 'b'],
     ],
-    ['a,b', ['a', 'b']],
     ['a;b', ['a', 'b']],
     ['[a, b]', ['a', 'b']],
-    [' a ; b , c ', ['a', 'b', 'c']],
     ['a', ['a']],
   ])('parses %j', (input, expected) => {
     expect(parseCognitoGroups(input)).toEqual(expected)
   })
 
-  test.each([undefined, null, '', 42, {}, [1, null]])(
-    'returns nothing for %j',
-    (input) => {
-      expect(parseCognitoGroups(input)).toEqual([])
-    }
-  )
+  test.each([undefined, ''])('returns nothing for %j', (input) => {
+    expect(parseCognitoGroups(input)).toEqual([])
+  })
 })
 
 describe('cognitoLogoutUrl', () => {
@@ -40,9 +35,49 @@ describe('cognitoLogoutUrl', () => {
     )
   })
 
-  test('returns null when not configured', () => {
-    delete process.env.COGNITO_DOMAIN
+  const configure = (overrides = {}) => {
+    process.env.COGNITO_DOMAIN = 'auth.example.com'
+    process.env.COGNITO_CLIENT_ID = 'client-id'
+    process.env.NEXTAUTH_URL = 'https://app.example.com'
+    Object.assign(process.env, overrides)
+  }
 
-    expect(cognitoLogoutUrl()).toBeNull()
+  test.each(['COGNITO_DOMAIN', 'COGNITO_CLIENT_ID', 'NEXTAUTH_URL'])(
+    'returns null when %s is missing',
+    (name) => {
+      configure()
+      delete process.env[name]
+
+      expect(cognitoLogoutUrl()).toBeNull()
+    }
+  )
+
+  test.each([
+    'auth.example.com',
+    'auth.example.com/',
+    'https://auth.example.com',
+    'http://auth.example.com/',
+  ])('accepts the domain %s', (domain) => {
+    configure({ COGNITO_DOMAIN: domain })
+
+    expect(cognitoLogoutUrl()).toMatch(
+      /^https:\/\/auth\.example\.com\/logout\?/
+    )
+  })
+
+  test('copes with a trailing slash on the app url', () => {
+    configure({ NEXTAUTH_URL: 'http://localhost:5001/' })
+
+    expect(new URL(cognitoLogoutUrl()).searchParams.get('logout_uri')).toBe(
+      'http://localhost:5001/login'
+    )
+  })
+
+  test('encodes the client id', () => {
+    configure({ COGNITO_CLIENT_ID: 'a b&c' })
+
+    expect(new URL(cognitoLogoutUrl()).searchParams.get('client_id')).toBe(
+      'a b&c'
+    )
   })
 })

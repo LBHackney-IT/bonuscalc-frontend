@@ -23,18 +23,9 @@ jest.mock('@sentry/nextjs', () => {
   }
 })
 
-// The real getToken decrypts a next-auth cookie. Tests use the cookie built by
-// factories/session.js, which is just base64 encoded JSON.
-jest.mock('next-auth/jwt', () => ({
-  getToken: jest.fn(async ({ req }) => {
-    const header = req.headers?.cookie ?? ''
-    const match = header.match(/(?:^|;\s*)next-auth\.session-token=([^;]+)/)
-
-    return match
-      ? JSON.parse(Buffer.from(match[1], 'base64').toString())
-      : null
-  }),
-}))
+// The real getToken decrypts a next-auth cookie. Tests that need a session
+// give getToken the token they want.
+jest.mock('next-auth/jwt', () => ({ getToken: jest.fn() }))
 
 jest.mock('axios', () => {
   const mockClient = {
