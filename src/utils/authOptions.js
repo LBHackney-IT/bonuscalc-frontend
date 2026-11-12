@@ -5,20 +5,7 @@ import { parseCognitoGroups } from '@/utils/cognito'
 // people sign in again once it has expired.
 export const SESSION_MAX_AGE = 4 * 60 * 60
 
-const {
-  COGNITO_CLIENT_ID,
-  COGNITO_CLIENT_SECRET,
-  COGNITO_ISSUER,
-  COGNITO_IDENTITY_PROVIDER,
-} = process.env
-
-const authorizationParams = {
-  scope: 'openid email profile',
-  // Skips the Cognito hosted UI and goes straight to the identity provider
-  ...(COGNITO_IDENTITY_PROVIDER && {
-    identity_provider: COGNITO_IDENTITY_PROVIDER,
-  }),
-}
+const { COGNITO_CLIENT_ID, COGNITO_CLIENT_SECRET, COGNITO_ISSUER } = process.env
 
 export const authOptions = {
   providers: [
@@ -27,7 +14,7 @@ export const authOptions = {
       clientSecret: COGNITO_CLIENT_SECRET || '',
       issuer: COGNITO_ISSUER,
       checks: ['pkce', 'state', 'nonce'],
-      authorization: { params: authorizationParams },
+      authorization: { params: { scope: 'openid email profile' } },
       // Public app clients have no secret
       ...(!COGNITO_CLIENT_SECRET && {
         client: { token_endpoint_auth_method: 'none' },

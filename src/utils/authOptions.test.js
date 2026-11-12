@@ -104,7 +104,9 @@ describe('Cognito provider', () => {
 
     jest.isolateModules(() => {
       require('./authOptions')
-      options = require('next-auth/providers/cognito').default.mock.calls.at(-1)[0]
+      options = require('next-auth/providers/cognito').default.mock.calls.at(
+        -1
+      )[0]
     })
 
     return options
@@ -144,19 +146,5 @@ describe('Cognito provider', () => {
 
     expect(options.clientSecret).toBe('secret')
     expect(options.client).toBeUndefined()
-  })
-
-  test('skips the hosted UI when an identity provider is set', () => {
-    const options = providerOptions({ COGNITO_IDENTITY_PROVIDER: 'Google' })
-
-    expect(options.authorization.params.identity_provider).toBe('Google')
-  })
-
-  test('shows the hosted UI when no identity provider is set', () => {
-    delete process.env.COGNITO_IDENTITY_PROVIDER
-
-    expect(providerOptions().authorization.params).not.toHaveProperty(
-      'identity_provider'
-    )
   })
 })

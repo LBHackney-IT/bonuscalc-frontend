@@ -81,7 +81,6 @@ Create your `.env` and `.env.test` files by copying `.env.sample` and `.env.test
 | `COGNITO_DOMAIN`                                                                                                   | Hosted UI domain, used for sign out.                                                          |
 | `COGNITO_CLIENT_ID`                                                                                                | App client id.                                                                                |
 | `COGNITO_CLIENT_SECRET`                                                                                            | Optional. Leave unset for a public (PKCE only) app client.                                    |
-| `COGNITO_IDENTITY_PROVIDER`                                                                                        | Optional. Name of the Google identity provider, to skip the hosted UI chooser.                |
 | `OPERATIVE_MANAGERS_GOOGLE_GROUPNAME`, `WEEK_MANAGERS_GOOGLE_GROUPNAME`, `AUTHORISATION_MANAGERS_GOOGLE_GROUPNAME` | Group names that map to each role.                                                            |
 
 The Cognito app client needs `<NEXTAUTH_URL>/api/auth/callback/cognito` as an allowed callback URL and `<NEXTAUTH_URL>/login` as an allowed sign out URL.

@@ -41,7 +41,6 @@ functions:
       COGNITO_DOMAIN: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/cognito-domain}
       COGNITO_CLIENT_ID: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/cognito-client-id}
       COGNITO_CLIENT_SECRET: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/cognito-client-secret}
-      COGNITO_IDENTITY_PROVIDER: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/cognito-identity-provider}
       NEXTAUTH_URL: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/nextauth-url}
       NEXTAUTH_SECRET: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/nextauth-secret}
       OPERATIVE_MANAGERS_GOOGLE_GROUPNAME: ${ssm:/dlo-bonus-scheme/${self:provider.stage}/operative-managers-group}
