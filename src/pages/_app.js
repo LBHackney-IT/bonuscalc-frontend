@@ -9,7 +9,7 @@ import * as Sentry from '@sentry/nextjs'
 import {
   isAuthorised,
   redirectToAcessDenied,
-  scrubAuthCookies,
+  clearSessionCookies,
   AUTH_WHITELIST,
 } from '@/utils/session'
 
@@ -65,7 +65,7 @@ BonusCalcApp.getInitialProps = async ({ ctx, Component: pageComponent }) => {
     return { accessDenied: true }
   }
 
-  Sentry.getCurrentScope().addEventProcessor(scrubAuthCookies)
+  Sentry.getCurrentScope().addEventProcessor(clearSessionCookies)
 
   if (userAuthorisedForPage(pageComponent, userDetails)) {
     return { userDetails, accessDenied: false }

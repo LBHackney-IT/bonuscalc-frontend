@@ -1,7 +1,6 @@
-import cookie from 'cookie'
 import { StatusCodes } from 'http-status-codes'
 import { cognitoLogoutUrl } from '@/utils/cognito'
-import { isAuthCookie } from '@/utils/session'
+import { clearStaffSessionCookies } from '@/utils/session'
 
 const { METHOD_NOT_ALLOWED, INTERNAL_SERVER_ERROR } = StatusCodes
 
@@ -21,20 +20,6 @@ export default function handler(req, res) {
       .json({ title: 'Cognito logout is not configured' })
   }
 
-  const cookies = cookie.parse(req.headers.cookie ?? '')
-
-  const expiredCookies = Object.keys(cookies)
-    .filter(isAuthCookie)
-    .map((name) =>
-      cookie.serialize(name, '', {
-        path: '/',
-        maxAge: 0,
-        expires: new Date(0),
-        httpOnly: true,
-        secure: /^__(Secure|Host)-/.test(name),
-      })
-    )
-
-  res.setHeader('Set-Cookie', expiredCookies)
+  clearStaffSessionCookies(req, res)
   res.redirect(logoutUrl)
 }

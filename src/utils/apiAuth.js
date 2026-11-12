@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 import {
   getSessionToken,
   isAuthorised,
-  scrubAuthCookies,
+  clearSessionCookies,
 } from '@/utils/session'
 import { paramsSerializer } from '@/utils/urls'
 
@@ -41,7 +41,7 @@ export const authoriseAPIRequest = (callback) => {
         Sentry.setUser({ name: user.name, email: user.email })
       }
 
-      Sentry.getCurrentScope().addEventProcessor(scrubAuthCookies)
+      Sentry.getCurrentScope().addEventProcessor(clearSessionCookies)
 
       return await callback(req, res, user)
     } catch (error) {

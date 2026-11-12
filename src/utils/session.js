@@ -1,3 +1,4 @@
+import cookie from 'cookie'
 import { getToken } from 'next-auth/jwt'
 import { buildUser } from './user'
 
@@ -29,7 +30,7 @@ export const redirectToAcessDenied = (res) => {
 }
 
 // Removes the auth cookies from the request data sent to Sentry
-export const scrubAuthCookies = (event) => {
+export const clearSessionCookies = (event) => {
   const cookies = event.request?.cookies
 
   if (cookies) {
@@ -41,6 +42,25 @@ export const scrubAuthCookies = (event) => {
   }
 
   return event
+}
+
+// Expires every next-auth cookie sent with the request
+export const clearStaffSessionCookies = (req, res) => {
+  const cookies = cookie.parse(req.headers.cookie ?? '')
+
+  const expiredCookies = Object.keys(cookies)
+    .filter(isAuthCookie)
+    .map((name) =>
+      cookie.serialize(name, '', {
+        path: '/',
+        maxAge: 0,
+        expires: new Date(0),
+        httpOnly: true,
+        secure: /^__(Secure|Host)-/.test(name),
+      })
+    )
+
+  res.setHeader('Set-Cookie', expiredCookies)
 }
 
 // Returns the next-auth session token, or null if it is missing, invalid or

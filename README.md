@@ -41,7 +41,7 @@ Create your `.env.local` and `.env.test.local` files from `.env`. You will need 
 
 | Variable                                                                                                           | Purpose                                                                                       |
 | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| `NEXTAUTH_URL`                                                                                                     | Public URL of the app, e.g. `http://localhost:5000` locally. Must match the Cognito callback. |
+| `NEXTAUTH_URL`                                                                                                     | Public URL of the app, e.g. `http://localhost:5001` locally. Must match the Cognito callback. |
 | `NEXTAUTH_SECRET`                                                                                                  | Encrypts the session cookie. Generate with `openssl rand -base64 32`.                         |
 | `COGNITO_ISSUER`                                                                                                   | `https://cognito-idp.<region>.amazonaws.com/<user-pool-id>`                                   |
 | `COGNITO_DOMAIN`                                                                                                   | Hosted UI domain, used for sign out.                                                          |
@@ -68,7 +68,7 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
+Open [http://localhost:5001](http://localhost:5001) with your browser to see the result.
 
 ## Continuous Delivery
 
