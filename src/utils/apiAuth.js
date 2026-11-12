@@ -1,19 +1,18 @@
-import cookie from 'cookie'
 import axios from 'axios'
 import logger from 'loglevel'
 import { StatusCodes } from 'http-status-codes'
-import { isAuthorised } from '@/utils/googleAuth'
+import {
+  getSessionToken,
+  isAuthorised,
+  scrubAuthCookies,
+} from '@/utils/session'
 import { paramsSerializer } from '@/utils/urls'
 
 // Sentry doesn't load the config for API routes automatically
 import * as Sentry from '@sentry/nextjs'
 
-const {
-  BONUSCALC_SERVICE_API_URL,
-  BONUSCALC_SERVICE_API_KEY,
-  GSSO_TOKEN_NAME,
-  LOG_LEVEL,
-} = process.env
+const { BONUSCALC_SERVICE_API_URL, BONUSCALC_SERVICE_API_KEY, LOG_LEVEL } =
+  process.env
 
 const { FORBIDDEN, BAD_GATEWAY } = StatusCodes
 
@@ -34,7 +33,7 @@ logger.setLevel(logger.levels[LOG_LEVEL || 'INFO'])
 export const authoriseAPIRequest = (callback) => {
   return async (req, res) => {
     try {
-      const user = isAuthorised({ req, res }, false)
+      const user = await isAuthorised({ req, res }, false)
 
       if (!user) {
         return res.status(FORBIDDEN).json(FORBIDDEN_ERROR)
@@ -42,21 +41,29 @@ export const authoriseAPIRequest = (callback) => {
         Sentry.setUser({ name: user.name, email: user.email })
       }
 
-      Sentry.getCurrentScope().addEventProcessor((event) => {
-        if (event.request?.cookies[GSSO_TOKEN_NAME]) {
-          event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
-        }
-
-        return event
-      })
+      Sentry.getCurrentScope().addEventProcessor(scrubAuthCookies)
 
       return await callback(req, res, user)
     } catch (error) {
       Sentry.captureException(error)
 
       if (error.response) {
-        logger.error('Service API response error:', error.response.statusText)
-        return res.status(error.response.status).json(error.response.data)
+        const { status, statusText, data, headers, config } = error.response
+
+        // x-amzn-errortype / x-amzn-requestid help tell an authorizer denial
+        // (AccessDeniedException) from a bad API key (ForbiddenException)
+        logger.error(
+          'Service API response error:',
+          JSON.stringify({
+            request: `${config?.method?.toUpperCase()} ${config?.url}`,
+            status,
+            statusText,
+            data,
+            errorType: headers?.['x-amzn-errortype'],
+            requestId: headers?.['x-amzn-requestid'],
+          })
+        )
+        return res.status(status).json(data)
       } else {
         logger.error('Service API request error:', error.message)
         return res.status(BAD_GATEWAY).json(BAD_GATEWAY_ERROR)
@@ -66,8 +73,8 @@ export const authoriseAPIRequest = (callback) => {
 }
 
 export const forwardAPIRequest = async (req) => {
-  const cookies = cookie.parse(req.headers.cookie ?? '')
-  const token = cookies[GSSO_TOKEN_NAME]
+  const session = await getSessionToken(req)
+  const token = session?.cognitoIdToken
 
   const headers = {
     'x-api-key': BONUSCALC_SERVICE_API_KEY,
@@ -75,6 +82,17 @@ export const forwardAPIRequest = async (req) => {
     'Authorization': token || '',
     'content-type': 'application/json',
   }
+
+  logger.debug(
+    'Service API auth:',
+    JSON.stringify({
+      hasToken: !!token,
+      tokenLength: token?.length,
+      tokenParts: token?.split('.').length,
+      hasApiKey: !!BONUSCALC_SERVICE_API_KEY,
+      apiUrl: BONUSCALC_SERVICE_API_URL,
+    })
+  )
 
   let { path, ...queryParams } = req.query
 
@@ -121,6 +139,9 @@ export const forwardAPIRequest = async (req) => {
 
     return data
   } catch (error) {
-    throw Error(error)
+    // Keep the original response so the caller can log and forward it
+    const errorToThrow = new Error(error)
+    errorToThrow.response = error.response
+    throw errorToThrow
   }
 }
