@@ -35,7 +35,7 @@ export default authoriseAPIRequest(async (req, res) => {
       return res.status(StatusCodes.BAD_REQUEST).json(BAD_REQUEST_ERROR)
     }
 
-    const summaries = await fetchOvertimeSummaries(date)
+    const summaries = await fetchOvertimeSummaries(req, date)
 
     if (summaries.length > 0) {
       output = stringify(transform(summaries, transformer), options)

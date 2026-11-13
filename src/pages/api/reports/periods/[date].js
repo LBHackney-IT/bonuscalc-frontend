@@ -59,7 +59,7 @@ export default authoriseAPIRequest(async (req, res) => {
       return res.status(StatusCodes.BAD_REQUEST).json(BAD_REQUEST_ERROR)
     }
 
-    const bandChanges = await fetchBandChanges(date)
+    const bandChanges = await fetchBandChanges(req, date)
 
     if (bandChanges.length > 0) {
       output = stringify(transform(bandChanges, transformer), options)
