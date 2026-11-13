@@ -7,6 +7,11 @@ const AccessDenied = () => (
     <p className="lbh-body">
       Please contact your manager if you think this is incorrect.
     </p>
+    <p className="lbh-body">
+      <a href="/api/logout" className="lbh-link">
+        Sign out
+      </a>
+    </p>
   </section>
 )
 

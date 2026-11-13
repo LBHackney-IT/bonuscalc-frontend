@@ -23,6 +23,10 @@ jest.mock('@sentry/nextjs', () => {
   }
 })
 
+// The real getToken decrypts a next-auth cookie. Tests that need a session
+// give getToken the token they want.
+jest.mock('next-auth/jwt', () => ({ getToken: jest.fn() }))
+
 jest.mock('axios', () => {
   const mockClient = {
     get: jest.fn(),

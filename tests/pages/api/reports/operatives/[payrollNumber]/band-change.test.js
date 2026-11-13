@@ -1,27 +1,22 @@
-import jsonwebtoken from 'jsonwebtoken'
+import { isAuthorised } from '@/utils/session'
 import { createRequest, createResponse } from 'node-mocks-http'
 import emailReport from '@/reports/operatives/[payrollNumber]/band-change'
 import axios from 'axios'
 const mockClient = axios.__mockClient
 
-const {
-  HACKNEY_JWT_SECRET,
-  GSSO_TOKEN_NAME,
-  OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
-  WEEK_MANAGERS_GOOGLE_GROUPNAME,
-} = process.env
+jest.mock('@/utils/session')
 
-const signedCookie = jsonwebtoken.sign(
-  {
-    name: 'A Week Manager',
-    email: 'a.weekmanager@hackney.gov.uk',
-    groups: [
-      OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
-      WEEK_MANAGERS_GOOGLE_GROUPNAME,
-    ],
-  },
-  HACKNEY_JWT_SECRET
-)
+const user = {
+  name: 'A Week Manager',
+  email: 'a.weekmanager@hackney.gov.uk',
+  hasOperativeManagerPermissions: true,
+  hasWeekManagerPermissions: true,
+  hasAnyPermissions: true,
+}
+
+beforeEach(() => {
+  isAuthorised.mockResolvedValue(user)
+})
 
 const status = (res) => {
   return res._getStatusCode()
@@ -53,11 +48,12 @@ const NOT_FOUND_RESPONSE = {
   status: 404,
 }
 
-
 describe('Emailing band change reports', () => {
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
+        isAuthorised.mockResolvedValue(false)
+
         const req = createRequest({
           method: 'GET',
           query: {
@@ -78,9 +74,6 @@ describe('Emailing band change reports', () => {
     test('It returns a 404 response', async () => {
       const req = createRequest({
         method: 'GET',
-        headers: {
-          Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
-        },
         query: {
           payrollNumber: '123456',
         },
@@ -97,6 +90,8 @@ describe('Emailing band change reports', () => {
   describe('A POST request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
+        isAuthorised.mockResolvedValue(false)
+
         const req = createRequest({
           method: 'POST',
           query: {
@@ -117,9 +112,6 @@ describe('Emailing band change reports', () => {
         test('It returns a 400 response', async () => {
           const req = createRequest({
             method: 'POST',
-            headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
-            },
             query: {
               payrollNumber: '999',
             },
@@ -139,9 +131,6 @@ describe('Emailing band change reports', () => {
         test('It sends an email', async () => {
           const req = createRequest({
             method: 'POST',
-            headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
-            },
             query: {
               payrollNumber: '123456',
             },
@@ -150,18 +139,17 @@ describe('Emailing band change reports', () => {
           const res = createResponse()
 
           mockClient.get.mockImplementation((url) => {
-
             if (url === `/operatives/123456`) {
               return Promise.resolve({
                 status: 200,
-                data: fixture('operatives/electrician')
+                data: fixture('operatives/electrician'),
               })
             }
 
             if (url === `/band-changes/123456`) {
               return Promise.resolve({
                 status: 200,
-                data: fixture('band-changes/2021-08-02')
+                data: fixture('band-changes/2021-08-02'),
               })
             }
           })
@@ -181,9 +169,6 @@ describe('Emailing band change reports', () => {
         test('It does not send an email', async () => {
           const req = createRequest({
             method: 'POST',
-            headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
-            },
             query: {
               payrollNumber: '123456',
             },
@@ -194,7 +179,7 @@ describe('Emailing band change reports', () => {
             if (url === `/operatives/123456`) {
               return Promise.resolve({
                 status: 200,
-                data: fixture('operatives/archived')
+                data: fixture('operatives/archived'),
               })
             }
           })
@@ -209,21 +194,17 @@ describe('Emailing band change reports', () => {
         test('It does not send an email', async () => {
           const req = createRequest({
             method: 'POST',
-            headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
-            },
             query: {
               payrollNumber: '123456',
             },
           })
           const res = createResponse()
 
-
           mockClient.get.mockImplementation((url) => {
             if (url === `/operatives/123456`) {
               return Promise.resolve({
                 status: 200,
-                data: fixture('operatives/no-email')
+                data: fixture('operatives/no-email'),
               })
             }
           })

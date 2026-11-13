@@ -58,7 +58,7 @@ const Header = ({ serviceName, currentPage }) => {
                 ) : (
                   <a href="/search">Search</a>
                 )}
-                <a href="/logout" id="signout">
+                <a href="/api/logout" id="signout">
                   Sign out
                 </a>
               </div>

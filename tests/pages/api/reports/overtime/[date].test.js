@@ -1,28 +1,23 @@
-import jsonwebtoken from 'jsonwebtoken'
+import { isAuthorised } from '@/utils/session'
 import { createRequest, createResponse } from 'node-mocks-http'
 import { parse } from 'csv/sync'
 import overtimeReport from '@/reports/overtime/[date]'
 import axios from 'axios'
 const mockClient = axios.__mockClient
 
-const {
-  HACKNEY_JWT_SECRET,
-  GSSO_TOKEN_NAME,
-  OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
-  WEEK_MANAGERS_GOOGLE_GROUPNAME,
-} = process.env
+jest.mock('@/utils/session')
 
-const signedCookie = jsonwebtoken.sign(
-  {
-    name: 'A Week Manager',
-    email: 'a.weekmanager@hackney.gov.uk',
-    groups: [
-      OPERATIVE_MANAGERS_GOOGLE_GROUPNAME,
-      WEEK_MANAGERS_GOOGLE_GROUPNAME,
-    ],
-  },
-  HACKNEY_JWT_SECRET
-)
+const user = {
+  name: 'A Week Manager',
+  email: 'a.weekmanager@hackney.gov.uk',
+  hasOperativeManagerPermissions: true,
+  hasWeekManagerPermissions: true,
+  hasAnyPermissions: true,
+}
+
+beforeEach(() => {
+  isAuthorised.mockResolvedValue(user)
+})
 
 const BASE_URL = 'http://localhost:5101'
 
@@ -62,6 +57,8 @@ describe('Downloading overtime reports', () => {
   describe('A GET request', () => {
     describe('When unauthorized', () => {
       test('It returns a 403 response', async () => {
+        isAuthorised.mockResolvedValue(false)
+
         const req = createRequest({
           method: 'GET',
           query: {
@@ -82,9 +79,6 @@ describe('Downloading overtime reports', () => {
         test('It returns a 400 response', async () => {
           const req = createRequest({
             method: 'GET',
-            headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
-            },
             query: {
               date: '20211018',
             },
@@ -104,22 +98,17 @@ describe('Downloading overtime reports', () => {
         test('It downloads a CSV file', async () => {
           const req = createRequest({
             method: 'GET',
-            headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
-            },
             query: {
               date: '2021-10-18',
             },
           })
           const res = createResponse()
 
-
           mockClient.get.mockImplementation((url) => {
-
             if (url === `/weeks/2021-10-18/overtime`) {
               return Promise.resolve({
                 status: 200,
-                data: fixture('overtime/2021-10-18')
+                data: fixture('overtime/2021-10-18'),
               })
             }
           })
@@ -157,9 +146,6 @@ describe('Downloading overtime reports', () => {
         test('It downloads a CSV file', async () => {
           const req = createRequest({
             method: 'GET',
-            headers: {
-              Cookie: `${GSSO_TOKEN_NAME}=${signedCookie};`,
-            },
             query: {
               date: '2021-10-18',
             },
@@ -167,11 +153,10 @@ describe('Downloading overtime reports', () => {
           const res = createResponse()
 
           mockClient.get.mockImplementation((url) => {
-
             if (url === `/weeks/2021-10-18/overtime`) {
               return Promise.resolve({
                 status: 200,
-                data: fixture('overtime/empty')
+                data: fixture('overtime/empty'),
               })
             }
           })
