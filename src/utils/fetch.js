@@ -2,16 +2,13 @@ import axios from 'axios'
 import { StatusCodes } from 'http-status-codes'
 import { BandChange, Operative, Summary, Timesheet } from '@/models'
 import { OutOfHoursSummary, OvertimeSummary } from '@/models'
+import { buildServiceHeaders } from '@/utils/apiAuth'
 import { operativeUrl, summaryUrl, timesheetUrl } from '@/utils/apiClient'
 
-const { BONUSCALC_SERVICE_API_URL, BONUSCALC_SERVICE_API_KEY } = process.env
+const { BONUSCALC_SERVICE_API_URL } = process.env
 
 const client = axios.create({
   baseURL: `${BONUSCALC_SERVICE_API_URL}/v1`,
-  headers: {
-    'x-api-key': BONUSCALC_SERVICE_API_KEY,
-    'content-type': 'application/json',
-  },
 })
 
 const bandChangesUrl = (bonusPeriodId) => {
@@ -35,8 +32,10 @@ const arrayMap = (klass, items) => items.map((item) => new klass(item))
 export const prnRegex = new RegExp('^[0-9]{6}$')
 export const dateRegex = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
 
-export const fetchBandChanges = async (bonusPeriodId) => {
-  const response = await client.get(bandChangesUrl(bonusPeriodId))
+export const fetchBandChanges = async (req, bonusPeriodId) => {
+  const response = await client.get(bandChangesUrl(bonusPeriodId), {
+    headers: await buildServiceHeaders(req),
+  })
 
   if (response.status == StatusCodes.OK) {
     return arrayMap(BandChange, response.data)
@@ -45,8 +44,10 @@ export const fetchBandChanges = async (bonusPeriodId) => {
   }
 }
 
-export const fetchBandChange = async (payrollNumber) => {
-  const response = await client.get(bandChangeUrl(payrollNumber))
+export const fetchBandChange = async (req, payrollNumber) => {
+  const response = await client.get(bandChangeUrl(payrollNumber), {
+    headers: await buildServiceHeaders(req),
+  })
 
   if (response.status == StatusCodes.OK) {
     return new BandChange(response.data)
@@ -55,8 +56,10 @@ export const fetchBandChange = async (payrollNumber) => {
   }
 }
 
-export const fetchOperative = async (payrollNumber) => {
-  const response = await client.get(operativeUrl(payrollNumber))
+export const fetchOperative = async (req, payrollNumber) => {
+  const response = await client.get(operativeUrl(payrollNumber), {
+    headers: await buildServiceHeaders(req),
+  })
 
   if (response.status == StatusCodes.OK) {
     return new Operative(response.data)
@@ -65,8 +68,10 @@ export const fetchOperative = async (payrollNumber) => {
   }
 }
 
-export const fetchSummary = async (payrollNumber, date) => {
-  const response = await client.get(summaryUrl(payrollNumber, date))
+export const fetchSummary = async (req, payrollNumber, date) => {
+  const response = await client.get(summaryUrl(payrollNumber, date), {
+    headers: await buildServiceHeaders(req),
+  })
 
   if (response.status == StatusCodes.OK) {
     return new Summary(response.data)
@@ -75,8 +80,10 @@ export const fetchSummary = async (payrollNumber, date) => {
   }
 }
 
-export const fetchTimesheet = async (payrollNumber, date) => {
-  const response = await client.get(timesheetUrl(payrollNumber, date))
+export const fetchTimesheet = async (req, payrollNumber, date) => {
+  const response = await client.get(timesheetUrl(payrollNumber, date), {
+    headers: await buildServiceHeaders(req),
+  })
 
   if (response.status == StatusCodes.OK) {
     return new Timesheet(response.data)
@@ -85,8 +92,10 @@ export const fetchTimesheet = async (payrollNumber, date) => {
   }
 }
 
-export const fetchOutOfHoursSummaries = async (date) => {
-  const response = await client.get(outOfHoursSummariesUrl(date))
+export const fetchOutOfHoursSummaries = async (req, date) => {
+  const response = await client.get(outOfHoursSummariesUrl(date), {
+    headers: await buildServiceHeaders(req),
+  })
 
   if (response.status == StatusCodes.OK) {
     return arrayMap(OutOfHoursSummary, response.data)
@@ -95,8 +104,10 @@ export const fetchOutOfHoursSummaries = async (date) => {
   }
 }
 
-export const fetchOvertimeSummaries = async (date) => {
-  const response = await client.get(overtimeSummariesUrl(date))
+export const fetchOvertimeSummaries = async (req, date) => {
+  const response = await client.get(overtimeSummariesUrl(date), {
+    headers: await buildServiceHeaders(req),
+  })
 
   if (response.status == StatusCodes.OK) {
     return arrayMap(OvertimeSummary, response.data)

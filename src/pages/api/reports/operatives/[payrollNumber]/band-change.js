@@ -60,13 +60,13 @@ export default authoriseAPIRequest(async (req, res) => {
         return res.status(StatusCodes.BAD_REQUEST).json(BAD_REQUEST_ERROR)
       }
 
-      const operative = await fetchOperative(payrollNumber)
+      const operative = await fetchOperative(req, payrollNumber)
 
       if (operative.isArchived || !operative.emailAddress) {
         return res.status(StatusCodes.NO_CONTENT).json()
       }
 
-      const bandChange = await fetchBandChange(payrollNumber)
+      const bandChange = await fetchBandChange(req, payrollNumber)
       const bonusPeriod = bandChange.bonusPeriod
 
       // Add Sentry tags

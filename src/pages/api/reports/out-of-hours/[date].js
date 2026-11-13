@@ -35,7 +35,7 @@ export default authoriseAPIRequest(async (req, res) => {
       return res.status(StatusCodes.BAD_REQUEST).json(BAD_REQUEST_ERROR)
     }
 
-    const summaries = await fetchOutOfHoursSummaries(date)
+    const summaries = await fetchOutOfHoursSummaries(req, date)
 
     if (summaries.length > 0) {
       output = stringify(transform(summaries, transformer), options)
