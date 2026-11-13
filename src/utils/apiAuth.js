@@ -65,16 +65,20 @@ export const authoriseAPIRequest = (callback) => {
   }
 }
 
-export const forwardAPIRequest = async (req) => {
-  const cookies = cookie.parse(req.headers.cookie ?? '')
+export const buildServiceHeaders = (req) => {
+  const cookies = cookie.parse(req?.headers?.cookie ?? '')
   const token = cookies[GSSO_TOKEN_NAME]
 
-  const headers = {
+  return {
     'x-api-key': BONUSCALC_SERVICE_API_KEY,
     'x-hackney-user': token || '',
-    'Authorization': token || '',
+    Authorization: token || '',
     'content-type': 'application/json',
   }
+}
+
+export const forwardAPIRequest = async (req) => {
+  const headers = buildServiceHeaders(req)
 
   let { path, ...queryParams } = req.query
 
@@ -90,7 +94,7 @@ export const forwardAPIRequest = async (req) => {
           ...request.headers,
           'x-api-key': '[REMOVED]',
           'x-hackney-user': '[REMOVED]',
-          'Authorization': '[REMOVED]',
+          Authorization: '[REMOVED]',
         },
       })
     )

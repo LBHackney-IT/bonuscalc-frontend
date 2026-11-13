@@ -18,13 +18,13 @@ export default authoriseAPIRequest(async (req, res) => {
       throw new Error('Invalid bonus period')
     }
 
-    const operative = await fetchOperative(payrollNumber)
-    const summary = await fetchSummary(payrollNumber, date)
+    const operative = await fetchOperative(req, payrollNumber)
+    const summary = await fetchSummary(req, payrollNumber, date)
     const { bonusPeriod, closedWeeklySummaries } = summary
 
     const timesheets = await Promise.all(
       closedWeeklySummaries.map(async (ws) => {
-        return fetchTimesheet(payrollNumber, ws.weekId)
+        return fetchTimesheet(req, payrollNumber, ws.weekId)
       })
     )
 

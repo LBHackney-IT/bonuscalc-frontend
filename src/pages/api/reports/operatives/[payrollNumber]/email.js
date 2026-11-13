@@ -69,18 +69,18 @@ export default authoriseAPIRequest(async (req, res) => {
         return res.status(StatusCodes.BAD_REQUEST).json(BAD_REQUEST_ERROR)
       }
 
-      const operative = await fetchOperative(payrollNumber)
+      const operative = await fetchOperative(req, payrollNumber)
 
       if (operative.isArchived || !operative.emailAddress) {
         return res.status(StatusCodes.NO_CONTENT).json()
       }
 
-      const summary = await fetchSummary(payrollNumber, date)
+      const summary = await fetchSummary(req, payrollNumber, date)
       const { bonusPeriod, closedWeeklySummaries } = summary
 
       const timesheets = await Promise.all(
         closedWeeklySummaries.map(async (ws) => {
-          return fetchTimesheet(payrollNumber, ws.weekId)
+          return fetchTimesheet(req, payrollNumber, ws.weekId)
         })
       )
 
