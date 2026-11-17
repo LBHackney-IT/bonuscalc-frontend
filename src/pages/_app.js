@@ -9,12 +9,11 @@ import * as Sentry from '@sentry/nextjs'
 import {
   isAuthorised,
   redirectToAcessDenied,
+  clearSessionCookies,
   AUTH_WHITELIST,
-} from '@/utils/googleAuth'
+} from '@/utils/session'
 
 import UserContext from '@/components/UserContext'
-
-const { GSSO_TOKEN_NAME } = process.env
 
 if (typeof window !== 'undefined') {
   document.body.className = document.body.className
@@ -60,19 +59,13 @@ BonusCalcApp.getInitialProps = async ({ ctx, Component: pageComponent }) => {
   // Do not write server redirects if this is a client side transition.
   // Otherwise I think Next JS tries to write another response and the
   // entire request fails.
-  const userDetails = isAuthorised(ctx, !isClientSideTransition)
+  const userDetails = await isAuthorised(ctx, !isClientSideTransition)
 
   if (!userDetails) {
     return { accessDenied: true }
   }
 
-  Sentry.getCurrentScope().addEventProcessor((event) => {
-    if (event.request?.cookies[GSSO_TOKEN_NAME]) {
-      event.request.cookies[GSSO_TOKEN_NAME] = '[REMOVED]'
-    }
-
-    return event
-  })
+  Sentry.getCurrentScope().addEventProcessor(clearSessionCookies)
 
   if (userAuthorisedForPage(pageComponent, userDetails)) {
     return { userDetails, accessDenied: false }

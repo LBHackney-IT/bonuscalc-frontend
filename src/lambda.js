@@ -33,6 +33,12 @@ server.use(files(path.join(__dirname, '../build')))
 server.use(files(path.join(__dirname, '../public')))
 
 server.all('*', async (req, res) => {
+  // next-auth reads the sign in form body itself (for the CSRF token), so Next
+  // has to parse it rather than receive a body that has already been consumed
+  if (req.url.startsWith('/api/auth/')) {
+    delete req.body
+  }
+
   await init()
   return nextRequestHandler(req, res)
 })

@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
+import { signIn } from 'next-auth/react'
 
-const UserLogin = ({ gssoUrl, submitText }) => {
+const UserLogin = ({ submitText }) => {
   return (
     <>
       <section>
         <h1 className="lbh-heading-h1">Sign in</h1>
-        <a
-          href={gssoUrl}
+        <button
+          type="button"
+          onClick={() => signIn('cognito', { callbackUrl: '/' })}
           className="govuk-button lbh-button lbh-button--start govuk-button--start"
         >
           {submitText}
@@ -21,7 +23,7 @@ const UserLogin = ({ gssoUrl, submitText }) => {
           >
             <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
           </svg>
-        </a>
+        </button>
         <p className="lbh-body">
           Please sign in with your Hackney email account.
         </p>
@@ -34,7 +36,6 @@ const UserLogin = ({ gssoUrl, submitText }) => {
 }
 
 UserLogin.propTypes = {
-  gssoUrl: PropTypes.string.isRequired,
   submitText: PropTypes.string.isRequired,
 }
 

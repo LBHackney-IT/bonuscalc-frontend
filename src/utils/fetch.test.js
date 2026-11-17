@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { createRequest } from 'node-mocks-http'
+import { getSessionToken } from '@/utils/session'
+
+jest.mock('@/utils/session')
 
 const mockGet = jest.fn()
 
@@ -12,16 +15,12 @@ const { fetchOperative, fetchSummary, fetchTimesheet } = require('./fetch')
 const { fetchBandChange, fetchBandChanges } = require('./fetch')
 const { fetchOutOfHoursSummaries, fetchOvertimeSummaries } = require('./fetch')
 
-const { GSSO_TOKEN_NAME } = process.env
-
-const req = createRequest({
-  method: 'POST',
-  headers: { Cookie: `${GSSO_TOKEN_NAME}=token-123;` },
-})
+const req = createRequest({ method: 'POST' })
 
 describe('service fetch helpers', () => {
   beforeEach(() => {
     mockGet.mockReset()
+    getSessionToken.mockResolvedValue({ cognitoIdToken: 'token-123' })
     mockGet.mockResolvedValue({ status: 200, data: [] })
   })
 

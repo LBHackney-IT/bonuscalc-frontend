@@ -34,7 +34,7 @@ export const dateRegex = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
 
 export const fetchBandChanges = async (req, bonusPeriodId) => {
   const response = await client.get(bandChangesUrl(bonusPeriodId), {
-    headers: buildServiceHeaders(req),
+    headers: await buildServiceHeaders(req),
   })
 
   if (response.status == StatusCodes.OK) {
@@ -46,7 +46,7 @@ export const fetchBandChanges = async (req, bonusPeriodId) => {
 
 export const fetchBandChange = async (req, payrollNumber) => {
   const response = await client.get(bandChangeUrl(payrollNumber), {
-    headers: buildServiceHeaders(req),
+    headers: await buildServiceHeaders(req),
   })
 
   if (response.status == StatusCodes.OK) {
@@ -58,7 +58,7 @@ export const fetchBandChange = async (req, payrollNumber) => {
 
 export const fetchOperative = async (req, payrollNumber) => {
   const response = await client.get(operativeUrl(payrollNumber), {
-    headers: buildServiceHeaders(req),
+    headers: await buildServiceHeaders(req),
   })
 
   if (response.status == StatusCodes.OK) {
@@ -70,7 +70,7 @@ export const fetchOperative = async (req, payrollNumber) => {
 
 export const fetchSummary = async (req, payrollNumber, date) => {
   const response = await client.get(summaryUrl(payrollNumber, date), {
-    headers: buildServiceHeaders(req),
+    headers: await buildServiceHeaders(req),
   })
 
   if (response.status == StatusCodes.OK) {
@@ -82,7 +82,7 @@ export const fetchSummary = async (req, payrollNumber, date) => {
 
 export const fetchTimesheet = async (req, payrollNumber, date) => {
   const response = await client.get(timesheetUrl(payrollNumber, date), {
-    headers: buildServiceHeaders(req),
+    headers: await buildServiceHeaders(req),
   })
 
   if (response.status == StatusCodes.OK) {
@@ -94,7 +94,7 @@ export const fetchTimesheet = async (req, payrollNumber, date) => {
 
 export const fetchOutOfHoursSummaries = async (req, date) => {
   const response = await client.get(outOfHoursSummariesUrl(date), {
-    headers: buildServiceHeaders(req),
+    headers: await buildServiceHeaders(req),
   })
 
   if (response.status == StatusCodes.OK) {
@@ -106,7 +106,7 @@ export const fetchOutOfHoursSummaries = async (req, date) => {
 
 export const fetchOvertimeSummaries = async (req, date) => {
   const response = await client.get(overtimeSummariesUrl(date), {
-    headers: buildServiceHeaders(req),
+    headers: await buildServiceHeaders(req),
   })
 
   if (response.status == StatusCodes.OK) {
